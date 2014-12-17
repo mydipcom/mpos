@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<context:annotation-config />	
+	<context:component-scan base-package="com.mpos.action,com.mpos.dao,com.mpos.service" />
+	
+	<bean class="com.mpos.commons.MyApplicationContextUtil" lazy-init="false"></bean>
+	
+	<!-- 资源文件绑定器 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="i18n.messageResource" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+		 
+		 	 
+	
+		
+	<bean id="adminUserService" class="com.mpos.service.impl.AdminUserServiceImpl" autowire="byName"/>
+		
+	<bean id="adminRoleService" class="com.mpos.service.impl.AdminRoleServiceImpl" autowire="byName"/>
+	
+	<bean id="adminRoleRightsService" class="com.mpos.service.impl.AdminRoleRightsServiceImpl" autowire="byName"/>
+	
+	<bean id="adminNodesService" class="com.mpos.service.impl.AdminNodesServiceImpl" autowire="byName"/>
+	
+	<bean id="adminInfoService" class="com.mpos.service.impl.AdminInfoServiceImpl" autowire="byName"/>		
+	
+	<bean id="adminuserLogService" class="com.mpos.service.impl.AdminuserLogServiceImpl" autowire="byName"/>
+	
+	<bean id="systemSettingService" class="com.mpos.service.impl.SystemSettingServiceImpl" autowire="byName"/>				
+	
+	<!-- 缓存系统常用数据 -->
+	<bean class="com.mpos.core.CachedDataProcessor"/>
+</beans>
