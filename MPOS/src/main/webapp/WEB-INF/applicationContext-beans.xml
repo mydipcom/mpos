@@ -17,7 +17,11 @@
 	</bean>
 		 
 		 	 
+	<bean id="attributeService" class="com.mpos.service.impl.CategoryAttributeServiceImpl" autowire="byName"/>
 	
+	<bean id="menuService" class="com.mpos.service.impl.MenuServiceImpl" autowire="byName"/>
+	
+	<bean id="categoryService" class="com.mpos.service.impl.CategoryServiceImpl" autowire="byName"/>
 		
 	<bean id="adminUserService" class="com.mpos.service.impl.AdminUserServiceImpl" autowire="byName"/>
 		

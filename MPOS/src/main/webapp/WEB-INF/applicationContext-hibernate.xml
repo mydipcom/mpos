@@ -41,7 +41,10 @@
 	      <value>cfg/AdminLog.hbm.xml</value>
 	      <value>cfg/AdminRoleRights.hbm.xml</value>
 	      <value>cfg/AdminNodes.hbm.xml</value>	      
-	      <value>cfg/Setting.hbm.xml</value>	    		      
+	      <value>cfg/Setting.hbm.xml</value>
+	      <value>cfg/Category.hbm.xml</value>
+	      <value>cfg/CategoryAttribute.hbm.xml</value>
+	      <value>cfg/Menu.hbm.xml</value>	    		      
 	  </list>
 	</property>
 	 
