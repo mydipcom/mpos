@@ -20,31 +20,31 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	CategoryDao categoryDao;
 	
-	@Override
+	
 	public void createCategory(Tcategory category) {
 		// TODO Auto-generated method stub
 		categoryDao.create(category);
 	}
 
-	@Override
+	
 	public void deleteCategory(Tcategory category) {
 		// TODO Auto-generated method stub
 		categoryDao.delete(category);
 	}
 
-	@Override
+	
 	public void updateCategory(Tcategory category) {
 		// TODO Auto-generated method stub
 		categoryDao.update(category);
 	}
 
-	@Override
+	
 	public Tcategory getCategory(Integer categoryId) {
 		// TODO Auto-generated method stub
 		return categoryDao.get(categoryId);
 	}
 
-	@Override
+	
 	public PagingData loadCategoryList(DataTableParamter rdtp) {
 		String searchJsonStr = rdtp.getsSearch();
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
@@ -79,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return null;
 	}
 
-	@Override
+	
 	public void deleteCategoryByIds(Integer[] ids) {
 		// TODO Auto-generated method stub
 		if(ids!=null&&ids.length>0){

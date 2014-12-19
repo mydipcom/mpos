@@ -1,0 +1,99 @@
+package com.mpos.action;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.mpos.commons.ConvertTools;
+import com.mpos.commons.MposException;
+import com.mpos.commons.SecurityTools;
+import com.mpos.dto.TadminUser;
+import com.mpos.dto.Tlanguage;
+import com.mpos.model.DataTableParamter;
+import com.mpos.model.PagingData;
+import com.mpos.service.LanguageService;
+
+
+@Controller
+@RequestMapping("/language")
+public class LanguageController extends BaseController{
+	
+	@Autowired
+	private LanguageService languageService;
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView Languages(HttpServletRequest request){
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("language/language");		
+		return mav;
+	}
+	
+	@RequestMapping(value="/languageList",method=RequestMethod.GET)
+	@ResponseBody
+	public String LanguagesList(HttpServletRequest request,DataTableParamter dtp){		
+		PagingData pagingData=languageService.loadLanguageList(dtp);
+		
+		pagingData.setSEcho(dtp.sEcho);
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}
+		String rightsListJson= JSON.toJSONString(pagingData);
+		return rightsListJson;	
+	}
+	
+	@RequestMapping(value="/addLanguage",method=RequestMethod.POST)
+	@ResponseBody
+	public String addLanguages(HttpServletRequest request,Tlanguage language){
+	
+		JSONObject respJson = new JSONObject();
+		try{
+			languageService.createLanguage(language);
+			respJson.put("status", true);
+		}
+		catch(MposException be){
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}		
+		return JSON.toJSONString(respJson);
+	}
+	@RequestMapping(value="/editlanguage",method=RequestMethod.POST)
+	@ResponseBody
+	public String editLanguages(HttpServletRequest request,Tlanguage language){
+		JSONObject respJson=new JSONObject();
+		try {
+			String flagname=language.getFlagImage().split("_")[1];
+			language.setFlagImage(flagname);
+			languageService.updateLanguage(language);
+			respJson.put("status", true);
+		} catch (MposException be) {
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
+	}
+	@RequestMapping(value="/deletelanguage/{ids}",method=RequestMethod.DELETE)
+	@ResponseBody
+	public String deleteAdmins(@PathVariable String ids,HttpServletRequest request){
+		String[] idstrArr=ids.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
+		JSONObject respJson = new JSONObject();
+		try{
+			languageService.deleteLanguageByIds(idArr);
+			respJson.put("status", true);
+		}
+		catch(MposException be){
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}	
+		return JSON.toJSONString(respJson);	
+	}
+}

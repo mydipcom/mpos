@@ -1,0 +1,48 @@
+package com.mpos.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mpos.dao.LanguageDao;
+import com.mpos.dto.Tlanguage;
+import com.mpos.model.DataTableParamter;
+import com.mpos.model.PagingData;
+import com.mpos.service.LanguageService;
+@Service
+public class LanguageServiceImpl implements LanguageService{
+	
+	@Autowired
+	private LanguageDao languageDao;
+	
+	public Tlanguage getLanguageById(Integer Id) {
+		
+		return languageDao.get(Id);
+	}
+
+	public void createLanguage(Tlanguage language) {
+	languageDao.create(language);
+		
+	}
+
+	public void updateLanguage(Tlanguage language) {
+	languageDao.update(language);
+		
+	}
+
+	public void deleteLanguage(Tlanguage language) {
+	languageDao.delete(language);
+		
+	}
+
+	public void deleteLanguageByIds(Integer[] ids) {
+		languageDao.deleteAll(ids);
+		
+	}
+
+	public PagingData loadLanguageList(DataTableParamter rdtp) {
+		return languageDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+	
+		
+	}
+
+}

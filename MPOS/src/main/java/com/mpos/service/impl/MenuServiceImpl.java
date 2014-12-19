@@ -20,7 +20,7 @@ import com.mpos.service.MenuService;
 public class MenuServiceImpl implements MenuService {
 	@Autowired
 	MenuDao menuDao;
-	@Override
+	
 	public void saveMenu(Tmenu menu) {
 		// TODO Auto-generated method stub
 		if(menu.getPid()!=0&&menuDao.get(menu.getPid())==null){
@@ -29,13 +29,13 @@ public class MenuServiceImpl implements MenuService {
 		menuDao.save(menu);
 	}
 
-	@Override
+
 	public void deleteMenu(Tmenu menu) {
 		// TODO Auto-generated method stub
        menuDao.delete(menu);
 	}
 
-	@Override
+	
 	public void updateMenu(Tmenu menu) {
 		// TODO Auto-generated method stub
 		if(menu.getPid()!=0&&menuDao.get(menu.getPid())==null){
@@ -44,13 +44,13 @@ public class MenuServiceImpl implements MenuService {
 		menuDao.update(menu);
 	}
 
-	@Override
+	
 	public Tmenu getMenu(Integer menuId) {
 		// TODO Auto-generated method stub
 		return menuDao.get(menuId);
 	}
 
-	@Override
+	
 	public PagingData loadMenuList(DataTableParamter rdtp) {
 		String searchJsonStr = rdtp.getsSearch();
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
@@ -78,7 +78,7 @@ public class MenuServiceImpl implements MenuService {
 		return menuDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
-	@Override
+	
 	public void deleteMenuByIds(Integer[] idArr) {
 		// TODO Auto-generated method stub
 		menuDao.deleteAll(idArr);

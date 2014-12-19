@@ -10,7 +10,8 @@ var FormWizard = function () {
 
             function format(state) {
                 if (!state.id) return state.text; // optgroup
-                return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
+                var s=(state.id).split("_");
+                return "<img class='flag' src='../assets/global/img/flags/" + s[1].toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
             }
 
             $("#country_list").select2({
@@ -22,7 +23,15 @@ var FormWizard = function () {
                     return m;
                 }
             });
-
+            $("#country_list2").select2({
+                placeholder: "Select",
+                allowClear: false,
+                formatResult: format,
+                formatSelection: format,
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
             var form = $('#submit_form');
             var error = $('.alert-danger', form);
             var success = $('.alert-success', form);

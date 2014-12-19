@@ -27,6 +27,7 @@ var FormFileUpload = function () {
             );
 
             // Upload server status check for browsers with CORS support:
+            /*
             if ($.support.cors) {
                 $.ajax({
                     type: 'HEAD'
@@ -37,7 +38,7 @@ var FormFileUpload = function () {
                         .appendTo('#fileupload');
                 });
             }
-
+*/
             // Load & display existing files:
             $('#fileupload').addClass('fileupload-processing');
             $.ajax({

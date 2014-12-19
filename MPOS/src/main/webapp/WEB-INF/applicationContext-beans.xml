@@ -37,6 +37,10 @@
 	
 	<bean id="systemSettingService" class="com.mpos.service.impl.SystemSettingServiceImpl" autowire="byName"/>				
 	
+	<bean id="languageService" class="com.mpos.service.impl.LanguageServiceImpl" autowire="byName"/>	
+	
+	<bean id="goodsService" class="com.mpos.service.impl.GoodsServiceImpl" autowire="byName"/>	
+	
 	<!-- 缓存系统常用数据 -->
 	<bean class="com.mpos.core.CachedDataProcessor"/>
 </beans>

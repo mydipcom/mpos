@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping  default-lazy="false">
+    <class name="com.mpos.dto.Tproduct" table="mpos_product" catalog="mpos">
+        <id name="id" type="java.lang.Integer">
+            <column name="product_id" />
+            <generator class="identity" />
+        </id>
+     
+        <many-to-one name="tmenu" column="menu_id" class="com.mpos.dto.Tmenu" unique="true" not-null="true"/>  
+         
+        <many-to-one name="tcategory" column="category_id" class="com.mpos.dto.Tcategory" unique="true" not-null="true"/>   
+        
+        <property name="productName" type="string">
+            <column name="product_name" length="300" not-null="true" />
+        </property>
+        <property name="shortDescr" type="string">
+            <column name="short_descr" length="20000" />
+        </property>
+        <property name="fullDescr" type="string">
+            <column name="full_descr" />
+        </property>
+        <property name="unitName" type="string">
+            <column name="unit_name" length="20" not-null="true" />
+        </property>
+        <property name="oldPrice" type="java.lang.Float">
+            <column name="old_price" precision="7" />
+        </property>
+        <property name="price" type="float">
+            <column name="price" precision="7" not-null="true" />
+        </property>
+        <property name="sku" type="java.lang.Integer">
+            <column name="sku" />
+        </property>
+        <property name="recommend" type="boolean">
+            <column name="recommend" not-null="true" />
+        </property>
+        <property name="sort" type="int">
+            <column name="sort" not-null="true" />
+        </property>
+        <property name="status" type="boolean">
+            <column name="status" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -44,7 +44,9 @@
 	      <value>cfg/Setting.hbm.xml</value>
 	      <value>cfg/Category.hbm.xml</value>
 	      <value>cfg/CategoryAttribute.hbm.xml</value>
-	      <value>cfg/Menu.hbm.xml</value>	    		      
+	      <value>cfg/Menu.hbm.xml</value>
+	      <value>cfg/Language.hbm.xml</value>
+	      <value>cfg/Product.hbm.xml</value>	    		      
 	  </list>
 	</property>
 	 
