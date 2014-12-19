@@ -84,4 +84,10 @@ public class MenuServiceImpl implements MenuService {
 		menuDao.deleteAll(idArr);
 	}
 
+
+	public List<Tmenu> getAllMenu() {
+		
+		return menuDao.getAll();
+	}
+
 }

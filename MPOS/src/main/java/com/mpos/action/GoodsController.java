@@ -1,5 +1,7 @@
 package com.mpos.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
+import com.mpos.dto.Tcategory;
+import com.mpos.dto.Tmenu;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
+import com.mpos.service.CategoryService;
 import com.mpos.service.GoodsService;
+import com.mpos.service.MenuService;
 
 @Controller
 @RequestMapping("/goods")
@@ -25,9 +31,19 @@ public class GoodsController extends BaseController{
 	@Autowired
 	private GoodsService goodsService;
 	
+	@Autowired
+	private MenuService menuService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView Goods(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
+		List<Tcategory> categorys=categoryService.getallCategory();
+		List<Tmenu> menus=menuService.getAllMenu();
+		mav.addObject("category", categorys);
+		mav.addObject("menu", menus);
 		mav.setViewName("goods/goods");
 		return mav;
 	}
@@ -47,6 +63,10 @@ public class GoodsController extends BaseController{
 	@RequestMapping(value="addgoods",method=RequestMethod.GET)
 	public ModelAndView addGoodsPage(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
+		List<Tcategory> categorys=categoryService.getallCategory();
+		List<Tmenu> menus=menuService.getAllMenu();
+		mav.addObject("category", categorys);
+		mav.addObject("menu", menus);
 		mav.setViewName("goods/addgoods");
 		return mav;
 		

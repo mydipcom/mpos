@@ -17,5 +17,7 @@ public interface LanguageService {
 	
 	void deleteLanguageByIds(Integer[] ids);
 	
+	void activeLanguageByids(Integer ids[]);
+	
 	public PagingData loadLanguageList(DataTableParamter rdtp);
 }

@@ -134,7 +134,8 @@
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_language"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_language" id="openEditlanguageModal" ><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_language" id="openActivelanguageModal"><i class="fa fa-key"></i>activate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeletelanguageModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
@@ -810,6 +811,20 @@
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
 						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+					</div>					
+				</div>				
+				<!-- END DELETE MODAL FORM-->	
+				
+				<!-- BEGIN DELETE MODAL FORM-->
+				<div class="modal" id="active_language" tabindex="-1" data-backdrop="static" data-keyboard="false">
+					<div class="modal-body">
+						<p>
+							 <s:message code="system.management.user.deletemessage" />
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button id="activeBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->				   						

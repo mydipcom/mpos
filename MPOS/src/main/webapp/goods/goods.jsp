@@ -100,9 +100,12 @@
 								<label class="col-md-3 control-label">MenuName</label>
 								<div class="col-md-9">
 								<select name="tmenu.menuId" class="form-control">
-								
 										<option value="">ALL</option>
-										<option value="1">noodles</option>					
+										<c:if test="${not empty menu}">
+											<c:forEach items="${menu}" var="menuitem">
+												<option value="${menuitem.menuId}">${menuitem.title}</option>
+											</c:forEach>
+										</c:if>							
 									</select>
 									</div>
 							</div>
@@ -116,7 +119,11 @@
 								<div class="col-md-9">
 									<select name="tcategory.categoryId" class="form-control">
 										<option value="">ALL</option>
-										<option value="1">noodles</option>					
+										<c:if test="${not empty category}">
+											<c:forEach items="${category}" var="categoryitem">
+												<option value="${categoryitem.categoryId}">${categoryitem.name}</option>
+											</c:forEach>
+										</c:if>							
 									</select>
 								
 								</div>

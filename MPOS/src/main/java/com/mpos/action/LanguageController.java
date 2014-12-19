@@ -56,6 +56,8 @@ public class LanguageController extends BaseController{
 	
 		JSONObject respJson = new JSONObject();
 		try{
+			String flagname=language.getFlagImage().split("_")[1];
+			language.setFlagImage(flagname);
 			languageService.createLanguage(language);
 			respJson.put("status", true);
 		}
@@ -82,12 +84,28 @@ public class LanguageController extends BaseController{
 	}
 	@RequestMapping(value="/deletelanguage/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteAdmins(@PathVariable String ids,HttpServletRequest request){
+	public String deleteLanguage(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
 		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
 		JSONObject respJson = new JSONObject();
 		try{
 			languageService.deleteLanguageByIds(idArr);
+			respJson.put("status", true);
+		}
+		catch(MposException be){
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}	
+		return JSON.toJSONString(respJson);	
+	}
+	@RequestMapping(value="/activelanguage/{ids}",method=RequestMethod.POST)
+	@ResponseBody
+	public String activelanguages(@PathVariable String ids,HttpServletRequest request){
+		String[] idstrArr=ids.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
+		JSONObject respJson = new JSONObject();
+		try{
+			languageService.activeLanguageByids(idArr);
 			respJson.put("status", true);
 		}
 		catch(MposException be){

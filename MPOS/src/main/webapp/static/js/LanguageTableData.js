@@ -66,13 +66,13 @@ var LanguagesTable = function () {
 						return false;
 					}
 				});
-			$("#openActiveadminsModal").on("click",function(event){
+			$("#openActivelanguageModal").on("click",function(event){
 				if(selected.length==0){
 					handleAlerts("Please select the rows which you want to Active.","warning","");				
 					return false;
 				}
 			});
-			$("#openDeactiveadminsModal").on("click",function(event){
+			$("#openDeletelanguageModal").on("click",function(event){
 				if(selected.length==0){
 					handleAlerts("Please select the rows which you want to deactive.","warning","");				
 					return false;
@@ -105,12 +105,12 @@ var LanguagesTable = function () {
            });
         });  
 		
-		//激活规则
-		$('#activateBtn').on('click', function (e) {
+		//激活语言
+		$('#activeBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "POST", 
-             "url": rootURI+"activateusers/"+selected.join(), 
+             "url": rootURI+"language/activelanguage/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -129,30 +129,7 @@ var LanguagesTable = function () {
              }
            });
         }); 
-		//禁用规则
-		$('#deactivateBtn').on('click', function (e) {
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "POST", 
-             "url": rootURI+"deactivateusers/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){					
-					 if(data.status){
-						 selected=[];						 
-		            	 oTable.api().draw();
-		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("deactivateBtn the rules successfully.","success","");
-					 }
-					 else{
-						 alert(data.info);
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        }); 
+	
 		//搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {
 			event.preventDefault();

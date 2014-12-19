@@ -50,6 +50,24 @@ var UserProfile = function () {
 				  return false;
 			};
 	   
+			
+
+			$('#testsid').on('change',function(e){
+				alert("test");
+				$('#id').modal('show');
+				/*
+				$('#name').empty();
+				var obj=document.getElementById("testsid");
+				if(obj.value==1){
+					var html="<div class=\"form-group\"><label class=\"control-label col-md-3\">PreferentialPrice<span class=\"required\">* </span></label><div class=\"col-md-9\"><input name=\"email\" class=\"form-control\"/></div></div>";
+					$(html).appendTo($('#id'));
+				}
+				if(obj.value==2){
+					var html="<div class=\"form-group\"><label class=\"control-label col-md-3\">Inline Checkboxes<span class=\"required\">* </span></label><div class=\"col-md-9\"><div class=\"checkbox-list\"><label class=\"checkbox-inline\"><input type=\"checkbox\" id=\"inlineCheckbox1\" value=\"option1\"> Checkbox 1 </label><label class=\"checkbox-inline\"><input type=\"checkbox\" id=\"inlineCheckbox2\" value=\"option2\"> Checkbox 2 </label></div></div></div>"
+					$(html).appendTo($('#id'));	
+				}
+				*/
+			});
 	    //修改密码
 	    var ChangePassword = function() {
                   event.stopPropagation();
@@ -87,6 +105,8 @@ var UserProfile = function () {
 				  return false;
 };
 	    
+
+
 	    //验证表单
 	    var changePasswordValidation = function() {
 	    	var changeform = $('#changePasswordForm');

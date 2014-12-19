@@ -24,7 +24,7 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
     private PromotionDao promtionDao;
 	
-	@Override
+	
 	public PagingData loadPromotionList(DataTableParamter dtp){
 		// TODO Auto-generated method stub
 		SimpleDateFormat sdf =new SimpleDateFormat("dd/mm/yyyy hh:mm");

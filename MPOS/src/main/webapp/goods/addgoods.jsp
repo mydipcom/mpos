@@ -301,7 +301,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">Category</label>
 															<div class="col-md-9">
-																<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1" id="testsid">
+																<select class="select2_category form-control"  data-placeholder="Choose a Category" tabindex="1" id="testsid">
 																	<option value="1">Category 1</option>
 																	<option value="1">Category 2</option>
 																	<option value="2">Category 5</option>
@@ -374,7 +374,19 @@
 			</div>
 			<!-- END PAGE CONTENT-->
 				
-				
+					<!-- BEGIN DELETE MODAL FORM-->
+				<div class="modal" id="id" tabindex="-1" data-backdrop="static" data-keyboard="false">
+					<div class="modal-body">
+						<p>
+							 <s:message code="system.management.user.deletemessage" />
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button id="activeBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+					</div>					
+				</div>				
+				<!-- END DELETE MODAL FORM-->
 		
 
 

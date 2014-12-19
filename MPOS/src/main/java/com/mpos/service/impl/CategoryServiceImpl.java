@@ -91,4 +91,10 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 	}
 
+
+	public List<Tcategory> getallCategory() {
+	
+		return categoryDao.getAll();
+	}
+
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.mpos.dao.LanguageDao;
 import com.mpos.dto.Tlanguage;
+import com.mpos.dto.Tproduct;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.LanguageService;
@@ -35,13 +36,29 @@ public class LanguageServiceImpl implements LanguageService{
 	}
 
 	public void deleteLanguageByIds(Integer[] ids) {
-		languageDao.deleteAll(ids);
-		
+		if(ids!=null&&ids.length>0){
+			for (Integer id : ids) {
+				Tlanguage language=getLanguageById(id);
+					language.setStatus(false);
+					languageDao.update(language);
+			}
+		}	
 	}
 
 	public PagingData loadLanguageList(DataTableParamter rdtp) {
 		return languageDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	
+		
+	}
+
+	public void activeLanguageByids(Integer[] ids) {
+		if(ids!=null&&ids.length>0){
+			for (Integer id : ids) {
+				Tlanguage language=getLanguageById(id);
+					language.setStatus(true);
+					languageDao.update(language);
+			}
+		}	
 		
 	}
 
