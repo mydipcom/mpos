@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.MposException;
 import com.mpos.dao.PromotionDao;
+import com.mpos.dto.Tpromotion;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.PromotionService;
@@ -69,6 +70,18 @@ public class PromotionServiceImpl implements PromotionService {
 			return promtionDao.findPage(criterions,dtp.iDisplayStart, dtp.iDisplayLength);
 		}
 		return promtionDao.findPage(dtp.iDisplayStart, dtp.iDisplayLength);
+	}
+
+
+	public void updatePromtion(Tpromotion tPromotion) {
+		// TODO Auto-generated method stub
+		promtionDao.update(tPromotion);
+	}
+
+
+	public Tpromotion getPromtionById(int id) {
+		// TODO Auto-generated method stub
+		return promtionDao.get(id);
 	}
 
 }

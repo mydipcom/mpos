@@ -10,7 +10,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>Point User List</title>
+<title>Promotion Addition</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -83,17 +83,20 @@
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <body class="page-header-fixed">
 	<!-- BEGIN HEADER -->
-
+	<c:import url="/common/header" />
 	<!-- END HEADER -->
 	<!-- BEGIN CONTAINER -->
 	<div class="page-container">
 		<!-- BEGIN SIDEBAR -->
-
+		<c:import url="/common/left" />
 		<!-- END SIDEBAR -->
 		<!-- BEGIN CONTENT -->
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+				<h3>
+					Promotion <small>promotion addition</small>
+				</h3>
 				<div class="page-bar">
 					<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
@@ -109,13 +112,12 @@
 
 				<!-- BEGIN SEARCH FORM -->
 				<div class="portlet-body">
-					<form id="searchForm" name="searchForm" action="rightslist1"
-						class="form-horizontal" method="post">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Promotion Way：</label>
-									<div class="col-md-11">
+					<form action="#" class="horizontal-form">
+						<div class="form-body">
+							<div class="row">
+								<div class="col-md-12 ">
+									<div class="form-group">
+										<label>Promotion Type</label>
 										<div class="radio-list">
 											<label class="radio-inline"> <input type="radio"
 												name="way" value="0" checked />Straight Down
@@ -123,224 +125,47 @@
 												name="way" value="1" />The Full Reduction
 											</label> <label class="radio-inline"> <input type="radio"
 												name="way" value="2" />Discount
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="3" />Group Purchase
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="4" />Combination
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="5" />Limited Time Discount
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="6" />Seckill
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="7" />Bought
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="8" />Custom
+											</label><label class="radio-inline"> <input type="radio"
+												name="way" value="3" />Combination
+											</label><label class="radio-inline"> <input type="radio"
+												name="way" value="4" />X Give Y  
+											</label>
+											<label class="radio-inline"> <input type="radio"
+												name="way" value="5" />M For Y Discount    
+											</label>
+											 <label class="radio-inline"> <input type="radio"
+												name="way" value="6" />Custom
 											</label>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Promotion Name：</label>
-									<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Promotion Name</label> 
 										<input name="userId" type="text" class="form-control">
 									</div>
 								</div>
+								<!--/span-->								
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Promotion Time：</label>
-									<div class="col-md-2">
-										
-									<input type="text" class="form-control form_datetime" readonly>
-									</div>
-									<div class="col-md-1">TO</div>
-									<div class="col-md-2">
-										<input type="text" class="form-control form_datetime" readonly>
+							<!--/row-->
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Post Code</label> 
+										<input type="text" class="form-control">
 									</div>
 								</div>
+								<!--/span-->
+								
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Promotion Rule：</label>
-
-									<div class="col-md-10" id="type_SalesRule_show">
-
-										<div class="col-md-6">
-											<label>Straight down: the rules of commodity, single
-												commodity in the actual price basis, reduction</label>
-										</div>
-										<div class="col-md-1">
-											<input name="\" type="text" class="form-control">
-										</div>
-										<div class="col-md-1">
-											<label>$</label>
-										</div>
-
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Product：</label>
-
-
-									<div class="col-md-3">
-
-
-										<div class="radio-list">
-											<label class="radio-inline"> <input type="radio"
-												name="product_type" value="0" checked />ALL
-											</label> <label class="radio-inline"> <input type="radio"
-												name="product_type" value="1" />Classification
-											</label> <label class="radio-inline"> <input type="radio"
-												name="product_type" value="2" />Menu
-											</label> <label class="radio-inline"> <input type="radio"
-												name="product_type" value="3" />Goods
-											</label>
-										</div>
-
-
-									</div>
-
-
-								</div>
-
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label"></label>
-									<div class="col-md-3 hidden" id="classification">
-										<input type="hidden" id="cla" style="width: 420px;" />
-									</div>
-									<div class="col-md-3 hidden" id="menu">
-										<input type="hidden" id="men" style="width: 420px;" />
-									</div>
-									<div class="col-md-3 hidden" id="goods">
-										<input type="hidden" id="goo" style="width: 420px;" />
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Shared：</label>
-									<div class="col-md-3">
-										<div class="radio-list">
-											<label class="radio-inline"> <input type="radio"
-												name="nn" value="0" checked />Yes
-											</label> <label class="radio-inline"> <input type="radio"
-												name="nn" value="1" />No
-											</label>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Priority：</label>
-									<div class="col-md-3">
-										<div id="spinner3">
-											<div class="input-group" style="width: 150px;">
-												<input type="text" class="spinner-input form-control"
-													maxlength="3" readonly>
-												<div class="spinner-buttons input-group-btn">
-													<button type="button" class="btn spinner-up default">
-														<i class="fa fa-angle-up"></i>
-													</button>
-													<button type="button" class="btn spinner-down default">
-														<i class="fa fa-angle-down"></i>
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-
-
-						<!--  					<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Poster：</label>
-									<div class="col-md-5">
-										<div class=row>
-											<div class="col-md-4">
-												<div id="tab_images_uploader_container"
-													class="text-align-reverse margin-bottom-10">
-													<a id="tab_images_uploader_pickfiles" href="javascript:;"
-														class="btn green"> <i class="fa fa-plus"></i> Select
-														Files
-													</a>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div id="tab_images_uploader_filelist"
-												class="col-md-6 col-sm-12"></div>
-										</div>
-									</div>
-
-								</div>
-
-							</div>
-						</div>
--->
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="col-md-1 control-label">Status：</label>
-									<div class="col-md-3">
-										<div class="radio-list">
-											<label class="radio-inline"> <input type="radio"
-												name="11" value="0" checked />False
-											</label> <label class="radio-inline"> <input type="radio"
-												name="11" value="1" />True
-											</label>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="col-md-offset-3 col-md-9">
-										<button type="submit" class="btn blue">
-											Add <i class="fa fa-plus"></i>
-										</button>
-										<button type="reset" class="btn grey-cascade">
-											Back <i class="fa fa-reply"></i>
-										</button>
-									</div>
-								</div>
-							</div>
+						<div class="form-actions right">
+							<button type="button" class="btn default">Cancel</button>
+							<button type="submit" class="btn blue">
+								<i class="fa fa-check"></i> Save
+							</button>
 						</div>
 					</form>
 				</div>
@@ -355,7 +180,7 @@
 	</div>
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
-
+	<c:import url="/common/footer" />
 	<!-- END FOOTER -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
@@ -443,8 +268,8 @@
 
 		});
 	</script>
-    
-  
+
+
 </body>
 <!-- END BODY -->
 

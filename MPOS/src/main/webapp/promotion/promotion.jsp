@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>Promtion List</title>
+<title>Promotion List</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -98,6 +98,9 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+				<h3 class="page-title">
+		       Promotion <small>promotionlist</small>
+			</h3>
 				<div class="page-bar">
 					<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
@@ -216,7 +219,7 @@
 									<i class="fa fa-edit"></i>Promotion Rule
 								</div>
 								<div class="actions">
-									<a class="btn btn-default btn-sm" href="add_promotion.jsp"><i
+									<a class="btn btn-default btn-sm" href="add_promotion"><i
 										class="fa fa-plus"></i>Add</a> <a class="btn btn-default btn-sm"
 										data-toggle="modal" id="changeBalancebtn"><i
 										class="fa fa-pencil"></i> Edit</a> <a

@@ -112,22 +112,28 @@ var Promotion = function() {
 				return false;
 			}
 		});
-		//启用活动
+		
+		//开启活动
         $('#activateBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "POST", 
-             "url": rootURI+"activateusers/"+selected.join(), 
+             "url": rootURI+"promotion/activaOrDeactiva/"+selected.join()+"?flag=1&rand="+ Math.random(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
 						 selected=[];						 
-		            	oTable.api().draw();
-		            	oTable.$('th span').removeClass();
+		            	 oTable.api().draw();
+		            	 oTable.$('th span').removeClass();
+		            	 var checked = $(".group-checkable").is(":checked");
+		  			     if(checked){
+		  				   $(".group-checkable").parents('span').removeClass("checked");
+		  				   $(".group-checkable").attr("checked", false);;
+		  			     }
 		            	 handleAlerts("Activate the promotion successfully.","success","");
 					 }
 					 else{
-						 alert(data.info);
+						 handleAlerts("Activate the promotion failure.","danger","");
 					 }
 				}             	 
              },
@@ -137,6 +143,38 @@ var Promotion = function() {
            });
         }); 
 		
+        //关闭活动
+        $('#deactivateBtn').on('click', function (e) {
+			$.ajax( {
+             "dataType": 'json', 
+             "type": "POST", 
+             "url": rootURI+"promotion/activaOrDeactiva/"+selected.join()+"?flag=0&rand="+ Math.random(), 
+             "success": function(data,status){
+            	 if(status == "success"){					
+					 if(data.status){
+						 selected=[];						 
+		            	 oTable.api().draw();
+		            	 oTable.$('th span').removeClass();
+		            	 var checked = $(".group-checkable").is(":checked");
+		      		     if(checked){
+		      			   $(".group-checkable").parents('span').removeClass("checked");
+		      			   $(".group-checkable").attr("checked", false);;
+		      		     }
+		            	 handleAlerts("Deactivate the promotion successfully.","success","");
+		            	 
+					 }
+					 else{
+						 handleAlerts("Deactivate the promotion failure.","danger","");
+					 }
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+		  
+        }); 
+        
 		//全选
 		$(".group-checkable").on('change',function () {
 			var set = jQuery(this).attr("data-set");
