@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.Tpromotion" table="mpos_promotion" catalog="mpos">
+        <id name="promotionId" type="java.lang.Integer">
+            <column name="promotion_id" />
+            <generator class="identity" />
+        </id>
+        <property name="promotionName" type="string">
+            <column name="promotion_name" length="20" not-null="true" />
+        </property>
+        <property name="promotionRule" type="string">
+            <column name="promotion_rule" length="50" not-null="true" />
+        </property>
+        <property name="promotionType" type="java.lang.Integer">
+            <column name="promotion_type"  not-null="true" />
+        </property>
+        <property name="startTime" type="long">
+            <column name="start_time" not-null="true" />
+        </property>
+        <property name="endTime" type="long">
+            <column name="end_time" not-null="true" />
+        </property>
+        <property name="paramOne" type="java.lang.Integer">
+            <column name="param1"/>
+        </property>
+        <property name="paramTwo" type="string">
+            <column name="param2" length="20"/>
+        </property>
+         <property name="shared" type="java.lang.Boolean">
+            <column name="shared"/>
+        </property>
+        <property name="priority" type="java.lang.Integer">
+            <column name="priority"/>
+        </property>
+        <property name="bindType" type="java.lang.Integer">
+            <column name="bind_type"/>
+        </property>
+        <property name="bindId" type="java.lang.Integer">
+            <column name="bind_id"/>
+        </property>
+        <property name="status" type="java.lang.Boolean">
+            <column name="status"/>
+        </property>
+       <set name="tProducts" table="mpos_promotion_product">
+           <key column="promotion_id"/>
+           <many-to-many column="product_id"
+            class="com.mpos.dto.Tproduct"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

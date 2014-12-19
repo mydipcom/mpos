@@ -461,9 +461,9 @@ var Dashbord = function () {
         	systemUserAmount();
         	pointUserAmount();
         	pointRuleAmount();
-            systemCpuChart();
-            systemMemChart();
-            getInterfaceData();
+//          systemCpuChart();
+//          systemMemChart();
+//          getInterfaceData();
            }
 
     };

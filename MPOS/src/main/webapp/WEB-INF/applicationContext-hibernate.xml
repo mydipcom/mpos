@@ -47,6 +47,7 @@
 	      <value>cfg/Menu.hbm.xml</value>
 	      <value>cfg/Language.hbm.xml</value>
 	      <value>cfg/Product.hbm.xml</value>	    		      
+              <value>cfg/Promotion.hbm.xml</value>
 	  </list>
 	</property>
 	 

@@ -9,6 +9,9 @@
 */ 
 package com.mpos.commons;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /** 
  * @ClassName: SystemConstants 
  * @Description: TODO
@@ -41,5 +44,16 @@ public class SystemConstants {
 	
 	public static final String LOGIN_ERROR_LOCK="login_error_locked";	
 	
-	
+	public static final Map<Integer, String> PROMOTION_TYPE=new HashMap<Integer, String>(){
+	     private static final long serialVersionUID = 1L;
+    {
+		put(0, "Straight Down");
+		put(1, "The Full Reduction");
+		put(2, "Discount");
+		put(3, "Combination");
+		put(4, "X Give Y");
+		put(5, "M For Y Discount");
+		put(6, "Custom");
+	}
+    };
 }
