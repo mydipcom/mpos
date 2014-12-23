@@ -21,66 +21,19 @@
 
 var rootURI="/";
 var AddPromotion = function () {
-	var preload_data = [
-	                    { id: 'user0', text: 'Disabled User'}
-	                    , { id: 'user1', text: 'Jane Doe'}
-	                    , { id: 'user2', text: 'John Doe'}
-	                    , { id: 'user3', text: 'Robert Paulson'}
-	                    , { id: 'user5', text: 'Spongebob Squarepants'}
-	                    , { id: 'user6', text: 'Planet Bob' }
-	                    , { id: 'user7', text: 'Inigo Montoya' }
-	                  ];
 	
-	var promotionRule=function(){
-		$("input:radio[name=way]").click(function(){
-		   $("#type_SalesRule_show").empty();
-		   switch(parseInt($(this).val())){
-		    case 0:$("#type_SalesRule_show").append("<div class=\"col-md-6\"><label>Straight down: the rules of commodity, single commodity in the actual price basis, reduction&nbsp;</label></div>" +
-		    		"<div class=\"col-md-1\"><input name=\"\" type=\"text\" class=\"form-control\"></div>" +
-		    		"<div class=\"col-md-1\"><label>$</label></div>");
-		    break;
-		   	case 1:
-		   		$("#type_SalesRule_show").append("<div class=\"col-md-5\"><label>Full: this rule under the single order goods, purchase amount</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
-		   				"<div class=\"col-md-1\"><label>$, reduce</label></div>"+
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>"+
-		   				"<div class=\"col-md-1\"><label>$</label></div>");
-		   		 ;
-		   	   break;
-		    case 2:
-		   		$("#type_SalesRule_show").append("<div class=\"col-md-5\"><label>Discount: the rules of goods, according to the commodity price</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
-		   				"<div class=\"col-md-1\"><label>discount.</label></div>");
-		   		  ;
-		   	   break;
-		   	case 3:
-		   		$("#type_SalesRule_show").append("<div class=\"col-md-7\"><label>Group purchase: the rules of commodity, single commodity in the actual price basis, a further reduction of </label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
-		   				"<div class=\"col-md-2\"><label>$group purchase.</label></div>");
-		   	   break;
-		    case 4:
-		   		$("#type_SalesRule_show").append("<div class=\"col-md-6\"><label>Buy: this rule combination of goods, to work together to buy a further reduction of</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
-		   				"<div class=\"col-md-3\"><label>$ each group contains at most 5 commodity.</label></div>");
-		   	   break;
-		   	 case 5:
-		   		$("#type_SalesRule_show").append("<div class=\"col-md-7\"><label>Limited time offer: this rule of commodity, single commodity in the actual price basis, a further reduction of </label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
-		   				"<div class=\"col-md-2\"><label>$ of sales.</label></div>");
-		   	   break;
-		   	 case 6:
-		   		$("#type_SalesRule_show").append("<div class=\"col-md-7\"><label>Seckill: this rule of commodity, single commodity in the actual price basis, a further reduction of </label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
-		   				"<div class=\"col-md-1\"><label>$of sales.</label></div>");
-		   	   break;
-			 case 7:
-		   	   break;
-			 case 8:
-				 $("#type_SalesRule_show").append("<div class=\"col-md-9\"><label>Custom promotion: this rule is not carried out under the commodity price concessions, only as the literal meaning of promotional activities</label></div>");
-			   				
-		   	   break;
-		   }
-		  
+	var promotionProductSelect = function(){
+		
+		$.ajax({
+			type:"GET",
+			url:"",
+			dataType:"json",
+			success:function(data){
+				
+			},"error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+			
 		});
 		
 		$("input:radio[name=product_type]").click(function(){
@@ -103,15 +56,41 @@ var AddPromotion = function () {
 			}
 			
 		});
+		var product_data = [
+		                      { id: 'user0', text: 'Disabled User'}
+		                    , { id: 'user1', text: 'Jane Doe'}
+		                    , { id: 'user2', text: 'John Doe'}
+		                    , { id: 'user3', text: 'Robert Paulson'}
+		                    , { id: 'user5', text: 'Spongebob Squarepants'}
+		                    , { id: 'user6', text: 'Planet Bob' }
+		                    , { id: 'user7', text: 'Inigo Montoya' }
+		                  ];
+		var menu_data = [
+		                      { id: 'user0', text: 'Disabled User'}
+		                    , { id: 'user1', text: 'Jane Doe'}
+		                    , { id: 'user2', text: 'John Doe'}
+		                    , { id: 'user3', text: 'Robert Paulson'}
+		                    , { id: 'user5', text: 'Spongebob Squarepants'}
+		                    , { id: 'user6', text: 'Planet Bob' }
+		                    , { id: 'user7', text: 'Inigo Montoya' }
+		                  ];
+		var categroy_data = [
+		                      { id: 'user0', text: 'Disabled User'}
+		                    , { id: 'user1', text: 'Jane Doe'}
+		                    , { id: 'user2', text: 'John Doe'}
+		                    , { id: 'user3', text: 'Robert Paulson'}
+		                    , { id: 'user5', text: 'Spongebob Squarepants'}
+		                    , { id: 'user6', text: 'Planet Bob' }
+		                    , { id: 'user7', text: 'Inigo Montoya' }
+		                  ];
 		
-		
-		 $('#cla').select2({
+		$('#cla').select2({
 			 placeholder: "Select Classification",
 		      multiple: true
 		      ,query: function (query){
 		          var data = {results: []};
 		 
-		          $.each(preload_data, function(){
+		          $.each(categroy_data, function(){
 		              if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
 		                  data.results.push({id: this.id, text: this.text });
 		              }
@@ -126,7 +105,7 @@ var AddPromotion = function () {
 		      ,query: function (query){
 		          var data = {results: []};
 		 
-		          $.each(preload_data, function(){
+		          $.each(product_data, function(){
 		              if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
 		                  data.results.push({id: this.id, text: this.text });
 		              }
@@ -141,7 +120,7 @@ var AddPromotion = function () {
 		      ,query: function (query){
 		          var data = {results: []};
 		 
-		          $.each(preload_data, function(){
+		          $.each(menu_data, function(){
 		              if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
 		                  data.results.push({id: this.id, text: this.text });
 		              }
@@ -149,12 +128,72 @@ var AddPromotion = function () {
 		 
 		          query.callback(data);
 		      }});
+	}
+	
+	var promotionRule=function(){
+		$("input:radio[name=way]").click(function(){
+		   $("#type_SalesRule_show").empty();
+		   switch(parseInt($(this).val())){
+		    case 0:$("#type_SalesRule_show").append("<div class=\"col-md-5\"><label>Straight down: the rules of commodity, single commodity in the actual price basis, reduction&nbsp;</label></div>" +
+		    		"<div class=\"col-md-1\"><input name=\"\" type=\"text\" class=\"form-control\"></div>" +
+		    		"<div class=\"col-md-1\"><label>$</label></div>");
+		    break;
+		   	case 1:
+		   		$("#type_SalesRule_show").append("<div class=\"col-md-4\"><label>Full: this rule under the single order goods, purchase amount</label></div>" +
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><label>$, reduce</label></div>"+
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>"+
+		   				"<div class=\"col-md-1\"><label>$</label></div>");
+		   		 ;
+		   	   break;
+		    case 2:
+		   		$("#type_SalesRule_show").append("<div class=\"col-md-4\"><label>Discount: the rules of goods, according to the commodity price</label></div>" +
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><label>discount.</label></div>");
+		   		  ;
+		   	   break;
+		   
+		    case 3:
+		   		$("#type_SalesRule_show").append("<div class=\"col-md-5\"><label>Combination: this rule combination of goods, to work together to buy a further reduction of</label></div>" +
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-3\"><label>$ each group contains at most 5 commodity.</label></div>");
+		   	   break;
+			case 4:
+		   		$("#type_SalesRule_show").append("<div class=\"col-md-3\"><label>To participate in the activities of goods, buy</label></div>" +
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><label> get</label></div>"+
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>"+
+		   				"<div class=\"col-md-1\"><label>free.</label></div>");
+		   		 ;
+		   	   break;
+			case 5:
+		   		$("#type_SalesRule_show").append("<div class=\"col-md-3\"><label>To participate in the activities of goods, buy</label></div>" +
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><label> get</label></div>"+
+		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>"+
+		   				"<div class=\"col-md-1\"><label>free.</label></div>");
+		   		 ;
+		   	   break;
+             case 6:
+				 $("#type_SalesRule_show").append("<div class=\"col-md-9\"><label>Custom promotion: this rule is not carried out under the commodity price concessions, only as the literal meaning of promotional activities</label></div>");
+			   				
+		   	   break;
+		   }
+		  
+		});
+		
+		
+		
+		
 		 
-		 $('#spinner3').spinner({value:5, min: 0, max: 10});
+		 
+		 
 		 
 		
 	};
 	var handleBootstrapSelect = function() {
+		$('#spinner3').spinner({value:5, min: 0, max: 10});
+		
         $('.bs-select').selectpicker({
             iconBase: 'fa',
             tickIcon: 'fa-check'
@@ -234,6 +273,7 @@ var AddPromotion = function () {
         	rootURI=rootPath;
         	promotionRule();
  //       	uploader.init();
+        	promotionProductSelect();
         	handleBootstrapSelect();
  //       	handleDatetimePicker();
            }

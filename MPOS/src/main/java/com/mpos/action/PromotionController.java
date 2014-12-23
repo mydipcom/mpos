@@ -109,5 +109,13 @@ public class PromotionController extends BaseController{
 		mav.setViewName("promotion/add_promotion");
 		return mav;
 	}
+	
+	@RequestMapping(value="promotion_bind_product",method=RequestMethod.GET)
+	public String getPromotionBindProduct(){
+		JSONObject resp  = new JSONObject();
+		JSONObject [] jsonObjects = new JSONObject[2];
+		JSONObject jsonObject = new JSONObject();
+		return JSON.toJSONString(resp);
+	}
 
 }

@@ -17,7 +17,7 @@ package com.mpos.model;
  */
 public class DataTableParamter {
 	
-	// DataTable请求服务器端次数
+    // DataTable请求服务器端次数
 	public String sEcho;
 	
 	// 过滤条件
@@ -39,7 +39,9 @@ public class DataTableParamter {
 	public String sColumns;
 	
 	public String delIds;
-
+    
+	public String order_id;
+	
 	public String getsEcho() {
 		return sEcho;
 	}
@@ -102,6 +104,14 @@ public class DataTableParamter {
 
 	public void setDelIds(String delIds) {
 		this.delIds = delIds;
+	}
+	
+	public String getOrder_id() {
+		return order_id;
+	}
+
+	public void setOrder_id(String order_id) {
+		this.order_id = order_id;
 	}
 	
 }

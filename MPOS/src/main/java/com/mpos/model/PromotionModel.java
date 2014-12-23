@@ -2,7 +2,7 @@ package com.mpos.model;
 
 /**
  * The persistent class for the admin_user database table.
- * 
+ * @author SivaSong
  */
 public class PromotionModel {
 

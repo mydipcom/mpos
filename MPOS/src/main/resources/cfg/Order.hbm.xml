@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+	<class name="com.mpos.dto.Torder" table="mpos_order" catalog="mpos">
+		<id name="orderId" type="java.lang.Integer">
+			<column name="order_id" />
+			<generator class="identity" />
+		</id>
+		<property name="orderStatus" type="int">
+			<column name="order_status" not-null="true" />
+		</property>
+		<property name="orderTotal" type="float">
+			<column name="order_total" precision="7" not-null="true" />
+		</property>
+		<property name="orderDiscount" type="float">
+			<column name="order_discount" precision="7" not-null="true" />
+		</property>
+		<property name="createTime" type="long">
+			<column name="create_time" not-null="true" />
+		</property>
+		<property name="creater" type="string">
+			<column name="creater" length="30" not-null="true" />
+		</property>
+		<property name="orderPromotion" type="string">
+			<column name="order_promotion" length="1000" />
+		</property>
+		<property name="comment" type="string">
+			<column name="comment" length="1000" />
+		</property>
+		
+	</class>
+</hibernate-mapping>

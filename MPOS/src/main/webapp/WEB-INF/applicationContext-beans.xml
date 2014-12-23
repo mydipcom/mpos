@@ -42,6 +42,10 @@
 	<bean id="goodsService" class="com.mpos.service.impl.GoodsServiceImpl" autowire="byName"/>	
 	
 	 <bean id="promotionService"     class="com.mpos.service.impl.PromotionServiceImpl"	 autowire="byName"/>
+	 
+	 <bean id="orderService"     class="com.mpos.service.impl.OrderServiceImpl"	 autowire="byName"/>
+	 
+	 <bean id="orderItemService"     class="com.mpos.service.impl.OrderItemServiceImpl"	 autowire="byName"/>
 	<!-- 缓存系统常用数据 -->
 	<bean class="com.mpos.core.CachedDataProcessor"/>
 </beans>

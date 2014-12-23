@@ -56,4 +56,14 @@ public class SystemConstants {
 		put(6, "Custom");
 	}
     };
+    
+    public static final Map<Integer, String> ORDER_STATUS=new HashMap<Integer, String>(){
+	     private static final long serialVersionUID = 1L;
+   {
+		put(0, "Waiting for Payment");
+		put(1, "Payment Complete");
+		put(2, "Rejected");
+		
+	}
+   };
 }

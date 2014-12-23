@@ -10,6 +10,9 @@
 package com.mpos.commons;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -72,5 +75,15 @@ public class ConvertTools {
 			idArr[i]=Integer.parseInt(strArr[i]);
 		}
 		return idArr;
+	}
+	
+	public static String longToDateString(long dateLong){
+		SimpleDateFormat sdf =new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		return sdf.format(new Date(dateLong));
+	}
+	
+	public static long dateStringToLong(String date) throws ParseException{
+		SimpleDateFormat sdf =new SimpleDateFormat("dd/mm/yyyy hh:mm");
+		return sdf.parse(date).getTime();
 	}
 }

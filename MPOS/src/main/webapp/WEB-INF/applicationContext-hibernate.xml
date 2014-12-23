@@ -34,7 +34,7 @@
 	<property name="dataSource" ref="dataSource" />	 	
 	<property name="mappingResources">
 	  <list>		
-	      <value>cfg/hql.xml</value>	      
+  	  <value>cfg/hql.xml</value>	      
 	      <value>cfg/AdminUser.hbm.xml</value>
 	      <value>cfg/AdminRole.hbm.xml</value>
 	      <value>cfg/AdminInfo.hbm.xml</value>
@@ -47,7 +47,9 @@
 	      <value>cfg/Menu.hbm.xml</value>
 	      <value>cfg/Language.hbm.xml</value>
 	      <value>cfg/Product.hbm.xml</value>	    		      
-              <value>cfg/Promotion.hbm.xml</value>
+          <value>cfg/Promotion.hbm.xml</value>
+           <value>cfg/Order.hbm.xml</value>	    		      
+          <value>cfg/OrderItem.hbm.xml</value>
 	  </list>
 	</property>
 	 
@@ -58,7 +60,7 @@
 		<prop key="hibernate.dialect">${db.sql.dialect}</prop>
 		<prop key="hibernate.cache.use_query_cache">false</prop>
 		<prop key="hibernate.show_sql">true</prop>
-		<!--<prop key="hibernate.hbm2ddl.auto">update</prop>  -->
+    <!--<prop key="hibernate.hbm2ddl.auto">update</prop> --> 
 		<prop key="hibernate.cache.use_second_level_cache">false</prop>
 		<prop key="hibernate.max_fetch_depth">2</prop>
 		<prop key="hibernate.jdbc.fetch_size">50</prop>

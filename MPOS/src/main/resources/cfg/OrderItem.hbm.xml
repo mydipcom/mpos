@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.TorderItem" table="mpos_order_item" catalog="mpos">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="orderId" type="string">
+            <column name="order_id" length="50" not-null="true" />
+        </property>
+        <property name="productId" type="int">
+            <column name="product_id" not-null="true" />
+        </property>
+        <property name="quantity" type="int">
+            <column name="quantity" not-null="true" />
+        </property>
+        <property name="unitPrice" type="float">
+            <column name="unit_price" precision="7" not-null="true" />
+        </property>
+        <property name="discount" type="float">
+            <column name="discount" precision="7" not-null="true" />
+        </property>
+        <property name="currPrice" type="float">
+            <column name="curr_price" precision="7" not-null="true" />
+        </property>
+        <property name="attributes" type="string">
+            <column name="attributes" length="65535" not-null="true" />
+        </property>
+        <property name="isGift" type="boolean">
+            <column name="is_gift" not-null="true" />
+        </property>
+        <property name="productPromotion" type="string">
+            <column name="product_promotion" length="1000" />
+        </property>
+    </class>
+</hibernate-mapping>

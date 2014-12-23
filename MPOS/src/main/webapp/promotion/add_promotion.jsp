@@ -117,55 +117,175 @@
 							<div class="row">
 								<div class="col-md-12 ">
 									<div class="form-group">
-										<label>Promotion Type</label>
-										<div class="radio-list">
-											<label class="radio-inline"> <input type="radio"
-												name="way" value="0" checked />Straight Down
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="1" />The Full Reduction
-											</label> <label class="radio-inline"> <input type="radio"
-												name="way" value="2" />Discount
-											</label><label class="radio-inline"> <input type="radio"
-												name="way" value="3" />Combination
-											</label><label class="radio-inline"> <input type="radio"
-												name="way" value="4" />X Give Y  
-											</label>
-											<label class="radio-inline"> <input type="radio"
-												name="way" value="5" />M For Y Discount    
-											</label>
-											 <label class="radio-inline"> <input type="radio"
-												name="way" value="6" />Custom
-											</label>
-										</div>
+										<label>Promotion Type</label> <label class="radio-inline">
+											<input type="radio" name="way" value="0" checked />Straight
+											Down
+										</label> <label class="radio-inline"> <input type="radio"
+											name="way" value="1" />The Full Reduction
+										</label> <label class="radio-inline"> <input type="radio"
+											name="way" value="2" />Discount
+										</label><label class="radio-inline"> <input type="radio"
+											name="way" value="3" />Combination
+										</label><label class="radio-inline"> <input type="radio"
+											name="way" value="4" />X Give Y
+										</label> <label class="radio-inline"> <input type="radio"
+											name="way" value="5" />M For Y Discount
+										</label> <label class="radio-inline"> <input type="radio"
+											name="way" value="6" />Custom
+										</label>
+
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Promotion Name</label> 
-										<input name="userId" type="text" class="form-control">
-									</div>
-								</div>
-								<!--/span-->								
-							</div>
-							<!--/row-->
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label>Post Code</label> 
-										<input type="text" class="form-control">
+										<label>Promotion Name</label> <input name="userId" type="text"
+											class="form-control">
 									</div>
 								</div>
 								<!--/span-->
-								
+							</div>
+							<!--/row-->
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Promotion Time</label>
+										<div class="input-group">
+											<input type="text" class="form-control form_datetime"
+												readonly> <span class="input-group-addon"> To
+											</span> <input type="text" class="form-control form_datetime"
+												readonly>
+										</div>
+
+									</div>
+								</div>
+								<!--/span-->
+
+							</div>
+							<!--/row-->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Promotion Rule</label>
+										<div id="type_SalesRule_show">
+
+
+											<div class="col-md-5">
+												<label>Straight down: the rules of commodity, single
+													commodity in the actual price basis, reduction</label>
+											</div>
+											<div class="col-md-1">
+
+												<input type="text" class="form-control">
+											</div>
+											<div class="col-md-1">
+												<label>$.</label>
+											</div>
+										</div>
+
+
+									</div>
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Product</label> <label class="radio-inline"> <input
+											type="radio" name="product_type" value="0" checked />ALL
+										</label> <label class="radio-inline"> <input type="radio"
+											name="product_type" value="1" />Classification
+										</label> <label class="radio-inline"> <input type="radio"
+											name="product_type" value="2" />Menu
+										</label> <label class="radio-inline"> <input type="radio"
+											name="product_type" value="3" />Goods
+										</label>
+
+									</div>
+								</div>
+								<!--/span-->
+								<div class="col-md-4">
+									<div class="form-group">
+										<div class="col-md-3 hidden" id="classification">
+											<input type="hidden" id="cla" style="width: 420px;" value=""/>
+										</div>
+										<div class="col-md-3 hidden" id="menu">
+											<input type="hidden" id="men" style="width: 420px;" />
+										</div>
+										<div class="col-md-3 hidden" id="goods">
+											<input type="hidden" id="goo" style="width: 420px;" />
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Shared</label> <label class="radio-inline"> <input
+											type="radio" name="nn" value="0" checked />Yes
+										</label> <label class="radio-inline"> <input type="radio"
+											name="nn" value="1" />No
+										</label>
+									</div>
+								</div>
+								<!--/span-->
+
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Status</label> <label class="radio-inline"> <input
+											type="radio" name="11" value="0" checked />False
+										</label> <label class="radio-inline"> <input type="radio"
+											name="11" value="1" />True
+										</label>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Priority</label>
+										<div id="spinner3">
+											<div class="input-group" style="width: 150px;">
+												<input type="text" class="spinner-input form-control"
+													maxlength="3" readonly>
+												<div class="spinner-buttons input-group-btn">
+													<button type="button" class="btn spinner-up default">
+														<i class="fa fa-angle-up"></i>
+													</button>
+													<button type="button" class="btn spinner-down default">
+														<i class="fa fa-angle-down"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--/span-->
+
 							</div>
 						</div>
+
 						<div class="form-actions right">
-							<button type="button" class="btn default">Cancel</button>
-							<button type="submit" class="btn blue">
-								<i class="fa fa-check"></i> Save
-							</button>
+							<div class="row">
+								<div class="col-md-2"></div>
+								<div class="col-md-4">
+									<button type="button" class="btn default">Cancel</button>
+									<button type="submit" class="btn blue">
+										<i class="fa fa-check"></i> Save
+									</button>
+								</div>
+							</div>
+
 						</div>
 					</form>
 				</div>
