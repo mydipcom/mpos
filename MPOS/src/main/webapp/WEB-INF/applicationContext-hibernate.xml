@@ -34,7 +34,7 @@
 	<property name="dataSource" ref="dataSource" />	 	
 	<property name="mappingResources">
 	  <list>		
-  	  <value>cfg/hql.xml</value>	      
+	      <value>cfg/hql.xml</value>	      
 	      <value>cfg/AdminUser.hbm.xml</value>
 	      <value>cfg/AdminRole.hbm.xml</value>
 	      <value>cfg/AdminInfo.hbm.xml</value>
@@ -48,6 +48,7 @@
 	      <value>cfg/Language.hbm.xml</value>
 	      <value>cfg/Product.hbm.xml</value>	    		      
           <value>cfg/Promotion.hbm.xml</value>
+	  <value>cfg/LocalizedField.hbm.xml</value>
            <value>cfg/Order.hbm.xml</value>	    		      
           <value>cfg/OrderItem.hbm.xml</value>
 	  </list>

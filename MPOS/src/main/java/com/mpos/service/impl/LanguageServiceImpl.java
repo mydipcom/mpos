@@ -1,5 +1,7 @@
 package com.mpos.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,12 @@ public class LanguageServiceImpl implements LanguageService{
 			}
 		}	
 		
+	}
+
+	@Override
+	public List<Tlanguage> loadAllTlanguage() {
+		// TODO Auto-generated method stub
+		return languageDao.LoadAll();
 	}
 
 }

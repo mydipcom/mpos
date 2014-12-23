@@ -1,0 +1,77 @@
+package com.mpos.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mpos.dao.LocalizedFieldDao;
+import com.mpos.dto.TlocalizedField;
+import com.mpos.service.LocalizedFieldService;
+@Service
+public class LocalizedFieldServiceImpl implements LocalizedFieldService{
+	
+	@Autowired
+	LocalizedFieldDao LocalizedFieldDao;
+	@Override
+	public void createLocalizedFieldList(List<TlocalizedField> locals) {
+		// TODO Auto-generated method stub
+		if(locals!=null&&locals.size()>0){
+			for (TlocalizedField tlocalizedField : locals) {
+				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null){
+					LocalizedFieldDao.save(tlocalizedField);
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public void updateLocalizedFieldList(List<TlocalizedField> locals) {
+		// TODO Auto-generated method stub
+		if(locals!=null&&locals.size()>0){
+			for (TlocalizedField tlocalizedField : locals) {
+				LocalizedFieldDao.update(tlocalizedField);
+			}
+		}
+	}
+
+	@Override
+	public void createLocalizedField(TlocalizedField local) {
+		// TODO Auto-generated method stub
+		LocalizedFieldDao.save(local);
+	}
+
+	@Override
+	public void updateLocalizedField(TlocalizedField local) {
+		// TODO Auto-generated method stub
+		LocalizedFieldDao.update(local);
+	}
+
+	
+	@Override
+	public void createLocalizedFieldList(TlocalizedField[] locals) {
+		// TODO Auto-generated method stub
+		if(locals!=null&&locals.length>0){
+			for (TlocalizedField tlocalizedField : locals) {
+				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null){
+					LocalizedFieldDao.save(tlocalizedField);
+				}
+			}
+		}
+	}
+
+	@Override
+	public List<TlocalizedField> getListByEntityIdAndEntityName(
+			Integer entityId, String tableName) {
+		// TODO Auto-generated method stub
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("entityId", entityId);
+		params.put("tableName", tableName);
+		String hql = "from TlocalizedField loc where loc.entityId = :entityId and loc.tableName = :tableName";
+		return LocalizedFieldDao.find(hql, params);
+	}
+
+}

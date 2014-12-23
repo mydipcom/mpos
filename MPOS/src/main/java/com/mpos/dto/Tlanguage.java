@@ -77,6 +77,13 @@ public class Tlanguage implements java.io.Serializable {
 	public void setSort(int sort) {
 		this.sort = sort;
 	}
+
+	@Override
+	public String toString() {
+		return "Tlanguage [id=" + id + ", name=" + name + ", local=" + local
+				+ ", flagImage=" + flagImage + ", status=" + status + ", sort="
+				+ sort + "]";
+	}
 	
 	
 }
