@@ -16,14 +16,14 @@ import com.mpos.service.LocalizedFieldService;
 public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 	
 	@Autowired
-	LocalizedFieldDao LocalizedFieldDao;
+	LocalizedFieldDao localizedFieldDao;
 	@Override
 	public void createLocalizedFieldList(List<TlocalizedField> locals) {
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.size()>0){
 			for (TlocalizedField tlocalizedField : locals) {
 				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null){
-					LocalizedFieldDao.save(tlocalizedField);
+					localizedFieldDao.save(tlocalizedField);
 				}
 			}
 		}
@@ -35,7 +35,7 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.size()>0){
 			for (TlocalizedField tlocalizedField : locals) {
-				LocalizedFieldDao.update(tlocalizedField);
+				localizedFieldDao.update(tlocalizedField);
 			}
 		}
 	}
@@ -43,13 +43,13 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 	@Override
 	public void createLocalizedField(TlocalizedField local) {
 		// TODO Auto-generated method stub
-		LocalizedFieldDao.save(local);
+		localizedFieldDao.save(local);
 	}
 
 	@Override
 	public void updateLocalizedField(TlocalizedField local) {
 		// TODO Auto-generated method stub
-		LocalizedFieldDao.update(local);
+		localizedFieldDao.update(local);
 	}
 
 	
@@ -59,7 +59,7 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		if(locals!=null&&locals.length>0){
 			for (TlocalizedField tlocalizedField : locals) {
 				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null){
-					LocalizedFieldDao.save(tlocalizedField);
+					localizedFieldDao.save(tlocalizedField);
 				}
 			}
 		}
@@ -73,12 +73,12 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		params.put("entityId", entityId);
 		params.put("tableName", tableName);
 		String hql = "from TlocalizedField loc where loc.entityId = :entityId and loc.tableName = :tableName";
-		return LocalizedFieldDao.find(hql, params);
+		return localizedFieldDao.find(hql, params);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<TlocalizedField> getLocalizedField(Integer entityId, String tableName, String fieldName) {
-		Criteria criteria=LocalizedFieldDao.createCriteria();
+		Criteria criteria=localizedFieldDao.createCriteria();
 		return criteria.add(Restrictions.eq("entityId", entityId))
 				.add(Restrictions.eq("tableName", tableName))
 				.add(Restrictions.eq("tableField", fieldName))

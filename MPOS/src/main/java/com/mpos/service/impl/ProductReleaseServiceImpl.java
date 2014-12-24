@@ -21,8 +21,7 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 		Criteria criteria=productReleaseDao.createCriteria();
 		return criteria.add(Restrictions.eq("isPublic", true))
 				.add(Restrictions.gt("id", verId))				
-				.list();
-		return null;
+				.list();		
 	}
 
 }
