@@ -91,10 +91,10 @@ public class MobileAPI {
 	@RequestMapping(value="orderCheck",method=RequestMethod.POST)
 	@ResponseBody
 	public String orderCheck(HttpServletResponse response,@RequestHeader("Authorization") String apiKey,@RequestBody String jsonStr) {		
-		
+		String apiToken=SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
 		JSONObject jsonObj=null;
 		JSONObject respJson = new JSONObject();						
-		if(apiKey==null||!apiKey.equalsIgnoreCase(SystemConfig.Api_Access_Key)){
+		if(apiKey==null||!apiKey.equalsIgnoreCase(apiToken)){
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");			
 			return JSON.toJSONString(respJson);
@@ -142,8 +142,9 @@ public class MobileAPI {
 	@ResponseBody
 	public String getMenu(HttpServletResponse response,@RequestHeader("Authorization") String apiKey) {		
 				
-		JSONObject respJson = new JSONObject();						
-		if(apiKey==null||!apiKey.equalsIgnoreCase(SystemConfig.Api_Access_Key)){
+		JSONObject respJson = new JSONObject();	
+		String apiToken=SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		if(apiKey==null||!apiKey.equalsIgnoreCase(apiToken)){
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");			
 			return JSON.toJSONString(respJson);
@@ -189,9 +190,9 @@ public class MobileAPI {
 	@RequestMapping(value="getProductsVer",method=RequestMethod.POST)
 	@ResponseBody
 	public String getProductsVer(HttpServletResponse response,@RequestHeader("Authorization") String apiKey,@RequestBody String jsonStr) {		
-				
+		String apiToken=SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);		
 		JSONObject respJson = new JSONObject();						
-		if(apiKey==null||!apiKey.equalsIgnoreCase(SystemConfig.Api_Access_Key)){
+		if(apiKey==null||!apiKey.equalsIgnoreCase(apiToken)){
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");			
 			return JSON.toJSONString(respJson);
