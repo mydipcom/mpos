@@ -6,7 +6,7 @@
 	  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
 	<context:annotation-config />	
-	<context:component-scan base-package="com.mpos.action,com.mpos.dao,com.mpos.service" />
+	<context:component-scan base-package="com.mpos.action,com.mpos.dao,com.mpos.service,com.mpos.api" />
 	
 	<bean class="com.mpos.commons.MyApplicationContextUtil" lazy-init="false"></bean>
 	
@@ -43,11 +43,14 @@
 	
 	<bean id="goodsService" class="com.mpos.service.impl.GoodsServiceImpl" autowire="byName"/>	
 	
-	 <bean id="promotionService"     class="com.mpos.service.impl.PromotionServiceImpl"	 autowire="byName"/>
+	 <bean id="promotionService" class="com.mpos.service.impl.PromotionServiceImpl" autowire="byName"/>
 	 
-	 <bean id="orderService"     class="com.mpos.service.impl.OrderServiceImpl"	 autowire="byName"/>
+	 <bean id="orderService" class="com.mpos.service.impl.OrderServiceImpl" autowire="byName"/>
 	 
-	 <bean id="orderItemService"     class="com.mpos.service.impl.OrderItemServiceImpl"	 autowire="byName"/>
+	 <bean id="orderItemService" class="com.mpos.service.impl.OrderItemServiceImpl" autowire="byName"/>
+	 
+	 <bean id="productReleaseService" class="com.mpos.service.impl.ProductReleaseServiceImpl" autowire="byName"/>
+	 
 	<!-- 缓存系统常用数据 -->
 	<bean class="com.mpos.core.CachedDataProcessor"/>
 </beans>

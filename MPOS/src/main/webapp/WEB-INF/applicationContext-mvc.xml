@@ -16,7 +16,7 @@
 	-The controllers are autodetected POJOs labeled with the @Controller annotation.
 	Springmvc将在该路径下寻找Controller(有Controller注释的类)
 	-->
-	<context:component-scan base-package="com.mpos.action,com.mpos.dao,com.mpos.service" />
+	<context:component-scan base-package="com.mpos.action,com.mpos.dao,com.mpos.service,com.mpos.api" />
 	
     <!-- 国际化操作 拦截器 必需配置,可以和其它国际化方式通用 -->
 	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />

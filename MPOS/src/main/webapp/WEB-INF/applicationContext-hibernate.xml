@@ -48,9 +48,10 @@
 	      <value>cfg/Language.hbm.xml</value>
 	      <value>cfg/Product.hbm.xml</value>	    		      
           <value>cfg/Promotion.hbm.xml</value>
-	  <value>cfg/LocalizedField.hbm.xml</value>
-           <value>cfg/Order.hbm.xml</value>	    		      
+	      <value>cfg/LocalizedField.hbm.xml</value>
+          <value>cfg/Order.hbm.xml</value>	    		      
           <value>cfg/OrderItem.hbm.xml</value>
+          <value>cfg/ProductRelease.hbm.xml</value>
 	  </list>
 	</property>
 	 
