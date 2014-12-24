@@ -85,9 +85,8 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 
-	public List<Tmenu> getAllMenu() {
-		
-		return menuDao.getAll();
+	public List<Tmenu> getAllMenu() {		
+		return menuDao.LoadAll();
 	}
-
+		
 }

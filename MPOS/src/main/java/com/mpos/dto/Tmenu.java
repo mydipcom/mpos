@@ -20,6 +20,9 @@ public class Tmenu implements Serializable {
 	 * 商品菜单显示名称
 	 */
 	private String title;
+	
+	
+	private Object titleLocale;
 	/**
 	 * 父菜单ID
 	 */
@@ -32,6 +35,9 @@ public class Tmenu implements Serializable {
 	 * 显示排序值，越小越先显示
 	 */
 	private Integer sort;
+	
+	
+	
 	public Integer getMenuId() {
 		return menuId;
 	}
@@ -63,6 +69,12 @@ public class Tmenu implements Serializable {
 		this.sort = sort;
 	}
 	
+	public Object getTitleLocale() {
+		return titleLocale;
+	}
+	public void setTitleLocale(Object titleLocale) {
+		this.titleLocale = titleLocale;
+	}
 	public Tmenu() {}
 	public Tmenu(Integer menuId, String title, Integer pid, Boolean status,
 			Integer sort) {

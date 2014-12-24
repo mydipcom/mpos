@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,6 +74,15 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		params.put("tableName", tableName);
 		String hql = "from TlocalizedField loc where loc.entityId = :entityId and loc.tableName = :tableName";
 		return LocalizedFieldDao.find(hql, params);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TlocalizedField> getLocalizedField(Integer entityId, String tableName, String fieldName) {
+		Criteria criteria=LocalizedFieldDao.createCriteria();
+		return criteria.add(Restrictions.eq("entityId", entityId))
+				.add(Restrictions.eq("tableName", tableName))
+				.add(Restrictions.eq("tableField", fieldName))
+				.list();		
 	}
 
 }

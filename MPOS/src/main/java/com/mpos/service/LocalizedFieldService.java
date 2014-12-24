@@ -18,4 +18,6 @@ public interface LocalizedFieldService {
 	
 	List<TlocalizedField> getListByEntityIdAndEntityName(Integer entityId,String tableName);
 	
+	List<TlocalizedField> getLocalizedField(Integer entityId,String tableName,String fieldName);
+	
 }
