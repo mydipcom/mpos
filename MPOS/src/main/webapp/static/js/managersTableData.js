@@ -95,7 +95,10 @@ var ManagersTable = function () {
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"managersList?rand="+Math.random()
+	        "ajaxSource": rootURI+"managersList?rand="+Math.random(),
+	        "fnDrawCallback":function(oSetting){
+	        	selected=[];
+	        }
 		});		
 		 
 		//打开删除对话框前判断是否已选择要删除的行

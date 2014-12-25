@@ -65,7 +65,10 @@ var RolesTable = function () {
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rolesList?rand="+Math.random()
+	        "ajaxSource": rootURI+"rolesList?rand="+Math.random(),
+	        "fnDrawCallback":function(oSetting){
+	        	selected=[];
+	        }
 
 		});	
 		

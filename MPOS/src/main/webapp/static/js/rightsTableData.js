@@ -68,7 +68,10 @@ var RightsTable = function () {
 	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rightsList?rand="+Math.random()
+	        "ajaxSource": rootURI+"rightsList?rand="+Math.random(),
+	        "fnDrawCallback":function(oSetting){
+	        	selected=[];
+	        }
 
 		});		
 
