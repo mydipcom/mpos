@@ -123,7 +123,7 @@
 									</div>
 									<div class="portlet-body form">
 										<!-- BEGIN FORM-->
-										<form action="setgoods" role="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
+										<form action="editgoods" role="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
 											<div class="form-body">
 												<h3 class="form-section">BasicGoods Info</h3>
 												<div class="row">
@@ -139,8 +139,8 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">menuName</label>
 															<div class="col-md-9">
-																<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1" name="menuId">
-																
+																<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1" name="menuId" >
+																	<option value="${product.tmenu.menuId}" hidden="false">${product.tmenu.title}</option>
 																	<c:if test="${not empty menu}">
 																		<c:forEach items="${menu}" var="menuitem">
 																			<option value="${menuitem.menuId}">${menuitem.title}</option>
@@ -156,7 +156,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">OldPrice</label>
 															<div class="col-md-9">
-																<input type="text" name="oldPrice" class="form-control" placeholder="0.00">
+																<input type="text" name="oldPrice" class="form-control" placeholder="0.00" value="${product.oldPrice}">
 															</div>
 														</div>
 													</div>
@@ -165,7 +165,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">price</label>
 															<div class="col-md-9">
-																<input type="text" name="price" class="form-control" placeholder="0.00">
+																<input type="text" name="price" class="form-control" value="${product.price}">
 															</div>
 														</div>
 													</div>
@@ -177,7 +177,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">unitName</label>
 															<div class="col-md-6">
-																<input type="text" name="unitName" class="form-control">
+																<input type="text" name="unitName" class="form-control" value="${product.unitName}">
 															</div>	
 														</div>
 													</div>	
@@ -186,7 +186,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">sort</label>
 															<div class="col-md-9">
-																<input type="text" name="sort" class="form-control" >
+																<input type="text" name="sort" class="form-control" value="${product.sort}">
 															</div>
 														</div>
 													</div>
@@ -237,7 +237,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">GoodsName</label>
 															<div class="col-md-9">
-																<input type="text"  name="productName" class="form-control">
+																<input type="text"  name="productName" class="form-control" value="${product.productName}">
 															</div>
 														</div>
 													</div>
@@ -247,7 +247,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">ShortDescribe</label>
 															<div class="col-md-9">
-														<textarea name="shortDescr" rows="4" cols="80"></textarea>
+														<textarea name="shortDescr" rows="4" cols="80" >${product.shortDescr}</textarea>
 															</div>
 														</div>
 													</div>
@@ -257,7 +257,7 @@
 										<div class="form-group">
 										<label class="control-label col-md-2">FullDescribe</label>
 										<div class="col-md-9">
-											<textarea name="fullDescr" data-provide="markdown" rows="10" data-error-container="#editor_error"></textarea>
+											<textarea name="fullDescr" data-provide="markdown" rows="10" data-error-container="#editor_error" >${product.fullDescr}</textarea>
 											<div id="editor_error">
 											</div>
 										</div>
@@ -271,7 +271,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">GoodsName</label>
 															<div class="col-md-9">
-																<input type="text" class="form-control">
+																<input type="text" class="form-control" value="">
 															</div>
 														</div>
 													</div>
@@ -307,8 +307,8 @@
 															<label class="control-label col-md-3">Category</label>
 															<div class="col-md-9">
 															<!--  select name="categoryId"  class="form-control"  id="testsid">-->	
-															<select name="categoryId"  class="form-control" id="choosecategory">
-																	<option value="">ALL</option>
+															<select name="categoryId"  class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1" id="testsid">
+																<option value="${product.tcategory.categoryId}" hidden="false">${product.tcategory.name}</option>
 																		<c:if test="${not empty category}">
 																			<c:forEach items="${category}" var="categoryitem">
 																				<option value="${categoryitem.categoryId}">${categoryitem.name}</option>
@@ -322,7 +322,14 @@
 														<div class="form-group" id="title">
 															<label class="control-label col-md-3">title</label>
 															<div class="col-md-9" id=fortest>
-															<select name="attributeId"  class="form-control" id="chooseattribute">
+															<select name="attributeId"  class="form-control" id="testid">
+																	<c:if test="${not empty categoryAttribute}">
+																		<c:forEach items="${categoryAttribute}" var="categoryAttribute">
+																			<option value="${categoryAttribute.attributeId}">${categoryAttribute.title}</option>
+																		</c:forEach>
+																	</c:if>				
+															
+															
 															<!--  
 															<select name="attributeId"  class="form-control" id="testid">
 																	<option value="">ALL</option>
@@ -347,7 +354,26 @@
 								
 								<div class="form-group">
 								<div class=row>
-								<div class="fileinput fileinput-new" data-provides="fileinput">
+						
+									<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+									<img src="<c:url value="/"/>static/upload/${productImage.id}.${productImage.imageSuffix}" alt="" />
+									</div>
+										<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;">
+										</div>
+											<div>
+												<span class="btn default btn-file">
+												<span class="fileinput-new">
+													Select image </span>
+												<span class="fileinput-exists">
+												Change </span>
+												<input type="file" name="files" accept="image/*"  >
+												</span>
+												<a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">
+												Remove </a>
+												</div>
+											</div>
+									<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 										<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
 									</div>
@@ -359,7 +385,7 @@
 													Select image </span>
 												<span class="fileinput-exists">
 												Change </span>
-												<input type="file" name="files" accept="image/*">
+												<input type="file" name="files" accept="image/*" >
 												</span>
 												<a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">
 												Remove </a>
@@ -391,25 +417,7 @@
 										</div>
 											<div>
 												<span class="btn default btn-file">
-												<span class="fileinput-new">
-													Select image </span>
 												<span class="fileinput-exists">
-												Change </span>
-												<input type="file" name="files" accept="image/*">
-												</span>
-												<a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">
-												Remove </a>
-												</div>
-											</div>
-											<div class="fileinput fileinput-new" data-provides="fileinput">
-									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-										<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
-									</div>
-										<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;">
-										</div>
-											<div>
-												<span class="btn default btn-file">
-												<span class="fileinput-new">
 													Select image </span>
 												<span class="fileinput-exists">
 												Change </span>
@@ -663,7 +671,7 @@
 
 	   //Demo.init(); // init demo features
 	 
-	   Addgoods.init("<c:url value="/"/>");	
+	   Addgoods.init("<c:url value="/"/>");
 	   FormFileUpload.init();
 //	   FormValidation.init();
 	});

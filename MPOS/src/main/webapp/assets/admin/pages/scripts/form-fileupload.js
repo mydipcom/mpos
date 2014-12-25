@@ -6,7 +6,7 @@ var FormFileUpload = function () {
         init: function () {
 
              // Initialize the jQuery File Upload widget:
-            $('#fileupload').fileupload({
+            $('#addgoods').fileupload({
                 disableImageResize: false,
                 autoUpload: false,
                 disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
@@ -17,7 +17,7 @@ var FormFileUpload = function () {
             });
 
             // Enable iframe cross-domain access via redirect option:
-            $('#fileupload').fileupload(
+            $('#addgoods').fileupload(
                 'option',
                 'redirect',
                 window.location.href.replace(

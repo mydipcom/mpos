@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.mpos.dto.TadminNodes;
+import com.mpos.dto.TproductAttribute;
+import com.mpos.model.AddAttributevaleModel;
 
 public class SystemConfig {
 	
@@ -20,4 +22,5 @@ public class SystemConfig {
 	
 	public static Map<String,String> Admin_Setting_Map=new Hashtable<String,String>();
 	
+	public static Map<String, AddAttributevaleModel> product_AttributeModel_Map=new LinkedHashMap<String,AddAttributevaleModel>();
 }

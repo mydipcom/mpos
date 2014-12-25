@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.TproductImage" table="mpos_product_image" catalog="mpos">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+         <many-to-one name="product" column="product_id" class="com.mpos.dto.Tproduct" unique="true" not-null="true"/> 
+         
+        <property name="imageSuffix" type="string">
+            <column name="image_suffix" length="10" not-null="true" />
+        </property>
+        <property name="image" type="binary">
+            <column name="image" not-null="true" />
+        </property>
+        <property name="imageUrl" type="string">
+            <column name="image_url" not-null="false" />
+        </property>
+    </class>
+</hibernate-mapping>

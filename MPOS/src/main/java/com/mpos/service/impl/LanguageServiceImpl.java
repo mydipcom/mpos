@@ -64,7 +64,7 @@ public class LanguageServiceImpl implements LanguageService{
 		
 	}
 
-	@Override
+	
 	public List<Tlanguage> loadAllTlanguage() {
 		// TODO Auto-generated method stub
 		return languageDao.LoadAll();

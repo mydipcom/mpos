@@ -65,8 +65,8 @@ var GoodsTable = function () {
             "columns": [
                {"orderable": false },
 	           { title: "ID",   data: "id"  },
-	           { title: "CategoryName",   data: "tcategory.name" },
-	           { title: "MenuName",    data: "tmenu.title" },
+	           { title: "CategoryName",   data: "categoryname" },
+	           { title: "MenuName",    data: "menuname" },
 	           { title: "ProductName",  data: "productName"},
 	           { title: "Old_Price", data: "oldPrice" },
 	           { title: "Price", data: "price"},
@@ -123,55 +123,7 @@ var GoodsTable = function () {
            });
         });  
 		
-		//激活规则
-		$('#activeBtn').on('click', function (e) {
-			
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "POST", 
-             "url": rootURI+"goods/activegoods/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){					
-					 if(data.status){
-						 selected=[];						 
-		            	oTable.api().draw();
-		            	oTable.$('th span').removeClass();
-		            	 handleAlerts("activateBtn the rules successfully.","success","");
-					 }
-					 else{
-						 alert(data.info);
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        }); 
-		//禁用规则
-		$('#deactivateBtn').on('click', function (e) {
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "POST", 
-             "url": rootURI+"deactivateusers/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){					
-					 if(data.status){
-						 selected=[];						 
-		            	 oTable.api().draw();
-		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("deactivateBtn the rules successfully.","success","");
-					 }
-					 else{
-						 alert(data.info);
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        }); 
+	
 		//搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {
 			event.preventDefault();
@@ -191,14 +143,36 @@ var GoodsTable = function () {
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-	            var adminId = data.adminId;
+	            var id = data.id;
+	          //  window.location.href=rootURI+"goods/editgoods/"+id;
+	            location.href=rootURI+"editgoods/"+id;
+	         /*   $.ajax({
+	            	 "dataType": 'json', 
+	                 "type":'GET', 
+	                 "url": rootURI+"goods/editgoods/"+id,
+	                 "success": function(data,status){
+	                	 if(status == "success"){					
+	    					 if(data.status){
+	    						 
+	    					 }
+	    					 else{
+	    						 
+	    					 }
+	    				}             	 
+	                 },
+	                 "error":function(XMLHttpRequest, textStatus, errorThrown){
+	                	 alert(errorThrown);
+	                 }
+	            });
+	            */
+	            /*
 	            var email =data.email;
 	            var createby=data.createdBy;
 	            var creatime=data.createdTimeStr;
 	            $("#editUsersForm input[name='adminId']").val(adminId);
 	            $("#editUsersForm input[name='email']").val(email);
 	            $("#editUsersForm input[name='createdBy']").val(createby);
-	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);
+	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);*/
 			}
 		});
 				           

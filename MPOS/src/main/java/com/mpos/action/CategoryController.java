@@ -48,7 +48,7 @@ public class CategoryController extends BaseController {
 	private LocalizedFieldService localizedFieldService;
 		
 
-	@RequestMapping(value="/category",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView category(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		logger.info("category");

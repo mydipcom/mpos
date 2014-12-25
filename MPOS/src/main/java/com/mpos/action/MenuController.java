@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
 	private LocalizedFieldService localizedFieldService;
 		
 
-	@RequestMapping(value="/menu",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView menu(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		List<Tlanguage> languages = languageService.loadAllTlanguage();

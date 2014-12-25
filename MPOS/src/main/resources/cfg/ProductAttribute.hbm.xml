@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.TproductAttribute" table="mpos_product_attribute" catalog="mpos">
+        <composite-id name="id" class="com.mpos.dto.TproductAttributeId">
+            <key-many-to-one name="categoryAttribute" class="com.mpos.dto.TcategoryAttribute">
+            <column name="attribute_id" />
+            </key-many-to-one>
+            <key-many-to-one name="product" class="com.mpos.dto.Tproduct">
+            <column name="product_id" />
+            </key-many-to-one>
+        </composite-id>
+        <property name="content" type="string">
+            <column name="attribute_value" length="10000" not-null="true" />
+        </property>
+        <property name="price" type="string">
+            <column name="attribute_price" length="10000" />
+        </property>
+    </class>
+</hibernate-mapping>

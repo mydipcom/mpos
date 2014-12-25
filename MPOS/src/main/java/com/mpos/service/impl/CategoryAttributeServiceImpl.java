@@ -1,5 +1,7 @@
 package com.mpos.service.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
@@ -55,5 +57,14 @@ public class CategoryAttributeServiceImpl implements CategoryAttributeService {
 		// TODO Auto-generated method stub
 		attributeDao.deleteAll(idArr);
 	}
+
+
+	public List<TcategoryAttribute> getCategoryAttributeByCategoryid(Integer id) {
+		// TODO Auto-generated method stub
+		return attributeDao.getAttributesbycategoryid(id);
+	}
+
+
+
 
 }

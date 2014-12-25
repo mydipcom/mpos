@@ -24,6 +24,8 @@ public class Tproduct implements java.io.Serializable {
 	private boolean status;
 	private Tmenu tmenu;
 	private Tcategory tcategory;
+	private String  menuname;
+	private String  categoryname;
 
 	public Tproduct() {
 	}
@@ -51,6 +53,32 @@ public class Tproduct implements java.io.Serializable {
 
 	
 	
+	
+	
+	public String getMenuname() {
+		return tmenu.getTitle();
+	}
+
+
+
+	public void setMenuname(String menuname) {
+		this.menuname = menuname;
+	}
+
+
+
+	public String getCategoryname() {
+		return tcategory.getName();
+	}
+
+
+
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
+	}
+
+
+
 	public boolean isStatus() {
 		return this.status;
 	}

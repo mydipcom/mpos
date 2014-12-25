@@ -103,7 +103,7 @@
 			<value>40960</value>
 		</property>
 		<property name="uploadTempDir">
-			<value>upload/temp/</value>	
+			<value>static/upload/</value>	
 	   </property>
 	</bean>		
  	

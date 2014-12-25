@@ -52,6 +52,8 @@
           <value>cfg/Order.hbm.xml</value>	    		      
           <value>cfg/OrderItem.hbm.xml</value>
           <value>cfg/ProductRelease.hbm.xml</value>
+	   <value>cfg/ProductImage.hbm.xml</value>
+          <value>cfg/ProductAttribute.hbm.xml</value>
 	  </list>
 	</property>
 	 

@@ -238,7 +238,7 @@
 									<thead>
 										<tr>
 											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#goods_table.checkboxes"/>
+												<input type="checkbox" class="group-checkable" data-set="#goods_table .checkboxes"/>
 											</th>
 											<th>ID</th>
 											<th>CategoryName</th>

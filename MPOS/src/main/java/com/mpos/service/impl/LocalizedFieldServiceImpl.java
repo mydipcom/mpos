@@ -17,7 +17,7 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 	
 	@Autowired
 	LocalizedFieldDao localizedFieldDao;
-	@Override
+	
 	public void createLocalizedFieldList(List<TlocalizedField> locals) {
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.size()>0){
@@ -30,7 +30,7 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		
 	}
 
-	@Override
+	
 	public void updateLocalizedFieldList(List<TlocalizedField> locals) {
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.size()>0){
@@ -40,20 +40,20 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		}
 	}
 
-	@Override
+	
 	public void createLocalizedField(TlocalizedField local) {
 		// TODO Auto-generated method stub
 		localizedFieldDao.save(local);
 	}
 
-	@Override
+	
 	public void updateLocalizedField(TlocalizedField local) {
 		// TODO Auto-generated method stub
 		localizedFieldDao.update(local);
 	}
 
 	
-	@Override
+	
 	public void createLocalizedFieldList(TlocalizedField[] locals) {
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.length>0){
@@ -65,7 +65,7 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		}
 	}
 
-	@Override
+	
 	public List<TlocalizedField> getListByEntityIdAndEntityName(
 			Integer entityId, String tableName) {
 		// TODO Auto-generated method stub

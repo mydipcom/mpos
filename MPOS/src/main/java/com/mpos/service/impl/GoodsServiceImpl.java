@@ -87,4 +87,14 @@ public class GoodsServiceImpl implements GoodsService{
 		
 	}
 
+	public void createGoods(Tproduct product) {
+		goodsDao.create(product);
+		
+	}
+
+	public Tproduct findbyProductName(String productName) {
+		
+		return goodsDao.findprodctbyname(productName);
+	}
+
 }
