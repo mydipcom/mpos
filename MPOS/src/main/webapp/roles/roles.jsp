@@ -42,10 +42,7 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager"><s:message code="system.management" /></a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>							<a href="<c:url value="/"/>roles"><s:message code="system.management.roles.title" /></a>
+							<a href="<c:url value="/"/>roles"><s:message code="system.management.roles.title" /></a>
 						</li>					</ul>					
 				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->

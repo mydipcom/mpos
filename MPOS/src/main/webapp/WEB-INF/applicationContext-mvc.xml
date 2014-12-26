@@ -68,8 +68,9 @@
 	<!--静态资源访问 -->
 	<mvc:resources location="/static/" mapping="/static/**"/> 
 	<mvc:resources location="/media/" mapping="/media/**" cache-period="72000000"/>
-	<mvc:resources location="/assets/" mapping="/assets/**" cache-period="72000000"/> 
-	<!--定义Spring MVC 的模板文件 -->
+	<mvc:resources location="/assets/" mapping="/assets/**" cache-period="72000000"/>
+	<mvc:resources location="/upload/" mapping="/upload/**" /> 
+    <!--定义Spring MVC 的模板文件 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!--支持JSTL -->
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -113,7 +114,7 @@
 			<value>40960</value>
 		</property>
 		<property name="uploadTempDir">
-			<value>static/upload/</value>	
+			<value>upload/temp/</value>	
 	   </property>
 	</bean>		
  	

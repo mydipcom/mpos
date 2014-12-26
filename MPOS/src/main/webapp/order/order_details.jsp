@@ -100,9 +100,11 @@
 				<div class="page-bar">
 					<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
-							href="<c:url value="/"/>home">XXXXXXX</a> <i
+							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i></li>
-						<li><a href="<c:url value="/"/>point">XXXXXXX</a></li>
+						<li><a href="<c:url value="/"/>order">Order List</a><i
+							class="fa fa-angle-right"></i></li>
+						<li><a href="">Order Details</a></li>
 
 					</ul>
 				</div>

@@ -21,5 +21,9 @@ public interface SystemSettingService {
 	public PagingData loadSystemsettingList(DataTableParamter rdtp);
 
 	public void cachedSystemSettingData();
+	
+	public PagingData getStoreSetting();
+	
+	Tsetting getSystemSettingByName(String name);
 
 }

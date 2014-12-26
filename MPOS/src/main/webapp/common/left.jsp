@@ -94,11 +94,23 @@
 					<c:when test="${menu.key.uri eq '/managerlog'}">
 						<c:set var="menuIcon" value="icon-feed"/>
 					</c:when>
-					<c:when test="${menu.key.uri eq '/point'}">
-						<c:set var="menuIcon" value="icon-note"/>
+					<c:when test="${menu.key.uri eq '/menu'}">
+						<c:set var="menuIcon" value="icon-grid"/>
 					</c:when>
-					<c:when test="${menu.key.uri eq '/interface'}">
-						<c:set var="menuIcon" value="icon-calendar"/>
+					<c:when test="${menu.key.uri eq '/goods'}">
+						<c:set var="menuIcon" value=" icon-star"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/category'}">
+						<c:set var="menuIcon" value="icon-equalizer"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/order'}">
+						<c:set var="menuIcon" value="icon-basket"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/promotion'}">
+						<c:set var="menuIcon" value="icon-present"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/log'}">
+						<c:set var="menuIcon" value=" icon-layers"/>
 					</c:when>					
 					<c:otherwise>
 						<c:set var="menuIcon" value="icon-home"/>

@@ -34,15 +34,15 @@ public class SystemConstants {
 	
 	public static final String LOG_SEPARATOR="-";
 	
-	public static final String EMAIL_HOST="email_host";
+	public static final String EMAIL_HOST="Email_Host";
 	
-	public static final String EMAIL_NAME="email_username";
+	public static final String EMAIL_NAME="Email_Username";
 	
-	public static final String EMAIl_PASSWORD="email_password";
+	public static final String EMAIl_PASSWORD="Email_Password";
 	
-	public static final String MAX_LOGIN_ERROR_TIMES="max_login_error_times";
+	public static final String MAX_LOGIN_ERROR_TIMES="Max_Login_Error_Times";
 	
-	public static final String LOGIN_ERROR_LOCK="login_error_locked";	
+	public static final String LOGIN_ERROR_LOCK="Login_Error_Locked";
 	
 	public static final String TABLE_NAME_MENU="menu";
 	public static final String TABLE_NAME_ATTRIBUTE="attribute";
@@ -58,6 +58,18 @@ public class SystemConstants {
 	public static final String CONFIG_CLIENT_LOGO="config_client_logo";
 	public static final String CONFIG_API_TOKEN="config_api_token";
 	public static final String CONFIG_DISPLAY_CURRENCY="config_display_currency";
+	
+	public static final String RESTAURANT_NAME="Restaurant_Name";
+	
+	public static final String ACCESS_PASSWORD="Access_Password";
+	
+	public static final String CURRENCY="Currency";
+	
+	public static final String RESTAURANT_LOGO="Restaurant_Logo";
+	
+	public static final String PAGE_BACKGROUND="Page_Background";
+	
+	public static final String TOKEN = "Token";
 	
 	public static final Map<Integer, String> PROMOTION_TYPE=new HashMap<Integer, String>(){
 	     private static final long serialVersionUID = 1L;

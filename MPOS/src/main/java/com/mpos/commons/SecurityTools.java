@@ -1,9 +1,6 @@
 /**   
  * @Title: SecurityTools.java 
  * @Package com.bps.commons 
- *
- * @Description: User Points Management System
- * 
  * @date Oct 29, 2014 2:48:01 PM
  * @version V1.0   
  */ 

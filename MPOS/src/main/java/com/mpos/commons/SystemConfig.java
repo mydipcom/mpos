@@ -12,7 +12,7 @@ import com.mpos.model.AddAttributevaleModel;
 public class SystemConfig {
 	
 		
-	public static String Api_Access_Key;
+	public static String TOKEN;
 	
 	public static Map<String,Long> Admin_Nodes_Url_Map=new LinkedHashMap<String,Long>();
 					

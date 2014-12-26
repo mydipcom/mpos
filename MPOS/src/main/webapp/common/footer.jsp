@@ -6,7 +6,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="page-footer">
 		<div class="page-footer-inner">
-			 2014 &copy; CampRay. Points Management System.
+			 2014 &copy; CampRay. ECP Management System.
 		</div>
 		<div class="page-footer-tools">
 			<span class="go-top">
