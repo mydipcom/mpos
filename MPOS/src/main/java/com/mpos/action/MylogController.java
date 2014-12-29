@@ -21,18 +21,19 @@ import com.mpos.service.MyLogService;
 
 
 @Controller
+@RequestMapping(value="mylog")
 public class MylogController extends BaseController {
 
 	@Resource
 	private MyLogService myLogService;
 	
-	@RequestMapping(value="/mylog",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView mylogs(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();					
 		mav.setViewName("mylog/mylog");
 		return mav;
 	}	
-	@RequestMapping(value="/mylogList",method=RequestMethod.GET)
+	@RequestMapping(value="mylogList",method=RequestMethod.GET)
 	@ResponseBody
 	public String mylogsList(HttpServletRequest request,DataTableParamter dtp){	
 		TadminUser adminuser=getSessionUser(request);
@@ -47,7 +48,7 @@ public class MylogController extends BaseController {
 		return rightsListJson;
 			
 		}
-	@RequestMapping(value="/mylogview/{ids}",method=RequestMethod.POST)
+	@RequestMapping(value="mylogview/{ids}",method=RequestMethod.POST)
 	@ResponseBody
 	public String viewMyLogs(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		

@@ -20,20 +20,20 @@
 })(jQuery);
 
 var rootURI="/";
-var ManagerLogTable = function () {
+var MyLogTable = function () {
 	var oTable;
 	var selected = [];
 	var handleTable = function () {
 		
-		var table=$('#managerlog_table');
-			oTable = table.dataTable({
+		var table=$('#mylog_table');
+		oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
         	"processing":true,
         	"scrollX":"100%",
-        	"scrollXInner":"100%",
+           	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -57,14 +57,14 @@ var ManagerLogTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
+                    	return '<div class="actions"><a class="btn btn-sm dark"" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
                     },
                     'class':'center'
                 }
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id" ,"bVisible":false},
+	           { title: "ID",   data: "id" },
 	           { title: "Admin Name",   data: "adminId" },
 	           { title: "Content",  data: "content"},
 	           { title: "Level", data: "level"},
@@ -73,7 +73,7 @@ var ManagerLogTable = function () {
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"managerlog/managerslogList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"mylog/mylogList?rand="+Math.random(),
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -98,38 +98,8 @@ var ManagerLogTable = function () {
 //			},
 
 		});		
-			//打开删除对话框前判断是否已选择要删除的行
-			$("#openDeleteAdminLogModal").on("click",function(event){
-					if(selected.length==0){
-						handleAlerts("Please select the rows which you want to delete.","warning","");				
-						return false;
-					}
-				});
-			
-		//删除操作
-		$('#deleteBtn').on('click', function (e) {
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "DELETE", 
-             "url": rootURI+"managerlog/managerslog/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){					
-					 if(data.status){
-						 selected=[];						 
-		            	 oTable.api().draw();
-		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("delete the adminlog successfully.","success","");
-					 }
-					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        });           
+
+        
 		//全选
 		
 		$(".group-checkable").on('change',function () {
@@ -140,7 +110,7 @@ var ManagerLogTable = function () {
 	            var api=oTable.api();            
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
-	            	var id = data.id;
+	            	 var id = data.id;
 	                var index = $.inArray(id, selected);
 	                selected.push( id );
                     $(this).attr("checked", true);
@@ -155,6 +125,7 @@ var ManagerLogTable = function () {
             }
             jQuery.uniform.update(set);
         });
+
         
       //搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {
@@ -181,7 +152,7 @@ var ManagerLogTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-           
+          //查看日志详情 
         table.on('click', 'tbody tr a', function () {
             var data = oTable.api().row($(this).parents('tr')).data();
             $.ajax( {
@@ -191,11 +162,11 @@ var ManagerLogTable = function () {
                 "success": function(data,status){
                	 if(status == "success"){
                		var adminslogs=data.adminslog;
-               		$("#viewAdminlogForm input[name='id']").val(adminslogs.id);
-    	            $("#viewAdminlogForm input[name='adminId']").val(adminslogs.adminId);
-    	            $("#viewAdminlogForm textarea[name='content']").val(adminslogs.content);
-    	            $("#viewAdminlogForm input[name='level']").val(adminslogs.level);
-    	            $("#viewAdminlogForm input[name='createdTime']").val(adminslogs.createdTimeStr);
+               		$("#viewMylogForm input[name='id']").val(adminslogs.id);
+    	            $("#viewMylogForm input[name='adminId']").val(adminslogs.adminId);
+    	            $("#viewMylogForm textarea[name='content']").val(adminslogs.content);
+    	            $("#viewMylogForm input[name='level']").val(adminslogs.level);
+    	            $("#viewMylogForm input[name='createdTime']").val(adminslogs.createdTimeStr);
     				}             	 
                 },
                 "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -214,21 +185,6 @@ var ManagerLogTable = function () {
         
         
 	};
-	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {         
-        Metronic.alert({
-            container: position, // alerts parent container(by default placed after the page breadcrumbs)
-            place: "prepent", // append or prepent in container 
-            type: msgType,  // alert's type (success, danger, warning, info)
-            message: msg,  // alert's message
-            close: true, // make alert closable
-            reset: true, // close all previouse alerts first
-            focus: false, // auto scroll to the alert after shown
-            closeInSeconds: 10, // auto close after defined seconds, 0 never close
-            icon: "warning" // put icon before the message, use the font Awesone icon (fa-[*])
-        });        
-
-    };
 	 //initialize datepicker
     var datePicker = function(){
     	$('.date-picker').datepicker({

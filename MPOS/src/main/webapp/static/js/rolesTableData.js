@@ -65,7 +65,7 @@ var RolesTable = function () {
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rolesList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"roles/rolesList?rand="+Math.random(),
 	        "fnDrawCallback":function(oSetting){
 	        	selected=[];
 	        }
@@ -85,7 +85,7 @@ var RolesTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"roles/"+selected.join(), 
+             "url": rootURI+"roles/roles/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -170,7 +170,7 @@ var RolesTable = function () {
 			$.ajax( {
 				 "dataType": 'json', 
 				 "type": "POST", 
-				 "url": rootURI+"editRoleRights", 
+				 "url": rootURI+"roles/editRoleRights", 
 				 "data": $('#editRoleRightsForm').serialize(),
 				 "success": function(resp,status){
 					 if(status == "success"){  
@@ -261,7 +261,7 @@ var RolesTable = function () {
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
-         "url": rootURI+"addRole", 
+         "url": rootURI+"roles/addRole", 
          "data": $('#addRoleForm').serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
@@ -285,7 +285,7 @@ var RolesTable = function () {
 		$.ajax( {
 		  "dataType": 'json', 
 		 "type": "POST", 
-		 "url": rootURI+"editRole", 
+		 "url": rootURI+"roles/editRole", 
 		 "data": $('#editRoleForm').serialize(),
 		 "success": function(resp,status){
 			 if(status == "success"){  

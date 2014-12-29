@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>Order Details</title>
+<title><s:message code="order.details.title"/></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -96,15 +96,15 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 			   <h3 class="page-title">
-		       Order <small>orderdetails</small></h3>
+		       <s:message code="order" /> <small><s:message code="order.details" /></small></h3>
 				<div class="page-bar">
 					<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i></li>
-						<li><a href="<c:url value="/"/>order">Order List</a><i
+						<li><a href="<c:url value="/"/>order"><s:message code="order" /></a><i
 							class="fa fa-angle-right"></i></li>
-						<li><a href="">Order Details</a></li>
+						<li><a href=""><s:message code="order.details.title" /></a></li>
 
 					</ul>
 				</div>
@@ -121,7 +121,7 @@
 								<div class="portlet">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-shopping-cart"></i>Order #
+											<i class="fa fa-shopping-cart"></i><s:message code="order" /> #
 											${order_details['order_id']}<span class="hidden-480">
 												| ${order_details['create_time']} </span>
 											<input type="hidden" value="${order_details['order_id']}"/>
@@ -129,11 +129,11 @@
 										<div class="actions">
 											<a href="<c:url value="/"/>order"
 												class="btn default yellow-stripe"> <span
-												class="hidden-480"> Back </span>
+												class="hidden-480"> <s:message code="back"/> </span>
 											</a> <a  class="btn default yellow-stripe"> <span
-												class="hidden-480" id="paymentBtn">Payment</span>
+												class="hidden-480" id="paymentBtn"><s:message code="payment"/></span>
 											</a> <a  class="btn default yellow-stripe"><span
-												class="hidden-480" id="cancelBtn"> Cancel </span> </a>
+												class="hidden-480" id="cancelBtn"> <s:message code="cancel"/> </span> </a>
 											<!-- 										<a href="#" class="btn default yellow-stripe"><span class="hidden-480">
 													Print </span>
 											</a>
@@ -149,34 +149,34 @@
 													<div class="portlet yellow-crusta box">
 														<div class="portlet-title">
 															<div class="caption">
-																<i class="fa fa-cogs"></i>Order Details
+																<i class="fa fa-cogs"></i><s:message code="order.details.title"/>
 															</div>
 														</div>
 														<div class="portlet-body">
 															<div class="row static-info">
-																<div class="col-md-5 name">Order ID:</div>
+																<div class="col-md-5 name"><s:message code="order.id"/>:</div>
 																<div class="col-md-7 value">
 																	${order_details['order_id']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name">Order Date & Time:</div>
+																<div class="col-md-5 name"><s:message code="order.time"/>:</div>
 																<div class="col-md-7 value">${order_details['create_time']}</div>
 															</div>
 
 															<div class="row static-info">
-																<div class="col-md-5 name">Discount Total:</div>
+																<div class="col-md-5 name"><s:message code="discount.total"/>:</div>
 																<div class="col-md-7 value">${order_details['discount_total']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name">Payment Total:</div>
+																<div class="col-md-5 name"><s:message code="payment.total"/>:</div>
 																<div class="col-md-7 value">${order_details['payment_total']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name">Oreder Creater:</div>
+																<div class="col-md-5 name"><s:message code="oreder.creater"/>:</div>
 																<div class="col-md-7 value">${order_details['creater']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name">Order Status:</div>
+																<div class="col-md-5 name"><s:message code="order.status"/>:</div>
 																<div class="col-md-7 value">
 																	<span class="label label-success">
 																		${order_details['order_status']} </span> 
@@ -192,7 +192,7 @@
 													<div class="portlet blue-hoki box">
 														<div class="portlet-title">
 															<div class="caption">
-																<i class="fa fa-cogs"></i>Promotion Info
+																<i class="fa fa-cogs"></i><s:message code="promotion.info"/>
 															</div>
 
 														</div>
@@ -222,7 +222,7 @@
 						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Order Product
+									<i class="fa fa-edit"></i><s:message code="order product"/>
 								</div>
 								<div class="actions">
 									<div class="btn-group">

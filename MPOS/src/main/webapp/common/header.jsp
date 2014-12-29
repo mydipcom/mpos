@@ -34,11 +34,11 @@
 					</a>
 					<ul class="dropdown-menu">
 					    <li>
-							<a href="<c:url value="/"/>locale?locale=en_US">
+							<a href="<c:url value="/"/>settings/locale?locale=en_US">
 							<img alt="" src="../assets/global/img/flags/us.png"> US </a>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>locale?locale=zh_CN">
+							<a href="<c:url value="/"/>settings/locale?locale=zh_CN">
 							<img alt="" src="../assets/global/img/flags/cn.png"> Chinese </a>
 						</li>						
 					</ul>

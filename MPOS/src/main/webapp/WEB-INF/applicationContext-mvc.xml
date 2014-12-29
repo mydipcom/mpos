@@ -10,25 +10,25 @@
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd 
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
-
-	<context:annotation-config />	
+    
+     
+    
+	<context:annotation-config />
+	 
+	
+	 
 	<!--
 	-The controllers are autodetected POJOs labeled with the @Controller annotation.
 	Springmvc将在该路径下寻找Controller(有Controller注释的类)
 	-->
 	<context:component-scan base-package="com.mpos.action,com.mpos.dao,com.mpos.service,com.mpos.api" />
+	 
 	
-	<!--更改注解@ResponseBody返回默认字符集ISO-8859-1为UTF-8  -->
-	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<!-- default StringHttpMessageConverter, solve encoding problem -->
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<constructor-arg value="UTF-8" />
-				<property name="writeAcceptCharset" value="false" />
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-    <!-- 国际化操作 拦截器 必需配置,可以和其它国际化方式通用 -->
+	   
+	 
+	
+	
+	<!-- 国际化操作 拦截器 必需配置,可以和其它国际化方式通用 -->
 	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 	<!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="cookieName" value="locale"></property>
@@ -57,7 +57,21 @@
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
 		<property name="interceptors" ref="localeChangeInterceptor" />
 	</bean>
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+	
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">    
+        <list>  
+           <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+                <property name="supportedMediaTypes">  
+                    <list>  
+                        <value>text/plain;charset=UTF-8</value>  
+                    </list>  
+                </property>  
+            </bean>  
+        </list>  
+       </property>
+	</bean>
+	 
 	
 	
 	<!--使用依赖控制器类名字的惯例，将URI映射到控制器(开启注解的另一种方式) 	

@@ -39,6 +39,7 @@ import com.mpos.service.AdminRoleService;
  * 
  */
 @Controller
+@RequestMapping(value="roles")
 public class RolesController extends BaseController {
 
 	private Logger logger = Logger.getLogger(RolesController.class);
@@ -48,7 +49,7 @@ public class RolesController extends BaseController {
 	@Resource
 	private AdminRoleRightsService adminRoleRightsService;
 	
-	@RequestMapping(value="/roles",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView roles(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("rightsList", SystemConfig.Admin_Nodes_Group_Map);		
@@ -56,7 +57,7 @@ public class RolesController extends BaseController {
 		return mav;
 	}
 		
-	@RequestMapping(value="/rolesList",method=RequestMethod.GET)
+	@RequestMapping(value="rolesList",method=RequestMethod.GET)
 	@ResponseBody
 	public String rolesList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminRoleService.loadAdminRolesList(dtp);
@@ -71,14 +72,14 @@ public class RolesController extends BaseController {
 	}
 	
 	/**
-	 * <p>Description: ����������ݵ�ajax����</p>
+	 * <p>Description: </p>
 	 * @Title: addRole 
 	 * @param jsonStr
 	 * @param request
 	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value="/addRole",method=RequestMethod.POST)
+	@RequestMapping(value="addRole",method=RequestMethod.POST)
 	@ResponseBody
 	public String addRole(HttpServletRequest request,TadminRole adminRole){		
 		JSONObject respJson = new JSONObject();
@@ -93,7 +94,7 @@ public class RolesController extends BaseController {
 		return JSON.toJSONString(respJson);
 	}
 	
-	@RequestMapping(value="/editRole",method=RequestMethod.POST)
+	@RequestMapping(value="editRole",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateRole(HttpServletRequest request,TadminRole adminRole){		
 
@@ -109,7 +110,7 @@ public class RolesController extends BaseController {
 		return JSON.toJSONString(respJson);		
 	}
 	
-	@RequestMapping(value="/editRoleRights",method=RequestMethod.POST)
+	@RequestMapping(value="editRoleRights",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateRoleRights(HttpServletRequest request,TadminRoleRights adminRoleRights){
 		JSONObject respJson = new JSONObject();
@@ -132,7 +133,7 @@ public class RolesController extends BaseController {
 	}
 	
 
-	@RequestMapping(value="/roles/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="roles/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteRoles(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		

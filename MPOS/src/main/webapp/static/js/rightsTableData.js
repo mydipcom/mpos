@@ -68,7 +68,7 @@ var RightsTable = function () {
 	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rightsList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"rights/rightsList?rand="+Math.random(),
 	        "fnDrawCallback":function(oSetting){
 	        	selected=[];
 	        }
@@ -88,7 +88,7 @@ var RightsTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"rights/"+selected.join(), 
+             "url": rootURI+"rights/rights/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -218,7 +218,7 @@ var RightsTable = function () {
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
-         "url": rootURI+"addRights", 
+         "url": rootURI+"rights/addRights", 
          "data": $('#addRightsForm').serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
@@ -243,7 +243,7 @@ var RightsTable = function () {
 		  $.ajax( {
              "dataType": 'json', 
              "type": "POST", 
-             "url": rootURI+"editRights", 
+             "url": rootURI+"rights/editRights", 
              "data": $('#editRightsForm').serialize(),
              "success": function(resp,status){
             	 if(status == "success"){  

@@ -43,6 +43,7 @@ import com.mpos.model.ChangePasswordModel;
 import com.mpos.service.AdminInfoService;
 import com.mpos.service.AdminUserService;
 @Controller
+@RequestMapping(value="userprofile")
 public class AdminInfoController extends BaseController {
 
 	private Logger logger = Logger.getLogger(AdminInfoController.class);
@@ -54,7 +55,7 @@ public class AdminInfoController extends BaseController {
     
     private String log_content;
     
-	@RequestMapping(value="/userprofile",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView user(HttpServletRequest request) {
 		ModelAndView mav=new ModelAndView();
 		TadminInfo adminInfo=new TadminInfo();
@@ -87,7 +88,7 @@ public class AdminInfoController extends BaseController {
 		
 	}
 	
-	@RequestMapping(value="/editprofile",method=RequestMethod.POST)
+	@RequestMapping(value="editprofile",method=RequestMethod.POST)
 	@ResponseBody
 	public String editAdminInfo(HttpServletRequest request,TadminInfo adminInfo,HttpSession session){
 		JSONObject respJson = new JSONObject();
@@ -122,7 +123,7 @@ public class AdminInfoController extends BaseController {
 		return JSON.toJSONString(respJson);
 	   }
 	 
-	@RequestMapping(value="/changePassword",method=RequestMethod.POST)
+	@RequestMapping(value="changePassword",method=RequestMethod.POST)
 	@ResponseBody
 	public String changePassword(HttpServletRequest request,ChangePasswordModel cpMod){
 		JSONObject respJson = new JSONObject();
@@ -152,7 +153,7 @@ public class AdminInfoController extends BaseController {
 		return JSON.toJSONString(respJson);
 	   }
 	
-	@RequestMapping(value="/userprofile/chageAvatar",method=RequestMethod.POST)
+	@RequestMapping(value="chageAvatar",method=RequestMethod.POST)
 	public String changeAvatar(HttpServletRequest request,@RequestParam(value = "avatar", required = false) MultipartFile file) throws IOException{
 		TadminLog adminLog = new TadminLog();
 		InputStream inputStream = file.getInputStream();
@@ -174,7 +175,7 @@ public class AdminInfoController extends BaseController {
 		return "redirect:/userprofile"; 
 	   }
       
-	@RequestMapping(value="/userprofile/getAvatar",method=RequestMethod.GET)
+	@RequestMapping(value="getAvatar",method=RequestMethod.GET)
 	public void getAvatar(HttpServletRequest request,HttpServletResponse response){
 		try{
 			TadminUser adminUser = (TadminUser) request.getSession().getAttribute(SystemConstants.LOGINED);

@@ -36,6 +36,7 @@ import com.mpos.service.AdminNodesService;
  * 
  */
 @Controller
+@RequestMapping(value="rights")
 public class RightsController extends BaseController {
 
 	private Logger logger = Logger.getLogger(RightsController.class);
@@ -44,14 +45,14 @@ public class RightsController extends BaseController {
 	private AdminNodesService adminNodesService;
 		
 
-	@RequestMapping(value="/rights",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView rights(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();				
 		mav.setViewName("rights/rights");
 		return mav;
 	}
 	
-	@RequestMapping(value="/rightsList",method=RequestMethod.GET)
+	@RequestMapping(value="rightsList",method=RequestMethod.GET)
 	@ResponseBody
 	public String rightsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminNodesService.loadAdminNodesList(dtp);
@@ -74,7 +75,7 @@ public class RightsController extends BaseController {
 	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value="/addRights",method=RequestMethod.POST)
+	@RequestMapping(value="addRights",method=RequestMethod.POST)
 	@ResponseBody
 	public String addRights(HttpServletRequest request,TadminNodes adminNode){			
 		JSONObject respJson = new JSONObject();
@@ -89,7 +90,7 @@ public class RightsController extends BaseController {
 		return JSON.toJSONString(respJson);
 	}
 	
-	@RequestMapping(value="/editRights",method=RequestMethod.POST)
+	@RequestMapping(value="editRights",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateRights(HttpServletRequest request,TadminNodes adminNode){		
 
@@ -105,7 +106,7 @@ public class RightsController extends BaseController {
 		return JSON.toJSONString(respJson);		
 	}
 
-	@RequestMapping(value="/rights/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="rights/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteRights(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		

@@ -64,7 +64,7 @@ var SettingTable = function () {
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"settingsList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"settings/settingsList?rand="+Math.random(),
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -101,7 +101,7 @@ var SettingTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"setting/"+selected.join(), 
+             "url": rootURI+"settings/setting/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -216,7 +216,7 @@ var SettingTable = function () {
     	$.ajax( {
             "dataType": 'json', 
             "type":'POST', 
-            "url": rootURI+"addsetting", 
+            "url": rootURI+"settings/addsetting", 
             "data": $('#addSettingForm').serialize(),
 //            "processData":false,
 //            "contentType":"application/json",
@@ -300,7 +300,7 @@ var SettingTable = function () {
     	$.ajax( {
             "dataType": 'json', 
             "type": "POST", 
-            "url": rootURI+"editsetting", 
+            "url": rootURI+"settings/editsetting", 
             "data": $('#editSettingForm').serialize(),
 //            "processData":false,
 //            "contentType":"application/json",

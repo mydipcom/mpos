@@ -49,7 +49,7 @@ var ManagersTable = function () {
 		 	        ],
      	        "serverSide": true,
      	        "serverMethod": "GET",
-     	        "ajaxSource": rootURI+"managerslogList/"+ids+"?rand="+Math.random()
+     	        "ajaxSource": rootURI+"manager/managerslogList/"+ids+"?rand="+Math.random()
 			});	
 		};
 	
@@ -95,7 +95,7 @@ var ManagersTable = function () {
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"managersList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"manager/managersList?rand="+Math.random(),
 	        "fnDrawCallback":function(oSetting){
 	        	selected=[];
 	        }
@@ -125,7 +125,7 @@ var ManagersTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"managers/"+selected.join(), 
+             "url": rootURI+"manager/managers/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -150,7 +150,7 @@ var ManagersTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "POST", 
-             "url": rootURI+"activateusers/"+selected.join(), 
+             "url": rootURI+"manager/activateusers/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -174,7 +174,7 @@ var ManagersTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "POST", 
-             "url": rootURI+"deactivateusers/"+selected.join(), 
+             "url": rootURI+"manager/deactivateusers/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -313,7 +313,7 @@ var ManagersTable = function () {
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
-         "url": rootURI+"addUsers", 
+         "url": rootURI+"manager/addUsers", 
          "data": $('#addUsersForm').serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
@@ -394,7 +394,7 @@ var ManagersTable = function () {
 	  $.ajax( {
          "dataType": 'json', 
          "type": "POST", 
-         "url": rootURI+"editUsers", 
+         "url": rootURI+"manager/editUsers", 
          "data" :$('#editUsersForm').serializeJson(),
          "success": function(resp,status){
         	 if(status == "success"){  

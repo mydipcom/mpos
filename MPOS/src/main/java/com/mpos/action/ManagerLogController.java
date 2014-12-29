@@ -21,6 +21,7 @@ import com.mpos.service.AdminuserLogService;
 
 
 @Controller
+@RequestMapping(value="managerlog")
 public class ManagerLogController extends BaseController {
 
 	//private Logger logger = Logger.getLogger(ManagerLogController.class);
@@ -28,13 +29,13 @@ public class ManagerLogController extends BaseController {
 	@Resource
 	private AdminuserLogService adminuserLogService;
 		
-	@RequestMapping(value="/managerlog",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView adminuserslog(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();					
 		mav.setViewName("managerlog/managerslog");
 		return mav;
 	}	
-	@RequestMapping(value="/managerslogList",method=RequestMethod.GET)
+	@RequestMapping(value="managerslogList",method=RequestMethod.GET)
 	@ResponseBody
 	public String AdminuserlogsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminuserLogService.loadAdminLogList(dtp);
@@ -48,7 +49,7 @@ public class ManagerLogController extends BaseController {
 			
 		}
 	
-	@RequestMapping(value="/managerslogList/{ids}",method=RequestMethod.GET)
+	@RequestMapping(value="managerslogList/{ids}",method=RequestMethod.GET)
 	@ResponseBody
 	public String AdminuserlogsList(HttpServletRequest request,@PathVariable String ids,DataTableParamter dtp){		
 		
@@ -62,7 +63,7 @@ public class ManagerLogController extends BaseController {
 		return rightsListJson;
 			
 		}
-	@RequestMapping(value="/managerslog/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="managerslog/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteAdminuserslog(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
@@ -78,7 +79,7 @@ public class ManagerLogController extends BaseController {
 		}	
 		return JSON.toJSONString(respJson);	
 	}
-	@RequestMapping(value="/managerslogview/{ids}",method=RequestMethod.POST)
+	@RequestMapping(value="managerslogview/{ids}",method=RequestMethod.POST)
 	@ResponseBody
 	public String viewAdminuserLogs(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		

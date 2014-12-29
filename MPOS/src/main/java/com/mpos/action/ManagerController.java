@@ -26,6 +26,7 @@ import com.mpos.service.AdminRoleService;
 import com.mpos.service.AdminUserService;
 
 @Controller
+@RequestMapping(value="manager")
 public class ManagerController extends BaseController {
 	private Logger logger = Logger.getLogger(ManagerController.class);	
 	
@@ -39,7 +40,7 @@ public class ManagerController extends BaseController {
 	private AdminRoleService adminRoleService;
 	
 	
-	@RequestMapping(value="/manager",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView adminusers(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();		
 		mav.addObject("rolesList", adminRoleService.getAllAdminRoles());
@@ -47,7 +48,7 @@ public class ManagerController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/managersList",method=RequestMethod.GET)
+	@RequestMapping(value="managersList",method=RequestMethod.GET)
 	@ResponseBody
 	public String AdminusersList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminUserService.loadAdminUserList(dtp);
@@ -87,7 +88,7 @@ public class ManagerController extends BaseController {
 	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value="/addUsers",method=RequestMethod.POST)
+	@RequestMapping(value="addUsers",method=RequestMethod.POST)
 	@ResponseBody
 	public String addAdmins(HttpServletRequest request,TadminUser adminuser){
 		TadminUser ad=getSessionUser(request);
@@ -108,7 +109,7 @@ public class ManagerController extends BaseController {
 		return JSON.toJSONString(respJson);
 	}
 	
-	@RequestMapping(value="/editUsers",method=RequestMethod.POST)
+	@RequestMapping(value="editUsers",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateAdmin(HttpServletRequest request,TadminUser adminuser){		
 
@@ -144,7 +145,7 @@ public class ManagerController extends BaseController {
 		return str;
 	}
 
-	@RequestMapping(value="/managers/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="managers/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteAdmins(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
@@ -160,7 +161,7 @@ public class ManagerController extends BaseController {
 		}	
 		return JSON.toJSONString(respJson);	
 	}
-	@RequestMapping(value="/activateusers/{ids}",method=RequestMethod.POST)
+	@RequestMapping(value="activateusers/{ids}",method=RequestMethod.POST)
 	@ResponseBody
 	public String activateRules(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
@@ -177,7 +178,7 @@ public class ManagerController extends BaseController {
 		return JSON.toJSONString(respJson);	
 	}
 	
-	@RequestMapping(value="/deactivateusers/{ids}",method=RequestMethod.POST)
+	@RequestMapping(value="deactivateusers/{ids}",method=RequestMethod.POST)
 	@ResponseBody
 	public String deactivateRules(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");				

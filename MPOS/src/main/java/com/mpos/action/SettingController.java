@@ -35,6 +35,7 @@ import com.mpos.service.SystemSettingService;
 
 
 @Controller
+@RequestMapping(value="settings")
 public class SettingController extends BaseController {
 
 	private Logger logger = Logger.getLogger(RightsController.class);
@@ -43,14 +44,14 @@ public class SettingController extends BaseController {
 	private SystemSettingService systemSettingService;
 		
 
-	@RequestMapping(value="/settings",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView settings(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();		
 		mav.setViewName("settings/systemsetting");
 		return mav;
 	}
 	
-	@RequestMapping(value="/settingsList",method=RequestMethod.GET)
+	@RequestMapping(value="settingsList",method=RequestMethod.GET)
 	@ResponseBody
 	public String SystemsettingsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=systemSettingService.loadSystemsettingList(dtp);
@@ -72,7 +73,7 @@ public class SettingController extends BaseController {
 	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value="/addsetting",method=RequestMethod.POST)
+	@RequestMapping(value="addsetting",method=RequestMethod.POST)
 	@ResponseBody
 	public String addSettings(HttpServletRequest request,Tsetting setting){
 		
@@ -89,7 +90,7 @@ public class SettingController extends BaseController {
 		return JSON.toJSONString(respJson);
 	}
 	
-	@RequestMapping(value="/editsetting",method=RequestMethod.POST)
+	@RequestMapping(value="editsetting",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateSettings(HttpServletRequest request,Tsetting setting){		
 
@@ -107,7 +108,7 @@ public class SettingController extends BaseController {
 		return JSON.toJSONString(respJson);		
 	}
 
-	@RequestMapping(value="/setting/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="setting/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteSettings(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
@@ -125,13 +126,13 @@ public class SettingController extends BaseController {
 		return JSON.toJSONString(respJson);	
 	}
 	
-	@RequestMapping(value="/locale",method=RequestMethod.GET)
+	@RequestMapping(value="locale",method=RequestMethod.GET)
 	public void setLocale(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		String referer = request.getHeader("referer");
 		response.sendRedirect(referer);
 	}
 	
-	@RequestMapping(value="/settings/storesetting",method=RequestMethod.GET)
+	@RequestMapping(value="storesetting",method=RequestMethod.GET)
 	public ModelAndView storeSettings(HttpServletRequest request){
 		List<String> list = null;
 		Map<String, List<String>> store_setting =new LinkedHashMap<String, List<String>>();
@@ -150,7 +151,7 @@ public class SettingController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/settings/editstoresetting",method=RequestMethod.POST)
+	@RequestMapping(value="editstoresetting",method=RequestMethod.POST)
 	@ResponseBody
 	public String editStoreSettings(HttpServletRequest request,String name,String value){
 		JSONObject resp = new JSONObject();
@@ -167,7 +168,7 @@ public class SettingController extends BaseController {
 		return JSON.toJSONString(resp);
 	}
 	
-	 @RequestMapping(value="/settings/editstoreimage",method=RequestMethod.POST)
+	 @RequestMapping(value="editstoreimage",method=RequestMethod.POST)
      @ResponseBody
      public String editStoreImage(HttpServletRequest request,@RequestParam(value="images",required=true)MultipartFile file,@RequestParam int flag) throws IOException{
     	JSONObject resp = new JSONObject();

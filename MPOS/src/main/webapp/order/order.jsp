@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>Order List</title>
+<title><s:message code="order.title"/></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -97,14 +97,14 @@
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 				<h3 class="page-title">
-		       Order <small>orderlist</small></h3>
+		       <s:message code="order"/> <small><s:message code="orderlist"/></small></h3>
 				<div class="page-bar">
 					<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i>
 						</li>
-						<li><a href="<c:url value="/"/>order">Order List</a></li>
+						<li><a href="<c:url value="/"/>order"><s:message code="order.title"/></a></li>
 
 					</ul>
 				</div>
@@ -210,14 +210,14 @@
 						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Order List
+									<i class="fa fa-edit"></i><s:message code="order.title"/>
 								</div>
 								<div class="actions">
-									<a class="btn btn-default btn-sm" href="#payment_order" id="confirm_payment" data-toggle="modal">Confirm
-										Payment</a> <a class="btn btn-default btn-sm"
-										href="#cancel_order_model" id="cancel_order" data-toggle="modal">Cancel Order</a> <a
-										class="btn btn-default btn-sm" id="order_detail_btn">Order
-										Details</a>
+									<a class="btn btn-default btn-sm" href="#payment_order" id="confirm_payment" data-toggle="modal"><s:message code="confirm.payment"/>
+										</a> <a class="btn btn-default btn-sm"
+										href="#cancel_order_model" id="cancel_order" data-toggle="modal"><s:message code="cancel.order"/></a> <a
+										class="btn btn-default btn-sm" id="order_detail_btn"><s:message code="order.details"/>
+										</a>
 									<div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 											Columns <i class="fa fa-angle-down"></i>
@@ -269,7 +269,7 @@
 				<div class="modal" id="payment_order" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure the payment option order.
+							 <s:message code="sure.confirm.payment"/>
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -283,7 +283,7 @@
 				<div class="modal" id="cancel_order_model" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							Are you sure the cancel option order.
+							<s:message code="sure.cancel.payment"/>
 						</p>
 					</div>
 					<div class="modal-footer">

@@ -27,7 +27,7 @@ var UserProfile = function () {
 		     $.ajax( {
 		             "dataType": 'json', 
 		             "type": "POST", 
-		             "url": rootURI+"editprofile?rand="+Math.random(), 
+		             "url": rootURI+"userprofile/editprofile?rand="+Math.random(), 
 		             "data": $("#editUserProfile").serialize(),
 //		             "processData":false,
 //		             "contentType":"application/json",
@@ -75,7 +75,7 @@ var UserProfile = function () {
 				  $.ajax( {
 		             "dataType": 'json', 
 		             "type": "POST", 
-		             "url": rootURI+"changePassword?rand="+Math.random(), 
+		             "url": rootURI+"userprofile/changePassword?rand="+Math.random(), 
 		             "data": $("#changePasswordForm").serialize(),
 //		             "processData":false,
 //		             "contentType":"application/json",
