@@ -9,5 +9,6 @@ public interface ProductReleaseService {
 	
 	List<TproductRelease> getUpdatedRelease(Integer verId);
 	
+	void createOrupdateProductRelease(Integer id);
 	
 }

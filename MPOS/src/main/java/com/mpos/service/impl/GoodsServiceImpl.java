@@ -97,4 +97,9 @@ public class GoodsServiceImpl implements GoodsService{
 		return goodsDao.findprodctbyname(productName);
 	}
 
+	public void updateGoods(Tproduct product) {
+		
+		goodsDao.update(product);
+	}
+
 }

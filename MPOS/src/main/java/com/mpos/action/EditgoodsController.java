@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
+import com.mpos.dto.Tlanguage;
+import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Tproduct;
 import com.mpos.dto.TproductAttribute;
@@ -34,12 +38,17 @@ import com.mpos.dto.TproductAttributeId;
 import com.mpos.dto.TproductImage;
 import com.mpos.model.AddAttributevaleModel;
 import com.mpos.model.AddGoodsModel;
+import com.mpos.model.AddgoodsLocal;
+import com.mpos.model.LocalizedField;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
+import com.mpos.service.LanguageService;
+import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
 import com.mpos.service.ProductAttributeService;
+import com.mpos.service.ProductReleaseService;
 
 @Controller
 
@@ -63,21 +72,34 @@ private CategoryService categoryService;
 @Autowired
 private GoodsImageService goodsImageService;
 
+@Autowired
+private LanguageService languageService;
+
+@Autowired
+private ProductReleaseService productReleaseService;
+
+@Autowired
+private LocalizedFieldService localizedFieldService;
 
 	@RequestMapping(value="/editgoods/{ids}",method=RequestMethod.GET)
 	public ModelAndView eidtgoods(@PathVariable String ids,HttpServletRequest request){
 		Integer id=Integer.parseInt(ids);
+		JSONObject respJson = new JSONObject();
 		ModelAndView mav=new ModelAndView();
-
-		
 		try {
 			Tproduct product=goodsService.getTproductByid(id);
 			List<TcategoryAttribute> categoryAttribute;
-		//	List<TproductAttribute> productAttribute = null;
+			List<AddAttributevaleModel> addAttributevalemodels = new ArrayList<AddAttributevaleModel>();
 			categoryAttribute=CategoryAttributeService.getCategoryAttributeByCategoryid(product.getTcategory().getCategoryId());
+			List<TlocalizedField> list = localizedFieldService.getListByEntityIdAndEntityName(product.getId(), Tproduct.class.getSimpleName());
 			mav.addObject("product", product);
+			//respJson.put("list", LocalizedField.setValues(list));
+			mav.addObject("lists", JSON.toJSONString(LocalizedField.setValues(list)));
+			
 			List<Tcategory> categorys=categoryService.getallCategory();
 			List<Tmenu> menus=menuService.getAllMenu();
+			List<Tlanguage> languages = languageService.loadAllTlanguage();
+			mav.addObject("lanList", languages);
 			mav.addObject("category", categorys);
 			mav.addObject("menu", menus);
 			mav.addObject("categoryAttribute",categoryAttribute);
@@ -85,19 +107,26 @@ private GoodsImageService goodsImageService;
 			mav.addObject("productImage",productImage.get(0));
 			TproductAttributeId productAttributeId=new TproductAttributeId();
 			for (int i = 0; i < categoryAttribute.size(); i++) {
+				AddAttributevaleModel model=new AddAttributevaleModel();
 				productAttributeId.setCategoryAttribute(categoryAttribute.get(i));
 				productAttributeId.setProduct(product);
-				//TproductAttribute TproductAttribute=productAttributeService.getAttributes(productAttributeId);
-				//productAttribute.add(TproductAttribute);
-				System.out.print("111");
+				TproductAttribute productAttribute=productAttributeService.getAttributes(productAttributeId);
+				if (productAttribute!=null) {
+					model.setAttributeId(categoryAttribute.get(i).getAttributeId());
+					model.setContent(productAttribute.getContent());
+					model.setPrice(productAttribute.getPrice());
+					model.setTitle(categoryAttribute.get(i).getTitle());
+					addAttributevalemodels.add(model);
+				}
+				
 			}
-			
-			
+			mav.addObject("addAttributevalemodels", addAttributevalemodels);
+			mav.setViewName("goods/editgoods");
 			
 		} catch (MposException be ) {	
 			
 		}
-		mav.setViewName("goods/editgoods");
+		
 		return mav;
 	}
 	@RequestMapping(value="/editgoods/editgoods",method=RequestMethod.POST)
@@ -110,10 +139,11 @@ private GoodsImageService goodsImageService;
 		return null;
 	}*/
 	
-	public ModelAndView editGoods(HttpServletRequest request,AddGoodsModel model,@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
+	public ModelAndView editGoods(HttpServletRequest request,AddGoodsModel model,AddgoodsLocal value,
+			@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
 		Tproduct product=new Tproduct();
-		MultipartFile[] files;
 		JSONObject respJson = new JSONObject();
+		product.setId(model.getPorductid());
 		List<TproductAttribute> tproductAttributelist=new ArrayList<TproductAttribute>(); 
 		TproductAttribute tproductAttribute=new TproductAttribute();
 		product.setShortDescr(model.getShortDescr());
@@ -131,7 +161,9 @@ private GoodsImageService goodsImageService;
 		try {
 			
 		try {
-			goodsService.createGoods(product);
+			goodsService.updateGoods(product);
+			productReleaseService.createOrupdateProductRelease(product.getId());
+			localizedFieldService.updateLocalizedFieldList(value.setValue(product));
 		} catch (MposException be) {
 			
 		}
@@ -152,14 +184,14 @@ private GoodsImageService goodsImageService;
 		   } 
 		   for (int i = 0; i < tproductAttributelist.size(); i++) {
 			   try {
-				   productAttributeService.createProductAttribute(tproductAttributelist.get(i));
+				   productAttributeService.updattProductAttribute(tproductAttributelist.get(i));;
 				   
 			} catch (MposException be) {
 					
 			}
 			
 		}
-		
+		SystemConfig.product_AttributeModel_Map.clear();
 		for(int i=0;i<file.length;i++){
 			if (!(file[i].isEmpty())) {
 				TproductImage productImage=new TproductImage();
@@ -172,13 +204,14 @@ private GoodsImageService goodsImageService;
 				productImage.setImage(image);
 				productImage.setProduct(product);
 				try {
-					goodsImageService.CreateImages(productImage);
+				//	goodsImageService.CreateImages(productImage);
 					//File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
 					File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"
 											+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
-					
-					if(!file2.exists()){
-					ImageOutputStream ios= ImageIO.createImageOutputStream(file2);
+											//+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
+					File file3=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"+File.separator+"23.jpg");
+					if(file3.exists()){
+					ImageOutputStream ios= ImageIO.createImageOutputStream(file3);
 					ios.write(image);
 					String path="static/upload/"
 							+productImage.getId()+"."+productImage.getImageSuffix();

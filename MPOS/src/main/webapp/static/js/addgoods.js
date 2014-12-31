@@ -18,6 +18,51 @@
         return serializeObj;
     };
 })(jQuery);
+function setGoodsFromValue(list){
+	//var le = $("#lan_len").val();
+	var le=list.length/3;
+	if(list!=null&&list.length>0){
+		for (var int = 0; int < le; int++) {
+			var lan = list[int];
+			$("#editGoodsForm input[name='productNames["+int+"].localeValue']").val(lan.localeValue);
+			$("#editGoodsForm input[name='productNames["+int+"].language.id']").val(lan.languageId);
+			$("#editGoodsForm input[name='productNames["+int+"].tableField']").val(lan.tableField);
+			$("#editGoodsForm input[name='productNames["+int+"].localeId']").val(lan.localeId);
+		}
+		for (var int = le; int < 2*le; int++) {
+			var lan = list[int];
+			var tem = int - le;
+			$("#editGoodsForm textarea[name='shortDescrs["+tem+"].localeValue']").val(lan.localeValue);
+			$("#editGoodsForm input[name='shortDescrs["+tem+"].localeValue']").val(lan.localeValue);
+			$("#editGoodsForm input[name='shortDescrs["+tem+"].language.id']").val(lan.languageId);
+			$("#editGoodsForm input[name='shortDescrs["+tem+"].tableField']").val(lan.tableField);
+			$("#editGoodsForm input[name='shortDescrs["+tem+"].localeId']").val(lan.localeId);
+		}
+		for (var int = 2*le; int < list.length; int++) {
+			var lan = list[int];
+			var tem = int - 2*le;
+			$("#editGoodsForm textarea[name='fullDescrs["+tem+"].localeValue']").val(lan.localeValue);
+			$("#editGoodsForm input[name='fullDescrs["+tem+"].localeValue']").val(lan.localeValue);
+			$("#editGoodsForm input[name='fullDescrs["+tem+"].language.id']").val(lan.languageId);
+			$("#editGoodsForm input[name='fullDescrs["+tem+"].tableField']").val(lan.tableField);
+			$("#editGoodsForm input[name='fullDescrs["+tem+"].localeId']").val(lan.localeId);
+		}
+	}
+	
+}
+function setValue(id){
+	//var addc = $("#addAttributeForm input[name='content']").val();
+	//var editc = $("#edditAttributeForm input[name='content']").val();
+
+	//goods add
+	$("#good_addt_"+id).val($("#good_add_name").val());
+	$("#good_addc_"+id).val($("#good_add_scon").val());
+	$("#good_addft_"+id).val($("#good_add_fcon").val());
+	$("#good_editn_"+id).val($("#good_edit_name").val());
+	$("#goods_editsc_"+id).val($("#good_edit_scon").val());
+	$("#goods_editfc_"+id).val($("#good_edit_fcon").val());
+
+}
 
 var rootURI="/";
 var Addgoods = function () {
@@ -41,7 +86,20 @@ var Addgoods = function () {
 								html+="<label class=\"control-label col-md-3\">Price:"+attributes.price+"</label><div class=\"col-md-9\">";
 								html+="</div></div></div></div>";
 								$('#categoryAttributes').modal('hide');
-								$(html).appendTo($('#attribute'));
+								if(attributes.content==undefined){
+									$('#type'+attributes.type).empty();
+								}else{
+								if(attributes.type==1){
+									$('#type1').empty();
+									$(html).appendTo($('#type1'));
+								}else if(attributes.type==2){
+									$('#type2').empty();
+									$(html).appendTo($('#type2'));
+								}else{
+									$('#type3').empty();
+									$(html).appendTo($('#type3'));
+								}
+								}
 							 }
 							 else{
 								 
@@ -61,7 +119,7 @@ var Addgoods = function () {
 				var id=$(this).val();
 				alert(id);
 				var html;
-			//	html+="<select name=\"attributeId\"  class=\"form-control\" id=\"testid\"><option value=\"\">ALL</option>";
+				//html+="<select name=\"attributeId\"  class=\"form-control\" id=\"chooseattribute\">";
 				html+="<option value=\"\">ALL</option>";
 				$.ajax({
 					"dataType": 'json', 
@@ -72,9 +130,10 @@ var Addgoods = function () {
 		            		 if(data.status){
 		            			 alert(data.list);
 		            			 var test=data.list;
+		            			
 		            			 for(var i=0;i<test.length;i++){
 		            				 alert(test[i].content);
-		            				 var content=(test[i].content).split("?");
+		            				 var content=(test[i].content).split(",");
 		            				 html+="<option value="+test[i].attributeId+">"+test[i].title+"</option>"
 		            				 /*
 		            				 if((test[i].type)==1){
@@ -92,7 +151,11 @@ var Addgoods = function () {
 		            				 
 		            			 }
 		            			//html+="</select>";
-		            			 	$(html).appendTo($('#chooseattribute'));
+		            			 $('#chooseattribute').empty();
+		            			 $(html).appendTo($('#chooseattribute'));
+		            			 	//$('#chooseattribute').replaceWith(html);
+		            			 //$(html).replaceAll($('#attributetitle'));
+		            			 	//$(html).replaceAll($('#chooseattribute'));
 		            			 	//$('#categoryAttributes').modal('show');
 		            				
 							 }
@@ -122,7 +185,7 @@ var Addgoods = function () {
 		            		 if(data.status){
 		            			 var test=data.list;
 		            			 var html;
-		            			 var content=(test.content).split("?");
+		            			 var content=(test.content).split(",");
 		            			 if((test.type)==1){
 	            					 html="<div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">"+test.title+"</label><div class=\"col-md-9\"><div class=\"checkbox-list\">";
 	            					 for(var j=0;j<content.length;j++){
@@ -131,16 +194,19 @@ var Addgoods = function () {
 	            					 html+="</div></div></div></div><div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">Price</label><div class=\"col-md-9\"><input name=\"price\" class=\"form-control\"/>";
 	            					 html+="<div class=\"row\"><input name=\"title\" type=\"hidden\" value="+test.title+"></div>";
 	            					 html+="<div class=\"row\"><input name=\"attributeId\" type=\"hidden\" value="+test.attributeId+"></div>";
+	            					 html+="<div class=\"row\"><input name=\"type\" type=\"hidden\" value="+test.type+"></div>";
 	            					 html+="</div></div></div>";
+	            					
 	            					
 	            				 }else if((test.type)==2){
 	            					 html="<div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">"+test.title+"</label><div class=\"col-md-9\"><div class=\"radio-list\">";
 	            					 for(var j=0;j<content.length;j++){
-	            						 html+="<label class=\"radio-inline\"><input type=\"radio\"  name=\"recommend\" value="+content[j]+"/>"+content[j]+"</label>";
+	            						 html+="<label class=\"radio-inline\"><input type=\"radio\"  name=\"content\" value="+content[j]+">"+content[j]+"</label>";
 	            					 }
 	            					 html+="</div></div></div></div><div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">Price</label><div class=\"col-md-9\"><input name=\"price\" class=\"form-control\"/>";
 	            					 html+="<div class=\"row\"><input name=\"title\" type=\"hidden\" value="+test.title+"></div>";
 	            					 html+="<div class=\"row\"><input name=\"attributeId\" type=\"hidden\" value="+test.attributeId+"></div>";
+	            					 html+="<div class=\"row\"><input name=\"type\" type=\"hidden\" value="+test.type+"></div>";
 	            					 html+="</div></div></div>";
 	            					
 	            				 }else {
@@ -151,6 +217,7 @@ var Addgoods = function () {
 	            					 html+="</select></div></div></div><div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">Price</label><div class=\"col-md-9\"><input name=\"price\" class=\"form-control\"/>";
 	            					 html+="<div class=\"row\"><input name=\"title\" type=\"hidden\" value="+test.title+"></div>";
 	            					 html+="<div class=\"row\"><input name=\"attributeId\" type=\"hidden\" value="+test.attributeId+"></div>";
+	            					 html+="<div class=\"row\"><input name=\"type\" type=\"hidden\" value="+test.type+"></div>";
 	            					 html+="</div></div></div>";
 	            				 }
 		            			 $(html).appendTo($('#name'));

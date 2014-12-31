@@ -55,7 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 				String value = json.getString(key);
 				if(value!=null&&!value.isEmpty()){
 					if(key.equals("status")){
-						criterionList.add(Restrictions.eq(key, json.getInteger(key)));
+						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
 					}else{
 						criterionList.add(Restrictions.eq(key, json.get(key)));
 					}

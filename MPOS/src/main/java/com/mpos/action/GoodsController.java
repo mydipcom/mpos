@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
+import com.mpos.dto.Tlanguage;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Tproduct;
 import com.mpos.dto.TproductAttribute;
@@ -37,14 +39,19 @@ import com.mpos.dto.TproductAttributeId;
 import com.mpos.dto.TproductImage;
 import com.mpos.model.AddAttributevaleModel;
 import com.mpos.model.AddGoodsModel;
+import com.mpos.model.AddgoodsLocal;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
+import com.mpos.service.LanguageService;
+import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
 import com.mpos.service.ProductAttributeService;
+import com.mpos.service.ProductReleaseService;
+import com.mysql.fabric.xmlrpc.base.Value;
 
 @Controller
 @RequestMapping("/goods")
@@ -57,6 +64,9 @@ public class GoodsController extends BaseController{
 	private MenuService menuService;
 	
 	@Autowired
+	private LanguageService languageService;
+	
+	@Autowired
 	private CategoryService categoryService;
 	
 	@Autowired
@@ -67,6 +77,12 @@ public class GoodsController extends BaseController{
 	
 	@Autowired
 	private ProductAttributeService productAttributeService;
+	
+	@Autowired
+	private ProductReleaseService productReleaseService;
+	
+	@Autowired
+	private LocalizedFieldService localizedFieldService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView Goods(HttpServletRequest request){
@@ -96,6 +112,8 @@ public class GoodsController extends BaseController{
 		ModelAndView mav=new ModelAndView();
 		List<Tcategory> categorys=categoryService.getallCategory();
 		List<Tmenu> menus=menuService.getAllMenu();
+		List<Tlanguage> languages = languageService.loadAllTlanguage();
+		mav.addObject("lanList", languages);
 		mav.addObject("category", categorys);
 		mav.addObject("menu", menus);
 		mav.setViewName("goods/addgoods");
@@ -174,7 +192,8 @@ public class GoodsController extends BaseController{
 	}
 	@RequestMapping(value="/setgoods",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView addGoods(HttpServletRequest request,AddGoodsModel model,@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
+	public ModelAndView addGoods(HttpServletRequest request,AddGoodsModel model,AddgoodsLocal value,
+			@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
 		Tproduct product=new Tproduct();
 		MultipartFile[] files;
 		JSONObject respJson = new JSONObject();
@@ -196,6 +215,9 @@ public class GoodsController extends BaseController{
 			
 		try {
 			goodsService.createGoods(product);
+		//	localizedFieldService.createLocalizedFieldList(value.setValue(product));
+			productReleaseService.createOrupdateProductRelease(product.getId());
+			localizedFieldService.createLocalizedFieldList(value.setValue(product));
 		} catch (MposException be) {
 			
 		}
@@ -223,6 +245,7 @@ public class GoodsController extends BaseController{
 			}
 			
 		}
+		   SystemConfig.product_AttributeModel_Map.clear();
 		//Tproduct products=goodsService.findbyProductName(product.getProductName());
 		   //�����ƷͼƬ
 		for(int i=0;i<file.length;i++){
@@ -271,9 +294,16 @@ public class GoodsController extends BaseController{
 	public String test(HttpServletRequest request,AddAttributevaleModel attributeModel){
 		JSONObject respJson = new JSONObject();
 		try {
+			if(attributeModel.getContent()!=null){
 		productAttributeService.cachedSystemSettingData(attributeModel);
 		respJson.put("status", true);
 		respJson.put("attributeModel", attributeModel);
+		}else{
+		productAttributeService.cachedSystemclearData(attributeModel);
+		respJson.put("status", true);
+		respJson.put("attributeModel", attributeModel);
+		}
+			
 		}catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));

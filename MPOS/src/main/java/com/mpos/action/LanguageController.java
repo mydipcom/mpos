@@ -56,8 +56,9 @@ public class LanguageController extends BaseController{
 	
 		JSONObject respJson = new JSONObject();
 		try{
-			String flagname=language.getFlagImage().split("_")[1];
-			language.setFlagImage(flagname);
+			String flagname=language.getLocal().split("_")[1];
+			String flagurl="../assets/global/img/flags/"+flagname.toLowerCase()+".png";
+			language.setFlagImage(flagurl);
 			languageService.createLanguage(language);
 			respJson.put("status", true);
 		}
@@ -72,8 +73,9 @@ public class LanguageController extends BaseController{
 	public String editLanguages(HttpServletRequest request,Tlanguage language){
 		JSONObject respJson=new JSONObject();
 		try {
-			String flagname=language.getFlagImage().split("_")[1];
-			language.setFlagImage(flagname);
+			String flagname=language.getLocal().split("_")[1];
+			String flagurl="../assets/global/img/flags/"+flagname.toLowerCase()+".png";
+			language.setFlagImage(flagurl);
 			languageService.updateLanguage(language);
 			respJson.put("status", true);
 		} catch (MposException be) {

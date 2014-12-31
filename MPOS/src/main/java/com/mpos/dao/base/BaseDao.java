@@ -228,6 +228,25 @@ public class BaseDao<T> extends HibernateDaoSupport
     	return (Long)res;    	
     }
     
+    public Integer getMinintergerValue(String propertyName){
+    	Criteria criteria =createCriteria();    	
+    	Object res=criteria.setProjection(Projections.min(propertyName)).uniqueResult();
+    	if(res==null){
+    		return 0;
+    	}
+    	return (Integer)res;    	
+    }
+    public Integer getMaxintergerValue(String propertyName){
+    	Criteria criteria =createCriteria();  
+    	Object res=criteria.setProjection(Projections.max(propertyName)).uniqueResult();
+    	if(res==null){
+    		return 0;
+    	}
+    	return (Integer)res;
+    	
+    }
+    
+   
     @SuppressWarnings("unchecked")
 	public T findUnique(String[] popertyName, Object[] value)
     {

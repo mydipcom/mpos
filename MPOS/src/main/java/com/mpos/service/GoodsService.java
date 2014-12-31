@@ -19,5 +19,7 @@ public interface GoodsService {
 	Tproduct findbyProductName(String productName);
 	
 	Tproduct getTproductByid(Integer id);
+	
+	void updateGoods(Tproduct product);
 
 }

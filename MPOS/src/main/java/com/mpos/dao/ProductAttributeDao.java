@@ -17,8 +17,13 @@ public class ProductAttributeDao extends BaseDao<TproductAttribute>{
 		query.setParameter(0, productAttributeId.getCategoryAttribute().getAttributeId());
 		query.setParameter(1, productAttributeId.getProduct().getId());
 		List<TproductAttribute> list=query.list();
-		TproductAttribute productAttribute=list.get(0);
-		System.out.print("1");
-		return null;
+		TproductAttribute productAttribute=new TproductAttribute();
+		if(list.size()==0){
+			return null;
+		}
+		else {
+			productAttribute=list.get(0);
+			 return productAttribute;
+		}
 	}
 }

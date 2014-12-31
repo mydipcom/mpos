@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AddGoodsModel {
 
+	private Integer porductid;
 	private Integer goodsnumber;
 	private String productName;
 	private String shortDescr;
@@ -22,6 +23,12 @@ public class AddGoodsModel {
 //	private MultipartFile[] files;
 	public String getProductName() {
 		return this.productName;
+	}
+	public Integer getPorductid() {
+		return porductid;
+	}
+	public void setPorductid(Integer porductid) {
+		this.porductid = porductid;
 	}
 	public void setProductName(String productName) {
 		this.productName = productName;

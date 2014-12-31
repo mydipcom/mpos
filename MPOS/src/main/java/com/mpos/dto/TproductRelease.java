@@ -7,6 +7,10 @@ package com.mpos.dto;
  */
 public class TproductRelease implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String products;
 	private boolean isPublic;

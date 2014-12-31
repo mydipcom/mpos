@@ -36,4 +36,18 @@ public class ProductAttributeServiceImpl implements ProductAttributeService{
 		return productAttributeDao.getByAttributeid(productAttributeId);
 	}
 
+
+
+	public void updattProductAttribute(TproductAttribute productAttribute) {
+		productAttributeDao.update(productAttribute);
+		
+	}
+
+
+
+	public void cachedSystemclearData(AddAttributevaleModel model) {
+		SystemConfig.product_AttributeModel_Map.remove(model.getTitle());
+		
+	}
+
 }

@@ -8,6 +8,8 @@ import com.mpos.model.AddAttributevaleModel;
 
 public interface ProductAttributeService {
 	public void cachedSystemSettingData(AddAttributevaleModel model);
+	public void cachedSystemclearData(AddAttributevaleModel model);
 	void createProductAttribute(TproductAttribute productAttribute);
 	TproductAttribute getAttributes(TproductAttributeId productAttributeId);
+	void updattProductAttribute(TproductAttribute productAttribute);
 }

@@ -155,6 +155,8 @@ var LanguagesTable = function () {
 	            var name =data.name;
 	            var local=data.local;
 	            var sort=data.sort;
+	           
+	            $("#editLanguagesForm select[name='flagImage']").val(local);
 	            $("#editLanguagesForm input[name='id']").val(Id);
 	            $("#editLanguagesForm input[name='name']").val(name);
 	            $("#editLanguagesForm input[name='local']").val(local);
@@ -261,7 +263,7 @@ var LanguagesTable = function () {
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
-         "url": rootURI+"/language/addLanguage", 
+         "url": rootURI+"language/addLanguage", 
          "data": $('#addLanguagesForm').serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
@@ -270,7 +272,7 @@ var LanguagesTable = function () {
 	            	 handleAlerts("Added the data successfully.","success","");		            	 
 				 }
 				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"the name or email exist","danger","");						 
+					 handleAlerts("Failed to add the data."+resp.info+"  the local exist","danger","");						 
 				 }
 			}             	 
          },
@@ -290,21 +292,18 @@ var LanguagesTable = function () {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input                
             rules: {
-             adminId: {
+            	name: {
             	required: true,
-            	minlength:4,
+            	maxlength:9,
                 		},
-             password: {
+                flagImage: {
         		
         		required: true,
-        		minlength:6,
-        		maxlength:12,
-        	
     				},
-        	 email: {
+    			sort: {
         		
         		required: true,
-        		email:true,
+        		integer:true,
         		
     				}
 
@@ -352,7 +351,7 @@ var LanguagesTable = function () {
 	            	 handleAlerts("Edited the data successfully.","success","");
 				 }
 				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"the email is exist","danger","");
+					 handleAlerts("Failed to add the data."+resp.info+"the local is exist","danger","");
 				 }
 			}             	 
          },
@@ -373,18 +372,15 @@ var LanguagesTable = function () {
 			focusInvalid: false, // do not focus the last invalid input
 			ignore: "",  // validate all fields including form hidden input                
 			rules: {
-				adminId: {
-					required: true,
-					minlength:4,
-            			},
-            	password: {
-            		minlength:6,
-            		maxlength:12,
-					},
-				email: {
-					required: true,
-					email:true,
-				}
+				name: {
+	            	required: true,
+	            	maxlength:9,
+	                		},
+	    			sort: {
+	        		required: true,
+	        		integer:true,
+	        		
+	    				}
 
         },
        invalidHandler: function (event, validator) { //display error alert on form submit              

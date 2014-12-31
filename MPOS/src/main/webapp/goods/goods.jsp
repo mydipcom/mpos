@@ -179,6 +179,7 @@
 				
 				
 				<!-- BEGIN PAGE CONTENT-->
+				<!-- 
 				<div class="row profile">
 				  <div class="col-md-12">
 					<div class="nav nav-tabs">
@@ -200,7 +201,7 @@
 						<div class="portlet-body">
 						  <div class="tab-content">
 							<div class="tab-pane active" id="tab_1_1">
-							<div class="row"></div>	
+							<div class="row"></div>	 -->
 												<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 					<div class="col-md-12">
@@ -259,155 +260,7 @@
 				</div>
 				<!-- END PAGE CONTENT -->    						
 			</div>
-					<!--tab_1_2-->
 					
-					<div class="tab-pane" id="tab_1_2">
-					<div class="row mix-grid">
-					<div class="col-md-12">
-						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-						<div class="portlet  box green">
-							<div class="portlet-title">
-								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="system.management.user.tablename"/>
-								</div>
-								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i>add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i>edit</a>
-								    <a class="btn btn-default btn-sm"  href="../mpos/AddGoods.jsp" id="openActiveadminsModal"><i class="fa fa-key"></i> <s:message code="all.table.activate" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="../mposSetOrderNumber.jsp" id="openDeactiveadminsModal"><i class="fa fa-lock"></i> <s:message code="all.table.deactivate" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="../mpos/Addgood.jsp" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
-								    <div class="btn-group">
-										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
-										</a>
-										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
-											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.searchform.email"/></label>
-											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.rolename"/></label>
-											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.searchform.status"/></label>
-											<label><input type="checkbox"  data-column="5"><s:message code="system.management.user.createdBy"/></label>
-											<label><input type="checkbox"  data-column="6"><s:message code="system.management.user.createdTime"/></label>
-											<label><input type="checkbox"  data-column="7"><s:message code="system.management.user.updatedBy"/></label>
-											<label><input type="checkbox"  data-column="8"><s:message code="system.management.user.updatedTime"/></label>
-										</div>
-									</div>								    																
-								</div>
-							</div>
-							<div class="portlet-body" id="ttttt">	
-							<div class="row">					
-							<div class="col-md-3 col-sm-4 mix category_1">
-											<div class="mix-inner">
-												<img class="img-responsive" src="../media/image/image1.jpg" alt="">
-												<div class="mix-details">
-												<div class="mix-row">
-													<div class="mix-row-md">
-													test
-													</div>
-												</div>
-													<h6>Cascusamus et iusto odio</h6>
-													<a class="mix-link">
-													<i class="fa fa-link"></i>
-													</a>
-													<a class="mix-link" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i></a>
-													<a class="mix-preview fancybox-button" href="" title="Project Name" data-rel="fancybox-button">
-													<i class="fa fa-trash-o"></i>
-													</a>
-												</div>	
-											</div>
-											
-									</div>
-							
-									<div class="col-md-3 col-sm-4 mix category_2">	
-											<div id="forftest">
-											<div class="mix-inner" style="position:relative">
-											<div style="position:absolute;left:0;top:0">
-												<input type="checkbox" class="checkboxes"/>
-												</div>
-												<img   class="img-responsive" src="../media/image/image1.jpg" alt="" >
-												<div class="mix-details">
-													<input type="checkbox" class="group-checkable" data-set="#adminusers_table .checkboxes"/>
-													<h6><input type="checkbox"  class="checkboxes"/>name:                                                                      Price:</h6>
-													<h6>Price:</h6>
-													<h6>Cascusamus et iusto odio</h6>
-													<h6>Cascusamus et iusto odio</h6>
-													<a class="mix-link">
-													<i class="fa fa-link"></i>
-													</a>
-													<a class="mix-link" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i></a>
-													<a class="mix-preview fancybox-button" href="" title="Project Name" data-rel="fancybox-button">
-													<i class="fa fa-trash-o"></i>
-													</a>
-												</div>	
-											</div>
-											</div>
-									</div>
-							
-									<div class="col-md-3 col-sm-4 mix category_1">
-									
-											<div class="mix-inner">
-												<img class="img-responsive" src="../media/image/image1.jpg" alt="">
-												<div class="mix-details">
-													<h6>Cascusamus et iusto odio</h6>
-													<input type="checkbox" class="group-checkable" data-set="#adminusers_table .checkboxes"/>
-													<a class="mix-link">
-													<i class="fa fa-link"></i>
-													</a>
-													<a class="mix-link">
-													<i class="fa fa-link"></i>
-													</a>
-													<a class="mix-link" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i></a>
-													<a class="mix-preview fancybox-button" href="" title="Project Name" data-rel="fancybox-button">
-													<i class="fa fa-trash-o"></i>
-													</a>
-												</div>	
-											</div>
-									</div>
-									<div class="col-md-3 col-sm-4 mix category_1">
-											<div class="mix-inner">
-												<img class="img-responsive" src="../media/image/image1.jpg" alt="">
-												<div class="mix-details">
-													<h6>Cascusamus et iusto odio</h6>
-													<a class="mix-link">
-													<i class="fa fa-link"></i>
-													</a>
-													<a class="mix-link" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i></a>
-													<a class="mix-preview fancybox-button" href="" title="Project Name" data-rel="fancybox-button">
-													<i class="fa fa-trash-o"></i>
-													</a>
-												</div>	
-											</div>
-									</div>
-								
-							
-								</div>	
-							
-								<div class="row">
-								<div class="col-md-3 col-sm-4 mix category_1">
-											<div class="mix-inner">
-												<img class="img-responsive" src="../media/image/image1.jpg" alt="">
-												<div class="mix-details">
-													<h6>Cascusamus et iusto odio</h6>
-													<a class="mix-link">
-													<i class="fa fa-link"></i>
-													</a>
-													<a class="mix-link" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i></a>
-													<a class="mix-preview fancybox-button" href="" title="Project Name" data-rel="fancybox-button">
-													<i class="fa fa-trash-o"></i>
-													</a>
-												</div>	
-											</div>
-									</div>
-								</div>
-								</div>
-						
-								</div>	
-						</div>					
-						
-						</div>
-						<!-- END EXAMPLE TABLE PORTLET-->
-				</div>
-							<!--end tab-1-2-->	
 						</div>
 						
 						</div>

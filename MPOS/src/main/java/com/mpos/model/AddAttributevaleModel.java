@@ -6,7 +6,15 @@ public class AddAttributevaleModel {
 	private String content;
 	private String price;
 	private Integer attributeId;
+	private Integer type;
 	
+	
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
 	public Integer getAttributeId() {
 		return attributeId;
 	}

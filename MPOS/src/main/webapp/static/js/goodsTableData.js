@@ -146,25 +146,8 @@ var GoodsTable = function () {
 	            var id = data.id;
 	          //  window.location.href=rootURI+"goods/editgoods/"+id;
 	            location.href=rootURI+"editgoods/"+id;
-	         /*   $.ajax({
-	            	 "dataType": 'json', 
-	                 "type":'GET', 
-	                 "url": rootURI+"goods/editgoods/"+id,
-	                 "success": function(data,status){
-	                	 if(status == "success"){					
-	    					 if(data.status){
-	    						 
-	    					 }
-	    					 else{
-	    						 
-	    					 }
-	    				}             	 
-	                 },
-	                 "error":function(XMLHttpRequest, textStatus, errorThrown){
-	                	 alert(errorThrown);
-	                 }
-	            });
-	            */
+	          
+	            
 	            /*
 	            var email =data.email;
 	            var createby=data.createdBy;
