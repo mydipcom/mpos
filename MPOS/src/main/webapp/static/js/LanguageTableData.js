@@ -280,7 +280,7 @@ var LanguagesTable = function () {
         	 alert(errorThrown);
          }
        });
-		//$('#add_users').modal('hide');
+		$('#add_language').modal('hide');
     };
     
     var AddlanguagesValidation = function() {
@@ -359,7 +359,7 @@ var LanguagesTable = function () {
         	 alert(errorThrown);
          }
        });
-	 // $('#edit_users').modal('hide');
+	 $('#edit_language').modal('hide');
 	};
 		
             

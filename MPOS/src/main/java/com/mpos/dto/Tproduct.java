@@ -76,7 +76,11 @@ public class Tproduct implements java.io.Serializable {
 
 
 	public String getCategoryname() {
+		if(tcategory!=null){
 		return tcategory.getName();
+		}else {
+			return "All";
+		}
 	}
 
 

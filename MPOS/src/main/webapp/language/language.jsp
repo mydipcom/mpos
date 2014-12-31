@@ -16,7 +16,7 @@
 
 <meta charset="utf-8"/>
 
-<title>Roles List</title>
+<title>Language List</title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -129,7 +129,7 @@
 						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="system.management.user.tablename"/>
+									<i class="fa fa-edit"></i>Language List
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_language"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>

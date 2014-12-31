@@ -196,7 +196,7 @@
 														<div class="form-group">
 															<label class="control-label col-md-3">sort</label>
 															<div class="col-md-9">
-																<input type="text" name="sort" class="form-control" >
+																<input type="text" name="sort" class="form-control"  value="0">
 															</div>
 														</div>
 													</div>

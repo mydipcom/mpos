@@ -128,7 +128,6 @@ var Addgoods = function () {
 		            		 if(data.status){
 		            			 var list=data.list;
 		            			 for(var i=0;i<list.length;i++){
-		            				 alert(list[i].content);
 		            				 var content=(list[i].content).split(",");
 		            				 html+="<option value="+list[i].attributeId+">"+list[i].title+"</option>"
 		            				 /*
@@ -283,14 +282,106 @@ var Addgoods = function () {
 			            focusInvalid: false, // do not focus the last invalid input
 			            ignore: "",  // validate all fields including form hidden input                
 			            rules: {
-			            	name: {
+			            	oldPrice: {
 			            	required: true,
-			            	maxlength:9,
+			            	float:true,
+			            	maxlength:6,
+			            	
 			                		},
-			                flagImage: {
+			                price: {
+			                	required: true,
+				            	float:true,
+				            	maxlength:6,
+			    				},
+			    			unitName: {
+					               required: true,
+						           maxlength:4,
+					    			},
+					    	productName: {
+							       required: true,
+								   minlength:6,
+							    		},
+							shortDescr: {
+									required: true,
+									
+									    },
+							fullDescr: {
+								required: true,
+								
+							           },
+									  
+			    			sort: {
 			        		
 			        		required: true,
+			        		integer:true,
+			        		
+			    				}
+
+			            },
+			           invalidHandler: function (event, validator) { //display error alert on form submit              
+			                errorDiv.show();                    
+			            },
+
+			                highlight: function (element) { // hightlight error inputs
+			                    $(element)
+			                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+			                },
+
+			                unhighlight: function (element) { // revert the change done by hightlight
+			                    $(element)
+			                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+			                },
+
+			            success: function (label) {
+			                label
+			                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+			            },
+			            onfocusout:function(element){
+			            	$(element).valid();
+			            },
+			            submitHandler: function (form) { 
+			            	errorDiv.hide();
+			            	
+			            }
+			        });
+			    };
+			    var EditGoodsValidation = function() {
+			        var form = $('#editGoodsForm');
+			        var errorDiv = $('.alert-danger', form);            
+			        form.validate({
+			            errorElement: 'span', //default input error message container
+			            errorClass: 'help-block help-block-error', // default input error message class
+			            focusInvalid: false, // do not focus the last invalid input
+			            ignore: "",  // validate all fields including form hidden input                
+			            rules: {
+			            	oldPrice: {
+			            	required: true,
+			            	float:true,
+			            	maxlength:6,
+			            	
+			                		},
+			                price: {
+			                	required: true,
+				            	float:true,
+				            	maxlength:6,
 			    				},
+			    			unitName: {
+					               required: true,
+						           maxlength:4,
+					    			},
+					    	productName: {
+							       required: true,
+								   minlength:6,
+							    		},
+							shortDescr: {
+									required: true,
+									
+									    },
+							fullDescr: {
+								required: true,
+								
+							           },
+									  
 			    			sort: {
 			        		
 			        		required: true,
@@ -326,7 +417,6 @@ var Addgoods = function () {
 			            }
 			        });
 			    };
- 
     //提示信息处理方法（是在页面中指定位置显示提示信息的方式）
 	var handleAlerts = function(msg,msgType,position) {         
         Metronic.alert({
@@ -353,6 +443,7 @@ var Addgoods = function () {
         init: function (rootPath) {
         	rootURI=rootPath;
         	AddGoodsValidation();
+        	EditGoodsValidation();
         	
         }
 

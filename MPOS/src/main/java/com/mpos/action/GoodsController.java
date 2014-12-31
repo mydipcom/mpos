@@ -206,8 +206,10 @@ public class GoodsController extends BaseController{
 		product.setProductName(model.getProductName());
 		product.setUnitName(model.getUnitName());
 		product.setStatus(true);
+		if(model.getCategoryId()!=null){
 		Tcategory catefory=categoryService.getCategory(model.getCategoryId());
 		product.setTcategory(catefory);
+		}
 		Tmenu menu=menuService.getMenu(model.getMenuId());
 		product.setTmenu(menu);
 		product.setRecommend(model.isRecommend());

@@ -88,9 +88,11 @@ private LocalizedFieldService localizedFieldService;
 		ModelAndView mav=new ModelAndView();
 		try {
 			Tproduct product=goodsService.getTproductByid(id);
-			List<TcategoryAttribute> categoryAttribute;
+			List<TcategoryAttribute> categoryAttribute=new ArrayList<TcategoryAttribute>();
 			List<AddAttributevaleModel> addAttributevalemodels = new ArrayList<AddAttributevaleModel>();
-			categoryAttribute=CategoryAttributeService.getCategoryAttributeByCategoryid(product.getTcategory().getCategoryId());
+			
+			
+		
 			List<TlocalizedField> list = localizedFieldService.getListByEntityIdAndEntityName(product.getId(), Tproduct.class.getSimpleName());
 			mav.addObject("product", product);
 			//respJson.put("list", LocalizedField.setValues(list));
@@ -102,13 +104,15 @@ private LocalizedFieldService localizedFieldService;
 			mav.addObject("lanList", languages);
 			mav.addObject("category", categorys);
 			mav.addObject("menu", menus);
-			mav.addObject("categoryAttribute",categoryAttribute);
+			
 			List<TproductImage> productImage=goodsImageService.getByProductid(product.getId());
 			if (productImage.size()>0) {
 				mav.addObject("productImage",productImage.get(0));
 			}
-			TproductAttributeId productAttributeId=new TproductAttributeId();
+			if(product.getTcategory()!=null){
+			categoryAttribute=CategoryAttributeService.getCategoryAttributeByCategoryid(product.getTcategory().getCategoryId());
 			for (int i = 0; i < categoryAttribute.size(); i++) {
+				TproductAttributeId productAttributeId=new TproductAttributeId();
 				AddAttributevaleModel model=new AddAttributevaleModel();
 				productAttributeId.setCategoryAttribute(categoryAttribute.get(i));
 				productAttributeId.setProduct(product);
@@ -122,6 +126,8 @@ private LocalizedFieldService localizedFieldService;
 				}
 				
 			}
+			}
+			mav.addObject("categoryAttribute",categoryAttribute);
 			mav.addObject("addAttributevalemodels", addAttributevalemodels);
 			mav.setViewName("goods/editgoods");
 			
