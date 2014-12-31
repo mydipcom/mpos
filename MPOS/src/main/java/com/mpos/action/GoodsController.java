@@ -198,7 +198,7 @@ public class GoodsController extends BaseController{
 		MultipartFile[] files;
 		JSONObject respJson = new JSONObject();
 		List<TproductAttribute> tproductAttributelist=new ArrayList<TproductAttribute>(); 
-		TproductAttribute tproductAttribute=new TproductAttribute();
+		
 		product.setShortDescr(model.getShortDescr());
 		product.setFullDescr(model.getFullDescr());
 		product.setPrice(model.getPrice());
@@ -221,11 +221,12 @@ public class GoodsController extends BaseController{
 		} catch (MposException be) {
 			
 		}
-		//�����Ʒ��������
+		//
 		Iterator it = SystemConfig.product_AttributeModel_Map.keySet().iterator(); 
 		   while (it.hasNext()){ 
 		    String key; 
 		    key=(String)it.next(); 
+		    TproductAttribute tproductAttribute=new TproductAttribute();
 		    AddAttributevaleModel models= SystemConfig.product_AttributeModel_Map.get(key);
 		    TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(models.getAttributeId());
 		    tproductAttribute.setContent(models.getContent());
@@ -247,7 +248,7 @@ public class GoodsController extends BaseController{
 		}
 		   SystemConfig.product_AttributeModel_Map.clear();
 		//Tproduct products=goodsService.findbyProductName(product.getProductName());
-		   //�����ƷͼƬ
+		   //
 		for(int i=0;i<file.length;i++){
 			if (!(file[i].isEmpty())) {
 				TproductImage productImage=new TproductImage();
@@ -264,7 +265,10 @@ public class GoodsController extends BaseController{
 					//File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
 					File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"
 											+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
-					
+					File uploadDir = new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload");
+					if (!uploadDir.isDirectory()) {
+						uploadDir.mkdirs();
+					}
 					if(!file2.exists()){
 					ImageOutputStream ios= ImageIO.createImageOutputStream(file2);
 					ios.write(image);

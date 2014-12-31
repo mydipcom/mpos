@@ -73,10 +73,18 @@ var Promotion = function() {
 						title : "Priority",
 						data : "priority",
 						
-					},{
-						title : "Status",
-						data : "status"
-					} ],
+					},{ title: "Status",  
+				 	    'render':function(data,status,row){
+                            var tem = row.status;
+	        				var str = '';
+	        				if(tem==1){
+	        					str = 'Active';
+	        				}else if(tem==0){
+	        					str = 'Inactive';
+	        				}
+	        				return str;
+	        			}
+	              } ],
 					"serverSide" : true,
 					"serverMethod" : "GET",
 					"ajaxSource" : rootURI + "promotion/promotionList?rand="

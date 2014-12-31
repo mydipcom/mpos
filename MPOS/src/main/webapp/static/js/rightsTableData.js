@@ -64,7 +64,18 @@ var RightsTable = function () {
 	           { title: "Is Menu",    data: "isMenu" },
 	           { title: "Group Name",    data: "groupName" },
 	           { title: "Group Sort",    data: "groupSort" ,"bVisible":false},
-	           { title: "Status",    data: "status" }
+	           { title: "Status",  
+			 	    'render':function(data,status,row){
+	                                var tem = row.status;
+			        				var str = '';
+			        				if(tem==1){
+			        					str = 'Active';
+			        				}else if(tem==0){
+			        					str = 'Inactive';
+			        				}
+			        				return str;
+			        			}
+			           }
 	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

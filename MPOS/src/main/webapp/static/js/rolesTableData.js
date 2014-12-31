@@ -60,7 +60,18 @@ var RolesTable = function () {
 	           { title: "ID",   data: "roleId" },	           
 	           { title: "Role Name",  data: "roleName"},	           
 	           { title: "Parent ID",  data: "pid" },	           
-	           { title: "Status",  data: "status" },
+	           { title: "Status",  
+		 	    'render':function(data,status,row){
+                                var tem = row.status;
+		        				var str = '';
+		        				if(tem==1){
+		        					str = 'Active';
+		        				}else if(tem==0){
+		        					str = 'Inactive';
+		        				}
+		        				return str;
+		        			}
+		           },
 	           { title: "Role Rights",  data: "adminRoleRights" }
 	        ],
 	        "serverSide": true,

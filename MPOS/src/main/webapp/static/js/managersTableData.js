@@ -86,7 +86,19 @@ var ManagersTable = function () {
 	           { title: "ID",   data: "adminId"  },
 	           { title: "Email",   data: "email" },
 	           { title: "Role_Name",    data: "roleName" },
-	           { title: "Status",  data: "status"},
+	           { title: "Status",  
+	 	        'render':function(data,status,row){
+	        				var tem = row.status;
+	        				var str = '';
+	        				if(tem==1){
+	        					str = 'Active';
+	        				}else if(tem==0){
+	        					str = 'Inactive';
+	        				}
+	        				return str;
+	        			}
+	           },
+
 	           { title: "CreatedBy", data: "createdBy" ,"bVisible":false},
 	           { title: "CreatedTime", data: "createdTimeStr", "bVisible":false},
 	           { title: "UpdatedBy",  data: "updatedBy" ,"bVisible":false},
