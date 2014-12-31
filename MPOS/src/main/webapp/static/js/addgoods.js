@@ -115,9 +115,7 @@ var Addgoods = function () {
 			});
 
 			$('#choosecategory').on('change',function(e){
-				alert("test");
 				var id=$(this).val();
-				alert(id);
 				var html;
 				//html+="<select name=\"attributeId\"  class=\"form-control\" id=\"chooseattribute\">";
 				html+="<option value=\"\">ALL</option>";
@@ -171,9 +169,9 @@ var Addgoods = function () {
 				});
 			});
 			$('#chooseattribute').on('change',function(e){
-				alert("test");
+				
 				var id=$(this).val();
-				alert(id);
+				
 				$('#name').empty();
 				
 				$.ajax({
