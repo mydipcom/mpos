@@ -11,8 +11,9 @@ import com.mpos.dto.Tmenu;
 @Repository
 public class MenuDao extends BaseDao<Tmenu> {
 	public List<Tmenu> getAll(){
-		String hql="from Tmenu";
+		String hql="from Tmenu where status=?";
 		Query query=currentSession().createQuery(hql);
+		query.setParameter(0, true);
 		List<Tmenu> list=query.list();
 		return list;
 	}

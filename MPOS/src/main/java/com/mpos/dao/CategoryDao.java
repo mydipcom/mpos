@@ -11,8 +11,9 @@ import com.mpos.dto.Tcategory;
 public class CategoryDao extends BaseDao<Tcategory> {
 	
     public List<Tcategory> getAll(){
-    	String hql="from Tcategory";
+    	String hql="from Tcategory where status=?";
     	Query query = currentSession().createQuery(hql);
+    	query.setParameter(0, true);
 		List<Tcategory> list=query.list();
 		return list;
     }
