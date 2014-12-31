@@ -72,7 +72,7 @@ var GoodsTable = function () {
 	           { title: "Price", data: "price"},
 	           { title: "Recmmend",  data: "recommend" },
 	           { title: "Sort",    data: "sort"},  
-	           { title: "Status",    data: "status"},  
+	         //  { title: "Status",    data: "status"},  
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

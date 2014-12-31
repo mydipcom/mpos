@@ -27,6 +27,7 @@ public class GoodsServiceImpl implements GoodsService{
 		String searchJsonStr=rdtp.getsSearch();
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
 			List<Criterion> criterionsList=new ArrayList<Criterion>();
+			criterionsList.add(Restrictions.eq("status",true));
 			JSONObject jsonObj= (JSONObject)JSON.parse(searchJsonStr);
 			Set<String> keys=jsonObj.keySet();						
 			for (String key : keys) {
@@ -56,7 +57,9 @@ public class GoodsServiceImpl implements GoodsService{
 			}
 			return goodsDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
 		}
-		return goodsDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+			return goodsDao.findPage(Restrictions.eq("status",true),rdtp.iDisplayStart, rdtp.iDisplayLength);
+		
+		
 		
 	}
 

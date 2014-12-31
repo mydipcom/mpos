@@ -165,6 +165,7 @@ public class GoodsController extends BaseController{
 		List<TcategoryAttribute> list=CategoryAttributeService.getCategoryAttributeByCategoryid(id);
 		respJson.put("status", true);
 		respJson.put("list", list);
+		SystemConfig.product_AttributeModel_Map.clear();
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -205,6 +206,7 @@ public class GoodsController extends BaseController{
 		product.setOldPrice(model.getOldPrice());
 		product.setProductName(model.getProductName());
 		product.setUnitName(model.getUnitName());
+		product.setStatus(true);
 		Tcategory catefory=categoryService.getCategory(model.getCategoryId());
 		product.setTcategory(catefory);
 		Tmenu menu=menuService.getMenu(model.getMenuId());

@@ -104,7 +104,9 @@ private LocalizedFieldService localizedFieldService;
 			mav.addObject("menu", menus);
 			mav.addObject("categoryAttribute",categoryAttribute);
 			List<TproductImage> productImage=goodsImageService.getByProductid(product.getId());
-			mav.addObject("productImage",productImage.get(0));
+			if (productImage.size()>0) {
+				mav.addObject("productImage",productImage.get(0));
+			}
 			TproductAttributeId productAttributeId=new TproductAttributeId();
 			for (int i = 0; i < categoryAttribute.size(); i++) {
 				AddAttributevaleModel model=new AddAttributevaleModel();

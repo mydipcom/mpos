@@ -145,6 +145,7 @@
 							</div>
 						</div>
 					</div>
+					<!-- 
 					<div class="row">
 					<div class="col-md-6">	
 							<div class="form-group">
@@ -162,6 +163,7 @@
 							</div>
 						</div>
 						</div>
+						 -->
 					<div class="row">	
 						<div class="col-md-6">	
 							<div class="form-group">								
@@ -249,7 +251,7 @@
 											<th>Price</th>
 											<th>Recmmend</th>
 											<th>Sort</th>
-											<th>Status</th>
+										<!--  	<th>Status</th>-->
 										</tr>
 										</thead>																
 								</table>
