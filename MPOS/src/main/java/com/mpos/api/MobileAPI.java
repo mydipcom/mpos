@@ -58,27 +58,27 @@ import com.mpos.service.PromotionService;
 public class MobileAPI {
 	
 	/**
-	 * °ó¶¨ÀàĞÍÎªËùÓĞ
+	 * ç»‘å®šç±»å‹ä¸ºæ‰€æœ‰
 	 */
 	public static final int BIN_TYPE_ALL = 2;
 	/**
-	 * °ó¶¨ÀàĞÍÎª·ÖÀà
+	 * ç»‘å®šç±»å‹ä¸ºåˆ†ç±»
 	 */
 	public static final int BIN_TYPE_CATE = 1;
 	/**
-	 * °ó¶¨ÀàĞÍÎª²Ëµ¥
+	 * ç»‘å®šç±»å‹ä¸ºèœå•
 	 */
 	public static final int BIN_TYPE_MENU = 2;
 	/**
-	 * »î¶¯ÀàĞÍ Ö±½µ
+	 * æ´»åŠ¨ç±»å‹ ç›´é™
 	 */
 	public static final int PROMOTION_TYPE_STRAIGHT_DOWN = 1;
 	/**
-	 * »î¶¯ÀàĞÍ ÕÛ¿Û
+	 * æ´»åŠ¨ç±»å‹ æŠ˜æ‰£
 	 */
 	public static final int PROMOTION_TYPE_DISCOUNT = 2;
 	/**
-	 * »î¶¯ÀàĞÍ Âú¼õ
+	 * æ´»åŠ¨ç±»å‹ æ»¡å‡
 	 */
 	public static final int PROMOTION_TYPE_FULL_CUT = 3;
 	@Autowired
@@ -305,44 +305,44 @@ public class MobileAPI {
 	@RequestMapping(value = "getProduct/{productId}", method = RequestMethod.GET)
 	@ResponseBody
 	public String getProduct(HttpServletRequest request, HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable Integer productId) {
-		// »ñÈ¡»º´æapiToken
+		// è·å–ç¼“å­˜apiToken
 		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
 		JSONObject respJson = new JSONObject();
-		// ÅĞ¶ÏapiTokenÊÇ·ñÒ»ÖÂ
+		// åˆ¤æ–­apiTokenæ˜¯å¦ä¸€è‡´
 		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
 		}
-		// ÅĞ¶ÏÇëÇó²ÎÊı
+		// åˆ¤æ–­è¯·æ±‚å‚æ•°
 		if (productId == null || productId == 0) {
 			respJson.put("status", false);
 			respJson.put("info", "The request parameter productId is required");
 			return JSON.toJSONString(respJson);
 		}
 		try {
-			// ²éÑ¯ÉÌÆ·
+			// æŸ¥è¯¢å•†å“
 			Tproduct product = goodsService.getTproductByid(productId);
-			// ĞÂ½¨·µ»ØÊı¾İmodel
+			// æ–°å»ºè¿”å›æ•°æ®model
 			ProductModel model = new ProductModel();
 			model.setProductId(product.getId());
 			model.setMenuId(product.getTmenu().getMenuId());
 			BeanUtils.copyProperties(product, model, "attributes", "promotions", "images");
-			//×°ÔØĞèÒª¶àÓïÑÔ»¯µÃ×Ö¶Î
+			//è£…è½½éœ€è¦å¤šè¯­è¨€åŒ–å¾—å­—æ®µ
 			model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR);
-			//×°ÔØÉÌÆ·ÊôĞÔ
+			//è£…è½½å•†å“å±æ€§
 			model = loadAttribute(model, product);
-			//×°ÔØÉÌÆ·Í¼Æ¬
+			//è£…è½½å•†å“å›¾ç‰‡
 			model = loadImage(model, request, product);
-			//×°ÔØÉÌÆ·ÓÅ»İ»î¶¯ÁĞ±í
+			//è£…è½½å•†å“ä¼˜æƒ æ´»åŠ¨åˆ—è¡¨
 			List<Tpromotion> pros = loadProductPromotion(product);
-			//µÃµ½Í¨¹ıÓÅÏÈ¼¶ÅÅĞòµÄ¿Éµş¼ÓÓÅ»İÁĞ±í
+			//å¾—åˆ°é€šè¿‡ä¼˜å…ˆçº§æ’åºçš„å¯å åŠ ä¼˜æƒ åˆ—è¡¨
 			List<Tpromotion> isShareList = getPromotionList(pros,true);
-			//µÃµ½Í¨¹ıÓÅÏÈ¼¶ÅÅĞòµÄ²»¿Éµş¼ÓÓÅ»İÁĞ±í
+			//å¾—åˆ°é€šè¿‡ä¼˜å…ˆçº§æ’åºçš„ä¸å¯å åŠ ä¼˜æƒ åˆ—è¡¨
 			List<Tpromotion> noShareList = getPromotionList(pros,false);
-			//Í¨¹ı±È½Ï¿Éµş¼ÓÓë²»¿Éµş¼ÓµÄÓÅÏÈ¼¶µÃµ½×îÖÕµÄÓÅ»İÁĞ±í
+			//é€šè¿‡æ¯”è¾ƒå¯å åŠ ä¸ä¸å¯å åŠ çš„ä¼˜å…ˆçº§å¾—åˆ°æœ€ç»ˆçš„ä¼˜æƒ åˆ—è¡¨
 			List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);
-			//Í¨¹ıÓÅ»İÁĞ±í¼ÆËãÉÌÆ·¼Û¸ñ
+			//é€šè¿‡ä¼˜æƒ åˆ—è¡¨è®¡ç®—å•†å“ä»·æ ¼
 			float price = calculatePrice(product.getOldPrice(), promotions);
 			model = loadPromotion(model, promotions);
 			model.setPrice(price);
@@ -360,28 +360,28 @@ public class MobileAPI {
 	@RequestMapping(value = "putOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public String putOrder(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr){
-		// »ñÈ¡»º´æapiToken
+		// è·å–ç¼“å­˜apiToken
 				String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
 				JSONObject respJson = new JSONObject();
-				// ÅĞ¶ÏapiTokenÊÇ·ñÒ»ÖÂ
+				// åˆ¤æ–­apiTokenæ˜¯å¦ä¸€è‡´
 				if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
 					respJson.put("status", false);
 					respJson.put("info", "Error API token.");
 					return JSON.toJSONString(respJson);
 				}
 
-				// ÅĞ¶ÏÇëÇó²ÎÊı
+				// åˆ¤æ–­è¯·æ±‚å‚æ•°
 				if (jsonStr == null || jsonStr.isEmpty()) {
 					respJson.put("status", false);
 					respJson.put("info", "The request parameter is required.");
 					return JSON.toJSONString(respJson);
 				}
 				try {
-					// ²Î¼ÓÂú¼õ»î¶¯ÁĞ±í
+					// å‚åŠ æ»¡å‡æ´»åŠ¨åˆ—è¡¨
 					List<Tpromotion> productPromotionList = new ArrayList<Tpromotion>();
 					//
 					JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
-					// ×ÀºÅ
+					// æ¡Œå·
 					String appId = jsonObj.getString("appId");
 					JSONArray products = jsonObj.getJSONArray("products");
 					float totalMoney = 0;
@@ -396,25 +396,25 @@ public class MobileAPI {
 					orderService.createOrder(order);
 					for (Object object : products) {
 						JSONObject pro = (JSONObject) object;
-						// ÉÌÆ·ID
+						// å•†å“ID
 						Integer productId = pro.getInteger("productId");
-						// ÊıÁ¿
+						// æ•°é‡
 						Integer count = pro.getInteger("quantity");
 						Tproduct product = goodsService.getTproductByid(productId);
-						//×°ÔØÉÌÆ·ÓÅ»İ»î¶¯ÁĞ±í
+						//è£…è½½å•†å“ä¼˜æƒ æ´»åŠ¨åˆ—è¡¨
 						List<Tpromotion> pros = loadProductPromotion(product);
-						//µÃµ½Í¨¹ıÓÅÏÈ¼¶ÅÅĞòµÄ¿Éµş¼ÓÓÅ»İÁĞ±í
+						//å¾—åˆ°é€šè¿‡ä¼˜å…ˆçº§æ’åºçš„å¯å åŠ ä¼˜æƒ åˆ—è¡¨
 						List<Tpromotion> isShareList = getPromotionList(pros,true);
-						//µÃµ½Í¨¹ıÓÅÏÈ¼¶ÅÅĞòµÄ²»¿Éµş¼ÓÓÅ»İÁĞ±í
+						//å¾—åˆ°é€šè¿‡ä¼˜å…ˆçº§æ’åºçš„ä¸å¯å åŠ ä¼˜æƒ åˆ—è¡¨
 						List<Tpromotion> noShareList = getPromotionList(pros,false);
-						//Í¨¹ı±È½Ï¿Éµş¼ÓÓë²»¿Éµş¼ÓµÄÓÅÏÈ¼¶µÃµ½×îÖÕµÄÓÅ»İÁĞ±í
+						//é€šè¿‡æ¯”è¾ƒå¯å åŠ ä¸ä¸å¯å åŠ çš„ä¼˜å…ˆçº§å¾—åˆ°æœ€ç»ˆçš„ä¼˜æƒ åˆ—è¡¨
 						List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);
 						for (Tpromotion tpromotion : promotions) {
 							if(!productPromotionList.contains(tpromotion)){
 								productPromotionList.add(tpromotion);
 							}
 						}
-						//Í¨¹ıÓÅ»İÁĞ±í¼ÆËãÉÌÆ·¼Û¸ñ
+						//é€šè¿‡ä¼˜æƒ åˆ—è¡¨è®¡ç®—å•†å“ä»·æ ¼
 						float price = calculatePrice(product.getOldPrice(), promotions);
 						oneMoney = price*count;
 						float oneDis = (product.getOldPrice()-price)*count;
@@ -457,17 +457,17 @@ public class MobileAPI {
 	
 	@RequestMapping(value = "callWaiter/{appId}", method = RequestMethod.GET)
 	@ResponseBody
-	private String callWaiter(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable String appId) {
-		// »ñÈ¡»º´æapiToken
+	public String callWaiter(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable String appId) {
+		// è·å–ç¼“å­˜apiToken
 		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
 		JSONObject respJson = new JSONObject();
-		// ÅĞ¶ÏapiTokenÊÇ·ñÒ»ÖÂ
+		// åˆ¤æ–­apiTokenæ˜¯å¦ä¸€è‡´
 		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
 		}
-		// ÅĞ¶ÏÇëÇó²ÎÊı
+		// åˆ¤æ–­è¯·æ±‚å‚æ•°
 		if (appId == null || appId.isEmpty()) {
 			respJson.put("status", false);
 			respJson.put("info", "The request parameter appId is required");
@@ -484,7 +484,7 @@ public class MobileAPI {
 	}
 	
 	/**
-	 * ×°ÔØÓÅ»İĞÅÏ¢ ½«ÉÌÆ·²Î¼ÓµÄËùÓĞÓÅ»İ»î¶¯×°ÔØµ½modelÖĞ
+	 * è£…è½½ä¼˜æƒ ä¿¡æ¯ å°†å•†å“å‚åŠ çš„æ‰€æœ‰ä¼˜æƒ æ´»åŠ¨è£…è½½åˆ°modelä¸­
 	 * 
 	 * @param model
 	 * @param product
@@ -503,7 +503,7 @@ public class MobileAPI {
 	}
 
 	/**
-	 * ×°ÔØÍ¼Æ¬µØÖ·
+	 * è£…è½½å›¾ç‰‡åœ°å€
 	 * 
 	 * @param model
 	 * @param request
@@ -551,7 +551,7 @@ public class MobileAPI {
 	}
 
 	/**
-	 * ×°ÔØÊôĞÔ
+	 * è£…è½½å±æ€§
 	 * 
 	 * @param model
 	 * @param product
@@ -580,7 +580,7 @@ public class MobileAPI {
 	}
 
 	/**
-	 * ¶àÓïÑÔ¼ÓÔØ
+	 * å¤šè¯­è¨€åŠ è½½
 	 * 
 	 * @param model
 	 * @param tableName
@@ -619,7 +619,7 @@ public class MobileAPI {
 	}
 
 	/**
-	 * ¼ÓÔØÉÌÆ·ÓÅ»İÁĞ±í
+	 * åŠ è½½å•†å“ä¼˜æƒ åˆ—è¡¨
 	 * 
 	 * @param product
 	 * @return
@@ -640,7 +640,7 @@ public class MobileAPI {
 		}
 
 		String product_cate_id = product.getTcategory().getCategoryId() + "";
-		// ²éÑ¯°ó¶¨·ÖÀàµÄÓÅ»İ»î¶¯
+		// æŸ¥è¯¢ç»‘å®šåˆ†ç±»çš„ä¼˜æƒ æ´»åŠ¨
 		List<Tpromotion> bindType = promotionService.selectPromotion(BIN_TYPE_CATE);
 		if (bindType != null && bindType.size() > 0) {
 			for (Tpromotion promotion : bindType) {
@@ -653,7 +653,7 @@ public class MobileAPI {
 		}
 
 		String product_menu_id = product.getTmenu().getMenuId() + "";
-		// ²éÑ¯°ó¶¨²Ëµ¥µÄÓÅ»İ»î¶¯
+		// æŸ¥è¯¢ç»‘å®šèœå•çš„ä¼˜æƒ æ´»åŠ¨
 		List<Tpromotion> bindMenu = promotionService.selectPromotion(BIN_TYPE_MENU);
 		if (bindMenu != null && bindMenu.size() > 0) {
 			for (Tpromotion promotion : bindMenu) {
@@ -664,7 +664,7 @@ public class MobileAPI {
 				}
 			}
 		}
-		// ²éÑ¯°ó¶¨ËùÓĞµÄÓÅ»İ»î¶¯
+		// æŸ¥è¯¢ç»‘å®šæ‰€æœ‰çš„ä¼˜æƒ æ´»åŠ¨
 		List<Tpromotion> bindAll = promotionService.selectPromotion(BIN_TYPE_ALL);
 		for (Tpromotion promotion : bindAll) {
 			if (!promotionList.contains(promotion)) {
@@ -676,7 +676,7 @@ public class MobileAPI {
 	}
 
 	/**
-	 * ÅĞ¶ÏidÊÇ·ñÔÚÊı×éidsÄÚ
+	 * åˆ¤æ–­idæ˜¯å¦åœ¨æ•°ç»„idså†…
 	 * 
 	 * @param id
 	 * @param ids
@@ -696,12 +696,12 @@ public class MobileAPI {
 	}
 
 	/**
-	 * ¸ù¾İÓÅ»İÊÇ·ñ¿ÉÒÔµş¼Ó»ñÈ¡Í¨¹ıÓÅÏÈ¼¶ÅÅĞòµÄ»î¶¯ÁĞ±í
+	 * æ ¹æ®ä¼˜æƒ æ˜¯å¦å¯ä»¥å åŠ è·å–é€šè¿‡ä¼˜å…ˆçº§æ’åºçš„æ´»åŠ¨åˆ—è¡¨
 	 * 
 	 * @param pros
-	 *             ÓÅ»İÁĞ±í
+	 *             ä¼˜æƒ åˆ—è¡¨
 	 * @param isShare
-	 *             true ¿Éµş¼Ó false ²»¿Éµş¼Ó
+	 *             true å¯å åŠ  false ä¸å¯å åŠ 
 	 * @return
 	 */
 	private List<Tpromotion> getPromotionList(List<Tpromotion> pros, boolean isShare) {
@@ -728,7 +728,7 @@ public class MobileAPI {
 		return promotions;
 	}
 	/**
-	 * ±È½Ïµş¼ÓºÍ²»¿Éµş¼ÓµÄÓÅÏÈ¼¶ 
+	 * æ¯”è¾ƒå åŠ å’Œä¸å¯å åŠ çš„ä¼˜å…ˆçº§ 
 	 * @param isShareList
 	 * @param unShareList
 	 * @return
@@ -757,9 +757,9 @@ public class MobileAPI {
 		return new ArrayList<Tpromotion>();
 	}
 	/**
-	 * ¼ÆËãÉÌÆ·²Î¼Ó»î¶¯ºóµÄµ¥¼Û
-	 * @param oldPrice Ô­¼Û
-	 * @param promotions »î¶¯ÁĞ±í
+	 * è®¡ç®—å•†å“å‚åŠ æ´»åŠ¨åçš„å•ä»·
+	 * @param oldPrice åŸä»·
+	 * @param promotions æ´»åŠ¨åˆ—è¡¨
 	 * @return
 	 */
 	private float calculatePrice(float oldPrice,List<Tpromotion> promotions){
