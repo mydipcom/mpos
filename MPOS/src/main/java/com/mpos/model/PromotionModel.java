@@ -13,7 +13,9 @@ public class PromotionModel {
 	private String promotionRule;
 
 	private String promotionType;
-
+    
+	private int way;
+	
 	private String startTime;
 
 	private String endTime;
@@ -28,8 +30,14 @@ public class PromotionModel {
 
 	private int bindType;
 
-	private int bindId;
-
+	private String bindId;
+    
+	private String claId;
+	
+	private String gooId;
+	
+	private String menId;
+	
 	private boolean status;
 
 	public int getPromotionId() {
@@ -63,7 +71,15 @@ public class PromotionModel {
 	public void setPromotionType(String promotionType) {
 		this.promotionType = promotionType;
 	}
+    
+	public int getWay() {
+		return way;
+	}
 
+	public void setWay(int way) {
+		this.way = way;
+	}
+	
 	public String getStartTime() {
 		return startTime;
 	}
@@ -120,14 +136,38 @@ public class PromotionModel {
 		this.bindType = bindType;
 	}
 
-	public int getBindId() {
+	public String getBindId() {
 		return bindId;
 	}
 
-	public void setBindId(int bindId) {
+	public void setBindId(String bindId) {
 		this.bindId = bindId;
 	}
+    
+	public String getClaId() {
+		return claId;
+	}
 
+	public void setClaId(String claId) {
+		this.claId = claId;
+	}
+
+	public String getGooId() {
+		return gooId;
+	}
+
+	public void setGooId(String gooId) {
+		this.gooId = gooId;
+	}
+
+	public String getMenId() {
+		return menId;
+	}
+
+	public void setMenId(String menId) {
+		this.menId = menId;
+	}
+	
 	public boolean isStatus() {
 		return status;
 	}

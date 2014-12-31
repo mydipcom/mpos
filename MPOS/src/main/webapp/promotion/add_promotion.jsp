@@ -32,7 +32,18 @@
 	href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"
 	rel="stylesheet" type="text/css" />
 <!-- END GLOBAL MANDATORY STYLES -->
-
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/clockface/css/clockface.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link href="../assets/global/plugins/select2/select2.css"
 	rel="stylesheet" type="text/css" />
@@ -104,7 +115,7 @@
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i></li>
-						<li><a href="<c:url value="/"/>point">XXXXXXX</a></li>
+						<li><a href="<c:url value="/"/>add_promotion">Promotion Addition</a></li>
 
 					</ul>
 				</div>
@@ -114,7 +125,8 @@
 
 				<!-- BEGIN SEARCH FORM -->
 				<div class="portlet-body">
-					<form action="#" class="horizontal-form">
+					<form action="" class="horizontal-form" id="promotion_form"
+						method="post">
 						<div class="form-body">
 							<div class="row">
 								<div class="col-md-12 ">
@@ -142,8 +154,8 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Promotion Name</label> <input name="userId" type="text"
-											class="form-control">
+										<label>Promotion Name</label> <input name="promotionName"
+											type="text" class="form-control">
 									</div>
 								</div>
 								<!--/span-->
@@ -153,11 +165,22 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Promotion Time</label>
-										<div class="input-group">
-											<input type="text" class="form-control form_datetime"
-												readonly> <span class="input-group-addon"> To
-											</span> <input type="text" class="form-control form_datetime"
-												readonly>
+										<div class="row">
+											<div class="col-md-5">
+
+												<input type="text" size="16" readonly
+													class="form-control date form_datetime" name="startTime">
+
+
+											</div>
+											<div class="col-md-2">To</div>
+											<div class="col-md-5">
+
+												<input type="text" size="16" readonly
+													class="form-control date form_datetime" name="endTime">
+
+
+											</div>
 										</div>
 
 									</div>
@@ -178,8 +201,7 @@
 													commodity in the actual price basis, reduction</label>
 											</div>
 											<div class="col-md-1">
-
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="paramOne" />
 											</div>
 											<div class="col-md-1">
 												<label>$.</label>
@@ -198,13 +220,13 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Product</label> <label class="radio-inline"> <input
-											type="radio" name="product_type" value="0" checked />ALL
+											type="radio" name="bindType" value="0" checked />ALL
 										</label> <label class="radio-inline"> <input type="radio"
-											name="product_type" value="1" />Classification
+											name="bindType" value="1" />Classification
 										</label> <label class="radio-inline"> <input type="radio"
-											name="product_type" value="2" />Menu
+											name="bindType" value="2" />Menu
 										</label> <label class="radio-inline"> <input type="radio"
-											name="product_type" value="3" />Goods
+											name="bindType" value="3" />Goods
 										</label>
 
 									</div>
@@ -213,13 +235,16 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<div class="col-md-3 hidden" id="classification">
-											<input type="hidden" id="cla" style="width: 420px;" value=""/>
+											<input type="hidden" id="cla" style="width: 420px;"
+												name="claId" />
 										</div>
 										<div class="col-md-3 hidden" id="menu">
-											<input type="hidden" id="men" style="width: 420px;" />
+											<input type="hidden" id="men" style="width: 420px;"
+												name="menId" />
 										</div>
 										<div class="col-md-3 hidden" id="goods">
-											<input type="hidden" id="goo" style="width: 420px;" />
+											<input type="hidden" id="goo" style="width: 420px;"
+												name="gooId" />
 										</div>
 
 									</div>
@@ -231,9 +256,9 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Shared</label> <label class="radio-inline"> <input
-											type="radio" name="nn" value="0" checked />Yes
+											type="radio" name="shared" value="true" checked />Yes
 										</label> <label class="radio-inline"> <input type="radio"
-											name="nn" value="1" />No
+											name="shared" value="false" />No
 										</label>
 									</div>
 								</div>
@@ -243,9 +268,9 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Status</label> <label class="radio-inline"> <input
-											type="radio" name="11" value="0" checked />False
+											type="radio" name="status" value="0" checked />False
 										</label> <label class="radio-inline"> <input type="radio"
-											name="11" value="1" />True
+											name="status" value="1" />True
 										</label>
 
 									</div>
@@ -259,7 +284,7 @@
 										<div id="spinner3">
 											<div class="input-group" style="width: 150px;">
 												<input type="text" class="spinner-input form-control"
-													maxlength="3" readonly>
+													maxlength="3" name="priority" readonly>
 												<div class="spinner-buttons input-group-btn">
 													<button type="button" class="btn spinner-up default">
 														<i class="fa fa-angle-up"></i>
@@ -281,7 +306,7 @@
 							<div class="row">
 								<div class="col-md-2"></div>
 								<div class="col-md-4">
-									<button type="button" class="btn default">Cancel</button>
+									<a class="btn grey-cascade" href="<c:url value="/"/>promotion"><i class="fa fa-reply"></i> Back</a>
 									<button type="submit" class="btn blue">
 										<i class="fa fa-check"></i> Save
 									</button>
@@ -366,6 +391,8 @@
 		src="../assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
 	<script type="text/javascript"
 		src="../assets/global/plugins/fuelux/js/spinner.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js"
 		type="text/javascript"></script>

@@ -1,5 +1,7 @@
 package com.mpos.service;
 
+import java.util.List;
+
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.Tproduct;
 import com.mpos.model.DataTableParamter;
@@ -21,5 +23,7 @@ public interface GoodsService {
 	Tproduct getTproductByid(Integer id);
 	
 	void updateGoods(Tproduct product);
+	
+	List<Tproduct> loadAll();
 
 }

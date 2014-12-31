@@ -35,7 +35,7 @@ import com.mpos.service.AdminuserLogService;
 
 /** 
  * @ClassName: LoginController 
- * @Description: 鐧诲綍璇锋眰澶勭悊鎺у埗鍣�
+ * @Description: 
  * @author Phills Li
  * @date Sep 10, 2014 3:06:32 PM 
  *  
@@ -112,7 +112,7 @@ public class LoginController extends BaseController {
 			if(StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()==1){
 				toUrl="/home";
 			}else if (StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()!=1) {
-				toUrl="/point";	
+				toUrl="/home";	
 			}			
 			mav.setViewName("redirect:"+toUrl);
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
@@ -129,7 +129,7 @@ public class LoginController extends BaseController {
 		TadminUser adminUser = adminUserService.getTadminUsersByEmail(email.toLowerCase());
 		if(adminUser == null){
 			 adminUser = new TadminUser();
-			//閭涓嶅瓨鍦�
+			 
 			 mav.addObject(ERROR_MSG_KEY,"email not exist.");
 		}else{
 			adminLog.setAdminId(adminUser.getAdminId());
@@ -140,8 +140,8 @@ public class LoginController extends BaseController {
 			adminUser.setUpdatedTime(System.currentTimeMillis());
 			TemaiMessage message = new TemaiMessage();
 			message.setTo(email);
-			message.setText("浣犵殑BPS甯愬彿锛�+adminUser.getAdminId()+"+Calendar.getInstance().getTime()+"閲嶇疆瀵嗙爜锛屾柊瀵嗙爜涓猴細"+random);
-			message.setSubject("BPS閲嶇疆瀵嗙爜");
+			message.setText("your account: "+adminUser.getAdminId()+" reset password :"+Calendar.getInstance().getTime()+" new password:"+random);
+			message.setSubject("MPOS Password Reset");
 			EMailTool.send(message);
 			adminUserService.updateAdminUserPassword(adminUser);
 			mav.addObject(ERROR_MSG_KEY,"password reset success.");
@@ -155,7 +155,7 @@ public class LoginController extends BaseController {
 	}
 	
 	/** 
-	 * <p>娉ㄩ攢鐧诲綍鐢ㄦ埛</p>
+	 * <p></p>
 	 * @Title: logout 
 	 * @param session
 	 * @return String

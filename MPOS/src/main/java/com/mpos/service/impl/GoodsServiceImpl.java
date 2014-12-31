@@ -101,5 +101,10 @@ public class GoodsServiceImpl implements GoodsService{
 		
 		goodsDao.update(product);
 	}
+	
+		public List<Tproduct> loadAll() {
+		// TODO Auto-generated method stub
+		return goodsDao.LoadAll();
+	}
 
 }

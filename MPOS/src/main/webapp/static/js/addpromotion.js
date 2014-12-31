@@ -23,20 +23,24 @@ var rootURI="/";
 var AddPromotion = function () {
 	
 	var promotionProductSelect = function(){
-		
+		var product_data= [];
+		var menu_data = [];
+		var categroy_data = [];
 		$.ajax({
 			type:"GET",
-			url:"",
+			url:rootURI+"promotion/promotion_bind_product?rand="+Math.random(),
 			dataType:"json",
 			success:function(data){
-				
+                product_data=data.product;
+				menu_data=data.menu;
+			    categroy_data=data.category;
 			},"error":function(XMLHttpRequest, textStatus, errorThrown){
            	 alert(errorThrown);
             }
 			
 		});
 		
-		$("input:radio[name=product_type]").click(function(){
+		$("input:radio[name=bindType]").click(function(){
 			$("#classification").addClass("hidden");
 			$("#goods").addClass("hidden");
 			$("#menu").addClass("hidden");
@@ -56,33 +60,7 @@ var AddPromotion = function () {
 			}
 			
 		});
-		var product_data = [
-		                      { id: 'user0', text: 'Disabled User'}
-		                    , { id: 'user1', text: 'Jane Doe'}
-		                    , { id: 'user2', text: 'John Doe'}
-		                    , { id: 'user3', text: 'Robert Paulson'}
-		                    , { id: 'user5', text: 'Spongebob Squarepants'}
-		                    , { id: 'user6', text: 'Planet Bob' }
-		                    , { id: 'user7', text: 'Inigo Montoya' }
-		                  ];
-		var menu_data = [
-		                      { id: 'user0', text: 'Disabled User'}
-		                    , { id: 'user1', text: 'Jane Doe'}
-		                    , { id: 'user2', text: 'John Doe'}
-		                    , { id: 'user3', text: 'Robert Paulson'}
-		                    , { id: 'user5', text: 'Spongebob Squarepants'}
-		                    , { id: 'user6', text: 'Planet Bob' }
-		                    , { id: 'user7', text: 'Inigo Montoya' }
-		                  ];
-		var categroy_data = [
-		                      { id: 'user0', text: 'Disabled User'}
-		                    , { id: 'user1', text: 'Jane Doe'}
-		                    , { id: 'user2', text: 'John Doe'}
-		                    , { id: 'user3', text: 'Robert Paulson'}
-		                    , { id: 'user5', text: 'Spongebob Squarepants'}
-		                    , { id: 'user6', text: 'Planet Bob' }
-		                    , { id: 'user7', text: 'Inigo Montoya' }
-		                  ];
+		
 		
 		$('#cla').select2({
 			 placeholder: "Select Classification",
@@ -98,7 +76,9 @@ var AddPromotion = function () {
 		 
 		          query.callback(data);
 		      }});
-		 
+//		 $('#cla').select2('data', categroy_data ); 设置初始值
+		
+		
 		 $('#goo').select2({
 			 placeholder: "Select Good",
 		      multiple: true
@@ -116,8 +96,8 @@ var AddPromotion = function () {
 		 
 		 $('#men').select2({
 			 placeholder: "Select Menu",
-		      multiple: true
-		      ,query: function (query){
+		      multiple: true,
+		      query: function (query){
 		          var data = {results: []};
 		 
 		          $.each(menu_data, function(){
@@ -135,42 +115,42 @@ var AddPromotion = function () {
 		   $("#type_SalesRule_show").empty();
 		   switch(parseInt($(this).val())){
 		    case 0:$("#type_SalesRule_show").append("<div class=\"col-md-5\"><label>Straight down: the rules of commodity, single commodity in the actual price basis, reduction&nbsp;</label></div>" +
-		    		"<div class=\"col-md-1\"><input name=\"\" type=\"text\" class=\"form-control\"></div>" +
+		    		"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramOne\"></div>" +
 		    		"<div class=\"col-md-1\"><label>$</label></div>");
 		    break;
 		   	case 1:
 		   		$("#type_SalesRule_show").append("<div class=\"col-md-4\"><label>Full: this rule under the single order goods, purchase amount</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramOne\"></div>" +
 		   				"<div class=\"col-md-1\"><label>$, reduce</label></div>"+
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>"+
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramTwo\"></div>"+
 		   				"<div class=\"col-md-1\"><label>$</label></div>");
 		   		 ;
 		   	   break;
 		    case 2:
 		   		$("#type_SalesRule_show").append("<div class=\"col-md-4\"><label>Discount: the rules of goods, according to the commodity price</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramOne\"></div>" +
 		   				"<div class=\"col-md-1\"><label>discount.</label></div>");
 		   		  ;
 		   	   break;
 		   
 		    case 3:
 		   		$("#type_SalesRule_show").append("<div class=\"col-md-5\"><label>Combination: this rule combination of goods, to work together to buy a further reduction of</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramOne\"></div>" +
 		   				"<div class=\"col-md-3\"><label>$ each group contains at most 5 commodity.</label></div>");
 		   	   break;
 			case 4:
 		   		$("#type_SalesRule_show").append("<div class=\"col-md-3\"><label>To participate in the activities of goods, buy</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramOne\"></div>" +
 		   				"<div class=\"col-md-1\"><label> get</label></div>"+
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>"+
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramTwo\"></div>"+
 		   				"<div class=\"col-md-1\"><label>free.</label></div>");
 		   		 ;
 		   	   break;
 			case 5:
 		   		$("#type_SalesRule_show").append("<div class=\"col-md-3\"><label>To participate in the activities of goods, buy</label></div>" +
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>" +
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramOne\"></div>" +
 		   				"<div class=\"col-md-1\"><label> get</label></div>"+
-		   				"<div class=\"col-md-1\"><input name=\"gg\" type=\"text\" class=\"form-control\"></div>"+
+		   				"<div class=\"col-md-1\"><input  type=\"text\" class=\"form-control\" name=\"paramTwo\"></div>"+
 		   				"<div class=\"col-md-1\"><label>free.</label></div>");
 		   		 ;
 		   	   break;
@@ -200,7 +180,7 @@ var AddPromotion = function () {
         });
     };
     
-	 var uploader = new plupload.Uploader({
+	 /*var uploader = new plupload.Uploader({
          runtimes : 'html5,flash,silverlight,html4',
           
          browse_button : document.getElementById('tab_images_uploader_pickfiles'), // you can pass in id...
@@ -264,8 +244,92 @@ var AddPromotion = function () {
                  Metronic.alert({type: 'danger', message: err.message, closeInSeconds: 10, icon: 'warning'});
              }
          }
-     });
-	 
+     });*/
+    var handleDatetimePicker = function() {
+		$(".form_datetime").datetimepicker(
+				{
+					isRTL : Metronic.isRTL(),
+					format : "dd/mm/yyyy hh:ii",
+					autoclose : true,
+					todayBtn : false,
+					pickerPosition : (Metronic.isRTL() ? "bottom-right"
+							: "bottom-left"),
+					minuteStep : 1
+				});
+	}
+    
+    var addFormValidation = function() {
+        var form = $('#promotion_form');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+             promotionName: {
+            	 required: true,
+            	 },
+             paramOne:{
+            	 required: true,
+            	 digits:true,
+            	 min:0,
+             },
+             paramTwo:{
+                	 required: true,
+                	 digits:true,
+                	 min:0,
+                 },
+             startTime:{
+            	 required: true
+             },
+             endTime:{
+                	 required: true
+                 }
+             
+            
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	addPromotionSubmit();
+            }
+        });
+    } 
+    
+    var addPromotionSubmit= function(){
+    	$.ajax({
+    		type:"POST",
+    		dataType:"json",
+    		url:rootURI+"promotion/addPromotion?rand="+Math.random(),
+    		data:$('#promotion_form').serializeJson(),
+    		success:function(resp,status){
+    			
+    		}
+    		
+    		
+    	});
+    }
 	
     return {
         //main function to initiate the module
@@ -275,7 +339,8 @@ var AddPromotion = function () {
  //       	uploader.init();
         	promotionProductSelect();
         	handleBootstrapSelect();
- //       	handleDatetimePicker();
+         	handleDatetimePicker();
+         	addFormValidation();
            }
 
     };

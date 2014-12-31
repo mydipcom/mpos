@@ -15,4 +15,6 @@ public interface PromotionService {
 	Tpromotion getPromtionById(int id);
 	
 	List<Tpromotion> selectPromotion(Integer bindType);
+	
+	void createPromtion(Tpromotion tPromotion);
 }

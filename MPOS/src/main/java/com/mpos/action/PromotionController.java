@@ -1,7 +1,12 @@
 package com.mpos.action;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -14,15 +19,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConstants;
+import com.mpos.dto.Tcategory;
+import com.mpos.dto.Tmenu;
+import com.mpos.dto.Tproduct;
 import com.mpos.dto.Tpromotion;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.model.PromotionModel;
+import com.mpos.service.CategoryService;
+import com.mpos.service.GoodsService;
+import com.mpos.service.MenuService;
 import com.mpos.service.PromotionService;
+import com.sun.mail.handlers.text_html;
 @Controller
 @RequestMapping("promotion")
 public class PromotionController extends BaseController{
@@ -31,6 +44,15 @@ public class PromotionController extends BaseController{
 	
 	@Autowired
 	private PromotionService promotionService;
+	
+	@Autowired
+	private GoodsService goodsService;
+	
+	@Autowired
+	private MenuService menuService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView promotion(){
@@ -104,17 +126,91 @@ public class PromotionController extends BaseController{
 	}
 	
 	@RequestMapping(value="add_promotion",method=RequestMethod.GET)
-	public ModelAndView addPromotion(){
+	public ModelAndView add_Promotion(){
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("promotion/add_promotion");
 		return mav;
 	}
 	
 	@RequestMapping(value="promotion_bind_product",method=RequestMethod.GET)
+	@ResponseBody
 	public String getPromotionBindProduct(){
 		JSONObject resp  = new JSONObject();
-		JSONObject [] jsonObjects = new JSONObject[2];
-		JSONObject jsonObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		JSONObject jsonObject = null;
+		List<Tproduct> products = goodsService.loadAll();
+		List<Tcategory> categorys = categoryService.getallCategory();
+		List<Tmenu> menus = menuService.getAllMenu();
+		for(Tproduct product : products){
+			jsonObject = new JSONObject();
+			jsonObject.put("id",product.getId().toString());
+			jsonObject.put("text", product.getProductName());
+			jsonArray.add(jsonObject);
+		}
+		resp.put("product", jsonArray);
+		jsonArray = new JSONArray();
+		for(Tcategory category:categorys){
+			jsonObject = new JSONObject();
+			jsonObject.put("id", category.getCategoryId().toString());
+			jsonObject.put("text", category.getName());
+			jsonArray.add(jsonObject);
+		}
+		resp.put("category", jsonArray);
+		jsonArray= new JSONArray();
+		for(Tmenu menu:menus){
+			jsonObject = new JSONObject();
+			jsonObject.put("id",menu.getMenuId().toString());
+			jsonObject.put("text",menu.getTitle());
+			jsonArray.add(jsonObject);
+		}
+		resp.put("menu", jsonArray);
+		String jsongString = JSON.toJSONString(resp);
+		return jsongString;
+	}
+    
+	@RequestMapping(value="addPromotion",method=RequestMethod.POST)
+	@ResponseBody
+	String addPromotion(HttpServletRequest request,PromotionModel pm){
+		JSONObject resp = new JSONObject();
+		try{
+			Tpromotion tpromotion= new Tpromotion();
+			Set <Tproduct> tproducts = null;
+			tpromotion.setPromotionName(pm.getPromotionName());
+			tpromotion.setBindType(pm.getWay());
+			tpromotion.setShared(pm.isShared());
+			tpromotion.setPriority(pm.getPriority());
+			tpromotion.setStatus(pm.isStatus());
+			tpromotion.setStartTime(ConvertTools.dateStringToLong(pm.getStartTime()));
+			tpromotion.setEndTime(ConvertTools.dateStringToLong(pm.getEndTime()));
+			tpromotion.setBindType(pm.getBindType());
+			tpromotion.setParamOne(pm.getParamOne());
+			tpromotion.setParamTwo(pm.getParamTwo());
+			if(pm.getBindType() == 1){
+				tpromotion.setBindId(pm.getClaId());
+			}else if(pm.getBindType() == 2){
+				tpromotion.setBindId(pm.getMenId());
+			}else if(pm.getBindType() == 3){
+				String []strArr = pm.getGooId().split(",");
+                Integer [] ids = ConvertTools.stringArr2IntArr(strArr);
+                tproducts = new HashSet<Tproduct>();
+                for(int id : ids){
+                	Tproduct tproduct = new Tproduct();
+                	tproduct.setId(id);
+                	tproducts.add(tproduct);
+                }
+                tpromotion.settProducts(tproducts);
+			}
+			tpromotion.setPromotionRule("XXXXXXXXX");
+			promotionService.createPromtion(tpromotion);
+		}catch(MposException m){
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		return JSON.toJSONString(resp);
 	}
 

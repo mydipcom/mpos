@@ -97,5 +97,11 @@ public class PromotionServiceImpl implements PromotionService {
 		String hql = "from Tpromotion tp where tp.status=:status and tp.startTime <=:time and tp.endTime>=:time1 and tp.bindType=:bindType order by tp.priority";
 		return promtionDao.find(hql, map);
 	}
+	
+	public void createPromtion(Tpromotion tPromotion) {
+		// TODO Auto-generated method stub
+		promtionDao.create(tPromotion);
+	}
+	
 
 }
