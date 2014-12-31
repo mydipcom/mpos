@@ -98,7 +98,6 @@ public class GoodsController extends BaseController{
 	@ResponseBody
 	public String goodsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=goodsService.loadGoodsList(dtp);
-		
 		pagingData.setSEcho(dtp.sEcho);
 		if(pagingData.getAaData()==null){
 			Object[] objs=new Object[]{};
@@ -196,7 +195,7 @@ public class GoodsController extends BaseController{
 	public ModelAndView addGoods(HttpServletRequest request,AddGoodsModel model,AddgoodsLocal value,
 			@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
 		Tproduct product=new Tproduct();
-		MultipartFile[] files;
+		
 		JSONObject respJson = new JSONObject();
 		List<TproductAttribute> tproductAttributelist=new ArrayList<TproductAttribute>(); 
 		

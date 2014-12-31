@@ -283,7 +283,7 @@ var LanguagesTable = function () {
 		//$('#add_users').modal('hide');
     };
     
-    var AddUsersValidation = function() {
+    var AddlanguagesValidation = function() {
         var form = $('#addLanguagesForm');
         var errorDiv = $('.alert-danger', form);            
         form.validate({
@@ -363,7 +363,7 @@ var LanguagesTable = function () {
 	};
 		
             
-	var EditUsersValidation = function() {
+	var EditLanguagesValidation = function() {
 		var form = $('#editLanguagesForm');
 		var errorDiv = $('.alert-danger', form);            
 		form.validate({
@@ -417,8 +417,8 @@ var LanguagesTable = function () {
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-        	AddUsersValidation();
-        	EditUsersValidation();        	
+        	AddlanguagesValidation();
+        	EditLanguagesValidation();        	
         }
 
     };

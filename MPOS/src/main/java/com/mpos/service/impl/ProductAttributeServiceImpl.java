@@ -39,7 +39,8 @@ public class ProductAttributeServiceImpl implements ProductAttributeService{
 
 
 	public void updattProductAttribute(TproductAttribute productAttribute) {
-		productAttributeDao.update(productAttribute);
+		//productAttributeDao.update(productAttribute);
+		productAttributeDao.saveOrUpdate(productAttribute);
 		
 	}
 

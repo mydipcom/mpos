@@ -44,7 +44,7 @@
             <column name="status" not-null="true" />
         </property>
         
-        <set name="attributes" table="mpos_product_attribute" inverse="true" lazy="true" fetch="select">
+ <!--        <set name="attributes" table="mpos_product_attribute" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="product_id" not-null="true" />
             </key>
@@ -58,11 +58,12 @@
                 <column name="promotion_id" not-null="true" />
             </many-to-many>
         </set>
-        <set name="images" table="mpos_product_image" inverse="true" lazy="true" fetch="select">
+        
+         <set name="images" table="mpos_product_image" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="product_id" not-null="true" />
             </key>
             <one-to-many class="com.mpos.dto.TproductImage" />
-        </set>
+        </set>  -->
     </class>
 </hibernate-mapping>

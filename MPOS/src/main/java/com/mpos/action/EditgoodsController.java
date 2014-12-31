@@ -147,13 +147,13 @@ private LocalizedFieldService localizedFieldService;
 		JSONObject respJson = new JSONObject();
 		product.setId(model.getPorductid());
 		List<TproductAttribute> tproductAttributelist=new ArrayList<TproductAttribute>(); 
-		TproductAttribute tproductAttribute=new TproductAttribute();
 		product.setShortDescr(model.getShortDescr());
 		product.setFullDescr(model.getFullDescr());
 		product.setPrice(model.getPrice());
 		product.setOldPrice(model.getOldPrice());
 		product.setProductName(model.getProductName());
 		product.setUnitName(model.getUnitName());
+		product.setStatus(true);
 		Tcategory catefory=categoryService.getCategory(model.getCategoryId());
 		product.setTcategory(catefory);
 		Tmenu menu=menuService.getMenu(model.getMenuId());
@@ -169,13 +169,14 @@ private LocalizedFieldService localizedFieldService;
 		} catch (MposException be) {
 			
 		}
-		//�����Ʒ��������
+		
 		Iterator it = SystemConfig.product_AttributeModel_Map.keySet().iterator(); 
 		   while (it.hasNext()){ 
 		    String key; 
 		    key=(String)it.next(); 
 		    AddAttributevaleModel models= SystemConfig.product_AttributeModel_Map.get(key);
 		    TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(models.getAttributeId());
+		    TproductAttribute tproductAttribute=new TproductAttribute();
 		    tproductAttribute.setContent(models.getContent());
 		    tproductAttribute.setPrice(models.getPrice());
 		    TproductAttributeId productAttributeid=new TproductAttributeId();

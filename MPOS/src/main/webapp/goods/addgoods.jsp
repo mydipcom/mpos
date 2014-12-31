@@ -128,6 +128,16 @@
 											<div class="form-body">
 												<h3 class="form-section">BasicGoods Info</h3>
 												<div class="row">
+												<!--/span-->
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label col-md-3">Price</label>
+															<div class="col-md-9">
+																<input type="text" name="price" class="form-control" placeholder="0.00">
+															</div>
+														</div>
+													</div>
+													<!--/span-->
 													<div class="col-md-6">
 														<div class="form-group">
 															<label class="control-label col-md-3">OldPrice</label>
@@ -136,16 +146,7 @@
 															</div>
 														</div>
 													</div>
-													<!--/span-->
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">price</label>
-															<div class="col-md-9">
-																<input type="text" name="price" class="form-control" placeholder="0.00">
-															</div>
-														</div>
-													</div>
-													<!--/span-->
+													
 												</div>
 												<div class="row">
 													<div class="col-md-6">
