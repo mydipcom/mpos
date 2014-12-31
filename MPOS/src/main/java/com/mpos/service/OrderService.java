@@ -13,5 +13,5 @@ public interface OrderService {
 	
 	void update(Torder torder);
 	
-	
+	void createOrder(Torder torder);
 }

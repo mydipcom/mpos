@@ -1,5 +1,7 @@
 package com.mpos.dto;
 
+import java.util.Set;
+
 // Generated Dec 18, 2014 11:18:19 AM by Hibernate Tools 4.0.0
 
 /**
@@ -26,6 +28,12 @@ public class Tproduct implements java.io.Serializable {
 	private Tcategory tcategory;
 	private String  menuname;
 	private String  categoryname;
+	
+	private Set<TproductImage> images;
+	
+	private Set<TgoodsAttribute> attributes;
+	
+	private Set<Tpromotion> promotions;
 
 	public Tproduct() {
 	}
@@ -185,6 +193,42 @@ public class Tproduct implements java.io.Serializable {
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+
+
+	public Set<TproductImage> getImages() {
+		return images;
+	}
+
+
+
+	public void setImages(Set<TproductImage> images) {
+		this.images = images;
+	}
+
+
+
+	public Set<TgoodsAttribute> getAttributes() {
+		return attributes;
+	}
+
+
+
+	public void setAttributes(Set<TgoodsAttribute> attributes) {
+		this.attributes = attributes;
+	}
+
+
+
+	public Set<Tpromotion> getPromotions() {
+		return promotions;
+	}
+
+
+
+	public void setPromotions(Set<Tpromotion> promotions) {
+		this.promotions = promotions;
 	}
 
 }

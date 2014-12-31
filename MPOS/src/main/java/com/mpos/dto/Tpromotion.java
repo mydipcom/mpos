@@ -27,11 +27,11 @@ public class Tpromotion implements Serializable {
 
 	private boolean shared;
 
-	private int priority;
+	private Integer priority;
 
 	private int bindType;
 
-	private int bindId;
+	private String bindId;
 
 	private boolean status;
 
@@ -109,11 +109,11 @@ public class Tpromotion implements Serializable {
 		this.shared = shared;
 	}
 
-	public int getPriority() {
+	public Integer getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
 
@@ -125,11 +125,11 @@ public class Tpromotion implements Serializable {
 		this.bindType = bindType;
 	}
 
-	public int getBindId() {
+	public String getBindId() {
 		return bindId;
 	}
 
-	public void setBindId(int bindId) {
+	public void setBindId(String bindId) {
 		this.bindId = bindId;
 	}
 

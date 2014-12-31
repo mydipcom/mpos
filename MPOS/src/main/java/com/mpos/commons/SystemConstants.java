@@ -44,19 +44,20 @@ public class SystemConstants {
 	
 	public static final String LOGIN_ERROR_LOCK="Login_Error_Locked";
 	
-	public static final String TABLE_NAME_MENU="menu";
-	public static final String TABLE_NAME_ATTRIBUTE="attribute";
-	public static final String TABLE_NAME_PRODUCT="product";
+	public static final String TABLE_NAME_MENU="Tmenu";
+	public static final String TABLE_NAME_CATE_ATTRIBUTE="TcategoryAttribute";
+	public static final String TABLE_NAME_PRODUCT_ATTRIBUTE="TproductAttribute";
+	public static final String TABLE_NAME_PRODUCT="Tproduct";
 	
 	public static final String TABLE_FIELD_TITLE="title";
-	public static final String TABLE_FIELD_CONTENT="content";
+	public static final String TABLE_FIELD_ATTRIBUTE_VALUE="attributeValue";
 	public static final String TABLE_FIELD_PRODUCTNAME="productName";
 	public static final String TABLE_FIELD_SHORTDESCR="shortDescr";
 	public static final String TABLE_FIELD_FULLDESCR="fullDescr";
 	
 	public static final String CONFIG_CLIENT_PWD="config_client_pwd";
 	public static final String CONFIG_CLIENT_LOGO="config_client_logo";
-	public static final String CONFIG_API_TOKEN="config_api_token";
+	public static final String CONFIG_API_TOKEN="Token";
 	public static final String CONFIG_DISPLAY_CURRENCY="config_display_currency";
 	
 	public static final String RESTAURANT_NAME="Restaurant_Name";

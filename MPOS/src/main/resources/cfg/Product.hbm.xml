@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
-<hibernate-mapping  default-lazy="true">
+<hibernate-mapping  default-lazy="false">
     <class name="com.mpos.dto.Tproduct" table="mpos_product" catalog="mpos">
         <id name="id" type="java.lang.Integer">
             <column name="product_id" />
@@ -43,5 +43,26 @@
         <property name="status" type="boolean">
             <column name="status" not-null="true" />
         </property>
+        
+        <set name="attributes" table="mpos_product_attribute" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.mpos.dto.TgoodsAttribute" />
+        </set>
+        <set name="promotions" table="mpos_promotion_product" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.mpos.dto.Tpromotion">
+                <column name="promotion_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="images" table="mpos_product_image" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.mpos.dto.TproductImage" />
+        </set>
     </class>
 </hibernate-mapping>

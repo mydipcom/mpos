@@ -54,6 +54,7 @@
           <value>cfg/ProductRelease.hbm.xml</value>
 	   <value>cfg/ProductImage.hbm.xml</value>
           <value>cfg/ProductAttribute.hbm.xml</value>
+          <value>cfg/GoodsAttribute.hbm.xml</value>
 	  </list>
 	</property>
 	 

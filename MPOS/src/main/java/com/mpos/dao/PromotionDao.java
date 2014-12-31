@@ -1,5 +1,10 @@
 package com.mpos.dao;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+
 import com.mpos.dao.base.BaseDao;
 import com.mpos.dto.Tpromotion;
 
@@ -11,5 +16,13 @@ import com.mpos.dto.Tpromotion;
 @Repository
 public class PromotionDao extends BaseDao<Tpromotion> {
 	
-
+	public List<Tpromotion> find(String hql, Map<String, Object> params) {
+		Query query = currentSession().createQuery(hql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				query.setParameter(key, params.get(key));
+			}
+		}
+		return query.list();
+	}
 }

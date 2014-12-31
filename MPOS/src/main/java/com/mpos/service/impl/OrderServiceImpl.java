@@ -77,4 +77,9 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		orderDao.update(torder);
 	}
+
+	public void createOrder(Torder torder) {
+		// TODO Auto-generated method stub
+		orderDao.create(torder);
+	}
 }

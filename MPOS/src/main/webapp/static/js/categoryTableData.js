@@ -43,7 +43,7 @@ function setValue(id){
  * @param list
  */
 function setFromValue(list){
-	var le = $("#lan_len").val();
+	var le = list.length/2;
 	if(list!=null&&list.length>0){
 		for (var int = 0; int < le; int++) {
 			var lan = list[int];
@@ -69,7 +69,7 @@ function setFromValue(list){
  * @param list
  */
 function setCateFromValue(list){
-	var le = $("#lan_len").val();
+	var le = list.length/2;
 	if(list!=null&&list.length>0){
 		for (var int = 0; int < le; int++) {
 			var lan = list[int];
@@ -95,7 +95,7 @@ function setCateFromValue(list){
  * @param list
  */
 function setCateCopyFromValue(list){
-	var le = $("#lan_len").val();
+	var le = list.length/2;
 	if(list!=null&&list.length>0){
 		for (var int = 0; int < le; int++) {
 			var lan = list[int];

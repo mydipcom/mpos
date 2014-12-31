@@ -81,7 +81,14 @@ public class MenuServiceImpl implements MenuService {
 	
 	public void deleteMenuByIds(Integer[] idArr) {
 		// TODO Auto-generated method stub
-		menuDao.deleteAll(idArr);
+		if(idArr!=null&&idArr.length>0){
+			for (Integer integer : idArr) {
+				Tmenu menu = menuDao.get(integer);
+				menu.setStatus(false);
+				menuDao.update(menu);
+			}
+		}
+		
 	}
 
 

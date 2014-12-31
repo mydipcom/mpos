@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.criterion.Criterion;
@@ -82,6 +84,18 @@ public class PromotionServiceImpl implements PromotionService {
 	public Tpromotion getPromtionById(int id) {
 		// TODO Auto-generated method stub
 		return promtionDao.get(id);
+	}
+	
+	public List<Tpromotion> selectPromotion(Integer bindType) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		long time = new Date().getTime();
+		map.put("status", true);
+		map.put("time", time);
+		map.put("time1", time);
+		map.put("bindType", bindType);
+		String hql = "from Tpromotion tp where tp.status=:status and tp.startTime <=:time and tp.endTime>=:time1 and tp.bindType=:bindType order by tp.priority";
+		return promtionDao.find(hql, map);
 	}
 
 }
