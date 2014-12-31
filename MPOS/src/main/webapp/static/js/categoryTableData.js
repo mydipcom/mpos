@@ -570,6 +570,8 @@ var CategoryTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
+	            	 form[0].reset();
+	            	 $("#add_category").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
 				 }
 				 else{
@@ -580,7 +582,7 @@ var CategoryTable = function () {
          "error":function(XMLHttpRequest, textStatus, errorThrown){
         	 alert(errorThrown);
          }
-       });		
+       });
     };
     
   //复制添加操作
@@ -595,6 +597,8 @@ var CategoryTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
+	            	 form[0].reset();
+	            	 $("#copy_add_category").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#copyFormMsg");		            	 
 				 }
 				 else{
@@ -618,8 +622,10 @@ var CategoryTable = function () {
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){						 
-        			 viewTable.api().draw();
-	            	 handleAlerts("Edit the data successfully.","success","#editCategoryFormMsg");		            	 
+        			 oTable.api().draw();
+        			 $('#editCategoryForm')[0].reset();
+        			 $("#edit_category").modal('hide');
+	            	 handleAlerts("Edit the data successfully.","success","#editFormMsg");		            	 
 				 }
 				 else{
 					 handleAlerts("Failed to edit the data.","danger","#editCategoryFormMsg");						 
@@ -644,6 +650,8 @@ var CategoryTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
+	            	 from[0].reset();
+	            	 $("#add_attribute").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#addAttributeFormMsg");		            	 
 				 }
 				 else{
@@ -669,6 +677,8 @@ var CategoryTable = function () {
         		 if(resp.status){
         			 attSelected = [];
         			 attTable.api().draw();
+        			 $("#editAttributeForm")[0].reset();
+	            	 $("#edit_attribute").modal('hide');
 	            	 handleAlerts("Edit the data successfully.","success","#editAttributeFormMsg");		            	 
 				 }
 				 else{
@@ -849,14 +859,6 @@ var CategoryTable = function () {
                     required: true
                 },
                 "content": {
-                    minlength: 2,
-                    required: true
-                },
-                "titles[1].localeValue": {
-                    minlength: 2,
-                    required: true
-                },
-                "contents[1].localeValue": {
                     minlength: 2,
                     required: true
                 }

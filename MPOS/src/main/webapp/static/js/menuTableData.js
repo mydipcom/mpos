@@ -244,6 +244,8 @@ var MenuTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
+	            	 $('#addMenuForm')[0].reset();
+	            	 $("#add_menu").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
 				 }
 				 else{
@@ -270,6 +272,8 @@ var MenuTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
+	            	 $('#editMenuForm')[0].reset();
+	            	 $("#edit_menu").modal('hide');
 	            	 handleAlerts("Edit the data successfully.","success","#editFormMsg");		            	 
 				 }
 				 else{
@@ -314,10 +318,6 @@ var MenuTable = function () {
                 rules: {
                     "title": {
                         minlength: 2,
-                        required: true
-                    },
-                    "locals[1].localeValue":{
-                    	minlength: 2,
                         required: true
                     },
                     "pid": {
@@ -367,10 +367,6 @@ var MenuTable = function () {
                 rules: {
                     "title": {
                         minlength: 2,
-                        required: true
-                    },
-                    "locals[1].localeValue":{
-                    	minlength: 2,
                         required: true
                     },
                     "pid": {
