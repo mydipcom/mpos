@@ -126,13 +126,11 @@ var Addgoods = function () {
 		             "success": function(data,status){
 		            	 if(status == "success"){ 
 		            		 if(data.status){
-		            			 alert(data.list);
-		            			 var test=data.list;
-		            			
-		            			 for(var i=0;i<test.length;i++){
-		            				 alert(test[i].content);
-		            				 var content=(test[i].content).split(",");
-		            				 html+="<option value="+test[i].attributeId+">"+test[i].title+"</option>"
+		            			 var list=data.list;
+		            			 for(var i=0;i<list.length;i++){
+		            				 alert(list[i].content);
+		            				 var content=(list[i].content).split(",");
+		            				 html+="<option value="+list[i].attributeId+">"+list[i].title+"</option>"
 		            				 /*
 		            				 if((test[i].type)==1){
 		            					 html="<div class=\"form-group\"><label class=\"control-label col-md-3\">"+test[i].title+"</label><div class=\"col-md-9\"><div class=\"checkbox-list\">"
@@ -184,7 +182,7 @@ var Addgoods = function () {
 		            			 var test=data.list;
 		            			 var html;
 		            			 var content=(test.content).split(",");
-		            			 if((test.type)==1){
+		            			 if((test.type)==2){
 	            					 html="<div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">"+test.title+"</label><div class=\"col-md-9\"><div class=\"checkbox-list\">";
 	            					 for(var j=0;j<content.length;j++){
 	            						 html=html+"<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"content\" value="+content[j]+">"+content[j]+"</label>";
@@ -196,7 +194,7 @@ var Addgoods = function () {
 	            					 html+="</div></div></div>";
 	            					
 	            					
-	            				 }else if((test.type)==2){
+	            				 }else if((test.type)==1){
 	            					 html="<div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">"+test.title+"</label><div class=\"col-md-9\"><div class=\"radio-list\">";
 	            					 for(var j=0;j<content.length;j++){
 	            						 html+="<label class=\"radio-inline\"><input type=\"radio\"  name=\"content\" value="+content[j]+">"+content[j]+"</label>";
@@ -207,7 +205,7 @@ var Addgoods = function () {
 	            					 html+="<div class=\"row\"><input name=\"type\" type=\"hidden\" value="+test.type+"></div>";
 	            					 html+="</div></div></div>";
 	            					
-	            				 }else {
+	            				 }else  if((test.type==3)){
 	            					 html="<div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">"+test.title+"</label><div class=\"col-md-9\"><select class=\"select2_category form-control\"  name=\"content\">";
 	            					 for(var j=0;j<content.length;j++){
 	            					 html+="<option value="+content[j]+">"+content[j]+"</option>";
