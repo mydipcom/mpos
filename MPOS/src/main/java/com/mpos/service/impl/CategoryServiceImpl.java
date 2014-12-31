@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 		
 		try {
-			return categoryDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+			return categoryDao.findPage(Restrictions.eq("status",true),rdtp.iDisplayStart, rdtp.iDisplayLength);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

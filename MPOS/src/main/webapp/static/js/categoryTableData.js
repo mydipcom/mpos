@@ -159,7 +159,7 @@ var CategoryTable = function () {
 	           { title: "ID",   data: "categoryId"},
 	           { title: "Name",    data: "name" },
 	           { title: "Content",  data: "content" },
-	           { title: "Status",    data: "status" },
+	           /*{ title: "Status",    data: "status" },*/
 	           { title: "Action" ,"class":"center"}
 	          ],
 	        "serverSide": true,

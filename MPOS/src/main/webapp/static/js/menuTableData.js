@@ -79,7 +79,7 @@ var MenuTable = function () {
 	           { title: "ID",   data: "menuId"},
 	           { title: "Title",    data: "title" },
 	           { title: "Parent ID",  data: "pid" },
-	           { title: "Status",    data: "status" },
+	           /*{ title: "Status",    data: "status" },*/
 	           { title: "Sort",    data: "sort"}
 	          ],
 	        "serverSide": true,

@@ -75,7 +75,7 @@ public class MenuServiceImpl implements MenuService {
 			}
 			return menuDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
 		}
-		return menuDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+		return menuDao.findPage(Restrictions.eq("status",true),rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
 	
