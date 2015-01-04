@@ -74,7 +74,7 @@
 					<div class="row">
 						<div class="col-md-6">					
 							<div class="form-group">
-								<label class="col-md-3 control-label">ProductName</label>
+								<label class="col-md-3 control-label">Product Name</label>
 								<div class="col-md-9">
 									<input name="productName" type="text" class="form-control">							
 								</div>
@@ -82,7 +82,7 @@
 						</div>
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">MenuName</label>
+								<label class="col-md-3 control-label">Category</label>
 								<div class="col-md-9">
 								<select name="tmenu.menuId" class="form-control">
 										<option value="">ALL</option>
@@ -96,27 +96,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row">					
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">category</label>
-								
-								<div class="col-md-9">
-									<select name="tcategory.categoryId" class="form-control">
-										<option value="">ALL</option>
-										<c:if test="${not empty category}">
-											<c:forEach items="${category}" var="categoryitem">
-												<option value="${categoryitem.categoryId}">${categoryitem.name}</option>
-											</c:forEach>
-										</c:if>							
-									</select>
-								
-								</div>
-							</div>
-						</div>					
-						<div class="col-md-6">	
-							<div class="form-group">
-								<label class="col-md-3 control-label">recommend</label>
+								<label class="col-md-3 control-label">Recommend</label>
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
@@ -196,7 +179,7 @@
 						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>GoodsList Table
+									<i class="fa fa-edit"></i>ProductsList Table
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i>add</a>

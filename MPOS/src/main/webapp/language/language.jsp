@@ -91,21 +91,7 @@
 			
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 
-				<div class="page-bar">
-
-					<ul class="page-breadcrumb">
-
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="<c:url value="/"/>home">home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>manager">setodernumber</a>	
-						</li>
-					</ul>					
-
-				</div>
+				
 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 
@@ -134,8 +120,8 @@
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_language"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_language" id="openEditlanguageModal" ><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_language" id="openActivelanguageModal"><i class="fa fa-key"></i>activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeletelanguageModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_language" id="openActivelanguageModal"><i class="fa fa-key"></i>Activate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeletelanguageModal"><i class="fa fa-trash-o"></i>Deactivate</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
