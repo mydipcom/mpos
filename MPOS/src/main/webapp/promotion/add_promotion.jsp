@@ -107,18 +107,15 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<h3>
-					Promotion <small>promotion addition</small>
-				</h3>
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
+				 <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i></li>
 						<li><a href="<c:url value="/"/>add_promotion">Promotion Addition</a></li>
 
-					</ul>
-				</div>
+					</ul>--%>
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->

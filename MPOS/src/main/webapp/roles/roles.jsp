@@ -34,8 +34,8 @@
 		<!-- BEGIN CONTENT -->
 		<div class="page-content-wrapper">				<div class="page-content">								
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
+				 <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li>
 							<i class="fa fa-home"></i>
 							<a href="<c:url value="/"/>home"><s:message code="home"/></a>
@@ -43,8 +43,8 @@
 						</li>
 						<li>
 							<a href="<c:url value="/"/>roles"><s:message code="system.management.roles.title" /></a>
-						</li>					</ul>					
-				</div>
+						</li>					</ul>--%>					
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				
 				<!-- BEGIN SEARCH FORM -->

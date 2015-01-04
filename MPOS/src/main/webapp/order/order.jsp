@@ -96,9 +96,7 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<h3 class="page-title">
-		       <s:message code="order"/> <small><s:message code="orderlist"/></small></h3>
-				<div class="page-bar">
+				<%-- <div class="page-bar">
 					<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
@@ -107,7 +105,7 @@
 						<li><a href="<c:url value="/"/>order"><s:message code="order.title"/></a></li>
 
 					</ul>
-				</div>
+				</div> --%>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->

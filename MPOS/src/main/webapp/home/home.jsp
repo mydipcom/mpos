@@ -88,7 +88,7 @@
 			</div>
 			<!-- END STYLE CUSTOMIZER -->
 			<!-- BEGIN PAGE HEADER-->
-			<h3 class="page-title">
+		<%-- 	<h3 class="page-title">
 		<s:message code="home.Dashboard"/> <small>dashboard & statistics</small>
 			</h3>
 			<div class="page-bar">
@@ -104,7 +104,7 @@
 					
 				</ul>
 				
-			</div>
+			</div> --%>
 			<!-- END PAGE HEADER-->
 			<!-- BEGIN DASHBOARD STATS -->
 			<div class="row">

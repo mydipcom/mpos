@@ -1,5 +1,7 @@
 package com.mpos.service;
 
+import java.io.UnsupportedEncodingException;
+
 import com.mpos.dto.Tsetting;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -18,9 +20,9 @@ public interface SystemSettingService {
 	
 	void deleteSystemsettingByIds(Integer[] ids);
 	
-	public PagingData loadSystemsettingList(DataTableParamter rdtp);
+	public PagingData loadSystemsetting();
 
-	public void cachedSystemSettingData();
+	public void cachedSystemSettingData() throws UnsupportedEncodingException;
 	
 	public PagingData getStoreSetting();
 	

@@ -13,20 +13,20 @@ public class Tsetting implements java.io.Serializable {
 	private static final long serialVersionUID = 5873012088660829829L;
 	private Integer id;
 	private String name;
-	private String value;
+	private byte[] value;
 	private String descr;
 	private short sort;
 
 	public Tsetting() {
 	}
 
-	public Tsetting(String name, String value, short sort) {
+	public Tsetting(String name, byte[] value, short sort) {
 		this.name = name;
 		this.value = value;
 		this.sort = sort;
 	}
 
-	public Tsetting(String name, String value, String descr, short sort) {
+	public Tsetting(String name, byte[] value, String descr, short sort) {
 		this.name = name;
 		this.value = value;
 		this.descr = descr;
@@ -49,11 +49,11 @@ public class Tsetting implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public String getValue() {
+	public byte[] getValue() {
 		return this.value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(byte[] value) {
 		this.value = value;
 	}
 

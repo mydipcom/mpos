@@ -98,18 +98,15 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<h3 class="page-title">
-		       Promotion <small>promotionlist</small>
-			</h3>
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
+				 <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i></li>
 						<li><a href="<c:url value="/"/>promotion">Promotion List</a></li>
 
-					</ul>
-				</div>
+					</ul>--%>
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->

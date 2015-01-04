@@ -61,8 +61,8 @@
 		<div class="page-content-wrapper">	
 			<div class="page-content">								
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
+				 <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li>
 							<i class="fa fa-home"></i>
 							<a href="<c:url value="/"/>home"><s:message code="home"/></a>
@@ -71,8 +71,8 @@
 						<li>
 							<a href="<c:url value="/"/>mylog"><s:message code="loglist.mylogtitle"/></a>
 						</li>
-					</ul>					
-				</div>
+					</ul>	--%>				
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				
 				<!-- BEGIN SEARCH FORM -->		

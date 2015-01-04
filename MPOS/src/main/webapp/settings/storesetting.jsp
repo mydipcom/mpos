@@ -86,18 +86,15 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<h3 class="page-title">
-					<s:message code="setting"/> <small><s:message code="storesetting"/></small>
-				</h3>
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
+				 <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home" /></a> <i
 							class="fa fa-angle-right"></i></li>
 						<li><a href="<c:url value="/"/>order"><s:message code="store.setting.title"/></a></li>
 
-					</ul>
-				</div>
+					</ul>--%>
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->
@@ -134,14 +131,14 @@
 											<td style="width: 35%"><span class="text-muted">
 													${store_setting['Access_Password'][1]} </span></td>
 										</tr>
-										<tr>
+<%-- 										<tr>
 											<td style="width: 15%"><s:message code="token"/></td>
 											<td style="width: 50%"><a href="#" id="token"
 												data-type="password" data-pk="1"
 												data-original-title="Enter Token"> [hidden] </a></td>
 											<td style="width: 35%"><span class="text-muted">
 													${store_setting['Token'][1]} </span></td>
-										</tr>
+										</tr> --%>
 										<tr>
 											<td><s:message code="currency"/></td>
 											<td><a href="#" id="currency" data-type="select2"
@@ -162,7 +159,7 @@
 																data-provides="fileinput">
 																<div class="fileinput-new thumbnail"
 																	style="width: 200px; height: 50px;">
-																	<img src="${store_setting['Restaurant_Logo'][0]}" alt="" />
+																	<img src="<c:url value="/"/>${store_setting['Restaurant_Logo'][0]}" alt="" />
 																</div>
 																<div
 																	class="fileinput-preview fileinput-exists thumbnail"
@@ -209,7 +206,7 @@
 																<div class="fileinput-new thumbnail"
 																	style="width: 200px; height: 150px;">
 																	<img
-																		src="${store_setting['Page_Background'][0]}"
+																		src="<c:url value="/"/>${store_setting['Page_Background'][0]}"
 																		alt="" />
 																</div>
 																<div

@@ -1,5 +1,6 @@
 package com.mpos.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
@@ -58,9 +59,12 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 	}
 
 	
-	public PagingData loadSystemsettingList(DataTableParamter rdtp) {
+	public PagingData loadSystemsetting() {
 		// TODO Auto-generated method stub
-		return settingDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+		Criterion criterions = Restrictions.not(Restrictions.in("name", new Object[]{SystemConstants.RESTAURANT_NAME,SystemConstants.ACCESS_PASSWORD
+				,SystemConstants.RESTAURANT_LOGO,SystemConstants.PAGE_BACKGROUND,SystemConstants.CURRENCY,SystemConstants.RESTAURANT_LOGO_File
+				,SystemConstants.PAGE_BACKGROUND_File}));
+		return settingDao.findPage(criterions, 0, 10);
 	}
 
 
@@ -70,13 +74,13 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 	}
 	
 	
-	public void cachedSystemSettingData() {
+	public void cachedSystemSettingData() throws UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		List <Tsetting> setingList = getAllSystemSetting();
 		SystemConfig.Admin_Setting_Map.clear();
 		SystemConfig.TOKEN = null;
 		for(Tsetting setting:setingList){
-			SystemConfig.Admin_Setting_Map.put(setting.getName(),setting.getValue());
+			SystemConfig.Admin_Setting_Map.put(setting.getName(),new String(setting.getValue(),"UTF-8"));
 		}
 		SystemConfig.TOKEN=SystemConfig.Admin_Setting_Map.get(SystemConstants.TOKEN);
 	}
@@ -84,7 +88,7 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 
 	public PagingData getStoreSetting() {
 		// TODO Auto-generated method stub
-		Criterion criterions = Restrictions.in("name", new Object[]{SystemConstants.RESTAURANT_NAME,SystemConstants.ACCESS_PASSWORD,SystemConstants.TOKEN
+		Criterion criterions = Restrictions.in("name", new Object[]{SystemConstants.RESTAURANT_NAME,SystemConstants.ACCESS_PASSWORD
 				,SystemConstants.RESTAURANT_LOGO,SystemConstants.PAGE_BACKGROUND,SystemConstants.CURRENCY});
 		return settingDao.findPage(criterions, 0, 10);
 	}

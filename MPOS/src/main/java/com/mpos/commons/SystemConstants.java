@@ -72,6 +72,10 @@ public class SystemConstants {
 	
 	public static final String PAGE_BACKGROUND="Page_Background";
 	
+    public static final String RESTAURANT_LOGO_File="Restaurant_Logo_File";
+	
+	public static final String PAGE_BACKGROUND_File="Page_Background_File";
+	
 	public static final String TOKEN = "Token";
 	
 	public static final Map<Integer, String> PROMOTION_TYPE=new HashMap<Integer, String>(){

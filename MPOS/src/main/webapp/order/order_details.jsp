@@ -95,10 +95,8 @@
 		<!-- BEGIN CONTENT -->
 		<div class="page-content-wrapper">
 			<div class="page-content">
-			   <h3 class="page-title">
-		       <s:message code="order" /> <small><s:message code="order.details" /></small></h3>
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
+			    <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i></li>
@@ -106,8 +104,8 @@
 							class="fa fa-angle-right"></i></li>
 						<li><a href=""><s:message code="order.details.title" /></a></li>
 
-					</ul>
-				</div>
+					</ul>--%>
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->
@@ -188,7 +186,7 @@
 												</div>
 												<c:set var="promotions" scope="session"
 													value="${order_details['order_promotion']}" />
-												<div class="col-md-6 col-sm-12">
+												<%-- <div class="col-md-6 col-sm-12">
 													<div class="portlet blue-hoki box">
 														<div class="portlet-title">
 															<div class="caption">
@@ -214,7 +212,7 @@
 
 														</div>
 													</div>
-												</div>
+												</div> --%>
 											</div>
 											<div class="row">
 												<div class="col-md-12">

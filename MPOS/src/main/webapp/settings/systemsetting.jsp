@@ -26,6 +26,9 @@
 <link href="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/select2/select2.css" />
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" />
 <!-- END PAGE LEVEL STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link href="../assets/global/css/components.css" rel="stylesheet" type="text/css"/>
@@ -60,8 +63,8 @@
 		<div class="page-content-wrapper">	
 			<div class="page-content">								
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
+				 <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li>
 							<i class="fa fa-home"></i>
 							<a href="<c:url value="/"/>home"><s:message code="home"/></a>
@@ -71,10 +74,15 @@
 							<a href="<c:url value="/"/>settings"><s:message code="setting"/></a>
 							
 						</li>
-					</ul>					
-				</div>
+					</ul>--%>					
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
-				
+				<div class="row">
+					<div class="col-md-12">
+						<button id="enable" class="btn blue"><s:message code="enable.disable"/></button>
+						<hr>
+					</div>
+				</div>
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 					<div class="col-md-12">
@@ -84,40 +92,61 @@
 								<div class="caption">
 									<i class="fa fa-edit"></i><s:message code="settingtable"/>
 								</div>
-								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_settings"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_settings" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_settings" id="openDeleteSettingsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
-								    <div class="btn-group">
-										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
-										</a>
-										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" 		  data-column="1"><s:message code="system.management.user.searchform.id"/></label>
-											<label><input type="checkbox" checked data-column="2"><s:message code="settingname"/></label>
-											<label><input type="checkbox" checked data-column="3"><s:message code="settingvalue"/></label>
-											<label><input type="checkbox" checked data-column="4"><s:message code="settingdescr"/></label>
-											<label><input type="checkbox" 		  data-column="5"><s:message code="settingsort"/></label>
-										</div>
-									</div>								    																
-								</div>
+								
 							</div>							
 							<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="setting_table">
-									<thead>
+								<table id="system_setting" class="table table-bordered table-striped">
+									<tbody>
 										<tr>
-											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#setting_table .checkboxes"/>
-											</th>
-											<th><s:message code="system.management.user.searchform.id"/></th>
-											<th><s:message code="settingname"/></th>
-											<th><s:message code="settingvalue"/></th>
-											<th><s:message code="settingdescr"/></th>
-											<th><s:message code="settingsort"/></th>
+											<td style="width: 15%">Email Username</td>
+											<td style="width: 50%"><a href="#" id="email_username"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Email Username"> ${system_setting['Email_Username'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Email_Username'][1]} </span></td>
 										</tr>
-									</thead>
-																						
+										<tr>
+											<td style="width: 15%">Email Password</td>
+											<td style="width: 50%"><a href="#" id="email_password"
+												data-type="password" data-pk="1"
+												data-original-title="Enter Email Password"> [hidden] </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Email_Password'][1]} </span></td>
+										</tr>
+ 										<tr>
+											<td style="width: 15%"><s:message code="token"/></td>
+											<td style="width: 50%"><a href="#" id="token"
+												data-type="password" data-pk="1"
+												data-original-title="Enter Token"> [hidden] </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Token'][1]} </span></td>
+										</tr> 
+										<tr>
+											<td style="width: 15%">Email Host</td>
+											<td style="width: 50%"><a href="#" id="email_host"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Email Host"> ${system_setting['Email_Host'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Email_Host'][1]} </span></td>
+										</tr>
+										<tr>
+											<td style="width: 15%">Max Login Error Times</td>
+											<td style="width: 50%"><a href="#" id="max_login_error_times"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Max_Login_Error_Times"> ${system_setting['Max_Login_Error_Times'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Max_Login_Error_Times'][1]} </span></td>
+										</tr>
+										<tr>
+											<td style="width: 15%">Login ErrorLocked</td>
+											<td style="width: 50%"><a href="#" id="login_error_locked"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Login_Error_Locked="> ${system_setting['Login_Error_Locked'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Login_Error_Locked'][1]} </span></td>
+										</tr>
+										
+									</tbody>
 								</table>
 							</div>
 						</div>
@@ -125,143 +154,6 @@
 					</div>
 				</div>
 				<!-- END PAGE CONTENT -->
-				
-				<!-- BEGIN ADD MODAL FORM-->
-				<div class="modal" id="add_settings" tabindex="-1" data-width="760">
-					<div class="modal-header">
-						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title"><s:message code="setting.addtitle"/></h4>
-					</div>
-					<div id="addFormMsg"></div>
-					<!-- <div class="modal-body"> -->
-					<div class="portlet-body form">
-						<!-- BEGIN FORM	-->					
-						<form id="addSettingForm" action="addsettings" method="post" name="addSettingForm" class="form-horizontal form-bordered">
-						<div class="form-body">
-								<div class="alert alert-danger display-hide">
-									<button class="close" data-close="alert"></button>
-									<s:message code="system.management.user.adduser.message"/>
-								</div>				
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingname"/><span class="required"> * </span></label>
-									<div class="col-md-9">										
-										<input name="name" class="form-control"/>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingvalue"/><span class="required">* </span></label>
-									<div class="col-md-9">																				
-										<input name="value" class="form-control"/>		
-								</div>
-								</div>									
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingsort"/><span class="required">* </span></label>
-									<div class="col-md-9">
-										<input name="sort" class="form-control"/>									
-									</div>
-								</div>
-								
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingdescr"/></label>
-									<div class="col-md-9">										
-										<input name="descr" class="form-control"/>
-									</div>
-								</div>									
-								
-							
-							<div class="form-actions" style="border-top:0;">
-								<div class="row">
-									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									</div>
-								</div>
-							</div>
-					       </div>
-						</form>
-						<!-- END FORM-->
-					</div>					
-				</div>				
-				<!-- END ADD MODAL FORM-->
-				
-				<!-- BEGIN Edit MODAL FORM-->
-				<div class="modal" id="edit_settings" tabindex="-1" data-width="760">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title"><s:message code="setting.edittitle"/></h4>
-					</div>
-					<div id="editFormMsg"></div>
-					<!-- <div class="modal-body"> -->
-					<div class="portlet-body form">
-							<!-- BEGIN FORM	-->					
-						<form id="editSettingForm" action="editsettings" method="post" name="editSettingForm" class="form-horizontal form-bordered">
-							<div class="form-body">
-								<div class="alert alert-danger display-hide">
-									<button class="close" data-close="alert"></button>
-									<s:message code="system.management.user.adduser.message"/>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
-									<div class="col-md-9">										
-										<input name="id" class="form-control" readonly="true"/>										
-									</div>
-								</div>						
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingname"/><span class="required"> * </span></label>
-									<div class="col-md-9">										
-										<input name="name" class="form-control" readonly="true"/>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingvalue"/><span class="required">* </span></label>
-									<div class="col-md-9">																				
-										<input name="value" class="form-control"/>
-									</div>
-								</div>									
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingsort"/><span class="required">* </span></label>
-									<div class="col-md-9">
-										<input name="sort" class="form-control"/>									
-									</div>
-								</div>
-								
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="settingdescr"/></label>
-									<div class="col-md-9">										
-										<input name="descr" class="form-control"/>
-									</div>
-								</div>									
-								
-							
-							<div class="form-actions" style="border-top:0;">
-								<div class="row">
-									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									</div>
-								</div>
-							</div>
-					       </div>
-						</form>
-						<!-- END FORM-->
-					</div>					
-				</div>				
-				<!-- END EDIT MODAL FORM-->
-				
-				<!-- BEGIN DELETE MODAL FORM-->
-				<div class="modal" id="delete_settings" tabindex="-1" data-backdrop="static" data-keyboard="false">
-					<div class="modal-body">
-						<p>
-							<s:message code="system.management.user.deletemessage" />
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
-					</div>					
-				</div>				
-				<!-- END DELETE MODAL FORM-->
-				
 			</div>		
 		</div>
 	</div>	
@@ -294,6 +186,20 @@
 	<script src="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
+    <script type="text/javascript"
+		src="../assets/global/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/moment.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/jquery.mockjax.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>

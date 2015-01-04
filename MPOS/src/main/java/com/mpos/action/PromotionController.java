@@ -35,7 +35,7 @@ import com.mpos.service.CategoryService;
 import com.mpos.service.GoodsService;
 import com.mpos.service.MenuService;
 import com.mpos.service.PromotionService;
-import com.sun.mail.handlers.text_html;
+
 @Controller
 @RequestMapping("promotion")
 public class PromotionController extends BaseController{

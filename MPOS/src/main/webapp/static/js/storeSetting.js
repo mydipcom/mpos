@@ -40,7 +40,7 @@ var StoreSetting = function() {
 		$.fn.editable.defaults.url = '/post';
 
 		$('#restaurant_name').editable({
-			url : rootURI + "settings/editstoresetting?rand=" + Math.random(),
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
 			name : 'Restaurant_Name',
@@ -51,7 +51,7 @@ var StoreSetting = function() {
 		});
 
 		$('#password').editable({
-			url : rootURI + "settings/editstoresetting?rand=" + Math.random(),
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
 			name : 'Access_Password',
@@ -62,7 +62,7 @@ var StoreSetting = function() {
 		});
 
 		$('#token').editable({
-			url : rootURI + "settings/editstoresetting?rand=" + Math.random(),
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
 			name : 'Token',
@@ -84,7 +84,7 @@ var StoreSetting = function() {
 		});
 
 		$('#currency').editable({
-			url : rootURI + "settings/editstoresetting?rand=" + Math.random(),
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			name : 'Currency',
 			inputclass : 'form-control input-medium',
 			source : currency,

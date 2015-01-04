@@ -246,12 +246,18 @@ var AddPromotion = function () {
          }
      });*/
     var handleDatetimePicker = function() {
+    	var d = new Date();
+        var today = d;
+        var dateThreeMonthLater = d.setMonth(d.getMonth() + 3);
+    	
+    	
 		$(".form_datetime").datetimepicker(
 				{
 					isRTL : Metronic.isRTL(),
 					format : "dd/mm/yyyy hh:ii",
 					autoclose : true,
 					todayBtn : false,
+					startDate: today,
 					pickerPosition : (Metronic.isRTL() ? "bottom-right"
 							: "bottom-left"),
 					minuteStep : 1
