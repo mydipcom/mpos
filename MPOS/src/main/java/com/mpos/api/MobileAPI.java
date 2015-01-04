@@ -31,18 +31,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
+import com.mpos.dto.Tcommodity;
 import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Torder;
 import com.mpos.dto.TorderItem;
-import com.mpos.dto.Tproduct;
 import com.mpos.dto.TproductImage;
 import com.mpos.dto.TproductRelease;
 import com.mpos.dto.Tpromotion;
 import com.mpos.model.AttributeModel;
 import com.mpos.model.ProductModel;
 import com.mpos.service.CategoryAttributeService;
+import com.mpos.service.CommodityService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
 import com.mpos.service.LocalizedFieldService;
@@ -84,6 +85,8 @@ public class MobileAPI {
 	@Autowired
 	private GoodsService goodsService;
 	@Autowired
+	private CommodityService commodityService;
+	@Autowired
 	private OrderService orderService;
 	@Autowired
 	private MenuService menuService;
@@ -107,21 +110,29 @@ public class MobileAPI {
 	 */
 	@RequestMapping(value="getSetting",method=RequestMethod.GET)
 	@ResponseBody
-	public String getSetting(HttpServletResponse response) {		
-				
-		JSONObject respJson = new JSONObject();												
+	public String getSetting(HttpServletResponse response,@RequestHeader("InitialAuthCode") String initKey) {
+		JSONObject respJson = new JSONObject();
+		if(initKey==null||!initKey.equalsIgnoreCase(SystemConstants.INIT_AUTH_CODE)){
+			respJson.put("status", false);
+			respJson.put("info", "Error Init API token.");			
+			return JSON.toJSONString(respJson);
+		}
 		try{
 			Map<String,String> setting=SystemConfig.Admin_Setting_Map;
 			String pwd=setting.get(SystemConstants.CONFIG_CLIENT_PWD);
 			String token=setting.get(SystemConstants.CONFIG_API_TOKEN);
 			String currency=setting.get(SystemConstants.CONFIG_DISPLAY_CURRENCY);
 			String logo=setting.get(SystemConstants.CONFIG_CLIENT_LOGO);
+			String backgroundImage=setting.get(SystemConstants.PAGE_BACKGROUND);
+			String restaurantName=setting.get(SystemConstants.RESTAURANT_NAME);
 			
 			JSONObject dataJson = new JSONObject();	
 			dataJson.put("pwd", pwd);
 			dataJson.put("token", token);
 			dataJson.put("currency", currency);
-			dataJson.put("logo", logo);			
+			dataJson.put("logo", logo);	
+			dataJson.put("backgroundImage", backgroundImage);
+			dataJson.put("storeName", restaurantName);
 			
 			respJson.put("status", true);
 			respJson.put("info", "OK");
@@ -322,7 +333,12 @@ public class MobileAPI {
 		}
 		try {
 			// 查询商品
-			Tproduct product = goodsService.getTproductByid(productId);
+			Tcommodity product = commodityService.getTproductByid(productId);
+			if(product==null){
+				respJson.put("status", false);
+				respJson.put("info", "product is not exist");
+				return JSON.toJSONString(respJson);
+			}
 			// 新建返回数据model
 			ProductModel model = new ProductModel();
 			model.setProductId(product.getId());
@@ -334,17 +350,20 @@ public class MobileAPI {
 			model = loadAttribute(model, product);
 			//装载商品图片
 			model = loadImage(model, request, product);
-			//装载商品优惠活动列表
+			/*//装载商品优惠活动列表
 			List<Tpromotion> pros = loadProductPromotion(product);
 			//得到通过优先级排序的可叠加优惠列表
 			List<Tpromotion> isShareList = getPromotionList(pros,true);
 			//得到通过优先级排序的不可叠加优惠列表
 			List<Tpromotion> noShareList = getPromotionList(pros,false);
 			//通过比较可叠加与不可叠加的优先级得到最终的优惠列表
-			List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);
+			List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);*/
 			//通过优惠列表计算商品价格
-			float price = calculatePrice(product.getOldPrice(), promotions);
-			model = loadPromotion(model, promotions);
+			Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
+			//model = loadPromotion(model, promotions);
+			if(price==null){
+				price = product.getOldPrice();
+			}
 			model.setPrice(price);
 			respJson.put("status", true);
 			respJson.put("info", "OK");
@@ -378,7 +397,7 @@ public class MobileAPI {
 				}
 				try {
 					// 参加满减活动列表
-					List<Tpromotion> productPromotionList = new ArrayList<Tpromotion>();
+					//List<Tpromotion> productPromotionList = new ArrayList<Tpromotion>();
 					//
 					JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
 					// 桌号
@@ -400,8 +419,14 @@ public class MobileAPI {
 						Integer productId = pro.getInteger("productId");
 						// 数量
 						Integer count = pro.getInteger("quantity");
-						Tproduct product = goodsService.getTproductByid(productId);
-						//装载商品优惠活动列表
+						Tcommodity product = commodityService.getTproductByid(productId);
+						if(product == null){
+							respJson.put("status", false);
+							respJson.put("info", productId+" product is not exist");
+							orderService.deleteOrder(order);
+							return JSON.toJSONString(respJson);
+						}
+						/*//装载商品优惠活动列表
 						List<Tpromotion> pros = loadProductPromotion(product);
 						//得到通过优先级排序的可叠加优惠列表
 						List<Tpromotion> isShareList = getPromotionList(pros,true);
@@ -413,9 +438,12 @@ public class MobileAPI {
 							if(!productPromotionList.contains(tpromotion)){
 								productPromotionList.add(tpromotion);
 							}
-						}
+						}*/
 						//通过优惠列表计算商品价格
-						float price = calculatePrice(product.getOldPrice(), promotions);
+						Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
+						if(price==null){
+							price = product.getOldPrice();
+						}
 						oneMoney = price*count;
 						float oneDis = (product.getOldPrice()-price)*count;
 						TorderItem orderItem = new TorderItem();
@@ -431,18 +459,19 @@ public class MobileAPI {
 						totalMoney += oneMoney;
 						oldMoey += product.getOldPrice()*count;
 					}
-					List<Tpromotion> promotionLast = compareToPriority(getPromotionList(productPromotionList,true),getPromotionList(productPromotionList,false));
+					/*List<Tpromotion> promotionLast = compareToPriority(getPromotionList(productPromotionList,true),getPromotionList(productPromotionList,false));
 					for (Tpromotion tpromotion : promotionLast) {
 						if(tpromotion.getPromotionType()==PROMOTION_TYPE_FULL_CUT){
 							if(tpromotion.getParamOne()<=totalMoney){
 								totalMoney = totalMoney - Float.valueOf(tpromotion.getParamTwo());
 							}
 						}
-					}
+					}*/
 					order.setOrderDiscount(oldMoey-totalMoney);
 					order.setOrderTotal(totalMoney);
+					orderService.update(order);
 					JSONObject data = new JSONObject();
-					data.put("orderId ", 1);
+					data.put("orderId ", order.getOrderId());
 					data.put("orderTotal", totalMoney);
 					respJson.put("status", true);
 					respJson.put("info", "OK");
@@ -510,7 +539,7 @@ public class MobileAPI {
 	 * @param product
 	 * @return
 	 */
-	private ProductModel loadImage(ProductModel model, HttpServletRequest request, Tproduct product) {
+	private ProductModel loadImage(ProductModel model, HttpServletRequest request, Tcommodity product) {
 		List<TproductImage> images = new ArrayList<TproductImage>();
 		String[] imageList = null;
 		images.addAll(product.getImages());
@@ -557,7 +586,7 @@ public class MobileAPI {
 	 * @param product
 	 * @return
 	 */
-	private ProductModel loadAttribute(ProductModel model, Tproduct product) {
+	private ProductModel loadAttribute(ProductModel model, Tcommodity product) {
 		List<AttributeModel> attributeModels = new ArrayList<AttributeModel>();
 		List<TgoodsAttribute> attributes = new ArrayList<TgoodsAttribute>();
 		attributes.addAll(product.getAttributes());
@@ -624,7 +653,7 @@ public class MobileAPI {
 	 * @param product
 	 * @return
 	 */
-	private List<Tpromotion> loadProductPromotion(Tproduct product) {
+	private List<Tpromotion> loadProductPromotion(Tcommodity product) {
 		List<Tpromotion> promotionList = new ArrayList<Tpromotion>();
 		//
 		Set<Tpromotion> binProduct = product.getPromotions();

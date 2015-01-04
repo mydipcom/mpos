@@ -16,6 +16,7 @@
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
 	
+	<bean id="commodityService" class="com.mpos.service.impl.CommodityServiceImpl" autowire="byName"/>
 	
 	<bean id="localizedFieldService" class="com.mpos.service.impl.LocalizedFieldServiceImpl" autowire="byName"/>	 
 		 	 

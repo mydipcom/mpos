@@ -158,7 +158,7 @@ var CategoryTable = function () {
                {"orderable": false },
 	           { title: "ID",   data: "categoryId"},
 	           { title: "Name",    data: "name" },
-	           { title: "Content",  data: "content" },
+	           { title: "Description",  data: "content" },
 	           /*{ title: "Status",    data: "status" },*/
 	           { title: "Action" ,"class":"center"}
 	          ],
@@ -175,6 +175,15 @@ var CategoryTable = function () {
 				return false;
 			}
 		});
+		
+		$('#view_attribute').on('shown',function(e){
+			$('#view_attribute').css({
+				"margin-top": function () {
+					return  -($(window).height()/3 + 50 );
+				}
+			});
+		 })
+
 		
 		//删除分类操作
 		$('#deleteBtn').on('click', function (e) {
@@ -257,6 +266,7 @@ var CategoryTable = function () {
 	            var name  = data.name;
 	            var content  = data.content;
 	            var status = data.status;
+	            $("#copy_add_title").html("copy of " + name);
 	            $("#copyCategoryForm :radio").removeAttr("checked");
 	            $("#copyCategoryForm :radio").parents('span').removeClass("checked");
 	            
@@ -386,13 +396,13 @@ var CategoryTable = function () {
 		 	        				var tem = row.type;
 		 	        				var str = '';
 		 	        				if(tem==0){
-		 	        					str = 'input';
+		 	        					str = 'Editbox';
 		 	        				}else if(tem==1){
-		 	        					str = 'radio';
+		 	        					str = 'Radio Button';
 		 	        				}else if(tem==2){
-		 	        					str = 'chekbox';
+		 	        					str = 'Checkbox';
 		 	        				}else{
-		 	        					str = 'select';
+		 	        					str = 'Dropdown List';
 		 	        				}
 		 	        				return str;
 		 	        			}
@@ -469,12 +479,12 @@ var CategoryTable = function () {
 		//打开删除属性对话框前判断是否已选择要删除的行
 		$("#openAddAttributeModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete.","warning","");				
+				handleAlerts("Please select the rows which you want to add attribute.","warning","");				
 				return false;
 			}else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				var categortyId = data.categoryId;
-				 $("#addAttributeForm input[name='categoryId.categoryId']").val(categortyId);
+				$("#addAttributeForm input[name='categoryId.categoryId']").val(categortyId);
 			}
 		});
 		
@@ -695,7 +705,10 @@ var CategoryTable = function () {
     
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {         
+	var handleAlerts = function(msg,msgType,position) {
+		if(position==""){
+			position = $("#msg");
+		}
         Metronic.alert({
             container: position, // alerts parent container(by default placed after the page breadcrumbs)
             place: "prepent", // append or prepent in container 
@@ -704,7 +717,7 @@ var CategoryTable = function () {
             close: true, // make alert closable
             reset: true, // close all previouse alerts first
             focus: false, // auto scroll to the alert after shown
-            closeInSeconds: 10, // auto close after defined seconds, 0 never close
+            closeInSeconds: 5, // auto close after defined seconds, 0 never close
             icon: "warning" // put icon before the message, use the font Awesone icon (fa-[*])
         });        
 

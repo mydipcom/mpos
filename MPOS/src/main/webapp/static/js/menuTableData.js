@@ -89,7 +89,7 @@ var MenuTable = function () {
 		});		
 
 		//打开删除对话框前判断是否已选择要删除的行
-		$("#openDeleteRightsModal").on("click",function(event){
+		$("#openDeleteMenuModal").on("click",function(event){
 			if(selected.length==0){
 				handleAlerts("Please select the rows which you want to delete.","warning","");				
 				return false;
@@ -290,7 +290,10 @@ var MenuTable = function () {
     
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {         
+	var handleAlerts = function(msg,msgType,position) {
+		if(position==""){
+			position = $("#msg");
+		}
         Metronic.alert({
             container: position, // alerts parent container(by default placed after the page breadcrumbs)
             place: "prepent", // append or prepent in container 
@@ -299,7 +302,7 @@ var MenuTable = function () {
             close: true, // make alert closable
             reset: true, // close all previouse alerts first
             focus: false, // auto scroll to the alert after shown
-            closeInSeconds: 10, // auto close after defined seconds, 0 never close
+            closeInSeconds: 5, // auto close after defined seconds, 0 never close
             icon: "warning" // put icon before the message, use the font Awesone icon (fa-[*])
         });        
 

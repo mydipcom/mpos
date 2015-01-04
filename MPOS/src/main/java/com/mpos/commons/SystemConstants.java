@@ -42,6 +42,8 @@ public class SystemConstants {
 	
 	public static final String MAX_LOGIN_ERROR_TIMES="Max_Login_Error_Times";
 	
+	public static final String INIT_AUTH_CODE="1596fa2bbd11959414d3267230013bf3";
+	
 	public static final String LOGIN_ERROR_LOCK="Login_Error_Locked";
 	
 	public static final String TABLE_NAME_MENU="Tmenu";
@@ -55,7 +57,7 @@ public class SystemConstants {
 	public static final String TABLE_FIELD_SHORTDESCR="shortDescr";
 	public static final String TABLE_FIELD_FULLDESCR="fullDescr";
 	
-	public static final String CONFIG_CLIENT_PWD="config_client_pwd";
+	public static final String CONFIG_CLIENT_PWD="Access_Password";
 	public static final String CONFIG_CLIENT_LOGO="config_client_logo";
 	public static final String CONFIG_API_TOKEN="Token";
 	public static final String CONFIG_DISPLAY_CURRENCY="config_display_currency";

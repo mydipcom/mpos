@@ -82,4 +82,9 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		orderDao.create(torder);
 	}
+
+	public void deleteOrder(Torder torder) {
+		// TODO Auto-generated method stub
+		orderDao.delete(torder);
+	}
 }
