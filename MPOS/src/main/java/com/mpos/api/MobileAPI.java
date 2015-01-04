@@ -419,6 +419,7 @@ public class MobileAPI {
 						Integer productId = pro.getInteger("productId");
 						// 数量
 						Integer count = pro.getInteger("quantity");
+						JSONArray attributes = jsonObj.getJSONArray("attributes");
 						Tcommodity product = commodityService.getTproductByid(productId);
 						if(product == null){
 							respJson.put("status", false);
@@ -453,7 +454,7 @@ public class MobileAPI {
 						orderItem.setQuantity(count);
 						orderItem.setCurrPrice(price);
 						orderItem.setDiscount(oneDis);
-						orderItem.setAttributes(JSON.toJSONString(product.getAttributes()));
+						orderItem.setAttributes(JSON.toJSONString(attributes));
 						orderItem.setIsGift(false);
 						orderItemService.createOrderItem(orderItem);
 						totalMoney += oneMoney;
