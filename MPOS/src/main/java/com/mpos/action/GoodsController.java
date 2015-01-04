@@ -192,10 +192,10 @@ public class GoodsController extends BaseController{
 	}
 	@RequestMapping(value="/setgoods",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView addGoods(HttpServletRequest request,AddGoodsModel model,AddgoodsLocal value,
+	public ModelAndView addGoods(HttpServletRequest request,AddGoodsModel model,AddgoodsLocal value,String attributeId,
 			@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
 		Tproduct product=new Tproduct();
-		
+		String[] contents = request.getParameterValues("content");
 		JSONObject respJson = new JSONObject();
 		List<TproductAttribute> tproductAttributelist=new ArrayList<TproductAttribute>(); 
 		
@@ -225,7 +225,33 @@ public class GoodsController extends BaseController{
 			
 		}
 		//
-		Iterator it = SystemConfig.product_AttributeModel_Map.keySet().iterator(); 
+		String[] idstrArr=attributeId.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
+		for (int j = 0; j < idArr.length; j++) {
+		for (int i = 0; i < contents.length; i++) {
+		 String[] content=(contents[i]).split("-");
+		 if(content.length>1){
+		 	TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(Integer.parseInt(content[1]));
+		 	TproductAttributeId productAttributeid=new TproductAttributeId();
+		 	TproductAttribute tproductAttribute=new TproductAttribute();
+		 	tproductAttribute.setContent(content[0]);
+		    productAttributeid.setCategoryAttribute(categoryAttribute);
+		    productAttributeid.setProduct(product);
+		    tproductAttribute.setId(productAttributeid);
+		    productAttributeService.createOrProductAttribute(tproductAttribute);
+		 }else {
+				 TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(idArr[j]);
+				 TproductAttributeId productAttributeid=new TproductAttributeId();
+				 TproductAttribute tproductAttribute=new TproductAttribute();
+				 tproductAttribute.setContent(contents[i]);
+				 productAttributeid.setCategoryAttribute(categoryAttribute);
+				 productAttributeid.setProduct(product);
+				 tproductAttribute.setId(productAttributeid);
+				 productAttributeService.createOrProductAttribute(tproductAttribute);
+		 } 
+			}
+		}
+		/*Iterator it = SystemConfig.product_AttributeModel_Map.keySet().iterator(); 
 		   while (it.hasNext()){ 
 		    String key; 
 		    key=(String)it.next(); 
@@ -233,7 +259,7 @@ public class GoodsController extends BaseController{
 		    AddAttributevaleModel models= SystemConfig.product_AttributeModel_Map.get(key);
 		    TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(models.getAttributeId());
 		    tproductAttribute.setContent(models.getContent());
-		    tproductAttribute.setPrice(models.getPrice());
+		   // tproductAttribute.setPrice(models.getPrice());
 		    TproductAttributeId productAttributeid=new TproductAttributeId();
 		    productAttributeid.setCategoryAttribute(categoryAttribute);
 		    productAttributeid.setProduct(product);
@@ -249,7 +275,7 @@ public class GoodsController extends BaseController{
 			}
 			
 		}
-		   SystemConfig.product_AttributeModel_Map.clear();
+		   SystemConfig.product_AttributeModel_Map.clear();*/
 		//Tproduct products=goodsService.findbyProductName(product.getProductName());
 		   //
 		for(int i=0;i<file.length;i++){
@@ -266,16 +292,16 @@ public class GoodsController extends BaseController{
 				try {
 					goodsImageService.CreateImages(productImage);
 					//File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
-					File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"
+					File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"products"
 											+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
-					File uploadDir = new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload");
+					File uploadDir = new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"products");
 					if (!uploadDir.isDirectory()) {
 						uploadDir.mkdirs();
 					}
 					if(!file2.exists()){
 					ImageOutputStream ios= ImageIO.createImageOutputStream(file2);
 					ios.write(image);
-					String path="static/upload/"
+					String path="upload/products/"
 							+productImage.getId()+"."+productImage.getImageSuffix();
 					productImage.setImageUrl(path);
 					goodsImageService.updeteImages(productImage);

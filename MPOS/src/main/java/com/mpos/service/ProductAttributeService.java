@@ -12,4 +12,5 @@ public interface ProductAttributeService {
 	void createProductAttribute(TproductAttribute productAttribute);
 	TproductAttribute getAttributes(TproductAttributeId productAttributeId);
 	void updattProductAttribute(TproductAttribute productAttribute);
+	void createOrProductAttribute(TproductAttribute productAttribute);
 }

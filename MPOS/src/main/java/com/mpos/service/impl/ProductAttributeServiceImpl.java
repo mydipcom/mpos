@@ -51,4 +51,19 @@ public class ProductAttributeServiceImpl implements ProductAttributeService{
 		
 	}
 
+
+
+	public void createOrProductAttribute(TproductAttribute productAttribute) {
+		
+		TproductAttribute tproductAttribute=productAttributeDao.getByAttributeid(productAttribute.getId());
+		if(tproductAttribute!=null){
+			String content=tproductAttribute.getContent();
+			String updatecontent=content+","+productAttribute.getContent();
+			tproductAttribute.setContent(updatecontent);
+			productAttributeDao.update(tproductAttribute);
+		}else {
+			productAttributeDao.create(productAttribute);
+		}
+	}
+
 }

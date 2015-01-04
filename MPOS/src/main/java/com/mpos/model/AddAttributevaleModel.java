@@ -4,7 +4,7 @@ public class AddAttributevaleModel {
 	
 	private String title;
 	private String content;
-	private String price;
+//	private String price;
 	private Integer attributeId;
 	private Integer type;
 	
@@ -33,12 +33,12 @@ public class AddAttributevaleModel {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getPrice() {
+	/*public String getPrice() {
 		return price;
 	}
 	public void setPrice(String price) {
 		this.price = price;
 	}
-	
+	*/
 
 }

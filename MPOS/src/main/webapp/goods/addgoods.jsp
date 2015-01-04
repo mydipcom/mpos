@@ -18,7 +18,7 @@
 
 <meta charset="utf-8"/>
 
-<title>Add Goods</title>
+<title>Add Products</title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -96,7 +96,7 @@
 
 			
 				<!-- BEGIN PAGE HEADER-->
-			<h3 class="page-title">
+			<%-- <h3 class="page-title">
 			Goods<small>Add Goods</small>
 			</h3>
 			<div class="page-bar">
@@ -115,32 +115,32 @@
 					</li>
 				</ul>
 			
-			</div>
-																<div class="portlet box green">
+			</div> --%>
+								<div class="portlet box green">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-gift"></i>Add goods
+											<i class="fa fa-gift"></i>Add Products
 										</div>
 									</div>
 									<div class="portlet-body form">
 										<!-- BEGIN FORM-->
 										<form action="setgoods" role="form" class="form-horizontal" enctype="multipart/form-data" id="addGoodsForm" method="POST">
 											<div class="form-body">
-												<h3 class="form-section">BasicGoods Info</h3>
+												<h3 class="form-section">Basic Info</h3>
 												<div class="row">
 												<!--/span-->
 													<div class="col-md-6">
 														<div class="form-group">
 															<label class="control-label col-md-3">Price</label>
 															<div class="col-md-9">
-																<input type="text" name="price" class="form-control" placeholder="0.00">
+																<input type="text" name="price" id="price" class="form-control" placeholder="0.00">
 															</div>
 														</div>
 													</div>
 													<!--/span-->
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">OldPrice</label>
+															<label class="control-label col-md-3">Old Price</label>
 															<div class="col-md-9">
 																<input type="text" name="oldPrice" class="form-control" placeholder="0.00">
 															</div>
@@ -148,38 +148,7 @@
 													</div>
 													
 												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">recommend</label>
-															<div class="col-md-9">
-																<div class="radio-list">
-																	<label class="radio-inline">
-																	<input type="radio"  name="recommend" value="ture"/>
-																	True </label>
-																	<label class="radio-inline">
-																	<input type="radio"  name="recommend" value="false"  checked/>
-																	Flase </label>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">menuName</label>
-															<div class="col-md-9">
-																<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1" name="menuId">
-																
-																	<c:if test="${not empty menu}">
-																		<c:forEach items="${menu}" var="menuitem">
-																			<option value="${menuitem.menuId}">${menuitem.title}</option>
-																		</c:forEach>
-																	</c:if>				
-																</select>
-															</div>
-														</div>
-													</div>
-												</div>
+												
 												
 												<div class="row">
 												
@@ -203,6 +172,24 @@
 													<!--/span-->
 													
 													<!--/span-->
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label col-md-3">Recommend</label>
+															<div class="col-md-9">
+																<div class="radio-list">
+																	<label class="radio-inline">
+																	<input type="radio"  name="recommend" value="ture"/>
+																	True </label>
+																	<label class="radio-inline">
+																	<input type="radio"  name="recommend" value="false"  checked/>
+																	False </label>
+																</div>
+															</div>
+														</div>
+													</div>
+											
 												</div>
 												<!--/row-->
 												
@@ -229,7 +216,7 @@
 									 			<div class="row">
 									 			<div class="col-md-6">
 									 				<div class="form-group">
-														<label class="control-label col-md-3">GoodsName<span class="required"> * </span></label>
+														<label class="control-label col-md-3">Product Name<span class="required"> * </span></label>
 														<div class="col-md-9">										
 															<input name="productName" class="form-control" onblur="setValue('${lan.id}')" id="good_add_name"/>
 															<input name="productNames[${status.index}].localeValue" type="hidden" id="good_addt_${lan.id}"/>
@@ -242,7 +229,7 @@
 												<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label col-md-3">ShortDescribe<span class="required"> * </span></label>
+														<label class="control-label col-md-3">Short Description<span class="required"> * </span></label>
 														<div class="col-md-9">
 															<!-- <input id="tags_1" type="text" class="form-control tags" name="content"/> -->										
 															<textarea name="shortDescr" class="form-control" rows="4" onblur="setValue('${lan.id}')" id="good_add_scon"></textarea>	
@@ -256,7 +243,7 @@
 									<div class="row">
 									<div class="col-md-9">
 										<div class="form-group">
-										<label class="control-label col-md-2">FullDescribe</label>
+										<label class="control-label col-md-2">Full Description</label>
 										<div class="col-md-9">
 											<textarea name="fullDescr" data-provide="markdown" rows="10" onblur="setValue('${lan.id}')" id="good_add_fcon"></textarea>
 											<input name="fullDescrs[${status.index}].localeValue" type="hidden" id="good_addft_${lan.id}"/>
@@ -273,7 +260,7 @@
 									 			<div class="row">
 									 			<div class="col-md-6">
 									 				<div class="form-group">
-														<label class="control-label col-md-3">GoodsName<span class="required"> * </span></label>
+														<label class="control-label col-md-3">Product Name<span class="required"> * </span></label>
 														<div class="col-md-9">										
 															<input name="productNames[${status.index}].localeValue" class="form-control"/>
 															<input name="productNames[${status.index}].language.id" type="hidden" value="${lan.id}"/>		
@@ -285,7 +272,7 @@
 													<div class="row">
 													<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label col-md-3">ShortDescribe<span class="required"> * </span></label>
+														<label class="control-label col-md-3">Short Description<span class="required"> * </span></label>
 														<div class="col-md-9">
 															<%-- <input id="tags_1" type="text" class="form-control tags" name="contents[${status.index}].localeValue"/> --%>
 															<textarea name="shortDescrs[${status.index}].localeValue" class="form-control" rows="4"></textarea>											
@@ -298,7 +285,7 @@
 									<div class="row">
 									<div class="col-md-9">
 										<div class="form-group">
-										<label class="control-label col-md-2">FullDescribe</label>
+										<label class="control-label col-md-2">Full Description</label>
 										<div class="col-md-9">
 											<textarea name="fullDescrs[${status.index}].localeValue" data-provide="markdown" rows="10" ></textarea>
 											<input name="fullDescrs[${status.index}].language.id" type="hidden" value="${lan.id}"/>		
@@ -313,13 +300,28 @@
                   					</c:forEach> 
 								
 								</div>
-							
-												<h3 class="form-section">Choose Category</h3>
+														<div class="row">
+														<div class="col-md-6">
+														<div class="form-group">
+															<label class="control-label col-md-3">Category</label>
+															<div class="col-md-9">
+																<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1" name="menuId">
+																
+																	<c:if test="${not empty menu}">
+																		<c:forEach items="${menu}" var="menuitem">
+																			<option value="${menuitem.menuId}">${menuitem.title}</option>
+																		</c:forEach>
+																	</c:if>				
+																</select>
+															</div>
+														</div>
+													</div>
+													</div>
 												<!--/row-->
 												<div class="row">
 													<div class="col-md-6" >
 														<div class="form-group">
-															<label class="control-label col-md-3">Category</label>
+															<label class="control-label col-md-3">Attribute Group</label>
 															<div class="col-md-9">
 															<!--  select name="categoryId"  class="form-control"  id="testsid">-->	
 															<select name="categoryId"  class="form-control" id="choosecategory">
@@ -333,26 +335,20 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-md-6" >
-														<div class="form-group" id="title">
-															<label class="control-label col-md-3">title</label>
-															<div class="col-md-9" id=fortest>
-															<select name="attributeId"  class="form-control" id="chooseattribute">
-															<option value="" id="attributetitle">ALL</option>
-															
-																</select>
-															</div>
-														</div>
-													</div>
-												</div>	
-											  
-										<div class="form-group">
+										
+												</div> 	
+										
+										
+										<div id="attributeshow">
+										</div>	  
+									
+										<!-- <div class="form-group">
 										 <div id="type1"></div>
 										 <div id="type2"></div>
 										 <div id="type3"></div>
 										
-										</div> 
-						<h3 class="form-section">Images</h3>
+										</div>  -->
+						<h3 class="form-section">Product Images</h3>
 							<!-- The global progress information -->
 								
 								
@@ -447,7 +443,7 @@
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-offset-3 col-md-9">
-																<button type="submit" class="btn green">Submit</button>
+																<button type="submit" class="btn green" id="testbutn">Submit</button>
 																<button type="button" class="btn default">Cancel</button>
 															</div>
 														</div>

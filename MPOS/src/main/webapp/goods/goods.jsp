@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>GoodsList</title>
+<title>ProductsList</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -65,23 +65,8 @@
 		<div class="page-content-wrapper">	
 			<div class="page-content">								
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<h3 class="page-title">
-			        GoodsList<small>goodslist</small>
-			     </h3>
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="<c:url value="/"/>home">Home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>goods">goodslist</a>
-							
-						</li>
-						
-					</ul>					
-				</div>
+				
+			
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<!-- BEGIN SEARCH FORM -->
 				<div class="portlet-body">

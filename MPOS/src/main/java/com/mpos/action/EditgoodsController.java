@@ -120,7 +120,7 @@ private LocalizedFieldService localizedFieldService;
 				if (productAttribute!=null) {
 					model.setAttributeId(categoryAttribute.get(i).getAttributeId());
 					model.setContent(productAttribute.getContent());
-					model.setPrice(productAttribute.getPrice());
+//					model.setPrice(productAttribute.getPrice());
 					model.setTitle(categoryAttribute.get(i).getTitle());
 					addAttributevalemodels.add(model);
 				}
@@ -184,7 +184,7 @@ private LocalizedFieldService localizedFieldService;
 		    TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(models.getAttributeId());
 		    TproductAttribute tproductAttribute=new TproductAttribute();
 		    tproductAttribute.setContent(models.getContent());
-		    tproductAttribute.setPrice(models.getPrice());
+//		    tproductAttribute.setPrice(models.getPrice());
 		    TproductAttributeId productAttributeid=new TproductAttributeId();
 		    productAttributeid.setCategoryAttribute(categoryAttribute);
 		    productAttributeid.setProduct(product);

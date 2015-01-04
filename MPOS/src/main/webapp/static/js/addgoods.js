@@ -118,7 +118,7 @@ var Addgoods = function () {
 				var id=$(this).val();
 				var html;
 				//html+="<select name=\"attributeId\"  class=\"form-control\" id=\"chooseattribute\">";
-				html+="<option value=\"\">ALL</option>";
+				//html+="<option value=\"\">ALL</option>";
 				$.ajax({
 					"dataType": 'json', 
 		             "type"   : "POST", 
@@ -129,25 +129,46 @@ var Addgoods = function () {
 		            			 var list=data.list;
 		            			 for(var i=0;i<list.length;i++){
 		            				 var content=(list[i].content).split(",");
-		            				 html+="<option value="+list[i].attributeId+">"+list[i].title+"</option>"
-		            				 /*
-		            				 if((test[i].type)==1){
-		            					 html="<div class=\"form-group\"><label class=\"control-label col-md-3\">"+test[i].title+"</label><div class=\"col-md-9\"><div class=\"checkbox-list\">"
+		            			//	 html+="<option value="+list[i].attributeId+">"+list[i].title+"</option>"
+		            			//	 var id=list[i].attributeId;
+		            				 if((list[i].type)==2){
+		            					 html+="<div class=\"row\"><div class='col-md-6' ><div class=\"form-group\"><label class=\"control-label col-md-3\">"+list[i].title+"</label><div class=\"col-md-9\"><div class=\"checkbox-list\">";
 		            					 for(var j=0;j<content.length;j++){
-		            						 html=html+"<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"content\" value="+content[j]+"/>"+content[j]+"</label>";
+		            						 html=html+"<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"content\" value="+content[j]+'-'+list[i].attributeId+">"+content[j]+"</label>";
 		            					 }
-		            					 html+="</div></div></div>";
+		            					 html+="</div></div></div></div></div>";
 		            					
-		            				 }else if((test[i].type)==2){
+		            					
+		            				 }else if((list[i].type)==1){
+		            					 html+="<div class='row'><div class='col-md-6' ><div class='form-group'><label class='control-label col-md-3'>"+list[i].title+"</label><div class='col-md-9'><div class='radio-list'>";
+		            					 for(var j=0;j<content.length;j++){
+		            						// html+="<label class='radio-inline'><div class='radio'><span><input type='radio'  name='content' value="+content[j]+"></span></div>"+content[j]+"</label>";
+		            						 html+="<label class='radio-inline'><span><input type='radio'  name='content' value="+content[j]+'-'+list[i].attributeId+"></span>"+content[j]+"</label>";
+		            					 }
+		            					 html+="</div></div></div></div></div>";
+		            					
+		            				 }else  if((list[i].type==3)){
+		            					 html+="<div class='row'><div class='col-md-6' ><div class='form-group'><label class='control-label col-md-3'>"+list[i].title+"</label><div class='col-md-9'><select class='select2_category form-control'  name='content'>";
+		            					 for(var j=0;j<content.length;j++){
+		            					 html+="<option value="+content[j]+'-'+list[i].attributeId+">"+content[j]+"</option>";
+		            					 }
+		            					 html+="</select></div></div></div></div>";
+		            				 }else if((list[i].type==0)){
+		            					 html+="<div class='row'><div class='col-md-6' ><div class='form-group'><label class='control-label col-md-3'>"+list[i].title+"</label>";
+		            					 html+="<div class='col-md-9'><input name='content' type='text' class='form-control'  />"; 
+		            					 html+="<div class='row'><input name='attributeId' type='hidden' value="+list[i].attributeId+"></div>";
+		            					 html+="</div></div></div></div>";
 		            					 
-		            				 }else {
-		            					 
-		            				 }*/
-		            				 
+		            				 }
 		            			 }
-		            			//html+="</select>";
+		            			// html+="<button type='button' class='btn default' id='tesssss'>Add Attribute</button>";
 		            			 $('#chooseattribute').empty();
-		            			 $(html).appendTo($('#chooseattribute'));
+		            			 $('#attributeshow').empty();
+		            			// $(html).appendTo($('#chooseattribute'));
+		            			 $(html).appendTo($('#attributeshow'));
+		            			 $('#attributebutn').removeAttr("hidden");
+		            			// $(html).appendTo($('#name'));
+		            			// $('#categoryAttributes').modal('show');
 		            			 	//$('#chooseattribute').replaceWith(html);
 		            			 //$(html).replaceAll($('#attributetitle'));
 		            			 	//$(html).replaceAll($('#chooseattribute'));
@@ -200,7 +221,7 @@ var Addgoods = function () {
 	            					 }
 	            					 html+="</div></div></div></div><div class=\"row\"><div class=\"form-group\"><label class=\"control-label col-md-3\">Price</label><div class=\"col-md-9\"><input name=\"price\" class=\"form-control\"/>";
 	            					 html+="<div class=\"row\"><input name=\"title\" type=\"hidden\" value="+test.title+"></div>";
-	            					 html+="<div class=\"row\"><input name=\"attributeId\" type=\"hidden\" value="+test.attributeId+"></div>";
+	            					 html+="<div class=\"row\"><input name=\"attributeId\" type='hidden' value="+test.attributeId+"></div>";
 	            					 html+="<div class=\"row\"><input name=\"type\" type=\"hidden\" value="+test.type+"></div>";
 	            					 html+="</div></div></div>";
 	            					
@@ -225,6 +246,9 @@ var Addgoods = function () {
 		             		}
 		            	 });
 		             
+			});
+			$('#addnewAttribute').on('click', function (e){
+				
 			});
 			/*
 				var AddGoods = function(){
@@ -275,31 +299,34 @@ var Addgoods = function () {
 	   
 			 var AddGoodsValidation = function() {
 			        var form = $('#addGoodsForm');
-			        var errorDiv = $('.alert-danger', form);            
+			        var errorDiv = $('.alert-danger', form);   
+			        var t=$('#price').val();
 			        form.validate({
 			            errorElement: 'span', //default input error message container
 			            errorClass: 'help-block help-block-error', // default input error message class
 			            focusInvalid: false, // do not focus the last invalid input
 			            ignore: "",  // validate all fields including form hidden input                
 			            rules: {
-			            	oldPrice: {
-			            	required: true,
-			            	float:true,
-			            	maxlength:6,
-			            	
-			                		},
-			                price: {
+			            	price: {
 			                	required: true,
-				            	float:true,
+			                	number:true,
 				            	maxlength:6,
 			    				},
+			            	oldPrice: {
+			            	
+			            	required: true,
+			            	maxlength:6,
+			            	number:true,
+			            
+			                		},
+			                
 			    			unitName: {
 					               required: true,
-						           maxlength:4,
+						           maxlength:6,
 					    			},
 					    	productName: {
 							       required: true,
-								   minlength:6,
+								   minlength:3,
 							    		},
 							shortDescr: {
 									required: true,
@@ -340,11 +367,12 @@ var Addgoods = function () {
 			            	$(element).valid();
 			            },
 			            submitHandler: function (form) { 
-			            	errorDiv.hide();
+			            	$('#testbutn').on(submit,true);
 			            	
 			            }
 			        });
 			    };
+			    
 			    var EditGoodsValidation = function() {
 			        var form = $('#editGoodsForm');
 			        var errorDiv = $('.alert-danger', form);            
@@ -354,20 +382,20 @@ var Addgoods = function () {
 			            focusInvalid: false, // do not focus the last invalid input
 			            ignore: "",  // validate all fields including form hidden input                
 			            rules: {
-			            	oldPrice: {
-			            	required: true,
-			            	float:true,
-			            	maxlength:6,
-			            	
-			                		},
-			                price: {
+			            	price: {
 			                	required: true,
-				            	float:true,
+			                	number:true,
 				            	maxlength:6,
 			    				},
+			            	oldPrice: {
+			            	required: true,
+			            	maxlength:6,
+			            	number:true,
+			            	min:"#price",
+			                		},
 			    			unitName: {
 					               required: true,
-						           maxlength:4,
+						           maxlength:6,
 					    			},
 					    	productName: {
 							       required: true,
@@ -413,7 +441,7 @@ var Addgoods = function () {
 			            },
 			            submitHandler: function (form) { 
 			            	errorDiv.hide();
-			            	AddLanguage();
+			            	
 			            }
 			        });
 			    };
