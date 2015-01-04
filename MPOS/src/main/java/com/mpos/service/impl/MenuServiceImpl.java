@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +93,11 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 
-	public List<Tmenu> getAllMenu() {		
-		return menuDao.LoadAll();
+	public List<Tmenu> getAllMenu() {
+		Criteria criteria=menuDao.createCriteria();
+		return criteria.add(Restrictions.eq("status",true))				
+				.list();		
+		//return menuDao.LoadAll();
 	}
 		
 }
