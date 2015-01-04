@@ -96,7 +96,7 @@ function setCateFromValue(list){
  */
 function setCateCopyFromValue(list){
 	var le = list.length/2;
-	if(list!=null&&list.length>0){
+	if(list!=null&&list.length>0){   
 		for (var int = 0; int < le; int++) {
 			var lan = list[int];
 			$("#copyCategoryForm input[name='names["+int+"].localeValue']").val(lan.localeValue);
@@ -106,9 +106,9 @@ function setCateCopyFromValue(list){
 		for (var int = le; int < list.length; int++) {
 			var lan = list[int];
 			var tem = int - le;
-			$("#copyCategoryForm textarea[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
+			$("#copyCategoryForm textarea[name='contents["+tem+"].localeValue']").val("copy of "+ lan.localeValue);
+			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val("copy of "+ lan.localeValue);
+			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val("copy of "+ lan.localeValue);
 			$("#copyCategoryForm input[name='contents["+tem+"].language.id']").val(lan.languageId);
 			$("#copyCategoryForm input[name='contents["+tem+"].tableField']").val(lan.tableField);
 		}
@@ -266,12 +266,12 @@ var CategoryTable = function () {
 	            var name  = data.name;
 	            var content  = data.content;
 	            var status = data.status;
-	            $("#copy_add_title").html("copy of " + name);
+	            //$("#copy_add_title").html("copy of " + name);
 	            $("#copyCategoryForm :radio").removeAttr("checked");
 	            $("#copyCategoryForm :radio").parents('span').removeClass("checked");
 	            
-	            $("#copyCategoryForm input[name='name']").val(name);
-	            $("#copyCategoryForm textarea[name='content']").val(content);
+	            $("#copyCategoryForm input[name='name']").val("copy of "+ name);
+	            $("#copyCategoryForm textarea[name='content']").val("copy of "+ content);
 	            	            	            
 	            $("#copyCategoryForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
 	            $("#copyCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");

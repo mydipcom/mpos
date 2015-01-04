@@ -2,6 +2,7 @@ package com.mpos.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,6 +42,7 @@ import com.mpos.dto.TproductImage;
 import com.mpos.dto.TproductRelease;
 import com.mpos.dto.Tpromotion;
 import com.mpos.model.AttributeModel;
+import com.mpos.model.CallWaiterInfo;
 import com.mpos.model.ProductModel;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CommodityService;
@@ -404,7 +406,6 @@ public class MobileAPI {
 					String appId = jsonObj.getString("appId");
 					JSONArray products = jsonObj.getJSONArray("products");
 					float totalMoney = 0;
-					float oneMoney = 0;
 					float oldMoey = 0;
 					Torder order = new Torder();
 					order.setCreater(appId);
@@ -445,7 +446,10 @@ public class MobileAPI {
 						if(price==null){
 							price = product.getOldPrice();
 						}
+						float oneMoney = 0;
+						float oneOldMoney = 0;
 						oneMoney = price*count;
+						oneOldMoney = product.getOldPrice()*count;
 						float oneDis = (product.getOldPrice()-price)*count;
 						TorderItem orderItem = new TorderItem();
 						orderItem.setOrderId(order.getOrderId()+"");
@@ -458,7 +462,7 @@ public class MobileAPI {
 						orderItem.setIsGift(false);
 						orderItemService.createOrderItem(orderItem);
 						totalMoney += oneMoney;
-						oldMoey += product.getOldPrice()*count;
+						oldMoey += oneOldMoney;
 					}
 					/*List<Tpromotion> promotionLast = compareToPriority(getPromotionList(productPromotionList,true),getPromotionList(productPromotionList,false));
 					for (Tpromotion tpromotion : promotionLast) {
@@ -485,9 +489,9 @@ public class MobileAPI {
 				}
 	}
 	
-	@RequestMapping(value = "callWaiter/{appId}", method = RequestMethod.GET)
+	@RequestMapping(value = "callWaiter/{appId}/{type}", method = RequestMethod.GET)
 	@ResponseBody
-	public String callWaiter(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable String appId) {
+	public String callWaiter(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable String appId,@PathVariable String type) {
 		// 获取缓存apiToken
 		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
 		JSONObject respJson = new JSONObject();
@@ -503,10 +507,34 @@ public class MobileAPI {
 			respJson.put("info", "The request parameter appId is required");
 			return JSON.toJSONString(respJson);
 		}
-		if (SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).equals("1")) {
+		if (type == null || type.isEmpty()) {
+			respJson.put("status", false);
+			respJson.put("info", "The request parameter type is required");
+			return JSON.toJSONString(respJson);
+		}
+		System.out.println(appId+"--------------"+type);
+		Date nowTime = new Date();
+		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		String timeString = sdf.format(nowTime);
+		if (SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==1) {
+			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
+			info.setCallTime(timeString);
+			SystemConfig.Call_Waiter_Map.put(appId, info);
 			respJson.put("info", "The Waiter will come");
-		} else {
-			SystemConfig.Call_Waiter_Map.put(appId, "1");
+		} else if(SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==0){
+			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
+			info.setStatus(1);
+			info.setType(Integer.valueOf(type));
+			info.setCallTime(timeString);
+			SystemConfig.Call_Waiter_Map.put(appId, info);
+			respJson.put("info", "The Waiter will come");
+		}else{
+			CallWaiterInfo info = new CallWaiterInfo();
+			info.setCallMan(appId);
+			info.setCallTime(timeString);
+			info.setStatus(1);
+			info.setType(Integer.valueOf(type));
+			SystemConfig.Call_Waiter_Map.put(appId, info);
 			respJson.put("info", "The call waiter success");
 		}
 		respJson.put("status", true);
@@ -527,7 +555,7 @@ public class MobileAPI {
 			for (int i = 0; i < promtionList.length; i++) {
 				promtionList[i] = promotions.get(i).getPromotionName();
 			}
-		}
+		}    
 		model.setPromotions(promtionList);
 		return model;
 	}

@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.mpos.dto.TadminNodes;
-import com.mpos.dto.TproductAttribute;
 import com.mpos.model.AddAttributevaleModel;
+import com.mpos.model.CallWaiterInfo;
 
 public class SystemConfig {
 	
 		
-	public static String TOKEN;
+	public static String TOKEN;  
 	
 	public static Map<String,Long> Admin_Nodes_Url_Map=new LinkedHashMap<String,Long>();
 					
@@ -24,5 +24,5 @@ public class SystemConfig {
 	
 	public static Map<String, AddAttributevaleModel> product_AttributeModel_Map=new LinkedHashMap<String,AddAttributevaleModel>();
 	
-	public static Map<String,String> Call_Waiter_Map = new Hashtable<String, String>();
+	public static Map<String,CallWaiterInfo> Call_Waiter_Map = new Hashtable<String, CallWaiterInfo>();
 }
