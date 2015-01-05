@@ -42,6 +42,7 @@ var StoreSetting = function() {
 		$('#restaurant_name').editable({
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
+			disabled:true,
 			pk : 1,
 			name : 'Restaurant_Name',
 			title : 'Enter Restaurant Name',
@@ -54,6 +55,7 @@ var StoreSetting = function() {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Access_Password',
 			title : 'Enter Password',
 			success : function(value) {
@@ -65,6 +67,7 @@ var StoreSetting = function() {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Token',
 			title : 'Enter Token',
 			success : function(value) {
@@ -86,6 +89,7 @@ var StoreSetting = function() {
 		$('#currency').editable({
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			name : 'Currency',
+			disabled:true,
 			inputclass : 'form-control input-medium',
 			source : currency,
 			success : function(value) {

@@ -36,12 +36,7 @@ public class OrderServiceImpl implements OrderService {
 						criterionsList.add(Restrictions.eq(key, jsonObj.getString(key)));
 					}
 					else if(key=="orderStatus"){
-						if(jsonObj.getInteger(key)==0){
-						 criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
-						}else{
-							criterionsList.add(Restrictions.ne(key,0));	
-						}
-						
+						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
 					}else if(key=="orderId"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
 					}

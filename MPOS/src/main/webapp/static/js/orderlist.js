@@ -74,7 +74,7 @@ var OrderList = function () {
 						+ Math.random()
 			}); 
 			
-	       $("input:radio[name=orderStatus]").change(function(){
+	       $("#status_select").change(function(){
 				event.preventDefault();
 				var jsonData=$(this).serializeJson();
 				var jsonDataStr=JSON.stringify(jsonData);			
@@ -237,6 +237,13 @@ var OrderList = function () {
 					minuteStep : 1
 				});
 	}
+	
+	 var handleBootstrapSelect = function() {
+	        $('.bs-select').selectpicker({
+	            iconBase: 'fa',
+	            tickIcon: 'fa-check'
+	        });
+	    }
     
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
 	var handleAlerts = function(msg,msgType,position) {         
@@ -313,6 +320,7 @@ var OrderList = function () {
         	orderListTable();
         	searchFormValidation();
         	handleDatetimePicker();
+        	handleBootstrapSelect();
            }
 
     };

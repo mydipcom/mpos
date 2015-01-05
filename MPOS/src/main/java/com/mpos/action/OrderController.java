@@ -174,19 +174,22 @@ public class OrderController extends BaseController{
 			objs = new Object[]{};
 			pagingData.setAaData(objs);
 		}
-//		else{
-//			for(int i=0;i<objs.length;i++){
-//				attrString="";
-//				TorderItem torderItem = (TorderItem) objs[i];
-//				jsonObject = JSONObject.parseObject(torderItem.getAttributes());
-//				Set<String> keys= jsonObject.keySet();
-//				for(String key:keys){
-//					attrString +=key+":"+jsonObject.getString(key)+" ";
-//				}
-//				torderItem.setAttributes();
-//				objs[i]=torderItem;
-//			}
-//		}
+		else{
+			for(int i=0;i<objs.length;i++){
+				attrString="";
+				TorderItem torderItem = (TorderItem) objs[i];
+				if(torderItem.getProductPromotion() == null){
+					torderItem.setProductPromotion("");
+				}
+				/*jsonObject = JSONObject.parseObject(torderItem.getAttributes());
+				Set<String> keys= jsonObject.keySet();
+				for(String key:keys){
+					attrString +=key+":"+jsonObject.getString(key)+" ";
+				}
+				torderItem.setAttributes();*/
+				objs[i]=torderItem;
+			}
+		}
 		return JSON.toJSONString(pagingData);
 	}
 }

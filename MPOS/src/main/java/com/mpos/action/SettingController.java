@@ -111,6 +111,7 @@ public class SettingController extends BaseController {
 					tsetting.setValue(value.getBytes("UTF-8"));
 				}
 	            systemSettingService.updateSystemsetting(tsetting);
+	            systemSettingService.cachedSystemSettingData();
 			}
 		}catch(MposException m){
 			

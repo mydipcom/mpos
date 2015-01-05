@@ -42,6 +42,7 @@ var SettingTable = function () {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Email_Username',
 			title : 'Enter Email Username',
 			success : function(data) {
@@ -53,6 +54,7 @@ var SettingTable = function () {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Email_Password',
 			title : 'Enter Email Password',
 			success : function(value) {
@@ -64,6 +66,7 @@ var SettingTable = function () {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Token',
 			title : 'Enter Token',
 			success : function(value) {
@@ -75,6 +78,7 @@ var SettingTable = function () {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Email_Host',
 			title : 'Enter Email Host',
 			success : function(data) {
@@ -85,6 +89,7 @@ var SettingTable = function () {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Max_Login_Error_Times',
 			title : 'Enter Max Login Error Times',
 			success : function(data) {
@@ -95,6 +100,7 @@ var SettingTable = function () {
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
 			type : 'text',
 			pk : 1,
+			disabled:true,
 			name : 'Login_Error_Locked',
 			title : 'Enter Login Error Locked',
 			success : function(data) {

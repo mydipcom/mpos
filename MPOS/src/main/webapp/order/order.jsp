@@ -37,11 +37,11 @@
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
 
 
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link href="../assets/global/plugins/select2/select2.css"
-	rel="stylesheet" type="text/css" />
+
 <link
 	href="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"
 	rel="stylesheet" type="text/css" />
@@ -96,22 +96,22 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<%-- <div class="page-bar">
-					<ul class="page-breadcrumb">
+				 <div class="page-bar">
+					<%--<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
 							class="fa fa-angle-right"></i>
 						</li>
 						<li><a href="<c:url value="/"/>order"><s:message code="order.title"/></a></li>
 
-					</ul>
-				</div> --%>
+					</ul>--%>
+				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->
 
 				<!-- BEGIN SEARCH FORM -->
-				<div class="portlet-body">
+				<div class="portlet-body from">
 					<form id="searchForm" name="searchForm" action=""
 						class="form-horizontal" method="post">
 						<div class="row">
@@ -119,13 +119,12 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label">Order Status：</label>
 									<div class="col-md-9">
-										<div class="radio-list">
-											<label class="radio-inline"> <input type="radio"
-												name="orderStatus" value="0" checked/>No Payment Order
-											</label> <label class="radio-inline"> <input type="radio"
-												name="orderStatus" value="1" />History Order
-											</label>
-										</div>
+										<select class="bs-select form-control" id="status_select" name="orderStatus">
+												<option value="0">Pending</option>
+												<option value="1">Paid</option>
+												<option value="2">Cancelled</option>
+												<option value="">All</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -337,6 +336,7 @@
 		src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
 		type="text/javascript"></script>
 	<!-- END CORE PLUGINS -->
+	<script type="text/javascript" src="../assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 	<script src="../assets/global/plugins/select2/select2.min.js"
 		type="text/javascript"></script>
