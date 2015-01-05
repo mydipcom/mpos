@@ -194,6 +194,7 @@ var CategoryTable = function () {
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
+						 selected=[];
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
 					 }
@@ -216,6 +217,8 @@ var CategoryTable = function () {
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+				$("tr input:checked").parents('span').removeClass("checked");
+				$("tr input:checked").removeAttr("checked");
 				var categoryId = data.categoryId;
 	            var name  = data.name;
 	            var content  = data.content;
@@ -230,7 +233,7 @@ var CategoryTable = function () {
 	            	            	            
 	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
 	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
-	            
+	            selected = [];
 	            $.ajax( {
 	                 "dataType": 'json', 
 	                 "type":'POST', 
@@ -238,7 +241,8 @@ var CategoryTable = function () {
 	                 "data": {"categoryId":categoryId},
 	                 "success": function(resp,status){
 	                	 if(status == "success"){  
-	                		 if(resp.status){						 
+	                		 if(resp.status){
+	                			 selected=[];
 	                			 setCateFromValue(resp.list);
 	        				 }
 	        				 else{
@@ -258,11 +262,13 @@ var CategoryTable = function () {
 		//打开复制窗口并赋值
 		$("#openCopyAddCategoryModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts("One and only one row can be copy add.","warning","");		
+				handleAlerts("One and only one row can be copy add.","warning","");
 				return false;				
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+				$("tr input:checked").parents('span').removeClass("checked");
+				$("tr input:checked").removeAttr("checked");
 	            var name  = data.name;
 	            var content  = data.content;
 	            var status = data.status;
@@ -275,6 +281,7 @@ var CategoryTable = function () {
 	            	            	            
 	            $("#copyCategoryForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
 	            $("#copyCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
+	            selected=[];
 	            $.ajax( {
 	                 "dataType": 'json', 
 	                 "type":'POST', 
@@ -436,6 +443,8 @@ var CategoryTable = function () {
 			}
 			else{
 				var data = attTable.api().row($("tr input:checked").parents('tr')).data();
+				$("tr input:checked").parents('span').removeClass("checked");
+				$("tr input:checked").removeAttr("checked");
 				var attributeId = data.attributeId;
 				var sort = data.sort;
 				var title = data.title;
@@ -454,6 +463,7 @@ var CategoryTable = function () {
 		            	            	            
 		        $("#editAttributeForm :radio[name='type']").filter("[value='"+type+"']").attr("checked","true");
 		        $("#editAttributeForm :radio[name='type']").filter("[value='"+type+"']").parents('span').addClass("checked");
+		        attSelected = [];
 				 $.ajax( {
 	                 "dataType": 'json', 
 	                 "type":'POST', 
@@ -476,9 +486,9 @@ var CategoryTable = function () {
 			}
 		});
 		
-		//打开删除属性对话框前判断是否已选择要删除的行
+		//
 		$("#openAddAttributeModal").on("click",function(event){
-			if(selected.length==0){
+			if(selected.length!=1){
 				handleAlerts("Please select the rows which you want to add attribute.","warning","");				
 				return false;
 			}else{
@@ -505,6 +515,7 @@ var CategoryTable = function () {
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
+						 attSelected=[];
 						 attTable.api().draw();
 						 attTable.$('th span').removeClass();
 					 }
@@ -608,6 +619,7 @@ var CategoryTable = function () {
         		 if(resp.status){						 
 	            	 oTable.api().draw();
 	            	 form[0].reset();
+	            	 selected=[];
 	            	 $("#copy_add_category").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#copyFormMsg");		            	 
 				 }
@@ -631,7 +643,8 @@ var CategoryTable = function () {
          "data": $('#editCategoryForm').serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
-        		 if(resp.status){						 
+        		 if(resp.status){
+        			 selected=[];
         			 oTable.api().draw();
         			 $('#editCategoryForm')[0].reset();
         			 $("#edit_category").modal('hide');
@@ -658,7 +671,8 @@ var CategoryTable = function () {
          "data": from.serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
-        		 if(resp.status){						 
+        		 if(resp.status){
+        			 selected=[];
 	            	 oTable.api().draw();
 	            	 from[0].reset();
 	            	 $("#add_attribute").modal('hide');
