@@ -128,6 +128,8 @@ var MenuTable = function () {
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+				$("tr input:checked").parents('span').removeClass("checked");
+				$("tr input:checked").removeAttr("checked");
 				var menuId = data.menuId;
 	            var sort  = data.sort;
 	            var pid  = data.pid;
@@ -144,6 +146,7 @@ var MenuTable = function () {
 	            	            	            
 	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
 	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
+	            selected = [];
 	            $.ajax( {
 	                 "dataType": 'json', 
 	                 "type":'POST', 
