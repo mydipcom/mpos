@@ -58,9 +58,9 @@ public class OrderServiceImpl implements OrderService {
 				criterions[i]=criterion;	
 				i++;
 			}
-			return orderDao.findPage(criterions,dtp.iDisplayStart, dtp.iDisplayLength);
+			return orderDao.findPage("orderId",false,criterions,dtp.iDisplayStart, dtp.iDisplayLength);
 		}
-		return orderDao.findPage(Restrictions.eq("orderStatus", 0),dtp.getiDisplayStart(), dtp.getiDisplayLength());
+		return orderDao.findPage("orderId",false,Restrictions.eq("orderStatus", 0),dtp.getiDisplayStart(), dtp.getiDisplayLength());
 	}
 
 	public Torder getTorderById(int id) {

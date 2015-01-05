@@ -75,7 +75,6 @@ var OrderList = function () {
 			}); 
 			
 	       $("#status_select").change(function(){
-				event.preventDefault();
 				var jsonData=$(this).serializeJson();
 				var jsonDataStr=JSON.stringify(jsonData);			
 				oTable.fnFilter(jsonDataStr);
