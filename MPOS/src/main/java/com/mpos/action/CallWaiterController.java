@@ -2,6 +2,7 @@ package com.mpos.action;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +23,17 @@ public class CallWaiterController extends BaseController {
 	@ResponseBody  
 	public String checkCall(){
 		JSONObject respJson = new JSONObject();
-		respJson.put("status", true);
-		respJson.put("callList", SystemConfig.Call_Waiter_Map);
+		Map<String, CallWaiterInfo> map = SystemConfig.Call_Waiter_Map;
+		boolean status = false;
+		respJson.put("info", "no call");
+		for (String key : map.keySet()) {
+			CallWaiterInfo info = map.get(key);
+			if(info!=null&&info.getStatus()==1){
+				status = true;
+				respJson.put("info", info);
+			}
+		}
+		respJson.put("status", status);
 		return JSON.toJSONString(respJson);
 	}
 	@RequestMapping("/callWaiter/{appId}")
@@ -31,13 +41,20 @@ public class CallWaiterController extends BaseController {
 	public String dealCall(@PathVariable String appId){
 		JSONObject respJson = new JSONObject();
 		CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
-		Date nowTime = new Date();
-		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		String timeString = sdf.format(nowTime);
-		info.setStatus(0);
-		info.setType(0);
-		info.setCallTime(timeString);
-		respJson.put("status", true);
+		if(info!=null){
+			Date nowTime = new Date();
+			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			String timeString = sdf.format(nowTime);
+			info.setStatus(0);
+			info.setType(0);
+			info.setCallTime(timeString);
+			respJson.put("status", true);
+			respJson.put("info", "OK");
+		}else{
+			respJson.put("status", false);
+			respJson.put("info", "appId is not exist");
+		}
+		
 		return JSON.toJSONString(respJson);
 	}
 }
