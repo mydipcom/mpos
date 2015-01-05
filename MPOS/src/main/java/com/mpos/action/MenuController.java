@@ -8,6 +8,7 @@
  */
 package com.mpos.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,6 +31,7 @@ import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.model.DataTableParamter;
+import com.mpos.model.MenuModel;
 import com.mpos.model.PagingData;
 import com.mpos.model.ParamWrapper;
 import com.mpos.service.LanguageService;
@@ -55,8 +57,22 @@ public class MenuController extends BaseController {
 	public ModelAndView menu(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
-		logger.info("menu");
+		List<Tmenu> menus = menuService.getAllMenu();
+		List<MenuModel> models = new ArrayList<MenuModel>();
+		if(menus!=null&&menus.size()>0){
+			for (Tmenu tmenu : menus) {
+				MenuModel model = new MenuModel();
+				model.setId(tmenu.getMenuId());
+				if(tmenu.getPid()==0){
+					model.setTitle(tmenu.getTitle());
+				}else{
+					model.setTitle(loadTitle(tmenu,tmenu.getTitle()));
+				}
+				models.add(model);
+			}
+		}
 		mav.addObject("lanList", languages);
+		mav.addObject("menus", models);
 		mav.setViewName("menu/menu");
 		return mav;
 	}
@@ -142,5 +158,45 @@ public class MenuController extends BaseController {
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);	
+	}
+	
+	@RequestMapping(value="/loadMenu",method=RequestMethod.GET)
+	@ResponseBody
+	public String loadMenu(HttpServletRequest request){
+		JSONObject respJson = new JSONObject();
+		try {
+			List<Tmenu> menus = menuService.getAllMenu();
+			List<MenuModel> models = new ArrayList<MenuModel>();
+			if(menus!=null&&menus.size()>0){
+				for (Tmenu tmenu : menus) {
+					MenuModel model = new MenuModel();
+					model.setId(tmenu.getMenuId());
+					if(tmenu.getPid()==0){
+						model.setTitle(tmenu.getTitle());
+					}else{
+						model.setTitle(loadTitle(tmenu,tmenu.getTitle()));
+					}
+					models.add(model);
+				}
+			}
+			respJson.put("status", true);
+			respJson.put("menus", models);
+		} catch (MposException be) {
+			// TODO: handle exception
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
+	} 
+	
+	private String loadTitle(Tmenu menu,String title){
+		Tmenu parent = menuService.getMenu(menu.getPid());
+		//String res = "";
+		if(parent!=null&&parent.getMenuId()!=null){
+			title += " << "+parent.getTitle();
+			return loadTitle(parent,title);
+		}
+		//System.out.println(title);
+		return title;
 	}
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,9 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	public PagingData loadCategoryList(DataTableParamter rdtp) {
 		String searchJsonStr = rdtp.getsSearch();
+		Criteria criteria = categoryDao.createCriteria();
+		criteria.addOrder(Order.desc("categoryId"));
+		criteria.add(Restrictions.eq("status", true));
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
 			List<Criterion> criterionList = new ArrayList<Criterion>();
 			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);
@@ -61,17 +66,14 @@ public class CategoryServiceImpl implements CategoryService {
 					}
 				}
 			}
-			Criterion[] criterions = new Criterion[criterionList.size()];
-			int i=0;
 			for (Criterion criterion : criterionList) {
-				criterions[i]=criterion;	
-				i++;
+				criteria.add(criterion);
 			}
-			return categoryDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
+			return categoryDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
 		}
 		
 		try {
-			return categoryDao.findPage(Restrictions.eq("status",true),rdtp.iDisplayStart, rdtp.iDisplayLength);
+			return categoryDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

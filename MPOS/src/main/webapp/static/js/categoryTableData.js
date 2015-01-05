@@ -429,9 +429,11 @@ var CategoryTable = function () {
 	           var ids=data.categoryId;
 	           if(attTable!=null){
 	        	   attTable.fnDestroy();
+	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(ids);
 	        	   viewTable(ids); 
 	           }else{
 	        	   viewTable(ids);
+	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(ids);
 	           }
 	          });
 		
@@ -504,6 +506,28 @@ var CategoryTable = function () {
 				handleAlerts("Please select the rows which you want to delete.","warning","");				
 				return false;
 			}
+		});
+		
+		$("#addAttributeForm :radio").on("change",function(event){
+			if($(this).val()==0){
+				$("#add_required").html("");
+				$("#addAttributeForm textarea[name='content']").rules("remove","required");
+			}else{
+				$("#add_required").html(" * ");
+				$("#addAttributeForm textarea[name='content']").rules("add",{required: true});
+			}
+			
+		});
+		
+		$("#editAttributeForm :radio").on("change",function(event){
+			if($(this).val()==0){
+				$("#edit_required").html("");
+				$("#editAttributeForm textarea[name='content']").rules("remove","required");
+			}else{
+				$("#edit_required").html(" * ");
+				$("#editAttributeForm textarea[name='content']").rules("add",{required: true});
+			}
+			
 		});
 		
 		//删除分类操作
@@ -672,8 +696,7 @@ var CategoryTable = function () {
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){
-        			 selected=[];
-	            	 oTable.api().draw();
+        			 attTable.api().draw();
 	            	 from[0].reset();
 	            	 $("#add_attribute").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#addAttributeFormMsg");		            	 
@@ -882,12 +905,10 @@ var CategoryTable = function () {
             ignore: "",  // validate all fields including form hidden input                
             rules: {
                 "title": {
-                    minlength: 2,
                     required: true
                 },
                 "content": {
-                    minlength: 2,
-                    required: true
+                	required: true
                 }
             },
 
@@ -925,7 +946,6 @@ var CategoryTable = function () {
         });
     };
     
-
     return {
         //main function to initiate the module
         init: function (rootPath) {

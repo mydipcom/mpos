@@ -15,5 +15,6 @@ public interface MenuService {
 	PagingData loadMenuList(DataTableParamter rdtp);
 	void deleteMenuByIds(Integer[] idArr);
 	public List<Tmenu> getAllMenu();
+	Tmenu getParentMenu(Tmenu menu);
 	
 }

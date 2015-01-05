@@ -40,6 +40,37 @@ function setFromValue(list){
 	
 }
 
+function loadMenu(sel){
+	var sid = document.getElementById(sel); 
+	//sid.options.length == 0;
+	$("#"+sel).empty();  
+	$.ajax( {
+        "dataType": 'json', 
+        "type":'GET', 
+        "url": rootURI+"menu/loadMenu?rand="+Math.random(), 
+        "success": function(resp,status){
+       	 if(status == "success"){  
+       		 if(resp.status){
+       			var list = resp.menus;
+       			sid.options[0]=new Option('[NONE]',0);
+       			for (var int = 0; int < list.length; int++) {
+       				var mm = list[int];
+       				//$("#add_select").append("<option value='"+mm.id+"'>"+mm.title+"</option>");
+       				sid.options[sid.options.length]=new Option(mm.title,mm.id);   
+       				}
+				 }
+				 else{
+					 handleAlerts("Failed to add the data.","danger","#editCategoryFormMsg");						 
+				 }
+			}             	 
+        },
+        "error":function(XMLHttpRequest, textStatus, errorThrown){
+       	 alert(errorThrown);
+        }
+      });
+}
+
+
 var rootURI="/";
 var MenuTable = function () {
 	var oTable;
@@ -77,7 +108,7 @@ var MenuTable = function () {
             "columns": [
                {"orderable": false },
 	           { title: "ID",   data: "menuId"},
-	           { title: "Name",    data: "title" },
+	           { title: "Title",    data: "title" },
 	           { title: "Parent ID",  data: "pid" },
 	           /*{ title: "Status",    data: "status" },*/
 	           { title: "Sort",    data: "sort"}
@@ -120,6 +151,10 @@ var MenuTable = function () {
            });
         });  
 		
+		$("#openAdd").on("click",function(event){
+			loadMenu("add_select");
+		});
+		
 		
 		$("#openEditMenuModal").on("click",function(event){
 			if(selected.length!=1){
@@ -142,7 +177,7 @@ var MenuTable = function () {
 	            
 	            $("#editMenuForm input[name='title']").val(title);
 	            $("#editMenuForm input[name='sort']").val(sort);
-	            $("#editMenuForm input[name='pid']").val(pid);
+	            $("#editMenuForm select[name='pid']").children("option[value='"+pid+"']").attr("selected","true");
 	            	            	            
 	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
 	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
@@ -236,7 +271,6 @@ var MenuTable = function () {
 	
 	//添加操作
 	var ajaxAddMenu=function(){	
-		var xx = $('#addMenuForm').serialize();
 		$.ajax( {
 		"traditional":true,
          "dataType": 'json', 
@@ -249,6 +283,7 @@ var MenuTable = function () {
 	            	 oTable.api().draw();
 	            	 $('#addMenuForm')[0].reset();
 	            	 $("#add_menu").modal('hide');
+	            	 loadMenu("edit_select");
 	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
 				 }
 				 else{
@@ -264,7 +299,6 @@ var MenuTable = function () {
     
 	//添加操作
 	var ajaxEditMenu=function(){	
-		//var xx = $('#editMenuForm').serialize();
 		$.ajax( {
 		"traditional":true,
          "dataType": 'json', 
@@ -289,9 +323,7 @@ var MenuTable = function () {
          }
        });		
     };
-	
     
-	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
 	var handleAlerts = function(msg,msgType,position) {
 		if(position==""){
