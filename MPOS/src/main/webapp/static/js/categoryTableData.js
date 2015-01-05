@@ -106,9 +106,9 @@ function setCateCopyFromValue(list){
 		for (var int = le; int < list.length; int++) {
 			var lan = list[int];
 			var tem = int - le;
-			$("#copyCategoryForm textarea[name='contents["+tem+"].localeValue']").val("copy of "+ lan.localeValue);
-			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val("copy of "+ lan.localeValue);
-			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val("copy of "+ lan.localeValue);
+			$("#copyCategoryForm textarea[name='contents["+tem+"].localeValue']").val(lan.localeValue);
+			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
+			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
 			$("#copyCategoryForm input[name='contents["+tem+"].language.id']").val(lan.languageId);
 			$("#copyCategoryForm input[name='contents["+tem+"].tableField']").val(lan.tableField);
 		}
