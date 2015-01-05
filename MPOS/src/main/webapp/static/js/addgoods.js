@@ -134,7 +134,7 @@ var Addgoods = function () {
 		            				 if((list[i].type)==2){
 		            					 html+="<div class=\"row\"><div class='col-md-6' ><div class=\"form-group\"><label class=\"control-label col-md-3\">"+list[i].title+"</label><div class=\"col-md-9\"><div class=\"checkbox-list\">";
 		            					 for(var j=0;j<content.length;j++){
-		            						 html=html+"<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"content\" value="+content[j]+'-'+list[i].attributeId+">"+content[j]+"</label>";
+		            						 html=html+"<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"content\" value='"+content[j]+'-'+list[i].attributeId+"'>"+content[j]+"</label>";
 		            					 }
 		            					 html+="</div></div></div></div></div>";
 		            					
@@ -143,20 +143,20 @@ var Addgoods = function () {
 		            					 html+="<div class='row'><div class='col-md-6' ><div class='form-group'><label class='control-label col-md-3'>"+list[i].title+"</label><div class='col-md-9'><div class='radio-list'>";
 		            					 for(var j=0;j<content.length;j++){
 		            						// html+="<label class='radio-inline'><div class='radio'><span><input type='radio'  name='content' value="+content[j]+"></span></div>"+content[j]+"</label>";
-		            						 html+="<label class='radio-inline'><span><input type='radio'  name='content' value="+content[j]+'-'+list[i].attributeId+"></span>"+content[j]+"</label>";
+		            						 html+="<label class='radio-inline'><span><input type='radio'  name='content' value='"+content[j]+'-'+list[i].attributeId+"'></span>"+content[j]+"</label>";
 		            					 }
 		            					 html+="</div></div></div></div></div>";
 		            					
 		            				 }else  if((list[i].type==3)){
 		            					 html+="<div class='row'><div class='col-md-6' ><div class='form-group'><label class='control-label col-md-3'>"+list[i].title+"</label><div class='col-md-9'><select class='select2_category form-control'  name='content'>";
 		            					 for(var j=0;j<content.length;j++){
-		            					 html+="<option value="+content[j]+'-'+list[i].attributeId+">"+content[j]+"</option>";
+		            					 html+="<option value='"+content[j]+'-'+list[i].attributeId+"'>"+content[j]+"</option>";
 		            					 }
 		            					 html+="</select></div></div></div></div>";
 		            				 }else if((list[i].type==0)){
 		            					 html+="<div class='row'><div class='col-md-6' ><div class='form-group'><label class='control-label col-md-3'>"+list[i].title+"</label>";
 		            					 html+="<div class='col-md-9'><input name='content' type='text' class='form-control'  />"; 
-		            					 html+="<div class='row'><input name='attributeId' type='hidden' value="+list[i].attributeId+"></div>";
+		            					 html+="<div class='row'><input name='attributeId' type='hidden' value='"+list[i].attributeId+"'></div>";
 		            					 html+="</div></div></div></div>";
 		            					 
 		            				 }
@@ -367,6 +367,7 @@ var Addgoods = function () {
 			            	$(element).valid();
 			            },
 			            submitHandler: function (form) { 
+			            	errorDiv.hide();
 			            	$('#testbutn').on(submit,true);
 			            	
 			            }

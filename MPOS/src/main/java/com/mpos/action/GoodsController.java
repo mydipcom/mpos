@@ -225,9 +225,7 @@ public class GoodsController extends BaseController{
 			
 		}
 		//
-		String[] idstrArr=attributeId.split(",");		
-		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
-		for (int j = 0; j < idArr.length; j++) {
+		int j=0;
 		for (int i = 0; i < contents.length; i++) {
 		 String[] content=(contents[i]).split("-");
 		 if(content.length>1){
@@ -240,6 +238,9 @@ public class GoodsController extends BaseController{
 		    tproductAttribute.setId(productAttributeid);
 		    productAttributeService.createOrProductAttribute(tproductAttribute);
 		 }else {
+			 if (attributeId!=null){
+			 	String[] idstrArr=attributeId.split(",");		
+				Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
 				 TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(idArr[j]);
 				 TproductAttributeId productAttributeid=new TproductAttributeId();
 				 TproductAttribute tproductAttribute=new TproductAttribute();
@@ -248,9 +249,11 @@ public class GoodsController extends BaseController{
 				 productAttributeid.setProduct(product);
 				 tproductAttribute.setId(productAttributeid);
 				 productAttributeService.createOrProductAttribute(tproductAttribute);
+				 j++;
+			 }
 		 } 
 			}
-		}
+		
 		/*Iterator it = SystemConfig.product_AttributeModel_Map.keySet().iterator(); 
 		   while (it.hasNext()){ 
 		    String key; 

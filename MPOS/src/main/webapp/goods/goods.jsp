@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>ProductsList</title>
+<title>Product List</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -179,13 +179,13 @@
 						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>ProductsList Table
+									<i class="fa fa-edit"></i>Product List Table
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i>add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i>edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActiveadminsModal"><i class="fa fa-key"></i>activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i>delete</a>
+								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i>Add</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i>Edit</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActiveadminsModal"><i class="fa fa-key"></i>Activate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i>Delete</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
@@ -212,12 +212,11 @@
 												<input type="checkbox" class="group-checkable" data-set="#goods_table .checkboxes"/>
 											</th>
 											<th>ID</th>
-											<th>CategoryName</th>
-											<th>MenuName</th>
-											<th>ProductName</th>
-											<th>Old_Price</th>
+											<th>Category Name</th>
+											<th>Product Name</th>
 											<th>Price</th>
-											<th>Recmmend</th>
+											<th>Old_Price</th>
+											<th>Recommend</th>
 											<th>Sort</th>
 										<!--  	<th>Status</th>-->
 										</tr>
