@@ -46,13 +46,13 @@ var OrderDetails = function () {
 				}, {
 					title : "Product ID",
 					data : "productId"
-				}, {
-					title : "Quantity",
-					data : "quantity"
 				},{
 					title : "Unit Price",
 					data : "unitPrice"
-				},  {
+				}, {
+					title : "Quantity",
+					data : "quantity"
+				} , {
 					title : "Discount",
 					data : "discount"
 				} ,{

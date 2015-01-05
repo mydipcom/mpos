@@ -77,7 +77,7 @@ var MenuTable = function () {
             "columns": [
                {"orderable": false },
 	           { title: "ID",   data: "menuId"},
-	           { title: "Title",    data: "title" },
+	           { title: "Name",    data: "title" },
 	           { title: "Parent ID",  data: "pid" },
 	           /*{ title: "Status",    data: "status" },*/
 	           { title: "Sort",    data: "sort"}

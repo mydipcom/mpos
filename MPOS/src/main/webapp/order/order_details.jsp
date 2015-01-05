@@ -231,8 +231,8 @@
 											class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
 											<label><input type="checkbox" checked data-column="1">Product ID</label>
+										    <label><input type="checkbox" checked data-column="3">Unit Price</label>
 											<label><input type="checkbox" checked data-column="2">Quantity</label>
-											<label><input type="checkbox" checked data-column="3">Unit Price</label>
 											<label><input type="checkbox" checked data-column="4">Discount</label>
 											<label><input type="checkbox" checked data-column="5">Curr Price</label>
 											<label><input type="checkbox" checked data-column="6">Attributes</label>
