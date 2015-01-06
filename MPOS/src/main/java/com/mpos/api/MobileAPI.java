@@ -176,20 +176,34 @@ public class MobileAPI {
 				
 		try{
 			jsonObj= (JSONObject)JSON.parse(jsonStr);
-			int appid=jsonObj.getIntValue("appId");
-			int orderid=jsonObj.getIntValue("orderId");
-			if(appid==0||orderid==0){
+			String appid = jsonObj.getString("appId");
+			if(appid==null||appid.isEmpty()){
 				respJson.put("status", false);
-				respJson.put("info", "The parameter appId and orderId is required.");				
+				respJson.put("info", "The parameter appId is required.");				
 				return JSON.toJSONString(respJson);				
 			}
-			Torder order=orderService.getTorderById(orderid);
+			String orderIds = jsonObj.getString("orderIds");
+			if(orderIds==null||orderIds.isEmpty()||orderIds.split(",").length==0){
+				respJson.put("status", false);
+				respJson.put("info", "The parameter orderIds is required.");				
+				return JSON.toJSONString(respJson);	
+			}
 			
-			JSONObject dataJson = new JSONObject();	
-			dataJson.put("orderStatus", order.getOrderStatus());
+			String[] orderIdsStr = orderIds.split(",");
+			Integer[] orderIdsInt = ConvertTools.stringArr2IntArr(orderIdsStr);
+			List<Map<String,Integer>> data = new ArrayList<Map<String,Integer>>();
+			for (Integer orderId : orderIdsInt) {
+				Torder order = orderService.getTorderById(orderId);
+				if(order !=null){
+					Map<String,Integer> res = new HashMap<String, Integer>();
+					res.put("orderId", order.getOrderId());
+					res.put("orderStatus", order.getOrderStatus());
+					data.add(res);
+				}
+			}
 			respJson.put("status", true);
 			respJson.put("info", "OK");
-			respJson.put("data", dataJson);
+			respJson.put("data", data);
 			
 			return JSON.toJSONString(respJson);
 		}
