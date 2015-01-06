@@ -478,7 +478,7 @@ public class MobileAPI {
 					order.setOrderTotal(totalMoney);
 					orderService.update(order);
 					JSONObject data = new JSONObject();
-					data.put("orderId ", order.getOrderId());
+					data.put("orderId", order.getOrderId());
 					data.put("orderTotal", totalMoney);
 					respJson.put("status", true);
 					respJson.put("info", "OK");
