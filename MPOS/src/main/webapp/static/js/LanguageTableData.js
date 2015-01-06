@@ -49,7 +49,7 @@ var LanguagesTable = function () {
 	           { title: "ID",   data: "id"  },
 	           { title: "Name",   data: "name" },
 	           { title: "Local",    data: "local" },
-	           { title: "Flagimage",  data: "flagImage"},
+	           { title: "Flag Image",  data: "flagImage"},
 	           { title: "Status", data: "status"},
 	           { title: "Sort", data: "sort"},
 	          

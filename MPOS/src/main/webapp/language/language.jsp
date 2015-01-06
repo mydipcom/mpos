@@ -131,7 +131,7 @@
 											<label><input type="checkbox" checked data-column="1">id</label>
 											<label><input type="checkbox" checked data-column="2">name</label>
 											<label><input type="checkbox" checked data-column="3">local</label>
-											<label><input type="checkbox" checked data-column="4">Flagimage</label>
+											<label><input type="checkbox" checked data-column="4">Flag Image</label>
 											<label><input type="checkbox" checked data-column="5">status</label>
 											<label><input type="checkbox" checked data-column="6">Sort</label>
 										</div>
@@ -148,7 +148,7 @@
 											<th>Id</th>
 											<th>Name</th>
 											<th>Local</th>
-											<th>Flagimage</th>
+											<th>Flag Image</th>
 											<th>Status</th>
 											<th>Sort</th>
 										</tr>

@@ -69,7 +69,6 @@ var Addgoods = function () {
 
 	   
 			$('#categoryAttributesFormSubmit').on('click',function(e){
-				alert("test");
 				var html;
 				$.ajax( {
 					 "dataType": 'json', 

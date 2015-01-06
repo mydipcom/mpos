@@ -70,9 +70,7 @@ var UserProfile = function () {
 			});
 	    //修改密码
 	    var ChangePassword = function() {
-                  event.stopPropagation();
-				  var jsondata=$(this).serializeJson();
-				  $.ajax( {
+                  $.ajax( {
 		             "dataType": 'json', 
 		             "type": "POST", 
 		             "url": rootURI+"userprofile/changePassword?rand="+Math.random(), 

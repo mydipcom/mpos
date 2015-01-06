@@ -132,7 +132,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label">Order Id：</label>
+									<label class="col-md-3 control-label">Order ID：</label>
 									<div class="col-md-6">
 										<input name="orderId" type="text" class="form-control">
 									</div>

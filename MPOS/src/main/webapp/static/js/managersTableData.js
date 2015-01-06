@@ -49,7 +49,7 @@ var ManagersTable = function () {
 		 	        ],
      	        "serverSide": true,
      	        "serverMethod": "GET",
-     	        "ajaxSource": rootURI+"manager/managerslogList/"+ids+"?rand="+Math.random()
+     	        "ajaxSource": rootURI+"managerlog/managerslogList/"+ids+"?rand="+Math.random()
 			});	
 		};
 	
@@ -85,7 +85,7 @@ var ManagersTable = function () {
                {"orderable": false },
 	           { title: "ID",   data: "adminId"  },
 	           { title: "Email",   data: "email" },
-	           { title: "Role_Name",    data: "roleName" },
+	           { title: "Role Name",    data: "roleName" },
 	           { title: "Status",  
 	 	        'render':function(data,status,row){
 	        				var tem = row.status;
@@ -99,10 +99,10 @@ var ManagersTable = function () {
 	        			}
 	           },
 
-	           { title: "CreatedBy", data: "createdBy" ,"bVisible":false},
-	           { title: "CreatedTime", data: "createdTimeStr", "bVisible":false},
-	           { title: "UpdatedBy",  data: "updatedBy" ,"bVisible":false},
-	           { title: "UpdatedTime",    data: "updatedTimeStr" ,"bVisible":false},  
+	           { title: "Created By", data: "createdBy" ,"bVisible":false},
+	           { title: "Created Time", data: "createdTimeStr", "bVisible":false},
+	           { title: "Updated By",  data: "updatedBy" ,"bVisible":false},
+	           { title: "Updated Time",    data: "updatedTimeStr" ,"bVisible":false},  
 	           { title: "Action" ,"class":"center"},
 	        ],
 	        "serverSide": true,

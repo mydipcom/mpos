@@ -95,6 +95,7 @@ public class ManagerController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try{
 			adminuser.setCreatedBy(ad.getAdminId());
+			adminuser.setStatus(true);
 			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
 			adminuser.setCreatedTime(System.currentTimeMillis());
 			String email = adminuser.getEmail();

@@ -248,7 +248,7 @@
 										</select>										
 									</div>
 								</div>
-								<div class="form-group">
+								<%-- <div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status" /><span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
@@ -258,7 +258,7 @@
 											<input type="radio" name="status" value="0"/>false </label>
 										</div>
 									</div>
-								</div>	
+								</div>	 --%>
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
@@ -342,21 +342,7 @@
 										<input name="password" type="password"  class="form-control"/>
 										<span class="help-block"> input a new password or not input password</span>
 									</div>
-								</div>	
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.createdBy"/></label>
-									<div class="col-md-9">																				
-										<input name="createdBy" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>			
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.createdTime"/></label>
-									<div class="col-md-9">																				
-										<input name="createdTimeStr" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>						
+								</div>
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/></label>
 									<div class="col-md-9">																				
@@ -373,17 +359,33 @@
 										</select>										
 									</div>
 								</div>
+									
 								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.createdBy"/></label>
+									<div class="col-md-9">																				
+										<input name="createdBy" class="form-control" readonly="true"/>
+										
+									</div>
+								</div>			
+								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.createdTime"/></label>
+									<div class="col-md-9">																				
+										<input name="createdTimeStr" class="form-control" readonly="true"/>
+										
+									</div>
+								</div>						
+								
+								 <div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
-											<label>
-											<input type="radio" name="status" value="1" checked/>true </label>
-											<label>
-											<input type="radio" name="status" value="0"/>false </label>
+											<label class="radio-inline">
+											<input type="radio" name="status" value="1" checked/>Active </label>
+											<label class="radio-inline">
+											<input type="radio" name="status" value="0"/>Inactive </label>
 										</div>
 									</div>
-								</div>														
+								</div>		 												
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
