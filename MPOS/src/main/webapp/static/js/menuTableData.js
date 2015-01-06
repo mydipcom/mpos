@@ -109,7 +109,7 @@ var MenuTable = function () {
                {"orderable": false },
 	           { title: "ID",   data: "menuId"},
 	           { title: "Name",    data: "title" },
-	           { title: "Parent ID",  data: "pid" },
+	           { title: "Parent Categories",  data: "pid" },
 	           /*{ title: "Status",    data: "status" },*/
 	           { title: "Sort",    data: "sort"}
 	          ],
