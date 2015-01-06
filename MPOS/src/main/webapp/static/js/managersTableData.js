@@ -321,7 +321,7 @@ var ManagersTable = function () {
     };
   //添加操作
 	var AddUsers = function(){
-		event.stopPropagation();
+		
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
