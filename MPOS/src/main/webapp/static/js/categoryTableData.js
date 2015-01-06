@@ -454,7 +454,10 @@ var CategoryTable = function () {
 				var type = data.type;
 				$("#editAttributeForm input[name='attributeId']").val(attributeId);
 				$("#editAttributeForm input[name='categoryId.categoryId']").val(att_cate_id);
-				
+				if(type==0){
+					$("#edit_required").html("");
+					$("#editAttributeForm textarea[name='content']").rules("remove","required");
+				}
 				$("#editAttributeForm :radio").removeAttr("checked");
 		        $("#editAttributeForm :radio").parents('span').removeClass("checked");
 		           

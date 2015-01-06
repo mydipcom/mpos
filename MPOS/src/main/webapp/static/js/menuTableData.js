@@ -449,6 +449,7 @@ var MenuTable = function () {
         	handleTable();  
         	addFormValidation();
         	editFormValidation();
+        	loadMenu("edit_select");
         }
 
     };

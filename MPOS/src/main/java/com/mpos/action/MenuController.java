@@ -193,7 +193,7 @@ public class MenuController extends BaseController {
 		Tmenu parent = menuService.getMenu(menu.getPid());
 		//String res = "";
 		if(parent!=null&&parent.getMenuId()!=null){
-			title += " << "+parent.getTitle();
+			title = parent.getTitle() + " >> " + title;
 			return loadTitle(parent,title);
 		}
 		//System.out.println(title);

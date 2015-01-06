@@ -353,7 +353,7 @@ public class MobileAPI {
 				model = loadAttribute(model, product);
 				//装载商品图片
 				model = loadImage(model, request, product);
-			}
+			}  
 			/*//装载商品优惠活动列表
 			List<Tpromotion> pros = loadProductPromotion(product);
 			//得到通过优先级排序的可叠加优惠列表
