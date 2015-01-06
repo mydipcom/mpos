@@ -280,8 +280,8 @@
 										</div>
 										<div class="actions">
 											<div class="portlet-input input-inline">
-												<form:select path="attributeGroupId" cssClass="form-control" id="chooseCategory">												
-													<option>-- Please product attribute group --</option>
+												<form:select path="attributeGroup.categoryId" cssClass="form-control" name="category" id="chooseCategory">												
+													<option value="0">-- Please product attribute group --</option>
 													<form:options items="${category}"/> 													
 												</form:select>												
 											</div>											

@@ -33,7 +33,7 @@ var Addgoods = function () {
 									var attrArr=content.split(",");
 									for(var n=0;n<attrArr.length;n++){
 									    var attr=attrArr[n];
-										var radioObj='<label class="radio-inline"><input type="radio" name="attr_'+attributeId+'" value="'+attr+'"/>'+attr+'</label>';
+										var radioObj='<label class="radio-inline"><input type="radio" name="attr_'+attributeId+'" value="'+n+'"/>'+attr+'</label>';
 										radioGroup.append(radioObj);
 									}
 									row.find('.col-md-10').append(radioGroup);
@@ -48,7 +48,7 @@ var Addgoods = function () {
 									var attrArr=content.split(",");
 									for(var n=0;n<attrArr.length;n++){
 									    var attr=attrArr[n];
-										var checkboxObj=$('<label class="checkbox-inline"><input type="checkbox" name="attr_'+attributeId+'" value="'+attr+'" />'+attr+'</label>');
+										var checkboxObj=$('<label class="checkbox-inline"><input type="checkbox" name="attr_'+attributeId+'" value="'+n+'" data="'+attr+'"/>'+attr+'</label>');
 										checkboxes=checkboxes.add(checkboxObj);
 									}
 									checkboxes.appendTo(checkboxGroup);
@@ -58,7 +58,7 @@ var Addgoods = function () {
 									checkboxGroup.on('change', ':checkbox', function () {
 										row.find("tbody").empty();
 										$.each(checkboxGroup.find(":checked"), function (index, obj) {
-											row.find("tbody").append('<tr><td><span>'+obj.value+'</span></td><td><span>HK$:</span> <input type="text" name="attrPrice_'+attributeId+'" placeholder="0.00"/></td></tr>');
+											row.find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" name="attrPrice_'+attributeId+'" placeholder="0.00"/></td></tr>');
 										});
 							        });
 									
@@ -68,10 +68,11 @@ var Addgoods = function () {
 									var attrArr=content.split(",");
 									for(var n=0;n<attrArr.length;n++){
 									    var attr=attrArr[n];
-										var selectObj='<option value="'+attr+'"/>'+attr+'</option>';
+										var selectObj='<option value="'+n+'"/>'+attr+'</option>';
 										selectGroup.find('select').append(selectObj);
 									}
 									row.find('.col-md-10').append(selectGroup);
+									row.append('<input type="hidden" name="attributeId" value="'+attributeId+'"/>');
 									break;
 								default:
 									row.find('.col-md-10').append('<p class="form-control-static">'+content+'</p>');
