@@ -58,7 +58,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @see com.bps.service.AdminRoleService#getAllAdminRoles()
 	 */
 	public List<TadminRole> getAllAdminRoles(){
-		return adminRoleDao.LoadAll();
+		return adminRoleDao.findBy("status", true);
 	}
 
 	/**

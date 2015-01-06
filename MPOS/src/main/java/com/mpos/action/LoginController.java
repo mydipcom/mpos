@@ -95,7 +95,13 @@ public class LoginController extends BaseController {
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
-		}else if(!tUser.getStatus()){
+		}else if(!tUser.getStatus() && !"admin".equals(tUser.getAdminId())){
+			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused) .");
+			mav.addObject("user", new TadminUser());
+			saveLoginErrorTims(request);
+			adminLog.setLevel((short)1);
+			log_content=SystemConstants.LOG_FAILURE+":userid error";
+		}else if(!tUser.getAdminRole().getStatus() && !"admin".equals(tUser.getAdminId())){
 			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused) .");
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
