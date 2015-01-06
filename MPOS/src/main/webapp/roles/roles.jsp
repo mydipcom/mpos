@@ -161,7 +161,7 @@
 										<input name="pid" class="form-control"/>									
 									</div>
 								</div>								
-								<div class="form-group">
+								<%-- <div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/><span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
@@ -171,7 +171,7 @@
 											<input type="radio" name="status" value="false"/>false </label>
 										</div>
 									</div>
-								</div>															
+								</div>	 --%>														
 								
 							</div>
 							<div class="form-actions" style="border-top:0;">
@@ -218,9 +218,9 @@
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label class="radio-inline">
-											<input type="radio" name="status" value="true" checked/>true </label>
+											<input type="radio" name="status" value="true" checked/>Active </label>
 											<label class="radio-inline">
-											<input type="radio" name="status" value="false"/>false </label>
+											<input type="radio" name="status" value="false"/>Inactive </label>
 										</div>
 									</div>
 								</div>														
@@ -279,7 +279,7 @@
 						</form>
 						<!-- END FORM-->
 					</div>					
-				</div>				
+				</div>				                
 				<!-- END EDIT Role Rights MODAL FORM-->
 				
 				<!-- BEGIN DELETE MODAL FORM-->

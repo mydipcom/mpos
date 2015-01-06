@@ -84,6 +84,7 @@ public class RolesController extends BaseController {
 	public String addRole(HttpServletRequest request,TadminRole adminRole){		
 		JSONObject respJson = new JSONObject();
 		try{
+			adminRole.setStatus(true);
 			adminRoleService.createAdminRole(adminRole);
 			respJson.put("status", true);
 		}
