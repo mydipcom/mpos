@@ -221,6 +221,9 @@ public class GoodsController extends BaseController{
 		product.setSort(model.getSort());
 		product.setStatus(true);		
 		product.setTmenu(model.getMenu());
+		if(model.getAttributeGroup().getCategoryId()!=0){
+			product.setTcategory(model.getAttributeGroup());
+		}
 		try {
 			//Save product basic information			
 			goodsService.createGoods(product);
@@ -239,7 +242,7 @@ public class GoodsController extends BaseController{
 			List<TlocalizedField> unitNameLocaleList=model.getUnitName_locale();
 			//Save product language information
 			for (TlocalizedField localizedField : productNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("productName");
@@ -247,7 +250,7 @@ public class GoodsController extends BaseController{
 				}				
 			}
 			for (TlocalizedField localizedField : shortDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("shortDescr");
@@ -255,7 +258,7 @@ public class GoodsController extends BaseController{
 				}
 			}
 			for (TlocalizedField localizedField : fullDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("fullDescr");
@@ -263,7 +266,7 @@ public class GoodsController extends BaseController{
 				}
 			}
 			for (TlocalizedField localizedField : unitNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("unitName");
@@ -279,6 +282,7 @@ public class GoodsController extends BaseController{
 				TproductImage productImage=new TproductImage();
 				productImage.setProduct(product);
 				productImage.setImage(fileMeta.getBytes());
+				productImage.setImageSuffix(fileMeta.getSuffix());
 				String filename=product.getId()+"_"+i+"."+fileMeta.getSuffix();
 				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
                 //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;

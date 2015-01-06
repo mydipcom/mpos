@@ -3,6 +3,7 @@ package com.mpos.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mpos.dto.Tcategory;
 import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
@@ -16,12 +17,12 @@ public class AddProductModel{
 	private String unitName;
 	private Float oldPrice;
 	private Float price;
-	private int sku=0;
+	private int sku;
 	private boolean recommend=false;
-	private Integer sort=0;
+	private Integer sort;
 	private boolean status=true;
 	private Tmenu menu;
-	private int attributeGroupId;
+	private Tcategory attributeGroup;
 	
 	private List<TlocalizedField> productName_locale=new ArrayList<TlocalizedField>();
 	private List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
@@ -52,14 +53,14 @@ public class AddProductModel{
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}	
+
+	public Tcategory getAttributeGroup() {
+		return attributeGroup;
 	}
 
-	public int getAttributeGroupId() {
-		return attributeGroupId;
-	}
-
-	public void setAttributeGroupId(int attributeGroupId) {
-		this.attributeGroupId = attributeGroupId;
+	public void setAttributeGroup(Tcategory attributeGroup) {
+		this.attributeGroup = attributeGroup;
 	}
 
 	public String getProductName() {
