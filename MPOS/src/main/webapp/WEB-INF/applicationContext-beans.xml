@@ -57,6 +57,9 @@
 	 <bean id="goodsImageService" class="com.mpos.service.impl.GoodsImageServiceImpl" autowire="byName"/>
 	 
 	 <bean id="productAttributeService" class="com.mpos.service.impl.ProductAttributeServiceImpl" autowire="byName"/>
+	 
+	 <bean id="goodsAttributeService" class="com.mpos.service.impl.GoodsAttributeServiceImpl" autowire="byName"/>
+	 
 	<!-- 缓存系统常用数据 -->
 	<bean class="com.mpos.core.CachedDataProcessor"/>
 </beans>

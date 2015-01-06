@@ -1,49 +1,54 @@
 package com.mpos.action;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
 
-import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
+import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.Tlanguage;
+import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Tproduct;
-import com.mpos.dto.TproductAttribute;
-import com.mpos.dto.TproductAttributeId;
 import com.mpos.dto.TproductImage;
 import com.mpos.model.AddAttributevaleModel;
-import com.mpos.model.AddGoodsModel;
-import com.mpos.model.AddgoodsLocal;
+import com.mpos.model.AddProductModel;
 import com.mpos.model.DataTableParamter;
+import com.mpos.model.FileMeta;
 import com.mpos.model.PagingData;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
+import com.mpos.service.GoodsAttributeService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
 import com.mpos.service.LanguageService;
@@ -51,9 +56,9 @@ import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
 import com.mpos.service.ProductAttributeService;
 import com.mpos.service.ProductReleaseService;
-import com.mysql.fabric.xmlrpc.base.Value;
 
 @Controller
+@Scope("session")
 @RequestMapping("/goods")
 public class GoodsController extends BaseController{
 	
@@ -79,10 +84,16 @@ public class GoodsController extends BaseController{
 	private ProductAttributeService productAttributeService;
 	
 	@Autowired
+	private GoodsAttributeService goodsAttributeService;
+	
+	@Autowired
 	private ProductReleaseService productReleaseService;
 	
 	@Autowired
 	private LocalizedFieldService localizedFieldService;
+	
+	private LinkedHashMap<Integer,FileMeta> filesMap = new LinkedHashMap<Integer,FileMeta>();
+	private int imgIndex=0;	
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView Goods(HttpServletRequest request){
@@ -108,13 +119,20 @@ public class GoodsController extends BaseController{
 	}
 	@RequestMapping(value="addgoods",method=RequestMethod.GET)
 	public ModelAndView addGoodsPage(HttpServletRequest request){
+		imgIndex=0;
+		filesMap.clear();
 		ModelAndView mav=new ModelAndView();
-		List<Tcategory> categorys=categoryService.getallCategory();
+		List<Tcategory> categoryList=categoryService.getallCategory();
+		Map<Integer, String> categoryMap = new HashMap<Integer, String>();  		
+		for (Tcategory tcategory : categoryList) {
+			categoryMap.put(tcategory.getCategoryId(), tcategory.getName());
+		}
 		List<Tmenu> menus=menuService.getAllMenu();
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
 		mav.addObject("lanList", languages);
-		mav.addObject("category", categorys);
+		mav.addObject("category", categoryMap);
 		mav.addObject("menu", menus);
+		mav.addObject("product", new AddProductModel());
 		mav.setViewName("goods/addgoods");
 		return mav;
 		
@@ -154,17 +172,16 @@ public class GoodsController extends BaseController{
 		}	
 		return JSON.toJSONString(respJson);		
 	}
-	@RequestMapping(value="/getcategorybyid/{ids}",method=RequestMethod.POST)
+	
+	@RequestMapping(value="/getAttributesGroupById/{id}",method=RequestMethod.GET)
 	@ResponseBody
-	public String getgoodscategory(@PathVariable String ids,HttpServletRequest request){
-		Integer id=Integer.parseInt(ids);	
+	public String getAttributesGroup(@PathVariable int id,HttpServletRequest request){			
 		JSONObject respJson = new JSONObject();
 		try {
-		//Tcategory category=categoryService.getCategory(id);
-		List<TcategoryAttribute> list=CategoryAttributeService.getCategoryAttributeByCategoryid(id);
-		respJson.put("status", true);
-		respJson.put("list", list);
-		SystemConfig.product_AttributeModel_Map.clear();
+			List<TcategoryAttribute> list=CategoryAttributeService.getCategoryAttributeByCategoryid(id);
+			respJson.put("status", true);
+			respJson.put("list", list);
+			SystemConfig.product_AttributeModel_Map.clear();
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -190,140 +207,95 @@ public class GoodsController extends BaseController{
 		}
 		return JSON.toJSONString(respJson);
 	}
-	@RequestMapping(value="/setgoods",method=RequestMethod.POST)
-	@ResponseBody
-	public ModelAndView addGoods(HttpServletRequest request,AddGoodsModel model,AddgoodsLocal value,String attributeId,
-			@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
+	@RequestMapping(value="/setgoods",method=RequestMethod.POST)	
+	public ModelAndView addGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
 		Tproduct product=new Tproduct();
-		String[] contents = request.getParameterValues("content");
-		JSONObject respJson = new JSONObject();
-		List<TproductAttribute> tproductAttributelist=new ArrayList<TproductAttribute>(); 
-		
+		product.setProductName(model.getProductName());
 		product.setShortDescr(model.getShortDescr());
 		product.setFullDescr(model.getFullDescr());
 		product.setPrice(model.getPrice());
-		product.setOldPrice(model.getOldPrice());
-		product.setProductName(model.getProductName());
+		product.setOldPrice(model.getOldPrice());		
 		product.setUnitName(model.getUnitName());
-		product.setStatus(true);
-		if(model.getCategoryId()!=null){
-		Tcategory catefory=categoryService.getCategory(model.getCategoryId());
-		product.setTcategory(catefory);
-		}
-		Tmenu menu=menuService.getMenu(model.getMenuId());
-		product.setTmenu(menu);
 		product.setRecommend(model.isRecommend());
+		product.setSku(model.getSku());
 		product.setSort(model.getSort());
+		product.setStatus(true);		
+		product.setTmenu(model.getMenu());
 		try {
-			
-		try {
+			//Save product basic information			
 			goodsService.createGoods(product);
-		//	localizedFieldService.createLocalizedFieldList(value.setValue(product));
-			productReleaseService.createOrupdateProductRelease(product.getId());
-			localizedFieldService.createLocalizedFieldList(value.setValue(product));
-		} catch (MposException be) {
 			
-		}
-		//
-		int j=0;
-		for (int i = 0; i < contents.length; i++) {
-		 String[] content=(contents[i]).split("-");
-		 if(content.length>1){
-		 	TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(Integer.parseInt(content[1]));
-		 	TproductAttributeId productAttributeid=new TproductAttributeId();
-		 	TproductAttribute tproductAttribute=new TproductAttribute();
-		 	tproductAttribute.setContent(content[0]);
-		    productAttributeid.setCategoryAttribute(categoryAttribute);
-		    productAttributeid.setProduct(product);
-		    tproductAttribute.setId(productAttributeid);
-		    productAttributeService.createOrProductAttribute(tproductAttribute);
-		 }else {
-			 if (attributeId!=null){
-			 	String[] idstrArr=attributeId.split(",");		
-				Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
-				 TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(idArr[j]);
-				 TproductAttributeId productAttributeid=new TproductAttributeId();
-				 TproductAttribute tproductAttribute=new TproductAttribute();
-				 tproductAttribute.setContent(contents[i]);
-				 productAttributeid.setCategoryAttribute(categoryAttribute);
-				 productAttributeid.setProduct(product);
-				 tproductAttribute.setId(productAttributeid);
-				 productAttributeService.createOrProductAttribute(tproductAttribute);
-				 j++;
-			 }
-		 } 
-			}
-		
-		/*Iterator it = SystemConfig.product_AttributeModel_Map.keySet().iterator(); 
-		   while (it.hasNext()){ 
-		    String key; 
-		    key=(String)it.next(); 
-		    TproductAttribute tproductAttribute=new TproductAttribute();
-		    AddAttributevaleModel models= SystemConfig.product_AttributeModel_Map.get(key);
-		    TcategoryAttribute categoryAttribute=CategoryAttributeService.getCategoryAttribute(models.getAttributeId());
-		    tproductAttribute.setContent(models.getContent());
-		   // tproductAttribute.setPrice(models.getPrice());
-		    TproductAttributeId productAttributeid=new TproductAttributeId();
-		    productAttributeid.setCategoryAttribute(categoryAttribute);
-		    productAttributeid.setProduct(product);
-		    tproductAttribute.setId(productAttributeid);
-		    tproductAttributelist.add(tproductAttribute);
-		   } 
-		   for (int i = 0; i < tproductAttributelist.size(); i++) {
-			   try {
-				   productAttributeService.createProductAttribute(tproductAttributelist.get(i));
-				   
-			} catch (MposException be) {
-					
+			//Save the product attribute
+			List<TgoodsAttribute> productAttributesList=model.getAttributes();
+			for (TgoodsAttribute goodsAttribute : productAttributesList) {
+				goodsAttribute.setProductId(product.getId());
+				goodsAttributeService.createProductAttribute(goodsAttribute);
 			}
 			
-		}
-		   SystemConfig.product_AttributeModel_Map.clear();*/
-		//Tproduct products=goodsService.findbyProductName(product.getProductName());
-		   //
-		for(int i=0;i<file.length;i++){
-			if (!(file[i].isEmpty())) {
-				TproductImage productImage=new TproductImage();
-				InputStream inputStream = file[i].getInputStream();
-				byte [] image=new byte[1048576];
-				inputStream.read(image);
-				String filename=file[i].getOriginalFilename();
-				String s[]=filename.split("\\.");
-				productImage.setImageSuffix(s[s.length-1]);
-				productImage.setImage(image);
-				productImage.setProduct(product);
-				try {
-					goodsImageService.CreateImages(productImage);
-					//File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"upload"+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
-					File file2=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"products"
-											+File.separator+productImage.getId()+"."+productImage.getImageSuffix());
-					File uploadDir = new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"products");
-					if (!uploadDir.isDirectory()) {
-						uploadDir.mkdirs();
-					}
-					if(!file2.exists()){
-					ImageOutputStream ios= ImageIO.createImageOutputStream(file2);
-					ios.write(image);
-					String path="upload/products/"
-							+productImage.getId()+"."+productImage.getImageSuffix();
-					productImage.setImageUrl(path);
-					goodsImageService.updeteImages(productImage);
-					}
-				} catch (MposException be) {
-					System.out.print(getMessage(request,be.getErrorID(),be.getMessage()));
-					
+			//Set the product fields language model
+			List<TlocalizedField> productNameLocaleList=model.getProductName_locale();
+			List<TlocalizedField> shortDescrLocaleList=model.getShortDescr_locale();
+			List<TlocalizedField> fullDescrLocaleList=model.getFullDescr_locale();
+			List<TlocalizedField> unitNameLocaleList=model.getUnitName_locale();
+			//Save product language information
+			for (TlocalizedField localizedField : productNameLocaleList) {
+				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+					localizedField.setEntityId(product.getId());
+					localizedField.setTableName("Tproduct");
+					localizedField.setTableField("productName");
+					localizedFieldService.createLocalizedField(localizedField);
+				}				
+			}
+			for (TlocalizedField localizedField : shortDescrLocaleList) {
+				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+					localizedField.setEntityId(product.getId());
+					localizedField.setTableName("Tproduct");
+					localizedField.setTableField("shortDescr");
+					localizedFieldService.createLocalizedField(localizedField);
 				}
 			}
-		}
-		respJson.put("status", true);
-		}catch(MposException be){
+			for (TlocalizedField localizedField : fullDescrLocaleList) {
+				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+					localizedField.setEntityId(product.getId());
+					localizedField.setTableName("Tproduct");
+					localizedField.setTableField("fullDescr");
+					localizedFieldService.createLocalizedField(localizedField);
+				}
+			}
+			for (TlocalizedField localizedField : unitNameLocaleList) {
+				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+					localizedField.setEntityId(product.getId());
+					localizedField.setTableName("Tproduct");
+					localizedField.setTableField("unitName");
+					localizedFieldService.createLocalizedField(localizedField);
+				}
+			}						
 			
-		}
-		//List<TcategoryAttribute> categorytitle=CategoryAttributeService.getCategoryAttributeByCategoryid(product.getId());
-		//mav.addObject("categorytitle", categorytitle);
-		
-		return new ModelAndView("redirect:/goods");
-		
+			//Save product images
+			Set<Integer> keys=filesMap.keySet();
+			int i=0;
+			for (Integer key : keys) {
+				FileMeta fileMeta=filesMap.get(key);
+				TproductImage productImage=new TproductImage();
+				productImage.setProduct(product);
+				productImage.setImage(fileMeta.getBytes());
+				String filename=product.getId()+"_"+i+"."+fileMeta.getSuffix();
+				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
+                //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
+            	String fileUrl=request.getContextPath()+"/upload/product/"+filename;
+                FileCopyUtils.copy(fileMeta.getBytes(), new FileOutputStream(filePath));
+				productImage.setImageUrl(fileUrl);
+				i++;
+				goodsImageService.CreateImages(productImage);
+			}
+			filesMap.clear();			
+			return new ModelAndView("redirect:/goods");
+		} catch (MposException | IOException e) {
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("errorMsg", e.getMessage());
+			mav.setViewName("goods/addgoods");
+			return mav;
+		}							
 	}
 	@RequestMapping(value="/addattributes",method=RequestMethod.POST)
 	@ResponseBody
@@ -366,4 +338,87 @@ public class GoodsController extends BaseController{
 		return mav;
 	}
 	*/
+	
+	@RequestMapping(value="/uploadImages",method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadImages(MultipartHttpServletRequest request){		
+		
+        Iterator<String> itr =  request.getFileNames();
+        MultipartFile mpf = null;
+		JSONObject respJson = new JSONObject();
+		JSONArray jsonArray=new JSONArray();  
+		
+        //Get each file		
+        while(itr.hasNext()){
+        	JSONObject jsonObj = new JSONObject();
+            //Get next MultipartFile        	
+            mpf = request.getFile(itr.next());                      
+            //String fileName=this.getSessionUser(request).getAdminId()+mpf.getOriginalFilename();
+            String originalName=mpf.getOriginalFilename();
+            String[] strArr=originalName.split("[.]");
+            String fileName=this.getSessionUser(request).getAdminId()+"_"+imgIndex+"."+strArr[strArr.length-1];
+            String fileSize=mpf.getSize()/1024+" Kb";            
+            FileMeta filemeta=new FileMeta();
+        	filemeta.setFileName(fileName);
+        	filemeta.setFileSize(mpf.getSize()/1024+" Kb");
+        	filemeta.setFileType(mpf.getContentType());
+        	filemeta.setSuffix(strArr[strArr.length-1]);
+        	jsonObj.put("id",imgIndex);
+        	jsonObj.put("fileName",mpf.getOriginalFilename());
+        	jsonObj.put("fileSize",fileSize); 	
+        		
+        	//Save file to cache     	
+            try {
+            	filemeta.setBytes(mpf.getBytes());
+            	String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"temp"+File.separator+fileName;
+                //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
+            	String fileUrl=request.getContextPath()+"/upload/temp/"+fileName;
+                FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(filePath));
+                filemeta.setUrl(fileUrl);                
+                //filemeta.setThumbnailUrl(request.getContextPath()+"/static/upload/"+fileName); 
+                jsonObj.put("url",fileUrl);
+                jsonArray.add(jsonObj);
+                filesMap.put(imgIndex,filemeta);
+           } catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+           } 
+           imgIndex++;
+        }
+        respJson.put("files", jsonArray);
+        respJson.put("status", true);
+        respJson.put("info", "OK");
+        return JSON.toJSONString(respJson);		
+	}
+	
+	@RequestMapping(value="/deleteImage/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public String deleteImage(@PathVariable int id,HttpServletRequest request){	
+		FileMeta fileMeta = filesMap.get(id);
+		String filename=fileMeta.getFileName();
+		filesMap.remove(id);
+		JSONObject respJson = new JSONObject();               	        	                
+    	//Delete file        	                      
+    	String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"temp"+File.separator+filename;
+        File file=new File(filePath);
+        file.deleteOnExit();            
+                                   
+        respJson.put("status", true);
+        respJson.put("info", "OK");
+        return JSON.toJSONString(respJson);		
+	}
+	
+	@RequestMapping(value = "/getCachedImg/{id}", method = RequestMethod.GET)
+    public void getCachedImg(HttpServletResponse response,@PathVariable int id){
+        FileMeta fileMeta = filesMap.get(id);        
+        try {      
+               response.setContentType(fileMeta.getFileType());
+               response.setHeader("Content-disposition", "attachment; filename=\""+fileMeta.getFileName()+"\"");
+               FileCopyUtils.copy(fileMeta.getBytes(), response.getOutputStream());
+        }catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+        }
+    }
+
 }

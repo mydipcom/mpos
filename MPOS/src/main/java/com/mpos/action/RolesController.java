@@ -101,8 +101,14 @@ public class RolesController extends BaseController {
 
 		JSONObject respJson = new JSONObject();
 		try{
-			adminRoleService.updateAdminRole(adminRole);
-			respJson.put("status", true);
+			if(adminRole.getRoleId()==1){
+				respJson.put("status", false);
+				respJson.put("info", "It is not allowed to edit the super user.");
+			}
+			else{
+				adminRoleService.updateAdminRole(adminRole);
+				respJson.put("status", true);
+			}
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -140,9 +146,15 @@ public class RolesController extends BaseController {
 		String[] idstrArr=ids.split(",");		
 		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
 		JSONObject respJson = new JSONObject();
-		try{
-			adminRoleService.deleteAdminRolesByIds(idArr);
-			respJson.put("status", true);
+		try{			
+			if(Arrays.binarySearch(idArr, new Integer(1))>=0){
+				respJson.put("status", false);
+				respJson.put("info", "It is not allowed to delete the super user.");
+			}
+			else{
+				adminRoleService.deleteAdminRolesByIds(idArr);
+				respJson.put("status", true);
+			}
 		}
 		catch(MposException be){
 			respJson.put("status", false);

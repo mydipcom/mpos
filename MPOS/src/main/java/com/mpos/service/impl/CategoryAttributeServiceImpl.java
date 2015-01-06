@@ -59,9 +59,12 @@ public class CategoryAttributeServiceImpl implements CategoryAttributeService {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public List<TcategoryAttribute> getCategoryAttributeByCategoryid(Integer id) {
-		// TODO Auto-generated method stub
-		return attributeDao.getAttributesbycategoryid(id);
+		Criteria criteria=attributeDao.createCriteria();
+		return criteria.add(Restrictions.eq("categoryId.categoryId", id))				
+				.addOrder(Order.asc("sort")).list();
+		
 	}
 
 
