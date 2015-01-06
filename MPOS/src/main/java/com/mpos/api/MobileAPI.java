@@ -346,12 +346,14 @@ public class MobileAPI {
 			model.setProductId(product.getId());
 			model.setMenuId(product.getTmenu().getMenuId());
 			BeanUtils.copyProperties(product, model, "attributes", "promotions", "images");
-			//装载需要多语言化得字段
-			model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR);
-			//装载商品属性
-			model = loadAttribute(model, product);
-			//装载商品图片
-			model = loadImage(model, request, product);
+			if(product.isStatus()){
+				//装载需要多语言化得字段
+				model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR);
+				//装载商品属性
+				model = loadAttribute(model, product);
+				//装载商品图片
+				model = loadImage(model, request, product);
+			}
 			/*//装载商品优惠活动列表
 			List<Tpromotion> pros = loadProductPromotion(product);
 			//得到通过优先级排序的可叠加优惠列表
