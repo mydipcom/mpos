@@ -342,7 +342,7 @@ var ManagersTable = function () {
         	 alert(errorThrown);
          }
        });
-		//$('#add_users').modal('hide');
+		$('#add_users').modal('hide');
     };
     
     var AddUsersValidation = function() {
@@ -424,7 +424,7 @@ var ManagersTable = function () {
         	 alert(errorThrown);
          }
        });
-	 // $('#edit_users').modal('hide');
+	  $('#edit_users').modal('hide');
 	};
 		
             
