@@ -68,7 +68,7 @@ var GoodsTable = function () {
 	           { title: "Category Name",   data: "menuname" },
 	           { title: "Product Name",  data: "productName"},
 	           { title: "Price", data: "price"},
-	           { title: "Old_Price", data: "oldPrice" },
+	           { title: "Old Price", data: "oldPrice" },
 	           { title: "Recommend",  data: "recommend" },
 	           { title: "Sort",    data: "sort"},  
 	         //  { title: "Status",    data: "status"},  

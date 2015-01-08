@@ -128,11 +128,11 @@
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">id</label>
-											<label><input type="checkbox" checked data-column="2">name</label>
-											<label><input type="checkbox" checked data-column="3">local</label>
+											<label><input type="checkbox" checked data-column="1">Id</label>
+											<label><input type="checkbox" checked data-column="2">Name</label>
+											<label><input type="checkbox" checked data-column="3">Local</label>
 											<label><input type="checkbox" checked data-column="4">Flag Image</label>
-											<label><input type="checkbox" checked data-column="5">status</label>
+											<label><input type="checkbox" checked data-column="5">Status</label>
 											<label><input type="checkbox" checked data-column="6">Sort</label>
 										</div>
 									</div>								    																

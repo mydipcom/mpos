@@ -182,10 +182,10 @@
 									<i class="fa fa-edit"></i>Product List Table
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i>Add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i>Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActiveadminsModal"><i class="fa fa-key"></i>Activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i>Delete</a>
+								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i> <s:message code="product.add" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="product.edit" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActiveadminsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
@@ -193,13 +193,13 @@
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
-											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.searchform.email"/></label>
-											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.rolename"/></label>
-											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.searchform.status"/></label>
-											<label><input type="checkbox"  data-column="5"><s:message code="system.management.user.createdBy"/></label>
-											<label><input type="checkbox"  data-column="6"><s:message code="system.management.user.createdTime"/></label>
-											<label><input type="checkbox"  data-column="7"><s:message code="system.management.user.updatedBy"/></label>
-											<label><input type="checkbox"  data-column="8"><s:message code="system.management.user.updatedTime"/></label>
+											<label><input type="checkbox" checked data-column="2">Category Name</label>
+											<label><input type="checkbox" checked data-column="3">Product Nam</label>
+											<label><input type="checkbox" checked data-column="4">Price</label>
+											<label><input type="checkbox" checked data-column="5">Old Price</label>
+											<label><input type="checkbox" checked data-column="6">Recommend</label>
+											<label><input type="checkbox" checked data-column="7">Sort</label>
+											
 										</div>
 									</div>								    																
 								</div>

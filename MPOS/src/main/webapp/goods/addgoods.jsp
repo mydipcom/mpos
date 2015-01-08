@@ -228,7 +228,7 @@
 											<div class="col-md-9">
 												<div class="radio-list">
 													<label class="radio-inline"> 
-													<form:radiobutton path="recommend" value="ture"/> True
+													<form:radiobutton path="recommend" value="true"/> True
 													</label> 
 													<label class="radio-inline"> 
 													<form:radiobutton path="recommend" value="false"/> False
