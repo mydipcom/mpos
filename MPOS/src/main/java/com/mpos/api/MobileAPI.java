@@ -135,8 +135,8 @@ public class MobileAPI {
 			dataJson.put("pwd", pwd);
 			dataJson.put("token", token);
 			dataJson.put("currency", currency);
-			dataJson.put("logo", path+logo);	
-			dataJson.put("backgroundImage", path+backgroundImage);
+			dataJson.put("logo", path + "/"+ logo);	
+			dataJson.put("backgroundImage", path + "/" + backgroundImage);
 			dataJson.put("storeName", restaurantName);
 			
 			respJson.put("status", true);
