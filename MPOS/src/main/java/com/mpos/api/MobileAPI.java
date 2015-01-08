@@ -535,18 +535,18 @@ public class MobileAPI {
 		Date nowTime = new Date();
 		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		String timeString = sdf.format(nowTime);
+		Map<String, Object> data = new HashMap<String, Object>();
+		String msg = "OK";
 		if (SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==1) {
 			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
 			info.setCallTime(timeString);
 			SystemConfig.Call_Waiter_Map.put(appId, info);
-			respJson.put("info", "The Waiter will come");
 		} else if(SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==0){
 			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
 			info.setStatus(1);
 			info.setType(Integer.valueOf(type));
 			info.setCallTime(timeString);
 			SystemConfig.Call_Waiter_Map.put(appId, info);
-			respJson.put("info", "The Waiter will come");
 		}else{
 			CallWaiterInfo info = new CallWaiterInfo();
 			info.setCallMan(appId);
@@ -554,8 +554,10 @@ public class MobileAPI {
 			info.setStatus(1);
 			info.setType(Integer.valueOf(type));
 			SystemConfig.Call_Waiter_Map.put(appId, info);
-			respJson.put("info", "The call waiter success");
 		}
+		data.put("type", type);
+		respJson.put("data", data);
+		respJson.put("info", msg);
 		respJson.put("status", true);
 		return JSON.toJSONString(respJson);
 	}
