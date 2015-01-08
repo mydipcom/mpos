@@ -62,8 +62,8 @@
 		<!-- BEGIN CONTENT -->
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<!-- BEGIN PAGE HEADER-->
-				<div class="page-bar">
+				
+				<!-- <div class="page-bar">
 					<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a href="index.html">Home</a>
 							<i class="fa fa-angle-right"></i></li>
@@ -71,7 +71,7 @@
 						</li>
 						<li><a href="#">addGoods</a></li>
 					</ul>
-				</div>
+				</div> -->
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
@@ -106,7 +106,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-1">GoodsName<span class="required"> * </span></label>
+																<label class="control-label col-md-2">Product Name<span class="required"> * </span></label>
 																<div class="col-md-5">
 																	<form:input path="productName_locale[${status.index}].localeValue" cssClass="form-control"/>
 																	<form:hidden path="productName_locale[${status.index}].language.id"  value="${lan.id}"/>													                
@@ -117,7 +117,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-1">ShortDescribe</label>
+																<label class="control-label col-md-2">Short Description</label>
 																<div class="col-md-5">
 																	<form:textarea path="shortDescr_locale[${status.index}].localeValue" rows="4" cols="90"/>																																		
 																	<form:hidden path="shortDescr_locale[${status.index}].language.id"  value="${lan.id}"/>																																		
@@ -128,7 +128,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-1">FullDescribe</label>
+																<label class="control-label col-md-2">Full Description</label>
 																<div class="col-md-8">																																		
 																	<form:textarea path="fullDescr_locale[${status.index}].localeValue" rows="10" data-provide="markdown" data-error-container="#editor_error_${status.index}"/>																																		
 																	<form:hidden path="fullDescr_locale[${status.index}].language.id"  value="${lan.id}"/>																	
@@ -140,7 +140,7 @@
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
-																<label class="control-label col-md-1">unitName<span class="required"> * </span></label>
+																<label class="control-label col-md-2">Unit Name<span class="required"> * </span></label>
 																<div class="col-md-5">
 																	<form:input path="unitName_locale[${status.index}].localeValue" cssClass="form-control"/>
 																	<form:hidden path="unitName_locale[${status.index}].language.id"  value="${lan.id}"/>
@@ -154,7 +154,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-1">GoodsName<span class="required"> * </span></label>
+																<label class="control-label col-md-2">Product Name<span class="required"> * </span></label>
 																<div class="col-md-5">																	
 																	<form:input path="productName" cssClass="form-control"/>																	
 																</div>
@@ -164,7 +164,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-1">ShortDescribe</label>
+																<label class="control-label col-md-2">Short Description</label>
 																<div class="col-md-5">																	
 																	<form:textarea path="shortDescr" rows="4" cols="90"/>
 																</div>
@@ -174,7 +174,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-1">FullDescribe</label>
+																<label class="control-label col-md-2">Full Description</label>
 																<div class="col-md-8">
 																	<form:textarea path="fullDescr" rows="10" data-provide="markdown" data-error-container="#editor_error"/>																	
 																	<div id="editor_error"></div>
@@ -185,7 +185,7 @@
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
-																<label class="control-label col-md-1">unitName<span class="required"> * </span></label>
+																<label class="control-label col-md-2">Unit Name<span class="required"> * </span></label>
 																<div class="col-md-5">
 																	<form:input path="unitName" cssClass="form-control"/>
 																</div>
@@ -199,7 +199,7 @@
 								</div>
 								<!--End Multi-language Form   -->
 							
-								<h3 class="form-section">Basic Goods Info</h3>
+								<h3 class="form-section">Basic Info</h3>
 								<div class="row">
 									<!--/span-->
 									<div class="col-md-6">
@@ -231,7 +231,7 @@
 													<form:radiobutton path="recommend" value="ture"/> True
 													</label> 
 													<label class="radio-inline"> 
-													<form:radiobutton path="recommend" value="false"/> Flase
+													<form:radiobutton path="recommend" value="false"/> False
 													</label>
 												</div>
 											</div>

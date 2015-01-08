@@ -2,6 +2,8 @@ package com.mpos.service.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,8 +68,9 @@ public class LanguageServiceImpl implements LanguageService{
 
 	
 	public List<Tlanguage> loadAllTlanguage() {
-		// TODO Auto-generated method stub
-		return languageDao.LoadAll();
+		Criteria criteria=languageDao.createCriteria();
+		return criteria.add(Restrictions.eq("status",true))				
+				.list();
 	}
 
 }

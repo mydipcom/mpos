@@ -13,5 +13,7 @@ public interface GoodsImageService {
 	void updeteImages(TproductImage image);
 	
 	List<TproductImage> getByProductid(Integer id);
+	
+	void deleteImagebyid(Integer id);
 
 }

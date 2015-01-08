@@ -100,7 +100,8 @@ public class GoodsController extends BaseController{
 	public ModelAndView Goods(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		List<Tcategory> categorys=categoryService.getallCategory();
-		List<Tmenu> menus=menuService.getAllMenu();
+		List<MenuModel> menus=menuService.getNoChildrenMenus();
+	//	List<Tmenu> menus=menuService.getAllMenu();
 		mav.addObject("category", categorys);
 		mav.addObject("menu", menus);
 		mav.setViewName("goods/goods");
@@ -208,9 +209,13 @@ public class GoodsController extends BaseController{
 		}
 		return JSON.toJSONString(respJson);
 	}
-	@RequestMapping(value="/setgoods",method=RequestMethod.POST)	
+	@RequestMapping(value="/setgoods",method=RequestMethod.POST)
+	@ResponseBody
 	public ModelAndView addGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
-		Tproduct product=new Tproduct();
+		try{
+			goodsService.createproduct(model, filesMap, request);
+			
+/*		Tproduct product=new Tproduct();
 		product.setProductName(model.getProductName());
 		product.setShortDescr(model.getShortDescr());
 		product.setFullDescr(model.getFullDescr());
@@ -293,9 +298,9 @@ public class GoodsController extends BaseController{
 				i++;
 				goodsImageService.CreateImages(productImage);
 			}
-			filesMap.clear();			
+			filesMap.clear();*/			
 			return new ModelAndView("redirect:/goods");
-		} catch (MposException | IOException e) {
+		} catch (MposException  e) {
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("errorMsg", e.getMessage());
 			mav.setViewName("goods/addgoods");

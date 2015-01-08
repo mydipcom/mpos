@@ -2,11 +2,16 @@ package com.mpos.action;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -15,15 +20,20 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
@@ -38,8 +48,11 @@ import com.mpos.dto.TproductAttributeId;
 import com.mpos.dto.TproductImage;
 import com.mpos.model.AddAttributevaleModel;
 import com.mpos.model.AddGoodsModel;
+import com.mpos.model.AddProductModel;
 import com.mpos.model.AddgoodsLocal;
+import com.mpos.model.FileMeta;
 import com.mpos.model.LocalizedField;
+import com.mpos.model.MenuModel;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
 import com.mpos.service.GoodsImageService;
@@ -81,6 +94,9 @@ private ProductReleaseService productReleaseService;
 @Autowired
 private LocalizedFieldService localizedFieldService;
 
+private LinkedHashMap<Integer,FileMeta> filesMap = new LinkedHashMap<Integer,FileMeta>();
+private int imgIndex=0;	
+
 	@RequestMapping(value="/editgoods/{ids}",method=RequestMethod.GET)
 	public ModelAndView eidtgoods(@PathVariable String ids,HttpServletRequest request){
 		Integer id=Integer.parseInt(ids);
@@ -88,24 +104,56 @@ private LocalizedFieldService localizedFieldService;
 		ModelAndView mav=new ModelAndView();
 		try {
 			Tproduct product=goodsService.getTproductByid(id);
+			 List<TlocalizedField> productName_locale=new ArrayList<TlocalizedField>();
+			 List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
+			 List<TlocalizedField> fullDescr_locale=new ArrayList<TlocalizedField>();
+			 List<TlocalizedField> unitName_locale=new ArrayList<TlocalizedField>();
+			List<Tcategory> categoryList=categoryService.getallCategory();
+			Map<Integer, String> categoryMap = new HashMap<Integer, String>();  		
+			for (Tcategory tcategory : categoryList) {
+				categoryMap.put(tcategory.getCategoryId(), tcategory.getName());
+			}
+			mav.addObject("category", categoryMap);
 			List<TcategoryAttribute> categoryAttribute=new ArrayList<TcategoryAttribute>();
 			List<AddAttributevaleModel> addAttributevalemodels = new ArrayList<AddAttributevaleModel>();
 			
 			
 		
-			List<TlocalizedField> list = localizedFieldService.getListByEntityIdAndEntityName(product.getId(), Tproduct.class.getSimpleName());
-			mav.addObject("product", product);
+		
+			//List<Tmenu> menus=menuService.getAllMenu();
+			List<MenuModel> menus=menuService.getNoChildrenMenus();
+			Map<Integer, String> menusMap = new HashMap<Integer, String>(); 
+			for (MenuModel menu : menus) {
+				menusMap.put(menu.getId(), menu.getTitle());
+			}
+			mav.addObject("menu", menusMap);
+			AddProductModel Productmodel=new AddProductModel();
+			Productmodel.setFullDescr(product.getFullDescr());
+			Productmodel.setMenu(product.getTmenu());
+			Productmodel.setOldPrice(product.getOldPrice());
+			Productmodel.setAttributeGroup(product.getTcategory());
+			Productmodel.setPrice(product.getPrice());
+			Productmodel.setShortDescr(product.getShortDescr());
+			Productmodel.setSort(product.getSort());
+			Productmodel.setSku(product.getSku());
+			Productmodel.setProductName(product.getProductName());
+			Productmodel.setUnitName(product.getUnitName());
+			Productmodel.setMenu(product.getTmenu());
+			Productmodel.setRecommend(product.isRecommend());
+			Productmodel.setProductId(product.getId());
+			productName_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "productName");
+			shortDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "shortDescr");
+			fullDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "fullDescr");
+			unitName_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "unitName");
+			Productmodel.setProductName_locale(productName_locale);
+			Productmodel.setFullDescr_locale(fullDescr_locale);
+			Productmodel.setShortDescr_locale(shortDescr_locale);
+			Productmodel.setUnitName_locale(unitName_locale);
 			//respJson.put("list", LocalizedField.setValues(list));
-			mav.addObject("lists", JSON.toJSONString(LocalizedField.setValues(list)));
-			
-			List<Tcategory> categorys=categoryService.getallCategory();
-			List<Tmenu> menus=menuService.getAllMenu();
 			List<Tlanguage> languages = languageService.loadAllTlanguage();
 			mav.addObject("lanList", languages);
-			mav.addObject("category", categorys);
-			mav.addObject("menu", menus);
-			
-			List<TproductImage> productImage=goodsImageService.getByProductid(product.getId());
+			//mav.addObject("menu", menus);
+/*			List<TproductImage> productImage=goodsImageService.getByProductid(product.getId());
 			if (productImage.size()>0) {
 				mav.addObject("productImage",productImage.get(0));
 			}
@@ -129,6 +177,9 @@ private LocalizedFieldService localizedFieldService;
 			}
 			mav.addObject("categoryAttribute",categoryAttribute);
 			mav.addObject("addAttributevalemodels", addAttributevalemodels);
+			*/
+			
+			mav.addObject("product", Productmodel);
 			mav.setViewName("goods/editgoods");
 			
 		} catch (MposException be ) {	
@@ -137,16 +188,8 @@ private LocalizedFieldService localizedFieldService;
 		
 		return mav;
 	}
-	@RequestMapping(value="/editgoods/editgoods",method=RequestMethod.POST)
+/*	@RequestMapping(value="/editgoods/editgoods",method=RequestMethod.POST)
 	@ResponseBody
-/*	public ModelAndView editGoods(HttpServletRequest request,AddGoodsModel model){
-		System.out.print("111");
-		
-		
-		
-		return null;
-	}*/
-	
 	public ModelAndView editGoods(HttpServletRequest request,AddGoodsModel model,AddgoodsLocal value,
 			@RequestParam(value = "files", required = false) MultipartFile[] file)throws IOException{
 		Tproduct product=new Tproduct();
@@ -236,12 +279,147 @@ private LocalizedFieldService localizedFieldService;
 		respJson.put("status", true);
 		}catch(MposException be){
 			
-		}
-		//List<TcategoryAttribute> categorytitle=CategoryAttributeService.getCategoryAttributeByCategoryid(product.getId());
-		//mav.addObject("categorytitle", categorytitle);
-		
+		}	
 		return new ModelAndView("redirect:/goods");
 		
+	}*/
+	@RequestMapping(value="/editgoods/editgoods",method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
+		try{
+			goodsService.updateproduct(model, filesMap, request);
+			return new ModelAndView("redirect:/goods");
+		} catch (MposException  e) {
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("errorMsg", e.getMessage());
+			mav.setViewName("goods/addgoods");
+			return mav;
+		}					
+
+		}
+	@RequestMapping(value="/editgoods/getImages/{ids}",method=RequestMethod.POST)
+	@ResponseBody
+	public String getproductImages(@PathVariable String ids,HttpServletRequest request){
+		List<TproductImage> list= new ArrayList<TproductImage>();
+		Integer id=Integer.parseInt(ids);
+		//JSONObject jsonObj = new JSONObject();
+		JSONObject respJson = new JSONObject();
+		JSONArray jsonArray=new JSONArray();
+		list=goodsImageService.getByProductid(id);
+		
+		for (int i = 0; i < list.size(); i++) {
+			JSONObject jsonObj = new JSONObject();
+			FileMeta filemeta=new FileMeta();
+			String string=list.get(i).getImageUrl();
+			String fileName=string.split("/")[4];
+			File file=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+fileName);
+			String s[]=fileName.split("\\.");
+			filemeta.setBytes(list.get(i).getImage());
+			filemeta.setFileId(list.get(i).getId());
+			filemeta.setSuffix(s[s.length-1]);
+			filemeta.setUrl(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+fileName);
+			jsonObj.put("id",imgIndex);
+	    	jsonObj.put("fileName",fileName);
+	    	jsonObj.put("fileSize", list.get(i).getImage().length/1024+"kb");
+	    	jsonObj.put("url", list.get(i).getImageUrl());
+	    	//jsonObj.put("fileSize",fileSize);
+	    	if(!file.exists()){
+	    		 try {
+						FileCopyUtils.copy(filemeta.getBytes(), file);
+					} catch (FileNotFoundException e) {
+						
+						e.printStackTrace();
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+					}
+	    	}
+	    	jsonArray.add(jsonObj);
+	    	filesMap.put(imgIndex,filemeta);
+	    
+	    	imgIndex++;
+		}
+			respJson.put("files", jsonArray);
+	        respJson.put("status", true);
+	        respJson.put("info", "OK");
+	        return JSON.toJSONString(respJson);	
 	}
-	
+	@RequestMapping(value="/editgoods/deleteImage/{ids}",method=RequestMethod.GET)
+	@ResponseBody
+	public String deleteImage(@PathVariable Integer ids,HttpServletRequest request){
+		
+		FileMeta fileMeta = filesMap.get(ids);
+		filesMap.remove(ids);
+		JSONObject respJson = new JSONObject();
+		if (fileMeta.getFileId()!=null) {
+			//Delete old image
+			File file=new File(fileMeta.getUrl());
+			file.deleteOnExit();
+			goodsImageService.deleteImagebyid(fileMeta.getFileId());
+			 respJson.put("status", true);
+		     respJson.put("info", "OK");
+		}else{
+		String filename=fileMeta.getFileName();            	        	                
+    	//Delete file        	                      
+    	String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"temp"+File.separator+filename;
+        File file=new File(filePath);
+        file.deleteOnExit();  
+        respJson.put("status", true);
+        respJson.put("info", "OK");
+		}                            
+       
+        return JSON.toJSONString(respJson);
+		
+	}
+	@RequestMapping(value="editgoods/uploadImages",method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadImages(MultipartHttpServletRequest request){		
+		
+        Iterator<String> itr =  request.getFileNames();
+        MultipartFile mpf = null;
+		JSONObject respJson = new JSONObject();
+		JSONArray jsonArray=new JSONArray();  
+		
+        //Get each file		
+        while(itr.hasNext()){
+        	JSONObject jsonObj = new JSONObject();
+            //Get next MultipartFile        	
+            mpf = request.getFile(itr.next());                      
+            //String fileName=this.getSessionUser(request).getAdminId()+mpf.getOriginalFilename();
+            String originalName=mpf.getOriginalFilename();
+            String[] strArr=originalName.split("[.]");
+            String fileName=this.getSessionUser(request).getAdminId()+"_"+imgIndex+"."+strArr[strArr.length-1];
+            String fileSize=mpf.getSize()/1024+" Kb";            
+            FileMeta filemeta=new FileMeta();
+        	filemeta.setFileName(fileName);
+        	filemeta.setFileSize(mpf.getSize()/1024+" Kb");
+        	filemeta.setFileType(mpf.getContentType());
+        	filemeta.setSuffix(strArr[strArr.length-1]);
+        	jsonObj.put("id",imgIndex);
+        	jsonObj.put("fileName",mpf.getOriginalFilename());
+        	jsonObj.put("fileSize",fileSize); 	
+        		
+        	//Save file to cache     	
+            try {
+            	filemeta.setBytes(mpf.getBytes());
+            	String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"temp"+File.separator+fileName;
+                //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
+            	String fileUrl=request.getContextPath()+"/upload/temp/"+fileName;
+                FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(filePath));
+                filemeta.setUrl(fileUrl);                
+                //filemeta.setThumbnailUrl(request.getContextPath()+"/static/upload/"+fileName); 
+                jsonObj.put("url",fileUrl);
+                jsonArray.add(jsonObj);
+                filesMap.put(imgIndex,filemeta);
+           } catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+           } 
+           imgIndex++;
+        }
+        respJson.put("files", jsonArray);
+        respJson.put("status", true);
+        respJson.put("info", "OK");
+        return JSON.toJSONString(respJson);		
+	}
 }

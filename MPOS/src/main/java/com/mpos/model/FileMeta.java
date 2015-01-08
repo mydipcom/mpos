@@ -3,7 +3,7 @@ package com.mpos.model;
 
 public class FileMeta {
 
-	private String fileId;
+	private Integer fileId;
 	private String fileName;
     private String fileSize;
     private String url;
@@ -12,10 +12,11 @@ public class FileMeta {
     private String suffix;
     private byte[] bytes;        
     
-	public String getFileId() {
+	
+	public Integer getFileId() {
 		return fileId;
 	}
-	public void setFileId(String fileId) {
+	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
 	}
 	public String getFileName() {

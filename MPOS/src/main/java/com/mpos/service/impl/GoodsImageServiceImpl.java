@@ -30,4 +30,10 @@ public class GoodsImageServiceImpl implements GoodsImageService{
 		return goodsImageDao.getByproductid(id);
 	}
 
+	
+	public void deleteImagebyid(Integer id) {
+		goodsImageDao.delete(id);
+		
+	}
+
 }

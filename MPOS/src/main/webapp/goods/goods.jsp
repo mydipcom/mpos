@@ -88,7 +88,7 @@
 										<option value="">ALL</option>
 										<c:if test="${not empty menu}">
 											<c:forEach items="${menu}" var="menuitem">
-												<option value="${menuitem.menuId}">${menuitem.title}</option>
+												<option value="${menuitem.id}">${menuitem.title}</option>
 											</c:forEach>
 										</c:if>							
 									</select>
@@ -105,9 +105,9 @@
 										<label class="radio-inline">
 										<input type="radio" name="recommend" value="" checked/>All </label>
 										<label class="radio-inline">
-										<input type="radio" name="recommend" value="true"/>True</label>
+										<input type="radio" name="recommend" value="1"/>True</label>
 										<label class="radio-inline">
-										<input type="radio" name="recommend" value="false"/>False</label>
+										<input type="radio" name="recommend" value="0"/>False</label>
 									</div>									
 								</div>
 							</div>
@@ -215,7 +215,7 @@
 											<th>Category Name</th>
 											<th>Product Name</th>
 											<th>Price</th>
-											<th>Old_Price</th>
+											<th>Old Price</th>
 											<th>Recommend</th>
 											<th>Sort</th>
 										<!--  	<th>Status</th>-->

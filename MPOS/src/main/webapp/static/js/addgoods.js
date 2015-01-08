@@ -56,20 +56,21 @@ var Addgoods = function () {
 									row.find('.col-md-10').append(checkboxGroup);
 									row.append(tableGroup);
 									checkboxGroup.on('change', ':checkbox', function () {
-										row.find("tbody").empty();
-										$.each(checkboxGroup.find(":checked"), function (index, obj) {
-											row.find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" name="attrPrice_'+attributeId+'" placeholder="0.00"/></td></tr>');
+										$(this).parents(".form-group").find("tbody").empty();
+										var checkedObj=$(this).parents(".checkbox-list").find(":checked");
+										$.each(checkedObj, function (index, obj) {											
+											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" name="attrPrice_'+attributeId+'" placeholder="0.00"/></td></tr>');
 										});
 							        });
 									
 									break;
 								case 3:											
-									var selectGroup=$('<select class="form-control" name="attr_'+attributeId+'"></select>');
+									var selectGroup=$('<select class="form-control input-xlarge" name="attr_'+attributeId+'"></select>');
 									var attrArr=content.split(",");
 									for(var n=0;n<attrArr.length;n++){
 									    var attr=attrArr[n];
-										var selectObj='<option value="'+n+'"/>'+attr+'</option>';
-										selectGroup.find('select').append(selectObj);
+										var selectObj='<option value="'+n+'">'+attr+'</option>';
+										selectGroup.append(selectObj);
 									}
 									row.find('.col-md-10').append(selectGroup);
 									row.append('<input type="hidden" name="attributeId" value="'+attributeId+'"/>');
@@ -149,7 +150,7 @@ var Addgoods = function () {
 	            		$.each($(form).find("input[name='attr_"+attributeId+"']:checked"), function (index, attrObj) {
 	            			attrArr[index]=attrObj.value;
 	            		});
-	            		$.each($(form).find("input[name='attr_"+attributeId+"']:selected"), function (index, attrObj) {
+	            		$.each($(form).find("select[name='attr_"+attributeId+"'] option:selected"), function (index, attrObj) {
 	            			attrArr[index]=attrObj.value;
 	            		});
 	            		$.each($(form).find("input[name='attrPrice_"+attributeId+"']"), function (index, attrPriceObj) {
@@ -270,7 +271,7 @@ var Addgoods = function () {
                             rows = rows.add(row);                            
                         });
                         $("#uploadedImagesList").append(rows);
-                        
+                        rows.find("a.fancybox-button").fancybox();
                     } else {
                         $('#uploaded_file_' + file.id + ' > .status').removeClass("label-info").addClass("label-danger").html('<i class="fa fa-warning"></i> Failed'); // set failed upload
                         Metronic.alert({type: 'danger', message: 'One of uploads failed. Please retry.', closeInSeconds: 10, icon: 'warning'});
