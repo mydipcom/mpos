@@ -122,7 +122,7 @@ public class MobileAPI {
 			return JSON.toJSONString(respJson);
 		}
 		try{
-			String path = request.getContextPath();
+			//String path = request.getContextPath();
 			Map<String,String> setting=SystemConfig.Admin_Setting_Map;
 			String pwd=setting.get(SystemConstants.CONFIG_CLIENT_PWD);
 			String token=setting.get(SystemConstants.CONFIG_API_TOKEN);
@@ -135,8 +135,8 @@ public class MobileAPI {
 			dataJson.put("pwd", pwd);
 			dataJson.put("token", token);
 			dataJson.put("currency", currency);
-			dataJson.put("logo", path + "/"+ logo);	
-			dataJson.put("backgroundImage", path + "/" + backgroundImage);
+			dataJson.put("logo", "/"+ logo);	
+			dataJson.put("backgroundImage", "/" + backgroundImage);
 			dataJson.put("storeName", restaurantName);
 			
 			respJson.put("status", true);
