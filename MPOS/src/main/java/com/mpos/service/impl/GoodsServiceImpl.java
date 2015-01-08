@@ -208,7 +208,7 @@ public class GoodsServiceImpl implements GoodsService{
 				String filename=product.getId()+"_"+i+"."+fileMeta.getSuffix();
 				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
                 //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
-            	String fileUrl=request.getContextPath()+"/upload/product/"+filename;
+            	String fileUrl="/upload/product/"+filename;
                 try {
 					FileCopyUtils.copy(fileMeta.getBytes(), new FileOutputStream(filePath));
 				} catch (FileNotFoundException e) {
@@ -327,7 +327,7 @@ public class GoodsServiceImpl implements GoodsService{
 				String filename=product.getId()+"_"+i+"."+fileMeta.getSuffix();
 				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
                 //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
-            	String fileUrl=request.getContextPath()+"/upload/product/"+filename;
+            	String fileUrl="/upload/product/"+filename;
                 try {
 					FileCopyUtils.copy(fileMeta.getBytes(), new FileOutputStream(filePath));
 				} catch (FileNotFoundException e) {

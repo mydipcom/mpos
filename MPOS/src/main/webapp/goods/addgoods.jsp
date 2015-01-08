@@ -75,7 +75,7 @@
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="fa fa-gift"></i>Add goods
+							<i class="fa fa-gift"></i><s:message code="product.table.title" />
 						</div>
 					</div>
 					<div class="portlet-body form">
@@ -213,7 +213,7 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">OldPrice</label>
+											<label class="control-label col-md-3">Old Price</label>
 											<div class="col-md-9">
 												<form:input path="oldPrice" cssClass="form-control" placeholder="0.00"/>												
 											</div>
@@ -224,7 +224,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">recommend</label>
+											<label class="control-label col-md-3">Recommend</label>
 											<div class="col-md-9">
 												<div class="radio-list">
 													<label class="radio-inline"> 
@@ -239,7 +239,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">sort<span class="required"> * </span></label>
+											<label class="control-label col-md-3">Sort<span class="required"> * </span></label>
 											<div class="col-md-9">
 												<form:input path="sort" cssClass="form-control"/>												
 											</div>
@@ -250,7 +250,7 @@
 								<div class="row">
 									<div class="col-md-6">										
 										<div class="form-group">
-											<label class="control-label col-md-3">menuName<span class="required"> * </span></label>
+											<label class="control-label col-md-3">Category Name<span class="required"> * </span></label>
 											<div class="col-md-9">
 												<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1"	name="menu.menuId">
 													<c:if test="${not empty menu}">

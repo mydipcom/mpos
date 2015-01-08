@@ -15,8 +15,8 @@ var Editgoods = function () {
            		  var file=data.files; 
            	      $.each(data.files, function (index,file) {
                       var row = $('<tr>' +
-                          '<td><a href="'+file.url+'" class="fancybox-button" data-rel="fancybox-button">'+
-                          '<img class="img-responsive" src="'+file.url+'" alt=""></a></td>'+                            	
+                          '<td><a href="'+rootURI+''+file.url+'" class="fancybox-button" data-rel="fancybox-button">'+
+                          '<img class="img-responsive" src="'+rootURI+''+file.url+'" alt=""></a></td>'+                            	
                           '<td><p class="name"></p></td>' + 
                           '<td><p class="size"></p></td>' +                                
                           '<td>Exists</td>' +                                 

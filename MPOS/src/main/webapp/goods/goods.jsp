@@ -193,8 +193,8 @@
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
-											<label><input type="checkbox" checked data-column="2">Category Name</label>
-											<label><input type="checkbox" checked data-column="3">Product Nam</label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="product.category.name"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="product.product.name"/></label>
 											<label><input type="checkbox" checked data-column="4">Price</label>
 											<label><input type="checkbox" checked data-column="5">Old Price</label>
 											<label><input type="checkbox" checked data-column="6">Recommend</label>

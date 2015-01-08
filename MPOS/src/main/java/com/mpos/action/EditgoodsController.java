@@ -311,7 +311,7 @@ private int imgIndex=0;
 			JSONObject jsonObj = new JSONObject();
 			FileMeta filemeta=new FileMeta();
 			String string=list.get(i).getImageUrl();
-			String fileName=string.split("/")[4];
+			String fileName=string.split("/")[3];
 			File file=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+fileName);
 			String s[]=fileName.split("\\.");
 			filemeta.setBytes(list.get(i).getImage());
