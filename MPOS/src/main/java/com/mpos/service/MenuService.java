@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mpos.dto.Tmenu;
 import com.mpos.model.DataTableParamter;
+import com.mpos.model.MenuModel;
 import com.mpos.model.PagingData;
 
 public interface MenuService {
@@ -16,5 +17,5 @@ public interface MenuService {
 	void deleteMenuByIds(Integer[] idArr);
 	public List<Tmenu> getAllMenu();
 	Tmenu getParentMenu(Tmenu menu);
-	
+	List<MenuModel> getNoChildrenMenus();  
 }

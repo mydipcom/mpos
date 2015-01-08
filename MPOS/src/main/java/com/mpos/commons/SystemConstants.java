@@ -22,7 +22,7 @@ import java.util.Map;
 public class SystemConstants {
 	public static final String LOGINED="Logined";
 	
-	public static final String RIGHTS="rights";
+	public static final String RIGHTS="rights";  
 	
 	public static final String LOGIN_ERROR="Login_Error";
 	
@@ -56,9 +56,10 @@ public class SystemConstants {
 	public static final String TABLE_FIELD_PRODUCTNAME="productName";
 	public static final String TABLE_FIELD_SHORTDESCR="shortDescr";
 	public static final String TABLE_FIELD_FULLDESCR="fullDescr";
+	public static final String TABLE_FIELD_UNITNAME="unitName";
 	
 	public static final String CONFIG_CLIENT_PWD="Access_Password";
-	public static final String CONFIG_CLIENT_LOGO="config_client_logo";
+	public static final String CONFIG_CLIENT_LOGO="Restaurant_Logo";
 	public static final String CONFIG_API_TOKEN="Token";
 	public static final String CONFIG_DISPLAY_CURRENCY="config_display_currency";
 	

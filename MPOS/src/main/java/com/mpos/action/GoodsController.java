@@ -45,6 +45,7 @@ import com.mpos.model.AddAttributevaleModel;
 import com.mpos.model.AddProductModel;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.FileMeta;
+import com.mpos.model.MenuModel;
 import com.mpos.model.PagingData;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
@@ -127,7 +128,7 @@ public class GoodsController extends BaseController{
 		for (Tcategory tcategory : categoryList) {
 			categoryMap.put(tcategory.getCategoryId(), tcategory.getName());
 		}
-		List<Tmenu> menus=menuService.getAllMenu();
+		List<MenuModel> menus=menuService.getNoChildrenMenus();
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
 		mav.addObject("lanList", languages);
 		mav.addObject("category", categoryMap);

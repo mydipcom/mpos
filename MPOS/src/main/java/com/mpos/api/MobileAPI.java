@@ -114,7 +114,7 @@ public class MobileAPI {
 	 */
 	@RequestMapping(value="getSetting",method=RequestMethod.GET)
 	@ResponseBody
-	public String getSetting(HttpServletResponse response,@RequestHeader("InitialAuthCode") String initKey) {
+	public String getSetting(HttpServletResponse response,HttpServletRequest request,@RequestHeader("InitialAuthCode") String initKey) {
 		JSONObject respJson = new JSONObject();
 		if(initKey==null||!initKey.equalsIgnoreCase(SystemConstants.INIT_AUTH_CODE)){
 			respJson.put("status", false);
@@ -122,6 +122,7 @@ public class MobileAPI {
 			return JSON.toJSONString(respJson);
 		}
 		try{
+			String path = request.getContextPath();
 			Map<String,String> setting=SystemConfig.Admin_Setting_Map;
 			String pwd=setting.get(SystemConstants.CONFIG_CLIENT_PWD);
 			String token=setting.get(SystemConstants.CONFIG_API_TOKEN);
@@ -134,8 +135,8 @@ public class MobileAPI {
 			dataJson.put("pwd", pwd);
 			dataJson.put("token", token);
 			dataJson.put("currency", currency);
-			dataJson.put("logo", logo);	
-			dataJson.put("backgroundImage", backgroundImage);
+			dataJson.put("logo", path+logo);	
+			dataJson.put("backgroundImage", path+backgroundImage);
 			dataJson.put("storeName", restaurantName);
 			
 			respJson.put("status", true);
@@ -364,7 +365,7 @@ public class MobileAPI {
 			BeanUtils.copyProperties(product, model, "attributes", "promotions", "images");
 			if(product.isStatus()){
 				//装载需要多语言化得字段
-				model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR);
+				model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR,SystemConstants.TABLE_FIELD_UNITNAME);
 				//装载商品属性
 				model = loadAttribute(model, product);
 				//装载商品图片
@@ -590,11 +591,43 @@ public class MobileAPI {
 		List<TproductImage> images = new ArrayList<TproductImage>();
 		String[] imageList = null;
 		images.addAll(product.getImages());
+		Collections.sort(images, new Comparator<TproductImage>() {
+			public int compare(TproductImage arg0, TproductImage arg1) {
+				return arg0.getId().compareTo(arg1.getId());
+			}
+		});
 		if (images != null && images.size() > 0) {
-			String qian = request.getSession().getServletContext().getRealPath("/") + File.separator + "static" + File.separator + "upload" + File.separator;
-			String z = "/static/upload/";
+			String qian = request.getSession().getServletContext().getRealPath("/") + File.separator + "upload" + File.separator + "product"+ File.separator;
+			String z = request.getContextPath() + "/upload/product/";
 			File file = null;
-			for (TproductImage tproductImage : images) {
+			for (int i = 0; i < images.size(); i++) {
+				TproductImage tproductImage = images.get(i);
+				String filePath = tproductImage.getImageUrl();
+				file = new File(qian + filePath.substring(filePath.lastIndexOf("/")));
+				if (!file.exists()) {
+					String newPath = qian + product.getId()+"_"+ i + "." + tproductImage.getImageSuffix();
+					File newImgePath = new File(newPath);
+					try {
+						File uplaodDir = new File(qian);
+						if (!uplaodDir.isDirectory()) {
+							uplaodDir.mkdirs();
+						}
+						if (tproductImage.getImage() != null && !newImgePath.exists()) {
+							ImageOutputStream ios = ImageIO.createImageOutputStream(newImgePath);
+							ios.write(tproductImage.getImage());
+							String loc = z + product.getId()+"_"+ i + "." + tproductImage.getImageSuffix();
+							tproductImage.setImageUrl(loc);
+							if(!filePath.equals(loc)){
+								goodsImageService.updeteImages(tproductImage);
+							}
+						}  
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			/*for (TproductImage tproductImage : images) {
 				String filePath = tproductImage.getImageUrl();
 				file = new File(qian + filePath.substring(filePath.lastIndexOf("/")));
 				if (!file.exists()) {
@@ -615,7 +648,7 @@ public class MobileAPI {
 						e.printStackTrace();
 					}
 				}
-			}
+			}*/
 
 			imageList = new String[images.size()];
 			for (int i = 0; i < images.size(); i++) {
@@ -673,10 +706,11 @@ public class MobileAPI {
 					model.setShortDescrLocale(setLocal(nameList));
 				} else if (field.equals("fullDescr")) {
 					model.setFullDescrLocale(setLocal(nameList));
+				} else if (field.equals("unitName")) {
+					model.setUnitNameLocale(setLocal(nameList));
 				}
 			}
 		}
-
 		return model;
 	}
 

@@ -255,7 +255,7 @@
 												<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1"	name="menu.menuId">
 													<c:if test="${not empty menu}">
 														<c:forEach items="${menu}" var="menuitem">
-															<option value="${menuitem.menuId}">${menuitem.title}</option>
+															<option value="${menuitem.id}">${menuitem.title}</option>
 														</c:forEach>
 													</c:if>
 												</select>

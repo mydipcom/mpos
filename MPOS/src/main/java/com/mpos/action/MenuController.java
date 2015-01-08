@@ -9,6 +9,8 @@
 package com.mpos.action;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,6 +32,7 @@ import com.mpos.commons.MposException;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
+import com.mpos.dto.Tpromotion;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.MenuModel;
 import com.mpos.model.PagingData;
@@ -38,165 +41,182 @@ import com.mpos.service.LanguageService;
 import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
 
-
 @Controller
-@RequestMapping(value="/menu")
+@RequestMapping(value = "/menu")
 public class MenuController extends BaseController {
 
 	private Logger logger = Logger.getLogger(MenuController.class);
-	
+
 	@Resource
 	private MenuService menuService;
 	@Resource
 	private LanguageService languageService;
 	@Resource
 	private LocalizedFieldService localizedFieldService;
-		
 
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView menu(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView menu(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
-		List<Tmenu> menus = menuService.getAllMenu();
-		List<MenuModel> models = new ArrayList<MenuModel>();
-		if(menus!=null&&menus.size()>0){
-			for (Tmenu tmenu : menus) {
-				MenuModel model = new MenuModel();
-				model.setId(tmenu.getMenuId());
-				if(tmenu.getPid()==0){
-					model.setTitle(tmenu.getTitle());
-				}else{
-					model.setTitle(loadTitle(tmenu,tmenu.getTitle()));
-				}
-				models.add(model);
-			}
-		}
 		mav.addObject("lanList", languages);
-		mav.addObject("menus", models);
 		mav.setViewName("menu/menu");
 		return mav;
 	}
-	
-	@RequestMapping(value="/menuList",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/menuList", method = RequestMethod.GET)
 	@ResponseBody
-	public String menuList(HttpServletRequest request,DataTableParamter dtp){		
-		PagingData pagingData=menuService.loadMenuList(dtp);
-		if(pagingData.getAaData()==null){
-			Object[] objs=new Object[]{};
+	public String menuList(HttpServletRequest request, DataTableParamter dtp) {
+		PagingData pagingData = menuService.loadMenuList(dtp);
+		if (pagingData.getAaData() == null) {
+			Object[] objs = new Object[] {};
 			pagingData.setAaData(objs);
 		}
 		pagingData.setSEcho(dtp.sEcho);
-		
-		String rightsListJson= JSON.toJSONString(pagingData);
+
+		String rightsListJson = JSON.toJSONString(pagingData);
 		return rightsListJson;
 	}
-		
 
-	@RequestMapping(value="/addMenu",method=RequestMethod.POST)
+	@RequestMapping(value = "/addMenu", method = RequestMethod.POST)
 	@ResponseBody
-	public String addMenu(HttpServletRequest request,Tmenu menu,@ModelAttribute ParamWrapper locals){
-		
+	public String addMenu(HttpServletRequest request, Tmenu menu,
+			@ModelAttribute ParamWrapper locals) {
+
 		JSONObject respJson = new JSONObject();
-		try{
+		try {
 			menuService.saveMenu(menu);
-			localizedFieldService.createLocalizedFieldList(locals.setValue(menu));
+			localizedFieldService.createLocalizedFieldList(locals
+					.setValue(menu));
 			respJson.put("status", true);
-		}
-		catch(MposException be){
+		} catch (MposException be) {
 			respJson.put("status", false);
-			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}		
+			respJson.put("info",
+					getMessage(request, be.getErrorID(), be.getMessage()));
+		}
 		return JSON.toJSONString(respJson);
 	}
-	
-	@RequestMapping(value="/getMenu",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/getMenu", method = RequestMethod.POST)
 	@ResponseBody
-	public String getMenu(HttpServletRequest request,Integer menuId){		
+	public String getMenu(HttpServletRequest request, Integer menuId) {
 
 		JSONObject respJson = new JSONObject();
-		try{
-			List<TlocalizedField> list = localizedFieldService.getListByEntityIdAndEntityName(menuId, Tmenu.class.getSimpleName());
+		try {
+			List<TlocalizedField> list = localizedFieldService
+					.getListByEntityIdAndEntityName(menuId,
+							Tmenu.class.getSimpleName());
 			respJson.put("list", list);
 			respJson.put("status", true);
-		}
-		catch(MposException be){
+		} catch (MposException be) {
 			respJson.put("status", false);
-			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}	
-		return JSON.toJSONString(respJson);		
+			respJson.put("info",
+					getMessage(request, be.getErrorID(), be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
 	}
-	
-	@RequestMapping(value="/editMenu",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/editMenu", method = RequestMethod.POST)
 	@ResponseBody
-	public String updateRights(HttpServletRequest request,Tmenu menu,@ModelAttribute ParamWrapper locals){		
+	public String updateRights(HttpServletRequest request, Tmenu menu,
+			@ModelAttribute ParamWrapper locals) {
 
 		JSONObject respJson = new JSONObject();
-		try{
+		try {
 			menuService.updateMenu(menu);
-			localizedFieldService.updateLocalizedFieldList(locals.setValue(menu));
+			localizedFieldService.updateLocalizedFieldList(locals
+					.setValue(menu));
 			respJson.put("status", true);
-		}
-		catch(MposException be){
+		} catch (MposException be) {
 			respJson.put("status", false);
-			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}	
-		return JSON.toJSONString(respJson);		
+			respJson.put("info",
+					getMessage(request, be.getErrorID(), be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
 	}
 
-	@RequestMapping(value="/menu/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value = "/menu/{ids}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteRights(@PathVariable String ids,HttpServletRequest request){
-		String[] idstrArr=ids.split(",");		
-		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
+	public String deleteRights(@PathVariable String ids,
+			HttpServletRequest request) {
+		String[] idstrArr = ids.split(",");
+		Integer[] idArr = ConvertTools.stringArr2IntArr(idstrArr);
 		JSONObject respJson = new JSONObject();
-		try{
+		try {
 			menuService.deleteMenuByIds(idArr);
 			respJson.put("status", true);
-		}
-		catch(MposException be){
+		} catch (MposException be) {
 			respJson.put("status", false);
-			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}	
-		return JSON.toJSONString(respJson);	
+			respJson.put("info",
+					getMessage(request, be.getErrorID(), be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
 	}
-	
-	@RequestMapping(value="/loadMenu",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/loadMenu", method = RequestMethod.GET)
 	@ResponseBody
-	public String loadMenu(HttpServletRequest request){
+	public String loadMenu(HttpServletRequest request) {
 		JSONObject respJson = new JSONObject();
 		try {
 			List<Tmenu> menus = menuService.getAllMenu();
 			List<MenuModel> models = new ArrayList<MenuModel>();
-			if(menus!=null&&menus.size()>0){
+			if (menus != null && menus.size() > 0) {
 				for (Tmenu tmenu : menus) {
 					MenuModel model = new MenuModel();
 					model.setId(tmenu.getMenuId());
-					if(tmenu.getPid()==0){
+					if (tmenu.getPid() == 0) {
 						model.setTitle(tmenu.getTitle());
-					}else{
-						model.setTitle(loadTitle(tmenu,tmenu.getTitle()));
+					} else {
+						model.setTitle(loadTitle(tmenu, tmenu.getTitle()));
 					}
 					models.add(model);
 				}
 			}
+			Collections.sort(models, new Comparator<MenuModel>() {
+				public int compare(MenuModel arg0, MenuModel arg1) {
+					return arg0.getTitle().compareTo(arg1.getTitle());
+				}
+			});  
 			respJson.put("status", true);
 			respJson.put("menus", models);
 		} catch (MposException be) {
 			// TODO: handle exception
 			respJson.put("status", false);
-			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			respJson.put("info",
+					getMessage(request, be.getErrorID(), be.getMessage()));
 		}
 		return JSON.toJSONString(respJson);
-	} 
-	
-	private String loadTitle(Tmenu menu,String title){
-		Tmenu parent = menuService.getMenu(menu.getPid());
-		//String res = "";
-		if(parent!=null&&parent.getMenuId()!=null){
-			title = parent.getTitle() + " >> " + title;
-			return loadTitle(parent,title);
+	}
+
+	@RequestMapping(value = "/getParentTitle/{menuId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String getParentTitle(HttpServletRequest request,
+			@PathVariable Integer menuId) {
+		JSONObject respJson = new JSONObject();
+		try {
+
+			MenuModel model = new MenuModel();
+			Tmenu tmenu = menuService.getMenu(menuId);
+			model.setId(menuId);
+			model.setTitle(loadTitle(tmenu, tmenu.getTitle()));
+			respJson.put("status", true);
+			respJson.put("menu", model);
+		} catch (MposException be) {
+			// TODO: handle exception
+			respJson.put("status", false);
+			respJson.put("info",
+					getMessage(request, be.getErrorID(), be.getMessage()));
 		}
-		//System.out.println(title);
+		return JSON.toJSONString(respJson);
+	}
+
+	private String loadTitle(Tmenu menu, String title) {
+		Tmenu parent = menuService.getMenu(menu.getPid());
+		// String res = "";
+		if (parent != null && parent.getMenuId() != null) {
+			title = parent.getTitle() + " >> " + title;
+			return loadTitle(parent, title);
+		}
+		// System.out.println(title);
 		return title;
 	}
 }

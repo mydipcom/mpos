@@ -16,7 +16,7 @@
             }
         });
         return serializeObj;
-    };
+    };  
 })(jQuery);
 
 function setValue(id){
@@ -71,6 +71,25 @@ function loadMenu(sel){
 }
 
 
+function getParentTitle(menuId){
+	var res = ""
+	$.ajax({
+         "dataType": 'json', 
+         "type":'GET', 
+         "async":false, 
+         "url": rootURI+"menu/getParentTitle/"+menuId, 
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){
+        			 res =  resp.menu.title
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){}
+       });
+	return res;
+}
+
 var rootURI="/";
 var MenuTable = function () {
 	var oTable;
@@ -107,10 +126,8 @@ var MenuTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "menuId"},
+	           { title: "ID",   data: "id"},
 	           { title: "Name",    data: "title" },
-	           { title: "Parent Categories",  data: "pid" },
-	           /*{ title: "Status",    data: "status" },*/
 	           { title: "Sort",    data: "sort"}
 	          ],
 	        "serverSide": true,
@@ -138,6 +155,7 @@ var MenuTable = function () {
 					 if(data.status){
 						 selected=[];
 		            	 oTable.api().draw();
+		            	 loadMenu("edit_select");
 		            	 oTable.$('th span').removeClass();
 					 }
 					 else{
@@ -157,27 +175,33 @@ var MenuTable = function () {
 		
 		
 		$("#openEditMenuModal").on("click",function(event){
+			//loadMenu("edit_select");
 			if(selected.length!=1){
 				handleAlerts("One and only one row can be edited.","warning","");		
 				return false;				
 			}
 			else{
+				//var select_ed = $("#edit_select");
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				$("tr input:checked").parents('span').removeClass("checked");
 				$("tr input:checked").removeAttr("checked");
-				var menuId = data.menuId;
+				var menuId = data.id;
 	            var sort  = data.sort;
 	            var pid  = data.pid;
 	            var status = data.status;
-	            var title = data.title;
+	            var title = data.name;
+	            
+	            $("#editMenuForm option").removeAttr("selected");
+	            $("#editMenuForm option[value='"+menuId+"']").remove();
 	            $("#editMenuForm :radio").removeAttr("checked");
 	            $("#editMenuForm :radio").parents('span').removeClass("checked");
 	            
+	            
+	            $("#editMenuForm select[name='pid']").children("option[value='"+pid+"']").attr("selected","true");
 	            $("#editMenuForm input[name='menuId']").val(menuId);
 	            
 	            $("#editMenuForm input[name='title']").val(title);
 	            $("#editMenuForm input[name='sort']").val(sort);
-	            $("#editMenuForm select[name='pid']").children("option[value='"+pid+"']").attr("selected","true");
 	            	            	            
 	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
 	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
@@ -193,7 +217,7 @@ var MenuTable = function () {
 	        	            	 setFromValue(resp.list);
 	        				 }
 	        				 else{
-	        					 handleAlerts("Failed to add the data.","danger","#editFormMsg");						 
+	        					 handleAlerts("load data Failed","danger","#editFormMsg");						 
 	        				 }
 	        			}             	 
 	                 },
@@ -224,7 +248,7 @@ var MenuTable = function () {
 	            var api=oTable.api();            
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
-	            	var id = data.menuId;
+	            	var id = data.id;
 	                var index = $.inArray(id, selected);
 	                selected.push( id );
                     $(this).attr("checked", true);
@@ -244,7 +268,7 @@ var MenuTable = function () {
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.menuId;
+            var id = data.id;
             var index = $.inArray(id, selected);     
             if ( index === -1 ) {
                 selected.push( id );
@@ -311,10 +335,11 @@ var MenuTable = function () {
 	            	 oTable.api().draw();
 	            	 $('#editMenuForm')[0].reset();
 	            	 $("#edit_menu").modal('hide');
+	            	 loadMenu("edit_select");
 	            	 handleAlerts("Edit the data successfully.","success","#editFormMsg");		            	 
 				 }
 				 else{
-					 handleAlerts("Failed to edit the data.","danger","#editFormMsg");						 
+					 handleAlerts(resp.info,"danger","#editFormMsg");						 
 				 }
 			}             	 
          },

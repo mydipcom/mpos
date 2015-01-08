@@ -9,6 +9,9 @@ public class MenuModel implements Serializable{
 	private static final long serialVersionUID = 8847670497753749910L;
 	private Integer id;
 	private String title;
+	private Integer pid;
+	private String name;
+	private Integer sort;
 	public Integer getId() {
 		return id;
 	}
@@ -20,6 +23,24 @@ public class MenuModel implements Serializable{
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public Integer getPid() {
+		return pid;
+	}
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getSort() {
+		return sort;
+	}
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 	
 }

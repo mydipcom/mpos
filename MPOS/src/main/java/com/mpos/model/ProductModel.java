@@ -27,6 +27,7 @@ public class ProductModel implements Serializable{
 	private Object productNameLocale;
 	private Object shortDescrLocale;
 	private Object fullDescrLocale;
+	private Object unitNameLocale;
 	
 	private List<AttributeModel> attributes;
 	
@@ -35,7 +36,7 @@ public class ProductModel implements Serializable{
 	private String[] images;
 
 	public Integer getProductId() {
-		return productId;
+		return productId;  
 	}
 
 	public void setProductId(Integer productId) {
@@ -152,6 +153,14 @@ public class ProductModel implements Serializable{
 
 	public void setFullDescrLocale(Object fullDescrLocale) {
 		this.fullDescrLocale = fullDescrLocale;
+	}
+	
+	public Object getUnitNameLocale() {
+		return unitNameLocale;
+	}
+
+	public void setUnitNameLocale(Object unitNameLocale) {
+		this.unitNameLocale = unitNameLocale;
 	}
 
 	public List<AttributeModel> getAttributes() {
