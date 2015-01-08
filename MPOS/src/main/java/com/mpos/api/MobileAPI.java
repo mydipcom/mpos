@@ -600,7 +600,7 @@ public class MobileAPI {
 		});
 		if (images != null && images.size() > 0) {
 			String qian = request.getSession().getServletContext().getRealPath("/") + File.separator + "upload" + File.separator + "product"+ File.separator;
-			String z = request.getContextPath() + "/upload/product/";
+			String z =  "/upload/product/";
 			File file = null;
 			for (int i = 0; i < images.size(); i++) {
 				TproductImage tproductImage = images.get(i);
