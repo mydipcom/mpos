@@ -149,7 +149,7 @@ public class CategoryController extends BaseController {
 				respJson.put("localName", LocalizedField.setValues(nameLocals));
 				respJson.put("localContent", LocalizedField.setValues(contentLocals));
 			}else if(type==2){
-				List<TlocalizedField> titleLocals = localizedFieldService.getLocalizedField(entityId,"TcategoryAttribute","name");
+				List<TlocalizedField> titleLocals = localizedFieldService.getLocalizedField(entityId,"TcategoryAttribute","title");
 				List<TlocalizedField> contentLocals = localizedFieldService.getLocalizedField(entityId,"TcategoryAttribute","content");
 				respJson.put("localTitle", LocalizedField.setValues(titleLocals));
 				respJson.put("localContent", LocalizedField.setValues(contentLocals));
