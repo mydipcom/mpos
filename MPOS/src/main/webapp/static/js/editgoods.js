@@ -1,4 +1,16 @@
 var rootURI="/";
+function getRootPath(){
+    //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+    var curWwwPath=window.document.location.href;
+    //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+    var pathName=window.document.location.pathname;
+    var pos=curWwwPath.indexOf(pathName);
+    //获取主机地址，如： http://localhost:8083
+    var localhostPaht=curWwwPath.substring(0,pos);
+    //获取带"/"的项目名，如：/uimcardprj
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    return(projectName);
+}
 var Editgoods = function () {
 
     var handleImages = function() {
@@ -15,8 +27,8 @@ var Editgoods = function () {
            		  var file=data.files; 
            	      $.each(data.files, function (index,file) {
                       var row = $('<tr>' +
-                          '<td><a href="'+rootURI+''+file.url+'" class="fancybox-button" data-rel="fancybox-button">'+
-                          '<img class="img-responsive" src="'+rootURI+''+file.url+'" alt=""></a></td>'+                            	
+                          '<td><a href="'+getRootPath()+''+file.url+'" class="fancybox-button" data-rel="fancybox-button">'+
+                          '<img class="img-responsive" src="'+getRootPath()+''+file.url+'" alt=""></a></td>'+                            	
                           '<td><p class="name"></p></td>' + 
                           '<td><p class="size"></p></td>' +                                
                           '<td>Exists</td>' +                                 
