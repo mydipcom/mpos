@@ -323,6 +323,11 @@ private int imgIndex=0;
 	    	jsonObj.put("fileSize", list.get(i).getImage().length/1024+"kb");
 	    	jsonObj.put("url", list.get(i).getImageUrl());
 	    	//jsonObj.put("fileSize",fileSize);
+	    	File filemkdir=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product");
+        	
+    		if (!filemkdir.isDirectory()) {
+    			filemkdir.mkdirs();
+    		}
 	    	if(!file.exists()){
 	    		 try {
 						FileCopyUtils.copy(filemeta.getBytes(), file);

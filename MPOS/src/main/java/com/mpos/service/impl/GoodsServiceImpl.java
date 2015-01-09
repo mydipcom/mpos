@@ -209,6 +209,11 @@ public class GoodsServiceImpl implements GoodsService{
 				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
                 //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
             	String fileUrl="/upload/product/"+filename;
+            	File filemkdir=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product");
+            	
+        		if (!filemkdir.isDirectory()) {
+        			filemkdir.mkdirs();
+        		}
                 try {
 					FileCopyUtils.copy(fileMeta.getBytes(), new FileOutputStream(filePath));
 				} catch (FileNotFoundException e) {
@@ -329,6 +334,11 @@ public class GoodsServiceImpl implements GoodsService{
 				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
                 //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
             	String fileUrl="/upload/product/"+filename;
+            	File file=new File(request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product");
+            	
+        		if (!file.isDirectory()) {
+        			file.mkdirs();
+        		}
                 try {
 					FileCopyUtils.copy(fileMeta.getBytes(), new FileOutputStream(filePath));
 				} catch (FileNotFoundException e) {
