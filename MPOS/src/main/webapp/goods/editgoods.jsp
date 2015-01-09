@@ -75,7 +75,7 @@
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="fa fa-gift"></i>Edit goods
+							<i class="fa fa-gift"></i><s:message code="product.edittable.title"/>
 						</div>
 					</div>
 					<div class="portlet-body form">
@@ -106,7 +106,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2">Product Name<span class="required"> * </span></label>
+																<label class="control-label col-md-2"><s:message code="product.product.name"/><span class="required"> * </span></label>
 																<div class="col-md-5">
 																	<form:input path="productName_locale[${status.index}].localeValue" cssClass="form-control"/>
 																	<form:hidden path="productName_locale[${status.index}].language.id"  value="${lan.id}"/>
@@ -118,7 +118,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2">Short Description</label>
+																<label class="control-label col-md-2"><s:message code="product.shortdescr"/></label>
 																<div class="col-md-5">
 																	<form:textarea path="shortDescr_locale[${status.index}].localeValue" rows="4" cols="90"/>																																		
 																	<form:hidden path="shortDescr_locale[${status.index}].language.id"  value="${lan.id}"/>	
@@ -130,7 +130,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2">Full Description</label>
+																<label class="control-label col-md-2"><s:message code="product.fulldescr"/></label>
 																<div class="col-md-8">																																		
 																	<form:textarea path="fullDescr_locale[${status.index}].localeValue" rows="10" data-provide="markdown" data-error-container="#editor_error_${status.index}"/>																																		
 																	<form:hidden path="fullDescr_locale[${status.index}].language.id"  value="${lan.id}"/>
@@ -143,7 +143,7 @@
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
-																<label class="control-label col-md-2">Unit Name<span class="required"> * </span></label>
+																<label class="control-label col-md-2"><s:message code="product.unitname"/><span class="required"> * </span></label>
 																<div class="col-md-5">
 																	<form:input path="unitName_locale[${status.index}].localeValue" cssClass="form-control"/>
 																	<form:hidden path="unitName_locale[${status.index}].language.id"  value="${lan.id}"/>
@@ -158,7 +158,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2">Product Name<span class="required"> * </span></label>
+																<label class="control-label col-md-2"><s:message code="product.product.name"/><span class="required"> * </span></label>
 																<div class="col-md-5">																	
 																	<form:input path="productName" cssClass="form-control" value="${product.productName}"/>																	
 																</div>
@@ -168,7 +168,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2">Short Description</label>
+																<label class="control-label col-md-2"><s:message code="product.shortdescr"/></label>
 																<div class="col-md-5">																	
 																	<form:textarea path="shortDescr" rows="4" cols="90"/>
 																</div>
@@ -178,7 +178,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2">Full Description</label>
+																<label class="control-label col-md-2"><s:message code="product.fulldescr"/></label>
 																<div class="col-md-8">
 																	<form:textarea path="fullDescr" rows="10" data-provide="markdown" data-error-container="#editor_error"/>																	
 																	<div id="editor_error"></div>
@@ -189,7 +189,7 @@
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
-																<label class="control-label col-md-2">Unit Name<span class="required"> * </span></label>
+																<label class="control-label col-md-2"><s:message code="product.unitname"/><span class="required"> * </span></label>
 																<div class="col-md-5">
 																	<form:input path="unitName" cssClass="form-control"/>
 																</div>
@@ -208,7 +208,7 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">Price<span class="required"> * </span></label>
+											<label class="control-label col-md-3"><s:message code="product.price"/><span class="required"> * </span></label>
 											<div class="col-md-9">
 												<form:input path="productId" type="hidden" id="productid"/>
 												<form:input path="price" cssClass="form-control" placeholder="0.00"/>												
@@ -218,7 +218,7 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">Old Price</label>
+											<label class="control-label col-md-3"><s:message code="product.oldprice"/></label>
 											<div class="col-md-9">
 												<form:input path="oldPrice" cssClass="form-control" placeholder="0.00"/>												
 											</div>
@@ -229,7 +229,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">Recommend</label>
+											<label class="control-label col-md-3"><s:message code="product.recommend"/></label>
 											<div class="col-md-9">
 												<div class="radio-list">
 													<label class="radio-inline"> 
@@ -244,7 +244,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">Sort<span class="required"> * </span></label>
+											<label class="control-label col-md-3"><s:message code="product.sort"/><span class="required"> * </span></label>
 											<div class="col-md-9">
 												<form:input path="sort" cssClass="form-control"/>												
 											</div>
@@ -255,7 +255,7 @@
 								<div class="row">
 									<div class="col-md-6">										
 										<div class="form-group">
-											<label class="control-label col-md-3">Menu Name<span class="required"> * </span></label>
+											<label class="control-label col-md-3"><s:message code="product.category.name"/><span class="required"> * </span></label>
 											<div class="col-md-9">
 												<form:select path="menu.menuId" cssClass="form-control" name="menu" >
 												<!--<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1"	name="menu.menuId">-->
@@ -272,7 +272,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">SKU</label>
+											<label class="control-label col-md-3"><s:message code="product.sku"/></label>
 											<div class="col-md-9">
 												<form:input path="sku" cssClass="form-control"/>												
 											</div>

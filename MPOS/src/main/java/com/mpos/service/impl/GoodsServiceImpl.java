@@ -91,11 +91,40 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 	public void deletegoodsByids(Integer[] ids) {
+		Integer verId=productReleaseDao.getMaxintergerValue("id");
 		if(ids!=null&&ids.length>0){
 			for (Integer id : ids) {
 				Tproduct goods=getTproductByid(id);
 				goods.setStatus(false);
 				goodsDao.update(goods);
+				
+				TproductRelease productrelease;
+				if (verId!=0) {
+					 productrelease=productReleaseDao.get(verId);
+					 if(productrelease!=null&&!productrelease.isIsPublic()){
+						 String productids=productrelease.getProducts();
+						 String products[]=productids.split(",");
+						 for (int j = 0; j < products.length; j++) {
+							if(products[j].equals(goods.getId().toString())){
+								return;
+							}
+						}
+						 productrelease.setProducts(ids+","+goods.getId());
+						 productReleaseDao.update(productrelease);	 
+					 }else {
+						 TproductRelease newproductrelease=new TproductRelease();
+						 newproductrelease.setProducts(goods.getId().toString());
+						 newproductrelease.setIsPublic(false);
+						 productReleaseDao.create(newproductrelease);
+					}
+				}
+				else {
+					TproductRelease productrelease1=new TproductRelease();
+					productrelease1.setProducts(goods.getId().toString());
+					productrelease1.setIsPublic(false);
+					productReleaseDao.create(productrelease1);
+				}
+				
 			}
 		}	
 	}

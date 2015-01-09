@@ -8,8 +8,12 @@ import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 
-public class AddProductModel{
+public class AddProductModel implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int productId;
 	private String productName;
 	private String shortDescr;
