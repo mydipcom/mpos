@@ -124,10 +124,10 @@ public class MobileAPI {
 		try{
 			//String path = request.getContextPath();
 			Map<String,String> setting=SystemConfig.Admin_Setting_Map;
-			String pwd=setting.get(SystemConstants.CONFIG_CLIENT_PWD);
-			String token=setting.get(SystemConstants.CONFIG_API_TOKEN);
-			String currency=setting.get(SystemConstants.CONFIG_DISPLAY_CURRENCY);
-			String logo=setting.get(SystemConstants.CONFIG_CLIENT_LOGO);
+			String pwd=setting.get(SystemConstants.ACCESS_PASSWORD);
+			String token=setting.get(SystemConstants.TOKEN);
+			String currency=setting.get(SystemConstants.CURRENCY);
+			String logo=setting.get(SystemConstants.RESTAURANT_LOGO);
 			String backgroundImage=setting.get(SystemConstants.PAGE_BACKGROUND);
 			String restaurantName=setting.get(SystemConstants.RESTAURANT_NAME);
 			
