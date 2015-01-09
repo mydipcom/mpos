@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,11 +31,10 @@ import com.mpos.commons.MposException;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
-import com.mpos.dto.Tpromotion;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.MenuModel;
+import com.mpos.model.PageModel;
 import com.mpos.model.PagingData;
-import com.mpos.model.ParamWrapper;
 import com.mpos.service.LanguageService;
 import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
@@ -57,6 +55,7 @@ public class MenuController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView menu(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		logger.info("menu");
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
 		mav.addObject("lanList", languages);
 		mav.setViewName("menu/menu");
@@ -79,14 +78,11 @@ public class MenuController extends BaseController {
 
 	@RequestMapping(value = "/addMenu", method = RequestMethod.POST)
 	@ResponseBody
-	public String addMenu(HttpServletRequest request, Tmenu menu,
-			@ModelAttribute ParamWrapper locals) {
-
+	public String addMenu(HttpServletRequest request, PageModel page) {
 		JSONObject respJson = new JSONObject();
 		try {
-			menuService.saveMenu(menu);
-			localizedFieldService.createLocalizedFieldList(locals
-					.setValue(menu));
+			menuService.saveMenu(page.getMenu());
+			localizedFieldService.createLocalizedFieldList(page.setOneTlocalizedFieldValue(page.getMenu()));
 			respJson.put("status", true);
 		} catch (MposException be) {
 			respJson.put("status", false);
@@ -96,40 +92,34 @@ public class MenuController extends BaseController {
 		return JSON.toJSONString(respJson);
 	}
 
-	@RequestMapping(value = "/getMenu", method = RequestMethod.POST)
+	@RequestMapping(value = "/getLocal/{menuId}", method = RequestMethod.GET)
 	@ResponseBody
-	public String getMenu(HttpServletRequest request, Integer menuId) {
-
+	public String getLocal(HttpServletRequest request, @PathVariable Integer menuId) {
 		JSONObject respJson = new JSONObject();
 		try {
-			List<TlocalizedField> list = localizedFieldService
-					.getListByEntityIdAndEntityName(menuId,
-							Tmenu.class.getSimpleName());
-			respJson.put("list", list);
+			List<TlocalizedField> titleLocals = localizedFieldService.getLocalizedField(menuId,"Tmenu","title");
+			respJson.put("localTitles", titleLocals);
 			respJson.put("status", true);
 		} catch (MposException be) {
 			respJson.put("status", false);
-			respJson.put("info",
-					getMessage(request, be.getErrorID(), be.getMessage()));
+			respJson.put("info",getMessage(request, be.getErrorID(), be.getMessage()));
 		}
 		return JSON.toJSONString(respJson);
 	}
 
 	@RequestMapping(value = "/editMenu", method = RequestMethod.POST)
 	@ResponseBody
-	public String updateRights(HttpServletRequest request, Tmenu menu,
-			@ModelAttribute ParamWrapper locals) {
+	public String updateRights(HttpServletRequest request, PageModel page) {
 
 		JSONObject respJson = new JSONObject();
 		try {
-			menuService.updateMenu(menu);
-			localizedFieldService.updateLocalizedFieldList(locals
-					.setValue(menu));
+			menuService.updateMenu(page.getMenu());
+			List<TlocalizedField> ls = page.setOneTlocalizedFieldValue(page.getMenu());
+			localizedFieldService.updateLocalizedFieldList(ls);
 			respJson.put("status", true);
 		} catch (MposException be) {
 			respJson.put("status", false);
-			respJson.put("info",
-					getMessage(request, be.getErrorID(), be.getMessage()));
+			respJson.put("info",getMessage(request, be.getErrorID(), be.getMessage()));
 		}
 		return JSON.toJSONString(respJson);
 	}
@@ -208,7 +198,7 @@ public class MenuController extends BaseController {
 		}
 		return JSON.toJSONString(respJson);
 	}
-
+	
 	private String loadTitle(Tmenu menu, String title) {
 		Tmenu parent = menuService.getMenu(menu.getPid());
 		// String res = "";

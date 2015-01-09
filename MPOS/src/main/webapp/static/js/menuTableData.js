@@ -18,78 +18,75 @@
         return serializeObj;
     };  
 })(jQuery);
-
-function setValue(id){
-	$("#addv_"+id).val($("#add_title").val());
-}
-
-function setEditValue(id){
-	$("#adde_"+id).val($("#edit_title").val());
-}
-
-function setFromValue(list){
-	if(list.length>0){
-		for (var int = 0; int < list.length; int++) {
-			var lan = list[int];
-			$("#editMenuForm input[name='locals["+int+"].localeValue']").val(lan.localeValue);
-			$("#editMenuForm input[name='locals["+int+"].language.id']").val(lan.language.id);
-			$("#editMenuForm input[name='locals["+int+"].tableField']").val(lan.tableField);
-			$("#editMenuForm input[name='locals["+int+"].localeId']").val(lan.localeId);
-		}
-	}
-	
-}
-
-function loadMenu(sel){
-	var sid = document.getElementById(sel); 
-	//sid.options.length == 0;
-	$("#"+sel).empty();  
-	$.ajax( {
+/**
+ * 加载数据
+ * @returns {String}
+ */
+function loadAllMenu(){
+	var res = "";
+	$.ajax({
         "dataType": 'json', 
-        "type":'GET', 
+        "type":'GET',
+        "async":false,
         "url": rootURI+"menu/loadMenu?rand="+Math.random(), 
         "success": function(resp,status){
        	 if(status == "success"){  
        		 if(resp.status){
-       			var list = resp.menus;
-       			sid.options[0]=new Option('[NONE]',0);
-       			for (var int = 0; int < list.length; int++) {
-       				var mm = list[int];
-       				//$("#add_select").append("<option value='"+mm.id+"'>"+mm.title+"</option>");
-       				sid.options[sid.options.length]=new Option(mm.title,mm.id);   
-       				}
-				 }
-				 else{
-					 handleAlerts("Failed to add the data.","danger","#editCategoryFormMsg");						 
-				 }
+       			 res = resp.menus;
+       			 return  res;
+				}
 			}             	 
-        },
-        "error":function(XMLHttpRequest, textStatus, errorThrown){
-       	 alert(errorThrown);
         }
       });
-}
-
-
-function getParentTitle(menuId){
-	var res = ""
-	$.ajax({
-         "dataType": 'json', 
-         "type":'GET', 
-         "async":false, 
-         "url": rootURI+"menu/getParentTitle/"+menuId, 
-         "success": function(resp,status){
-        	 if(status == "success"){  
-        		 if(resp.status){
-        			 res =  resp.menu.title
-				 }
-			}             	 
-         },
-         "error":function(XMLHttpRequest, textStatus, errorThrown){}
-       });
 	return res;
 }
+/**
+ * 加载下拉框列表
+ * @param selectId 下拉框
+ */
+function loadSelect(select){
+	//清空下拉框列表
+	select.empty();
+	select.append("<option value='0'>[NONE]</option>");
+	var menus = loadAllMenu();
+	if(menus !=""&&menus.length!=null&&menus.length>0){
+		for (var int = 0; int < menus.length; int++) {
+			select.append("<option value='"+menus[int].id+"'>"+menus[int].title+"</option>");
+		}
+	}
+}
+/**
+ * 加载多语言化
+ */
+var loadLocal = function(menuId){
+	var res = "";
+	$.ajax({
+        "dataType": 'json', 
+        "type":'GET',
+        "async":false,
+        "url": rootURI+"menu/getLocal/"+menuId+"?rand="+Math.random(),
+        "success": function(resp,status){
+       	 if(status == "success"){  
+       		 if(resp.status){
+       			 res = resp.localTitles;
+				}
+			}             	 
+        }
+      });
+	setLocal(res);
+}
 
+var setLocal = function(localTitles){
+	if(localTitles!=""&&localTitles.length!=null&&localTitles.length>0){
+		for (var int = 0; int < localTitles.length; int++) {
+			var lan = localTitles[int];
+			$("#editMenuForm input[name='localizedFieldFirst["+int+"].localeValue']").val(lan.localeValue);
+			$("#editMenuForm input[name='localizedFieldFirst["+int+"].language.id']").val(lan.language.id);
+			$("#editMenuForm input[name='localizedFieldFirst["+int+"].tableField']").val(lan.tableField);
+			$("#editMenuForm input[name='localizedFieldFirst["+int+"].localeId']").val(lan.localeId);
+		}
+	}
+}
 var rootURI="/";
 var MenuTable = function () {
 	var oTable;
@@ -107,15 +104,6 @@ var MenuTable = function () {
             // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
-//            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
-//            "oLanguage": {
-//                "sLengthMenu": "_MENU_ records per page",
-//                "oPaginate": {
-//                    "sPrevious": "Prev",
-//                    "sNext": "Next",
-//                	"zeroRecords": "No records to display"
-//                }
-//            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
@@ -155,7 +143,7 @@ var MenuTable = function () {
 					 if(data.status){
 						 selected=[];
 		            	 oTable.api().draw();
-		            	 loadMenu("edit_select");
+		            	 loadSelect($("#edit_select"));
 		            	 oTable.$('th span').removeClass();
 					 }
 					 else{
@@ -170,62 +158,35 @@ var MenuTable = function () {
         });  
 		
 		$("#openAdd").on("click",function(event){
-			loadMenu("add_select");
+			loadSelect($("#add_select"));
 		});
 		
 		
 		$("#openEditMenuModal").on("click",function(event){
-			//loadMenu("edit_select");
 			if(selected.length!=1){
 				handleAlerts("One and only one row can be edited.","warning","");		
 				return false;				
 			}
 			else{
-				//var select_ed = $("#edit_select");
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				$("tr input:checked").parents('span').removeClass("checked");
 				$("tr input:checked").removeAttr("checked");
 				var menuId = data.id;
 	            var sort  = data.sort;
 	            var pid  = data.pid;
-	            var status = data.status;
 	            var title = data.name;
 	            
 	            $("#editMenuForm option").removeAttr("selected");
 	            $("#editMenuForm option[value='"+menuId+"']").remove();
-	            $("#editMenuForm :radio").removeAttr("checked");
-	            $("#editMenuForm :radio").parents('span').removeClass("checked");
 	            
+	            $("#editMenuForm select[name='menu.pid']").children("option[value='"+pid+"']").attr("selected","true");
+	            $("#editMenuForm input[name='menu.menuId']").val(menuId);
 	            
-	            $("#editMenuForm select[name='pid']").children("option[value='"+pid+"']").attr("selected","true");
-	            $("#editMenuForm input[name='menuId']").val(menuId);
+	            $("#editMenuForm input[name='menu.title']").val(title);
+	            $("#editMenuForm input[name='menu.sort']").val(sort);
 	            
-	            $("#editMenuForm input[name='title']").val(title);
-	            $("#editMenuForm input[name='sort']").val(sort);
-	            	            	            
-	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#editMenuForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
 	            selected = [];
-	            $.ajax( {
-	                 "dataType": 'json', 
-	                 "type":'POST', 
-	                 "url": rootURI+"menu/getMenu", 
-	                 "data": {"menuId":menuId},
-	                 "success": function(resp,status){
-	                	 if(status == "success"){  
-	                		 if(resp.status){						 
-	        	            	 setFromValue(resp.list);
-	        				 }
-	        				 else{
-	        					 handleAlerts("load data Failed","danger","#editFormMsg");						 
-	        				 }
-	        			}             	 
-	                 },
-	                 "error":function(XMLHttpRequest, textStatus, errorThrown){
-	                	 alert(errorThrown);
-	                 }
-	               });	
-	            
+	            loadLocal(menuId);
 			}
 		});								
 		
@@ -296,7 +257,7 @@ var MenuTable = function () {
 	//添加操作
 	var ajaxAddMenu=function(){	
 		$.ajax( {
-		"traditional":true,
+		 "traditional":true,
          "dataType": 'json', 
          "type":'POST', 
          "url": rootURI+"menu/addMenu", 
@@ -307,7 +268,7 @@ var MenuTable = function () {
 	            	 oTable.api().draw();
 	            	 $('#addMenuForm')[0].reset();
 	            	 $("#add_menu").modal('hide');
-	            	 loadMenu("edit_select");
+	            	 loadSelect($("#edit_select"));
 	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
 				 }
 				 else{
@@ -322,9 +283,9 @@ var MenuTable = function () {
     };
     
 	//添加操作
-	var ajaxEditMenu=function(){	
+	var ajaxEditMenu=function(){
 		$.ajax( {
-		"traditional":true,
+		 "traditional":true,
          "dataType": 'json', 
          "type":'POST', 
          "url": rootURI+"menu/editMenu", 
@@ -335,7 +296,7 @@ var MenuTable = function () {
 	            	 oTable.api().draw();
 	            	 $('#editMenuForm')[0].reset();
 	            	 $("#edit_menu").modal('hide');
-	            	 loadMenu("edit_select");
+	            	 loadSelect($("#edit_select"));
 	            	 handleAlerts("Edit the data successfully.","success","#editFormMsg");		            	 
 				 }
 				 else{
@@ -474,7 +435,7 @@ var MenuTable = function () {
         	handleTable();  
         	addFormValidation();
         	editFormValidation();
-        	loadMenu("edit_select");
+        	loadSelect($("#edit_select"));
         }
 
     };

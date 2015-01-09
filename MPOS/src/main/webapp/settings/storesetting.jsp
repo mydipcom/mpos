@@ -158,7 +158,7 @@
 															<div class="fileinput fileinput-new"
 																data-provides="fileinput">
 																<div class="fileinput-new thumbnail"
-																	style="width: 200px; height: 50px;">
+																	style="width: 200px; height: 150px;">
 																	<img src="<c:url value="/"/>${store_setting['Restaurant_Logo'][0]}" alt="" />
 																</div>
 																<div

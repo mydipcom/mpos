@@ -1,5 +1,6 @@
 package com.mpos.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,14 +18,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
-import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.LocalizedField;
+import com.mpos.model.PageModel;
 import com.mpos.model.PagingData;
-import com.mpos.model.ParamWrapper;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
 import com.mpos.service.LanguageService;
@@ -72,31 +71,47 @@ public class CategoryController extends BaseController {
 		return rightsListJson;
 	}
 		
-	@RequestMapping(value="/getCategory",method=RequestMethod.POST)
+	@RequestMapping(value="/addCategory",method=RequestMethod.POST)
 	@ResponseBody
-	public String getCategory(HttpServletRequest request,Integer categoryId){		
+	public String addCategory(HttpServletRequest request,PageModel page){			
 		JSONObject respJson = new JSONObject();
 		try{
-			List<TlocalizedField> list = localizedFieldService.getListByEntityIdAndEntityName(categoryId, Tcategory.class.getSimpleName());
+			categoryService.createCategory(page.getCategory());
+			localizedFieldService.createLocalizedFieldList(page.setTwoTlocalizedFieldValue(page.getCategory()));
 			respJson.put("status", true);
-			respJson.put("list", LocalizedField.setValues(list));
-			logger.info(list.toString());
-			logger.info(JSON.toJSONString(respJson));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}	
-		return JSON.toJSONString(respJson);	
+		}		
+		return JSON.toJSONString(respJson);
 	}
-
-	@RequestMapping(value="/addCategory",method=RequestMethod.POST)
+	
+	@RequestMapping(value="/copyCategory",method=RequestMethod.POST)
 	@ResponseBody
-	public String addCategory(HttpServletRequest request,Tcategory category,@ModelAttribute ParamWrapper value){			
+	public String copyCategory(HttpServletRequest request,PageModel page,Integer id){			
 		JSONObject respJson = new JSONObject();
 		try{
-			categoryService.createCategory(category);
-			localizedFieldService.createLocalizedFieldList(value.setValue(category));
+			categoryService.createCategory(page.getCategory());
+			localizedFieldService.createLocalizedFieldList(page.setTwoTlocalizedFieldValue(page.getCategory()));
+			List<TcategoryAttribute> attrs = attributeService.getCategoryAttributeByCategoryid(id);
+			if(attrs!=null&&attrs.size()>0){
+				for (TcategoryAttribute tcategoryAttribute : attrs) {
+					tcategoryAttribute.setCategoryId(page.getCategory());
+					List<TlocalizedField> local = localizedFieldService.getListByEntityIdAndEntityName(tcategoryAttribute.getAttributeId(), tcategoryAttribute.getClass().getSimpleName());
+					tcategoryAttribute.setAttributeId(null);
+					attributeService.createCategoryAttribute(tcategoryAttribute);
+					if(local!=null&&local.size()>0){
+						for (TlocalizedField tlocalizedField : local) {
+							tlocalizedField.setLocaleId(null);
+							tlocalizedField.setEntityId(tcategoryAttribute.getAttributeId());
+						}
+					}
+					localizedFieldService.createLocalizedFieldList(local);
+				}
+			}
+			
+			
 			respJson.put("status", true);
 		}
 		catch(MposException be){
@@ -108,12 +123,12 @@ public class CategoryController extends BaseController {
 	
 	@RequestMapping(value="/editCategory",method=RequestMethod.POST)
 	@ResponseBody
-	public String updateCategory(HttpServletRequest request,Tcategory category,@ModelAttribute ParamWrapper value){		
+	public String updateCategory(HttpServletRequest request,PageModel page){		
 
 		JSONObject respJson = new JSONObject();
 		try{
-			categoryService.updateCategory(category);
-			localizedFieldService.updateLocalizedFieldList(value.setValue(category));
+			categoryService.updateCategory(page.getCategory());
+			localizedFieldService.updateLocalizedFieldList(page.setTwoTlocalizedFieldValue(page.getCategory()));
 			respJson.put("status", true);
 		}
 		catch(MposException be){
@@ -121,6 +136,30 @@ public class CategoryController extends BaseController {
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);		
+	}
+	
+	@RequestMapping(value = "/getLocal/{type}/{entityId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String getLocal(HttpServletRequest request, @PathVariable Integer entityId,@PathVariable Integer type) {
+		JSONObject respJson = new JSONObject();
+		try {
+			if(type==1){
+				List<TlocalizedField> nameLocals = localizedFieldService.getLocalizedField(entityId,"Tcategory","name");
+				List<TlocalizedField> contentLocals = localizedFieldService.getLocalizedField(entityId,"Tcategory","content");
+				respJson.put("localName", LocalizedField.setValues(nameLocals));
+				respJson.put("localContent", LocalizedField.setValues(contentLocals));
+			}else if(type==2){
+				List<TlocalizedField> titleLocals = localizedFieldService.getLocalizedField(entityId,"TcategoryAttribute","name");
+				List<TlocalizedField> contentLocals = localizedFieldService.getLocalizedField(entityId,"TcategoryAttribute","content");
+				respJson.put("localTitle", LocalizedField.setValues(titleLocals));
+				respJson.put("localContent", LocalizedField.setValues(contentLocals));
+			}
+			respJson.put("status", true);
+		} catch (MposException be) {
+			respJson.put("status", false);
+			respJson.put("info",getMessage(request, be.getErrorID(), be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
 	}
 
 	@RequestMapping(value="/category/{ids}",method=RequestMethod.DELETE)
@@ -172,31 +211,13 @@ public class CategoryController extends BaseController {
 			
 		}
 	
-	@RequestMapping(value="/getAttribute",method=RequestMethod.POST)
-	@ResponseBody
-	public String getAttribute(HttpServletRequest request,Integer attributeId){		
-		JSONObject respJson = new JSONObject();
-		try{
-			List<TlocalizedField> list = localizedFieldService.getListByEntityIdAndEntityName(attributeId, TcategoryAttribute.class.getSimpleName());
-			respJson.put("status", true);
-			respJson.put("list", LocalizedField.setValues(list));
-			logger.info(list.toString());
-			logger.info(JSON.toJSONString(respJson));
-		}
-		catch(MposException be){
-			respJson.put("status", false);
-			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}	
-		return JSON.toJSONString(respJson);	
-	}
-	
 	@RequestMapping(value="/addAttribute",method=RequestMethod.POST)
 	@ResponseBody
-	public String addAttribute(HttpServletRequest request,TcategoryAttribute attribute,@ModelAttribute ParamWrapper value){			
+	public String addAttribute(HttpServletRequest request,PageModel page){			
 		JSONObject respJson = new JSONObject();
 		try{
-			attributeService.createCategoryAttribute(attribute);
-			localizedFieldService.createLocalizedFieldList(value.setValue(attribute));
+			attributeService.createCategoryAttribute(page.getAttribute());
+			localizedFieldService.createLocalizedFieldList(page.setTwoTlocalizedFieldValue(page.getAttribute()));
 			respJson.put("status", true);
 		}
 		catch(MposException be){
@@ -208,12 +229,12 @@ public class CategoryController extends BaseController {
 	
 	@RequestMapping(value="/editAttribute",method=RequestMethod.POST)
 	@ResponseBody
-	public String editAttribute(HttpServletRequest request,TcategoryAttribute attribute,@ModelAttribute ParamWrapper value){		
+	public String editAttribute(HttpServletRequest request,PageModel page){		
 
 		JSONObject respJson = new JSONObject();
 		try{
-			attributeService.updateCategoryAttribute(attribute);
-			localizedFieldService.updateLocalizedFieldList(value.setValue(attribute));
+			attributeService.updateCategoryAttribute(page.getAttribute());
+			localizedFieldService.updateLocalizedFieldList(page.setTwoTlocalizedFieldValue(page.getAttribute()));
 			respJson.put("status", true);
 		}
 		catch(MposException be){

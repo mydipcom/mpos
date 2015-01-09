@@ -19,101 +19,72 @@
     };
 })(jQuery);
 
-function setValue(id){
-	//var addc = $("#addAttributeForm input[name='content']").val();
-	//var editc = $("#edditAttributeForm input[name='content']").val();
-	//category copy
-	$("#cate_copyt_"+id).val($("#cate_copy_title").val());
-	$("#cate_copyc_"+id).val($("#cate_copy_con").val());
-	$("#cate_copyt_"+id).val($("#cate_copy_title").val());
-	$("#cate_copyc_"+id).val($("#cate_copy_con").val());
-	//category add
-	$("#cate_addt_"+id).val($("#cate_add_title").val());
-	$("#cate_addc_"+id).val($("#cate_add_con").val());
-	$("#cate_editt_"+id).val($("#cate_edit_title").val());
-	$("#cate_editc_"+id).val($("#cate_edit_con").val());
-	//attribute add
-	$("#addt_"+id).val($("#add_title").val());
-	$("#addc_"+id).val($("#add_con").val());
-	$("#editt_"+id).val($("#edit_title").val());
-	$("#editc_"+id).val($("#edit_con").val());
-}
+
 /**
- * 编辑属性 表单赋值
- * @param list
+ * 加载多语言化
  */
-function setFromValue(list){
-	var le = list.length/2;
-	if(list!=null&&list.length>0){
-		for (var int = 0; int < le; int++) {
-			var lan = list[int];
-			$("#editAttributeForm input[name='titles["+int+"].localeValue']").val(lan.localeValue);
-			$("#editAttributeForm input[name='titles["+int+"].language.id']").val(lan.languageId);
-			$("#editAttributeForm input[name='titles["+int+"].tableField']").val(lan.tableField);
-			$("#editAttributeForm input[name='titles["+int+"].localeId']").val(lan.localeId);
-		}
-		for (var int = le; int < list.length; int++) {
-			var lan = list[int];
-			var tem = int - le;
-			$("#editAttributeForm textarea[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#editAttributeForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#editAttributeForm input[name='contents["+tem+"].language.id']").val(lan.languageId);
-			$("#editAttributeForm input[name='contents["+tem+"].tableField']").val(lan.tableField);
-			$("#editAttributeForm input[name='contents["+tem+"].localeId']").val(lan.localeId);
+var loadLocal = function(type,entityId){
+	var res = "";
+	$.ajax({
+        "dataType": 'json', 
+        "type":'GET',
+        "async":false,
+        "url": rootURI+"category/getLocal/"+type+"/"+entityId+"?rand="+Math.random(), 
+        "success": function(resp,status){
+       	 if(status == "success"){  
+       		 if(resp.status){
+       			 res = resp;
+				}
+			}             	 
+        }
+      });
+	return res;
+}
+
+var setLocal = function(localTitles,id,formId){
+	var setId = "First"
+	if(id==1){
+		setId = "First";
+	}else if(id=2){
+		setId = "Second";
+	}
+	if(localTitles!=""&&localTitles.length!=null&&localTitles.length>0){
+		for (var int = 0; int < localTitles.length; int++) {
+			var lan = localTitles[int];
+			if(id==1){
+				$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeValue']").val(lan.localeValue);
+			}else{
+				$("#"+formId+" textarea[name='localizedField"+setId+"["+int+"].localeValue']").val(lan.localeValue);
+			}
+			
+			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].language.id']").val(lan.languageId);
+			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].tableField']").val(lan.tableField);
+			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeId']").val(lan.localeId);
 		}
 	}
-	
 }
-/**
- * 编辑分类表单赋值
- * @param list
- */
-function setCateFromValue(list){
-	var le = list.length/2;
-	if(list!=null&&list.length>0){
-		for (var int = 0; int < le; int++) {
-			var lan = list[int];
-			$("#editCategoryForm input[name='names["+int+"].localeValue']").val(lan.localeValue);
-			$("#editCategoryForm input[name='names["+int+"].language.id']").val(lan.languageId);
-			$("#editCategoryForm input[name='names["+int+"].tableField']").val(lan.tableField);
-			$("#editCategoryForm input[name='names["+int+"].localeId']").val(lan.localeId);
-		}
-		for (var int = le; int < list.length; int++) {
-			var lan = list[int];
-			var tem = int - le;
-			$("#editCategoryForm textarea[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#editCategoryForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#editCategoryForm input[name='contents["+tem+"].language.id']").val(lan.languageId);
-			$("#editCategoryForm input[name='contents["+tem+"].tableField']").val(lan.tableField);
-			$("#editCategoryForm input[name='contents["+tem+"].localeId']").val(lan.localeId);
+
+var setCopyLocal = function(localTitles,id,formId,str){
+	var setId = "First"
+	if(id==1){
+		setId = "First";
+	}else if(id=2){
+		setId = "Second";
+	}
+	if(localTitles!=""&&localTitles.length!=null&&localTitles.length>0){
+		for (var int = 0; int < localTitles.length; int++) {
+			var lan = localTitles[int];
+			if(id==1){
+				$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeValue']").val(str + " " +lan.localeValue);
+			}else{
+				$("#"+formId+" textarea[name='localizedField"+setId+"["+int+"].localeValue']").val(str + " " + lan.localeValue);
+			}
+			
+			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].language.id']").val(lan.languageId);
+			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].tableField']").val(lan.tableField);
+			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeId']").val(lan.localeId);
 		}
 	}
-	
-}
-/**
- * 复制添加分类表单赋值
- * @param list
- */
-function setCateCopyFromValue(list){
-	var le = list.length/2;
-	if(list!=null&&list.length>0){   
-		for (var int = 0; int < le; int++) {
-			var lan = list[int];
-			$("#copyCategoryForm input[name='names["+int+"].localeValue']").val(lan.localeValue);
-			$("#copyCategoryForm input[name='names["+int+"].language.id']").val(lan.languageId);
-			$("#copyCategoryForm input[name='names["+int+"].tableField']").val(lan.tableField);
-		}
-		for (var int = le; int < list.length; int++) {
-			var lan = list[int];
-			var tem = int - le;
-			$("#copyCategoryForm textarea[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#copyCategoryForm input[name='contents["+tem+"].localeValue']").val(lan.localeValue);
-			$("#copyCategoryForm input[name='contents["+tem+"].language.id']").val(lan.languageId);
-			$("#copyCategoryForm input[name='contents["+tem+"].tableField']").val(lan.tableField);
-		}
-	}
-	
 }
 
 var rootURI="/";
@@ -226,35 +197,17 @@ var CategoryTable = function () {
 	            $("#editCategoryForm :radio").removeAttr("checked");
 	            $("#editCategoryForm :radio").parents('span').removeClass("checked");
 	            
-	            $("#editCategoryForm input[name='categoryId']").val(categoryId);
+	            $("#editCategoryForm input[name='category.categoryId']").val(categoryId);
 	            
-	            $("#editCategoryForm input[name='name']").val(name);
-	            $("#editCategoryForm textarea[name='content']").val(content);
+	            $("#editCategoryForm input[name='category.name']").val(name);
+	            $("#editCategoryForm textarea[name='category.content']").val(content);
 	            	            	            
-	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
+	            $("#editCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").attr("checked","true");
+	            $("#editCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").parents('span').addClass("checked");
 	            selected = [];
-	            $.ajax( {
-	                 "dataType": 'json', 
-	                 "type":'POST', 
-	                 "url": rootURI+"category/getCategory", 
-	                 "data": {"categoryId":categoryId},
-	                 "success": function(resp,status){
-	                	 if(status == "success"){  
-	                		 if(resp.status){
-	                			 selected=[];
-	                			 setCateFromValue(resp.list);
-	        				 }
-	        				 else{
-	        					 handleAlerts("Failed to add the data.","danger","#editCategoryFormMsg");						 
-	        				 }
-	        			}             	 
-	                 },
-	                 "error":function(XMLHttpRequest, textStatus, errorThrown){
-	                	 alert(errorThrown);
-	                 }
-	               });
-	            
+	            var list = loadLocal(1,categoryId);
+	            setLocal(list.localName,1,"editCategoryForm");
+	            setLocal(list.localContent,2,"editCategoryForm");
 			}
 		});
 		
@@ -272,35 +225,21 @@ var CategoryTable = function () {
 	            var name  = data.name;
 	            var content  = data.content;
 	            var status = data.status;
+	            $("#copyCategoryForm input[name='id']").val(data.categoryId);
+	            var str = "copy of ";
 	            //$("#copy_add_title").html("copy of " + name);
 	            $("#copyCategoryForm :radio").removeAttr("checked");
 	            $("#copyCategoryForm :radio").parents('span').removeClass("checked");
 	            
-	            $("#copyCategoryForm input[name='name']").val("copy of "+ name);
-	            $("#copyCategoryForm textarea[name='content']").val("copy of "+ content);
+	            $("#copyCategoryForm input[name='category.name']").val(str + name);
+	            $("#copyCategoryForm textarea[name='category.content']").val(str + content);
 	            	            	            
-	            $("#copyCategoryForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#copyCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
+	            $("#copyCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").attr("checked","true");
+	            $("#copyCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").parents('span').addClass("checked");
 	            selected=[];
-	            $.ajax( {
-	                 "dataType": 'json', 
-	                 "type":'POST', 
-	                 "url": rootURI+"category/getCategory", 
-	                 "data": {"categoryId":data.categoryId},
-	                 "success": function(resp,status){
-	                	 if(status == "success"){  
-	                		 if(resp.status){						 
-	                			 setCateCopyFromValue(resp.list);
-	        				 }
-	        				 else{
-	        					 handleAlerts("Failed to add the data.","danger","#copyFormMsg");						 
-	        				 }
-	        			}             	 
-	                 },
-	                 "error":function(XMLHttpRequest, textStatus, errorThrown){
-	                	 alert(errorThrown);
-	                 }
-	               });
+	            var list = loadLocal(1,data.categoryId);
+	            setCopyLocal(list.localName,1,"copyCategoryForm",str);
+	            setCopyLocal(list.localContent,2,"copyCategoryForm",str);
 			}
 		});	
 		
@@ -429,11 +368,11 @@ var CategoryTable = function () {
 	           var ids=data.categoryId;
 	           if(attTable!=null){
 	        	   attTable.fnDestroy();
-	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(ids);
+	        	   $("#addAttributeForm input[name='attribute.categoryId.categoryId']").val(ids);
 	        	   viewTable(ids); 
 	           }else{
 	        	   viewTable(ids);
-	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(ids);
+	        	   $("#addAttributeForm input[name='attribute.categoryId.categoryId']").val(ids);
 	           }
 	          });
 		
@@ -452,56 +391,29 @@ var CategoryTable = function () {
 				var title = data.title;
 				var content = data.content;
 				var type = data.type;
-				$("#editAttributeForm input[name='attributeId']").val(attributeId);
-				$("#editAttributeForm input[name='categoryId.categoryId']").val(att_cate_id);
+				$("#editAttributeForm input[name='attribute.attributeId']").val(attributeId);
+				$("#editAttributeForm input[name='attribute.categoryId.categoryId']").val(att_cate_id);
 				if(type==0){
 					$("#edit_required").html("");
-					$("#editAttributeForm textarea[name='content']").rules("remove","required");
+					$("#editAttributeForm textarea[name='attribute.content']").rules("remove","required");
 				}
 				$("#editAttributeForm :radio").removeAttr("checked");
 		        $("#editAttributeForm :radio").parents('span').removeClass("checked");
 		           
-		        $("#editAttributeForm input[name='sort']").val(sort);
-		        $("#editAttributeForm input[name='title']").val(title);
-		        $("#editAttributeForm textarea[name='content']").val(content);
+		        $("#editAttributeForm input[name='attribute.sort']").val(sort);
+		        $("#editAttributeForm input[name='attribute.title']").val(title);
+		        $("#editAttributeForm textarea[name='attribute.content']").val(content);
 		        //$(".form-control tags").val(content);
 		            	            	            
-		        $("#editAttributeForm :radio[name='type']").filter("[value='"+type+"']").attr("checked","true");
-		        $("#editAttributeForm :radio[name='type']").filter("[value='"+type+"']").parents('span').addClass("checked");
+		        $("#editAttributeForm :radio[name='attribute.type']").filter("[value='"+type+"']").attr("checked","true");
+		        $("#editAttributeForm :radio[name='attribute.type']").filter("[value='"+type+"']").parents('span').addClass("checked");
 		        attSelected = [];
-				 $.ajax( {
-	                 "dataType": 'json', 
-	                 "type":'POST', 
-	                 "url": rootURI+"category/getAttribute", 
-	                 "data": {"attributeId":attributeId},
-	                 "success": function(resp,status){
-	                	 if(status == "success"){  
-	                		 if(resp.status){						 
-	        	            	 setFromValue(resp.list);
-	        				 }
-	        				 else{
-	        					 handleAlerts("Failed to load the data.","danger","#editAttributeFormMsg");						 
-	        				 }
-	        			}             	 
-	                 },
-	                 "error":function(XMLHttpRequest, textStatus, errorThrown){
-	                	 alert(errorThrown);
-	                 }
-	               });
+		        var list = loadLocal(2,attributeId);
+	            setLocal(list.localTitle,1,"editAttributeForm");
+	            setLocal(list.localContent,2,"editAttributeForm");
 			}
 		});
 		
-		//
-		$("#openAddAttributeModal").on("click",function(event){
-			if(selected.length!=1){
-				handleAlerts("Please select the rows which you want to add attribute.","warning","");				
-				return false;
-			}else{
-				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-				var categortyId = data.categoryId;
-				$("#addAttributeForm input[name='categoryId.categoryId']").val(categortyId);
-			}
-		});
 		
 		//打开删除属性对话框前判断是否已选择要删除的行
 		$("#openDeleteAttributeModal").on("click",function(event){
@@ -514,10 +426,10 @@ var CategoryTable = function () {
 		$("#addAttributeForm :radio").on("change",function(event){
 			if($(this).val()==0){
 				$("#add_required").html("");
-				$("#addAttributeForm textarea[name='content']").rules("remove","required");
+				$("#addAttributeForm textarea[name='attribute.content']").rules("remove","required");
 			}else{
 				$("#add_required").html(" * ");
-				$("#addAttributeForm textarea[name='content']").rules("add",{required: true});
+				$("#addAttributeForm textarea[name='attribute.content']").rules("add",{required: true});
 			}
 			
 		});
@@ -525,10 +437,10 @@ var CategoryTable = function () {
 		$("#editAttributeForm :radio").on("change",function(event){
 			if($(this).val()==0){
 				$("#edit_required").html("");
-				$("#editAttributeForm textarea[name='content']").rules("remove","required");
+				$("#editAttributeForm textarea[name='attribute.content']").rules("remove","required");
 			}else{
 				$("#edit_required").html(" * ");
-				$("#editAttributeForm textarea[name='content']").rules("add",{required: true});
+				$("#editAttributeForm textarea[name='attribute.content']").rules("add",{required: true});
 			}
 			
 		});
@@ -774,7 +686,7 @@ var CategoryTable = function () {
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    "name": {
+                    "category.name": {
                         minlength: 2,
                         required: true
                     }
@@ -819,7 +731,7 @@ var CategoryTable = function () {
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    "name": {
+                    "category.name": {
                         minlength: 2,
                         required: true
                     }
@@ -863,7 +775,7 @@ var CategoryTable = function () {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input                
             rules: {
-                "name": {
+                "category.name": {
                     minlength: 2,
                     required: true
                 }
@@ -907,10 +819,10 @@ var CategoryTable = function () {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input                
             rules: {
-                "title": {
+                "attribute.title": {
                     required: true
                 },
-                "content": {
+                "attribute.content": {
                 	required: true
                 }
             },
