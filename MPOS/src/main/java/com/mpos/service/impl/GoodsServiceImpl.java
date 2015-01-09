@@ -165,7 +165,7 @@ public class GoodsServiceImpl implements GoodsService{
 			List<TlocalizedField> unitNameLocaleList=model.getUnitName_locale();
 			//Save product language information
 			for (TlocalizedField localizedField : productNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("productName");
@@ -173,7 +173,7 @@ public class GoodsServiceImpl implements GoodsService{
 				}				
 			}
 			for (TlocalizedField localizedField : shortDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("shortDescr");
@@ -181,7 +181,7 @@ public class GoodsServiceImpl implements GoodsService{
 				}
 			}
 			for (TlocalizedField localizedField : fullDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("fullDescr");
@@ -189,7 +189,7 @@ public class GoodsServiceImpl implements GoodsService{
 				}
 			}
 			for (TlocalizedField localizedField : unitNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("unitName");
@@ -282,35 +282,35 @@ public class GoodsServiceImpl implements GoodsService{
 			List<TlocalizedField> fullDescrLocaleList=model.getFullDescr_locale();
 			List<TlocalizedField> unitNameLocaleList=model.getUnitName_locale();
 			for (TlocalizedField localizedField : productNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("productName");
-					localizedFieldDao.saveOrUpdate(localizedField);
+					localizedFieldDao.save(localizedField);
 				}				
 			}
 			for (TlocalizedField localizedField : shortDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("shortDescr");
-					localizedFieldDao.saveOrUpdate(localizedField);
+					localizedFieldDao.save(localizedField);
 				}
 			}
 			for (TlocalizedField localizedField : fullDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("fullDescr");
-					localizedFieldDao.saveOrUpdate(localizedField);
+					localizedFieldDao.save(localizedField);
 				}
 			}
 			for (TlocalizedField localizedField : unitNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&localizedField.getLocaleValue().isEmpty()){
+				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("unitName");
-					localizedFieldDao.saveOrUpdate(localizedField);
+					localizedFieldDao.save(localizedField);
 				}
 			}
 			//set images 
