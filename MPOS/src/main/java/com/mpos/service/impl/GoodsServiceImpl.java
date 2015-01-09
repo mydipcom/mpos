@@ -239,9 +239,10 @@ public class GoodsServiceImpl implements GoodsService{
 					 productrelease.setProducts(ids+","+product.getId());
 					 productReleaseDao.update(productrelease);	 
 				 }else {
-					 productrelease.setProducts(product.getId().toString());
-					 productrelease.setIsPublic(false);
-					 productReleaseDao.create(productrelease);
+					 TproductRelease newproductrelease=new TproductRelease();
+					 newproductrelease.setProducts(product.getId().toString());
+					 newproductrelease.setIsPublic(false);
+					 productReleaseDao.create(newproductrelease);
 				}
 			}
 			else {
@@ -359,9 +360,10 @@ public class GoodsServiceImpl implements GoodsService{
 					 productrelease.setProducts(ids+","+product.getId());
 					 productReleaseDao.update(productrelease);	 
 				 }else {
-					 productrelease.setProducts(product.getId().toString());
-					 productrelease.setIsPublic(false);
-					 productReleaseDao.create(productrelease);
+					 TproductRelease newproductrelease=new TproductRelease();
+					 newproductrelease.setProducts(product.getId().toString());
+					 newproductrelease.setIsPublic(false);
+					 productReleaseDao.create(newproductrelease);
 				}
 			}
 			else {

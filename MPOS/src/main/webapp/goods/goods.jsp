@@ -74,7 +74,7 @@
 					<div class="row">
 						<div class="col-md-6">					
 							<div class="form-group">
-								<label class="col-md-3 control-label">Product Name</label>
+								<label class="col-md-3 control-label"><s:message code="product.product.name"/></label>
 								<div class="col-md-9">
 									<input name="productName" type="text" class="form-control">							
 								</div>
@@ -82,7 +82,7 @@
 						</div>
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Category</label>
+								<label class="col-md-3 control-label"><s:message code="product.category.name"/></label>
 								<div class="col-md-9">
 								<select name="tmenu.menuId" class="form-control">
 										<option value="">ALL</option>
@@ -179,7 +179,7 @@
 						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Product List Table
+									<i class="fa fa-edit"></i><s:message code="product.list.table.title"/>
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i> <s:message code="product.add" /></a>
@@ -195,10 +195,10 @@
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="product.category.name"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="product.product.name"/></label>
-											<label><input type="checkbox" checked data-column="4">Price</label>
-											<label><input type="checkbox" checked data-column="5">Old Price</label>
-											<label><input type="checkbox" checked data-column="6">Recommend</label>
-											<label><input type="checkbox" checked data-column="7">Sort</label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="product.price"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="product.oldprice"/></label>
+											<label><input type="checkbox" checked data-column="6"><s:message code="product.recommend"></s:message></label>
+											<label><input type="checkbox" checked data-column="7"><s:message code="product.sort"/></label>
 											
 										</div>
 									</div>								    																
