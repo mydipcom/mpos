@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -97,21 +98,28 @@ public class CategoryController extends BaseController {
 			List<TcategoryAttribute> attrs = attributeService.getCategoryAttributeByCategoryid(id);
 			if(attrs!=null&&attrs.size()>0){
 				for (TcategoryAttribute tcategoryAttribute : attrs) {
-					tcategoryAttribute.setCategoryId(page.getCategory());
-					List<TlocalizedField> local = localizedFieldService.getListByEntityIdAndEntityName(tcategoryAttribute.getAttributeId(), tcategoryAttribute.getClass().getSimpleName());
-					tcategoryAttribute.setAttributeId(null);
-					attributeService.createCategoryAttribute(tcategoryAttribute);
-					if(local!=null&&local.size()>0){
-						for (TlocalizedField tlocalizedField : local) {
-							tlocalizedField.setLocaleId(null);
+					List<TlocalizedField> localTitles = localizedFieldService.getLocalizedField(tcategoryAttribute.getAttributeId(), "TcategoryAttribute", "title");
+					List<TlocalizedField> localContents = localizedFieldService.getLocalizedField(tcategoryAttribute.getAttributeId(), "TcategoryAttribute", "content");
+					TcategoryAttribute attr = new TcategoryAttribute();
+					BeanUtils.copyProperties(tcategoryAttribute, attr, "attributeId");
+					attr.setCategoryId(page.getCategory());
+					attributeService.createCategoryAttribute(attr);
+					if(localTitles!=null&&localTitles.size()>0){
+						for (TlocalizedField tlocalizedField : localTitles) {
 							tlocalizedField.setEntityId(tcategoryAttribute.getAttributeId());
 						}
+						localizedFieldService.createLocalizedFieldList(localTitles);
 					}
-					localizedFieldService.createLocalizedFieldList(local);
+					
+					if(localContents!=null&&localContents.size()>0){
+						for (TlocalizedField tlocalizedField : localContents) {
+							tlocalizedField.setEntityId(tcategoryAttribute.getAttributeId());
+						}
+						localizedFieldService.createLocalizedFieldList(localContents);
+					}
+					
 				}
 			}
-			
-			
 			respJson.put("status", true);
 		}
 		catch(MposException be){

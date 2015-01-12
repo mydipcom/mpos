@@ -551,7 +551,7 @@ var CategoryTable = function () {
 		"traditional":true,
          "dataType": 'json', 
          "type":'POST', 
-         "url": rootURI+"category/addCategory", 
+         "url": rootURI+"category/copyCategory", 
          "data": form.serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  

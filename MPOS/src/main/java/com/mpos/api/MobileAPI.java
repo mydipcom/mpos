@@ -361,31 +361,33 @@ public class MobileAPI {
 			// 新建返回数据model
 			ProductModel model = new ProductModel();
 			model.setProductId(product.getId());
-			model.setMenuId(product.getTmenu().getMenuId());
-			BeanUtils.copyProperties(product, model, "attributes", "promotions", "images");
+			model.setStatus(false);
 			if(product.isStatus()){
+				model.setProductId(product.getId());
+				model.setMenuId(product.getTmenu().getMenuId());
+				BeanUtils.copyProperties(product, model, "attributes", "promotions", "images","status");
 				//装载需要多语言化得字段
 				model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR,SystemConstants.TABLE_FIELD_UNITNAME);
 				//装载商品属性
 				model = loadAttribute(model, product);
 				//装载商品图片
 				model = loadImage(model, request, product);
+				/*//装载商品优惠活动列表
+				List<Tpromotion> pros = loadProductPromotion(product);
+				//得到通过优先级排序的可叠加优惠列表
+				List<Tpromotion> isShareList = getPromotionList(pros,true);
+				//得到通过优先级排序的不可叠加优惠列表
+				List<Tpromotion> noShareList = getPromotionList(pros,false);
+				//通过比较可叠加与不可叠加的优先级得到最终的优惠列表
+				List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);*/
+				//通过优惠列表计算商品价格
+				Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
+				//model = loadPromotion(model, promotions);
+				if(price==null){
+					price = product.getOldPrice();
+				}
+				model.setPrice(price);
 			}  
-			/*//装载商品优惠活动列表
-			List<Tpromotion> pros = loadProductPromotion(product);
-			//得到通过优先级排序的可叠加优惠列表
-			List<Tpromotion> isShareList = getPromotionList(pros,true);
-			//得到通过优先级排序的不可叠加优惠列表
-			List<Tpromotion> noShareList = getPromotionList(pros,false);
-			//通过比较可叠加与不可叠加的优先级得到最终的优惠列表
-			List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);*/
-			//通过优惠列表计算商品价格
-			Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
-			//model = loadPromotion(model, promotions);
-			if(price==null){
-				price = product.getOldPrice();
-			}
-			model.setPrice(price);
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", model);
@@ -537,6 +539,7 @@ public class MobileAPI {
 		String timeString = sdf.format(nowTime);
 		Map<String, Object> data = new HashMap<String, Object>();
 		String msg = "OK";
+		Integer status = 0;
 		if (SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==1) {
 			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
 			info.setCallTime(timeString);
@@ -554,8 +557,9 @@ public class MobileAPI {
 			info.setStatus(1);
 			info.setType(Integer.valueOf(type));
 			SystemConfig.Call_Waiter_Map.put(appId, info);
+			status = 1;
 		}
-		data.put("type", type);
+		data.put("type", status);
 		respJson.put("data", data);
 		respJson.put("info", msg);
 		respJson.put("status", true);

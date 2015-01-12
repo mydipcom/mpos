@@ -19,9 +19,9 @@ public class ProductModel implements Serializable{
 	private Float oldPrice;
 	private Float price;
 	private Integer sku;
-	private boolean recommend;
+	private Boolean recommend;
 	private Integer sort;
-	private boolean status;
+	private Boolean status;
 	private Integer menuId;
 	
 	private Object productNameLocale;
@@ -99,11 +99,11 @@ public class ProductModel implements Serializable{
 		this.sku = sku;
 	}
 
-	public boolean isRecommend() {
+	public Boolean isRecommend() {
 		return recommend;
 	}
 
-	public void setRecommend(boolean recommend) {
+	public void setRecommend(Boolean recommend) {
 		this.recommend = recommend;
 	}
 
