@@ -17,6 +17,9 @@
         <property name="status" type="java.lang.Boolean">
             <column name="status" not-null="true"/>
         </property>
+        <property name="styleType" type="java.lang.Integer">
+            <column name="style_type" not-null="true"/>
+        </property>
         <property name="title" type="java.lang.String">
             <column name="title"/>
         </property>

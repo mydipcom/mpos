@@ -64,6 +64,7 @@ public class MenuDao extends BaseDao<Tmenu> {
 				model.setName(tmenu.getTitle());
 				model.setPid(tmenu.getPid());
 				model.setSort(tmenu.getSort());
+				model.setStyleType(tmenu.getStyleType());
 				if (tmenu.getPid() == 0) {
 					model.setTitle(tmenu.getTitle());
 				} else {

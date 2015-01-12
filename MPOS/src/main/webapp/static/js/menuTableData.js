@@ -175,12 +175,19 @@ var MenuTable = function () {
 	            var sort  = data.sort;
 	            var pid  = data.pid;
 	            var title = data.name;
+	            var style = data.styleType;
+	            
+	            $("#editMenuForm :radio").removeAttr("checked");
+	            $("#editMenuForm :radio").parents('span').removeClass("checked");
 	            
 	            $("#editMenuForm option").removeAttr("selected");
 	            $("#editMenuForm option[value='"+menuId+"']").remove();
 	            
 	            $("#editMenuForm select[name='menu.pid']").children("option[value='"+pid+"']").attr("selected","true");
 	            $("#editMenuForm input[name='menu.menuId']").val(menuId);
+	            
+	            $("#editMenuForm :radio[name='menu.styleType']").filter("[value='"+style+"']").attr("checked","true");
+	            $("#editMenuForm :radio[name='menu.styleType']").filter("[value='"+style+"']").parents('span').addClass("checked");
 	            
 	            $("#editMenuForm input[name='menu.title']").val(title);
 	            $("#editMenuForm input[name='menu.sort']").val(sort);

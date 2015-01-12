@@ -36,7 +36,7 @@ public class Tmenu implements Serializable {
 	 */
 	private Integer sort;
 	
-	
+	private Integer styleType;
 	
 	public Integer getMenuId() {
 		return menuId;
@@ -76,21 +76,21 @@ public class Tmenu implements Serializable {
 		this.titleLocale = titleLocale;
 	}
 	public Tmenu() {}
-	public Tmenu(Integer menuId, String title, Integer pid, Boolean status,
-			Integer sort) {
-		this.menuId = menuId;
-		this.title = title;
-		this.pid = pid;
-		this.status = status;
-		this.sort = sort;
-	}
 	public Tmenu(Integer menuId) {
 		this.menuId = menuId;
 	}
+	
+	public Integer getStyleType() {
+		return styleType;
+	}
+	public void setStyleType(Integer styleType) {
+		this.styleType = styleType;
+	}
 	@Override
 	public String toString() {
-		return "Tmenu [menuId=" + menuId + ", title=" + title + ", pid=" + pid
-				+ ", status=" + status + ", sort=" + sort + "]";
+		return "Tmenu [menuId=" + menuId + ", title=" + title
+				+ ", titleLocale=" + titleLocale + ", pid=" + pid + ", status="
+				+ status + ", sort=" + sort + ", styleType=" + styleType + "]";
 	}
 	
 }
