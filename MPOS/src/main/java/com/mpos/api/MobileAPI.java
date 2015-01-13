@@ -361,11 +361,11 @@ public class MobileAPI {
 			// 新建返回数据model
 			ProductModel model = new ProductModel();
 			model.setProductId(product.getId());
-			model.setStatus(false);
+		
 			if(product.isStatus()){
 				model.setProductId(product.getId());
 				model.setMenuId(product.getTmenu().getMenuId());
-				BeanUtils.copyProperties(product, model, "attributes", "promotions", "images","status");
+				BeanUtils.copyProperties(product, model, "attributes", "promotions", "images");
 				//装载需要多语言化得字段
 				model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR,SystemConstants.TABLE_FIELD_UNITNAME);
 				//装载商品属性
@@ -387,7 +387,9 @@ public class MobileAPI {
 					price = product.getOldPrice();
 				}
 				model.setPrice(price);
-			}  
+			} else{
+				model.setStatus(false);	
+			} 
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", model);
