@@ -196,7 +196,7 @@ var DeviceTable = function () {
 }();
 
 //---------------------------------
-var loadTime = 20000;
+var loadTime = 10000;
 var loadInterval;
 function runLoad(){
 	loadInterval = setInterval("load()",loadTime);
