@@ -60,4 +60,10 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 		
 	}
 
+	@Override
+	public TproductRelease getLatestPublished() {
+		// TODO Auto-generated method stub
+		return productReleaseDao.getLatestPublished();
+	}
+
 }

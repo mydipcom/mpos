@@ -56,6 +56,8 @@
           <value>cfg/ProductAttribute.hbm.xml</value>
           <value>cfg/GoodsAttribute.hbm.xml</value>
           <value>cfg/Commodity.hbm.xml</value>
+          <value>cfg/Table.hbm.xml</value>
+          <value>cfg/Device.hbm.xml</value>
 	  </list>
 	</property>
 	 

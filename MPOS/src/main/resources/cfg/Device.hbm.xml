@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-1-12 10:32:00 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.Tdevice" table="mpos_device" catalog="mpos" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <!-- <many-to-one name="table" class="com.mpos.dto.Ttable" fetch="select">
+            <column name="table_id" />
+        </many-to-one> -->
+        <property name="tableName" type="string">
+            <column name="table_name" length="45" not-null="true" />
+        </property>
+        <property name="table" type="java.lang.Integer">
+            <column name="table_id"/>
+        </property>
+        <property name="onlineStatus" type="boolean">
+            <column name="online_status" not-null="true" />
+        </property>
+        <property name="dataVersion" type="string">
+            <column name="data_version" length="45" not-null="true" />
+        </property>
+        <property name="lastSyncTime" type="long">
+            <column name="last_sync_time" not-null="true" />
+        </property>
+        <property name="lastReportTime" type="long">
+            <column name="last_report_time" not-null="true" />
+        </property>
+        <property name="status" type="java.lang.Boolean">
+            <column name="status" />
+        </property>
+        <property name="createTime" type="java.lang.Long">
+            <column name="create_time" />
+        </property>
+    </class>
+</hibernate-mapping>

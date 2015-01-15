@@ -35,6 +35,7 @@ import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.Tcommodity;
+import com.mpos.dto.Tdevice;
 import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
@@ -43,11 +44,13 @@ import com.mpos.dto.TorderItem;
 import com.mpos.dto.TproductImage;
 import com.mpos.dto.TproductRelease;
 import com.mpos.dto.Tpromotion;
+import com.mpos.dto.Ttable;
 import com.mpos.model.AttributeModel;
 import com.mpos.model.CallWaiterInfo;
 import com.mpos.model.ProductModel;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CommodityService;
+import com.mpos.service.DeviceService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
 import com.mpos.service.LocalizedFieldService;
@@ -56,6 +59,7 @@ import com.mpos.service.OrderItemService;
 import com.mpos.service.OrderService;
 import com.mpos.service.ProductReleaseService;
 import com.mpos.service.PromotionService;
+import com.mpos.service.TableService;
 
 
 @Controller
@@ -86,6 +90,10 @@ public class MobileAPI {
 	 * 活动类型 满减
 	 */
 	public static final int PROMOTION_TYPE_FULL_CUT = 3;
+	@Autowired
+	private TableService tableService;
+	@Autowired
+	private DeviceService deviceService;
 	@Autowired
 	private GoodsService goodsService;
 	@Autowired
@@ -138,7 +146,7 @@ public class MobileAPI {
 			dataJson.put("logo", "/"+ logo);	
 			dataJson.put("backgroundImage", "/" + backgroundImage);
 			dataJson.put("storeName", restaurantName);
-			
+			dataJson.put("tables", loadTables());
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", dataJson);
@@ -535,7 +543,6 @@ public class MobileAPI {
 			respJson.put("info", "The request parameter type is required");
 			return JSON.toJSONString(respJson);
 		}
-		System.out.println(appId+"--------------"+type);
 		Date nowTime = new Date();
 		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		String timeString = sdf.format(nowTime);
@@ -566,6 +573,79 @@ public class MobileAPI {
 		respJson.put("info", msg);
 		respJson.put("status", true);
 		return JSON.toJSONString(respJson);
+	}
+	
+	@RequestMapping(value = "deviceStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateDeviceStatus(HttpServletResponse response, @RequestHeader("Authorization") String apiKey,@RequestBody String jsonStr){
+		// 获取缓存apiToken
+		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		JSONObject respJson = new JSONObject();
+		// 判断apiToken是否一致
+		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+			respJson.put("status", false);
+			respJson.put("info", "Error API token.");
+			return JSON.toJSONString(respJson);
+			}
+		// 判断请求参数
+		if (jsonStr == null || jsonStr.isEmpty()) {
+			respJson.put("status", false);
+			respJson.put("info", "The request parameter is required.");
+			return JSON.toJSONString(respJson);
+		}
+		
+		try {
+			JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
+			String appId = jsonObj.getString("appId");
+			String verId = jsonObj.getString("verId");
+			Long verTime = jsonObj.getLong("verTime");
+			if (appId == null || appId.isEmpty()) {
+				respJson.put("status", false);
+				respJson.put("info", "The request parameter appId is required");
+				return JSON.toJSONString(respJson);
+			}
+			if (verId == null || verId.isEmpty()) {
+				respJson.put("status", false);
+				respJson.put("info", "The request parameter verId is required");
+				return JSON.toJSONString(respJson);
+			}
+			if (verTime == null) {
+				respJson.put("status", false);
+				respJson.put("info", "The request parameter verTime is required");
+				return JSON.toJSONString(respJson);
+			}
+			Tdevice device = deviceService.get(appId);
+			if(device==null){
+				Ttable table = tableService.get(appId);
+				Tdevice devic = new Tdevice();
+				devic.setCreateTime(System.currentTimeMillis());
+				devic.setLastReportTime(System.currentTimeMillis());
+				devic.setLastSyncTime(verTime);
+				devic.setDataVersion(verId);
+				if(table==null){
+					devic.setTable(0);
+				}else{
+					devic.setTable(table.getId());
+				}
+				devic.setOnlineStatus(true);
+				devic.setStatus(true);
+				devic.setTableName(appId);
+				deviceService.create(devic);
+			}else{
+				device.setDataVersion(verId);
+				device.setOnlineStatus(true);
+				device.setLastSyncTime(verTime);
+				device.setLastReportTime(System.currentTimeMillis());
+				deviceService.create(device);
+			}
+			respJson.put("status", true);
+			respJson.put("info", "OK");
+			return JSON.toJSONString(respJson);
+		} catch (MposException e) {
+			respJson.put("status", false);
+			respJson.put("info", e.getMessage());
+			return JSON.toJSONString(respJson);
+		}
 	}
 	
 	/**
@@ -891,5 +971,17 @@ public class MobileAPI {
 			}
 		}
 		return oldPrice;
+	}
+	
+	private String[] loadTables(){
+		List<Ttable> tables = tableService.loadAll();
+		String[] tt = null; 
+		if(tables!=null&&tables.size()>0){
+			tt = new String[tables.size()];
+			for (int i = 0; i < tables.size(); i++) {
+				tt[i] = tables.get(i).getTableName();
+			}
+		}
+		return tt;
 	}
 }
