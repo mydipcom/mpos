@@ -63,7 +63,7 @@ public class DeviceServiceImpl implements DeviceService {
 		// TODO Auto-generated method stub
 		String searchJsonStr = dtp.getsSearch();
 		Criteria criteria = deviceDao.createCriteria();
-		criteria.addOrder(Order.desc("id"));
+		criteria.addOrder(Order.asc("tableName"));
 		criteria.add(Restrictions.gt("table", 0));
 		if (searchJsonStr != null && !searchJsonStr.isEmpty()) {
 			List<Criterion> criterionList = new ArrayList<Criterion>();

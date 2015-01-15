@@ -75,8 +75,7 @@ public class TableServiceImpl implements TableService {
 	public PagingData loadTableList(DataTableParamter dtp) {
 		String searchJsonStr = dtp.getsSearch();
 		Criteria criteria = tableDao.createCriteria();
-		criteria.addOrder(Order.desc("id"));
-		//criteria.add(Restrictions.eq("status", true));
+		criteria.addOrder(Order.asc("tableName"));
 		if (searchJsonStr != null && !searchJsonStr.isEmpty()) {
 			List<Criterion> criterionList = new ArrayList<Criterion>();
 			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);

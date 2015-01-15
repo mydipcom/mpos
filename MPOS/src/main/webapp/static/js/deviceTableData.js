@@ -46,7 +46,7 @@ var DeviceTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id"},
+	           { title: "ID",   data: "id","bVisible":false},
 	           { title: "Table Name",    data: "tableName" },
 	           { title: "Status",    
 	        	   		"render":function(data,type,row){
