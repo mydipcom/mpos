@@ -1,5 +1,6 @@
 package com.mpos.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import com.mpos.dto.Tsetting;
@@ -22,7 +23,7 @@ public interface SystemSettingService {
 	
 	public PagingData loadSystemsetting();
 
-	public void cachedSystemSettingData() throws UnsupportedEncodingException;
+	public void cachedSystemSettingData() throws UnsupportedEncodingException, IOException;
 	
 	public PagingData getStoreSetting();
 	

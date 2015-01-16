@@ -118,6 +118,9 @@ public class SettingController extends BaseController {
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		resp.put("status", true);
 		return JSON.toJSONString(resp);

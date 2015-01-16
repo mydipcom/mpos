@@ -9,6 +9,7 @@
  */ 
 package com.mpos.core;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.context.ApplicationListener;
@@ -39,6 +40,9 @@ public class CachedDataProcessor implements ApplicationListener<ContextRefreshed
     			try {
 					systemSettingService.cachedSystemSettingData();
 				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

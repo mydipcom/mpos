@@ -1,8 +1,13 @@
 package com.mpos.service.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,13 +79,29 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 	}
 	
 	
-	public void cachedSystemSettingData() throws UnsupportedEncodingException {
+	public void cachedSystemSettingData() throws IOException {
 		// TODO Auto-generated method stub
 		List <Tsetting> setingList = getAllSystemSetting();
+		String realPath = this.getClass().getResource("/").getPath();
+		realPath = realPath.substring(0, realPath.indexOf("WEB-INF"));
 		SystemConfig.Admin_Setting_Map.clear();
 		SystemConfig.TOKEN = null;
+		File image;
 		for(Tsetting setting:setingList){
 			SystemConfig.Admin_Setting_Map.put(setting.getName(),new String(setting.getValue(),"UTF-8"));
+			if(SystemConstants.RESTAURANT_LOGO_File.equals((setting.getName()))){
+				image = new File(realPath,"upload"+File.separator+"store"+File.separator+"store_logo.png");
+				if(image.exists()){
+					image.delete();
+				}
+				FileUtils.copyInputStreamToFile(new ByteArrayInputStream(setting.getValue()), image);
+			}else if(SystemConstants.PAGE_BACKGROUND_File.equals(setting.getName())){
+				image = new File(realPath,"upload"+File.separator+"store"+File.separator+"store_background.jpg");
+				if(image.exists()){
+					image.delete();
+				}
+				FileUtils.copyInputStreamToFile(new ByteArrayInputStream(setting.getValue()), image);
+			}
 		}
 		SystemConfig.TOKEN=SystemConfig.Admin_Setting_Map.get(SystemConstants.TOKEN);
 	}
