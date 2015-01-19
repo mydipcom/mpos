@@ -151,11 +151,35 @@ public class BaseDao<T> extends HibernateDaoSupport
     {
         return (T)createCriteria(Restrictions.eq(name, value)).uniqueResult();
     }
+    
+    @SuppressWarnings("unchecked")
+   	public T findUnique(String[] popertyName, Object[] value)
+    {
+       Criteria criteria = currentSession().createCriteria(clazz);
+
+       for (int i = 0; i < popertyName.length; i++ )
+       {
+           criteria.add(Restrictions.eq(popertyName[i], value[i]));
+       }
+       return (T)criteria.uniqueResult();
+    }
 
     @SuppressWarnings("unchecked")
 	public List<T> findBy(String name, Object value)
     {
         return createCriteria(Restrictions.eq(name, value)).list();
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<T> findBy(String[] popertyName, Object[] value)
+    {
+    	Criteria criteria = currentSession().createCriteria(clazz);
+
+        for (int i = 0; i < popertyName.length; i++ )
+        {
+            criteria.add(Restrictions.eq(popertyName[i], value[i]));
+        }
+        return criteria.list();
     }
 
     @SuppressWarnings("unchecked")
@@ -244,20 +268,7 @@ public class BaseDao<T> extends HibernateDaoSupport
     	}
     	return (Integer)res;
     	
-    }
-    
-   
-    @SuppressWarnings("unchecked")
-	public T findUnique(String[] popertyName, Object[] value)
-    {
-        Criteria criteria = currentSession().createCriteria(clazz);
-
-        for (int i = 0; i < popertyName.length; i++ )
-        {
-            criteria.add(Restrictions.eq(popertyName[i], value[i]));
-        }
-        return (T)criteria.uniqueResult();
-    }
+    }    
         
 	@SuppressWarnings("rawtypes")
 	public List findByHqlName(String hqlName)
