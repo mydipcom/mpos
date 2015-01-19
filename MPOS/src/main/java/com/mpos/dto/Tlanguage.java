@@ -2,6 +2,8 @@ package com.mpos.dto;
 
 public class Tlanguage implements java.io.Serializable {
 
+	private static final long serialVersionUID = 2909518251922228073L;
+	
 	private Integer id;
 	private String name;
 	

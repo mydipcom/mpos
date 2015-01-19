@@ -47,11 +47,16 @@ public class SystemConstants {
 	public static final String LOGIN_ERROR_LOCK="Login_Error_Locked";
 	
 	public static final String TABLE_NAME_MENU="Tmenu";
+	public static final String TABLE_NAME_CATEGORY="Tcategory";
 	public static final String TABLE_NAME_CATE_ATTRIBUTE="TcategoryAttribute";
+	public static final String TABLE_NAME_ATTRIBUTE_VALUE="TattributeValue";
 	public static final String TABLE_NAME_PRODUCT_ATTRIBUTE="TproductAttribute";
 	public static final String TABLE_NAME_PRODUCT="Tproduct";
 	
+	public static final String TABLE_FIELD_NAME="name";
+	public static final String TABLE_FIELD_DESCR="descr";
 	public static final String TABLE_FIELD_TITLE="title";
+	public static final String TABLE_FIELD_VALUE="value";
 	public static final String TABLE_FIELD_ATTRIBUTE_VALUE="attributeValue";
 	public static final String TABLE_FIELD_PRODUCTNAME="productName";
 	public static final String TABLE_FIELD_SHORTDESCR="shortDescr";

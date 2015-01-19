@@ -17,75 +17,23 @@
         });
         return serializeObj;
     };
+    
+    $.validator.addMethod("sameArraySize", function(value, element) {   
+        var arrSize = value.split(",").length;
+        var isSame=true;
+        $.each( $(element.form).find(":text[name^='values_']"), function (index, obj) { 
+        	var length=obj.value.split(",").length;
+        	if(length>0){
+	        	if(arrSize!=length){	        		
+	            	isSame=false;	            	
+	        	}
+        	}
+        });                       
+        return this.optional(element) || isSame;
+    }, "Please enter the attribute value with the same options size in Multi-language Form Items.");
+    
 })(jQuery);
 
-
-/**
- * 加载多语言化
- */
-var loadLocal = function(type,entityId){
-	var res = "";
-	$.ajax({
-        "dataType": 'json', 
-        "type":'GET',
-        "async":false,
-        "url": rootURI+"category/getLocal/"+type+"/"+entityId+"?rand="+Math.random(), 
-        "success": function(resp,status){
-       	 if(status == "success"){  
-       		 if(resp.status){
-       			 res = resp;
-				}
-			}             	 
-        }
-      });
-	return res;
-}
-
-var setLocal = function(localTitles,id,formId){
-	var setId = "First"
-	if(id==1){
-		setId = "First";
-	}else if(id=2){
-		setId = "Second";
-	}
-	if(localTitles!=""&&localTitles.length!=null&&localTitles.length>0){
-		for (var int = 0; int < localTitles.length; int++) {
-			var lan = localTitles[int];
-			if(id==1){
-				$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeValue']").val(lan.localeValue);
-			}else{
-				$("#"+formId+" textarea[name='localizedField"+setId+"["+int+"].localeValue']").val(lan.localeValue);
-			}
-			
-			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].language.id']").val(lan.languageId);
-			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].tableField']").val(lan.tableField);
-			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeId']").val(lan.localeId);
-		}
-	}
-}
-
-var setCopyLocal = function(localTitles,id,formId,str){
-	var setId = "First"
-	if(id==1){
-		setId = "First";
-	}else if(id=2){
-		setId = "Second";
-	}
-	if(localTitles!=""&&localTitles.length!=null&&localTitles.length>0){
-		for (var int = 0; int < localTitles.length; int++) {
-			var lan = localTitles[int];
-			if(id==1){
-				$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeValue']").val(str + " " +lan.localeValue);
-			}else{
-				$("#"+formId+" textarea[name='localizedField"+setId+"["+int+"].localeValue']").val(str + " " + lan.localeValue);
-			}
-			
-			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].language.id']").val(lan.languageId);
-			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].tableField']").val(lan.tableField);
-			$("#"+formId+" input[name='localizedField"+setId+"["+int+"].localeId']").val(lan.localeId);
-		}
-	}
-}
 
 var rootURI="/";
 var CategoryTable = function () {
@@ -137,7 +85,30 @@ var CategoryTable = function () {
 	        "serverMethod": "GET",
 	        "ajaxSource": rootURI+"category/categoryList?rand="+Math.random()
 
-		});		
+		});
+		
+		$("#CloneSelectedCategory").on("click",function(){
+			$.ajax( {
+             "dataType": 'json', 
+             "type": "GET", 
+             "url": rootURI+"category/clone/"+selected.join(), 
+             "success": function(data,status){
+            	 if(status == "success"){					
+					 if(data.status){
+						 selected=[];
+		            	 oTable.api().draw();
+		            	 oTable.$('th span').removeClass();
+					 }
+					 else{
+						 handleAlerts("Failed to clone the data. " +data.info,"danger","");
+					 }
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+		});
 
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteCategoryModal").on("click",function(event){
@@ -145,23 +116,14 @@ var CategoryTable = function () {
 				handleAlerts("Please select the rows which you want to delete.","warning","");				
 				return false;
 			}
-		});
-		
-		$('#view_attribute').on('shown',function(e){
-			$('#view_attribute').css({
-				"margin-top": function () {
-					return  -($(window).height()/3 + 50 );
-				}
-			});
-		 })
+		});		
 
-		
 		//删除分类操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"category/category/"+selected.join(), 
+             "url": rootURI+"category/delete/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -187,61 +149,43 @@ var CategoryTable = function () {
 				return false;				
 			}
 			else{
-				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-				$("tr input:checked").parents('span').removeClass("checked");
-				$("tr input:checked").removeAttr("checked");
+				var data = oTable.api().row($("tr input:checked").parents('tr')).data();								
 				var categoryId = data.categoryId;
 	            var name  = data.name;
 	            var content  = data.content;
 	            var status = data.status;
+	            var categoryNameLocaleList=data.categoryName_locale;
+	            var categoryDescrLocaleList=data.categoryDescr_locale;
 	            $("#editCategoryForm :radio").removeAttr("checked");
 	            $("#editCategoryForm :radio").parents('span').removeClass("checked");
 	            
-	            $("#editCategoryForm input[name='category.categoryId']").val(categoryId);
+	            $("#editCategoryForm input[name='categoryId']").val(categoryId);
 	            
-	            $("#editCategoryForm input[name='category.name']").val(name);
-	            $("#editCategoryForm textarea[name='category.content']").val(content);
+	            $("#editCategoryForm input[name='name']").val(name);	            
+	            $.each(categoryNameLocaleList, function (index, categoryNameLocale) {
+	            	 $.each($("#editCategoryForm input[name^='categoryName_locale'][name$='.language.id']"), function (index, obj) {
+	            		 if($(obj).val()==categoryNameLocale.language.id){
+	            			 $(obj).nextAll("input[name$='.localeValue']").val(categoryNameLocale.localeValue);
+	            			 $(obj).nextAll("input[name$='.localeId']").val(categoryNameLocale.localeId);
+	            		 }
+	            	 });
+				});	            	            	            
+	            
+	            $("#editCategoryForm input[name='content']").val(content);
+	            $.each(categoryDescrLocaleList, function (index, categoryDescrLocale) {
+	            	 $.each($("#editCategoryForm input[name^='categoryDescr_locale'][name$='.language.id']"), function (index, obj) {
+	            		 if($(obj).val()==categoryDescrLocale.language.id){
+	            			 $(obj).nextAll("input[name$='.localeValue']").val(categoryDescrLocale.localeValue);
+	            			 $(obj).nextAll("input[name$='.localeId']").val(categoryDescrLocale.localeId);
+	            		 }
+	            	 });
+				});
 	            	            	            
-	            $("#editCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#editCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").parents('span').addClass("checked");
-	            selected = [];
-	            var list = loadLocal(1,categoryId);
-	            setLocal(list.localName,1,"editCategoryForm");
-	            setLocal(list.localContent,2,"editCategoryForm");
+	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
+	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");	            
 			}
 		});
-		
-		
-		//打开复制窗口并赋值
-		$("#openCopyAddCategoryModal").on("click",function(event){
-			if(selected.length!=1){
-				handleAlerts("One and only one row can be copy add.","warning","");
-				return false;				
-			}
-			else{
-				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-				$("tr input:checked").parents('span').removeClass("checked");
-				$("tr input:checked").removeAttr("checked");
-	            var name  = data.name;
-	            var content  = data.content;
-	            var status = data.status;
-	            $("#copyCategoryForm input[name='id']").val(data.categoryId);
-	            var str = "copy of ";
-	            //$("#copy_add_title").html("copy of " + name);
-	            $("#copyCategoryForm :radio").removeAttr("checked");
-	            $("#copyCategoryForm :radio").parents('span').removeClass("checked");
-	            
-	            $("#copyCategoryForm input[name='category.name']").val(str + name);
-	            $("#copyCategoryForm textarea[name='category.content']").val(str + content);
-	            	            	            
-	            $("#copyCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#copyCategoryForm :radio[name='category.status']").filter("[value='"+status+"']").parents('span').addClass("checked");
-	            selected=[];
-	            var list = loadLocal(1,data.categoryId);
-	            setCopyLocal(list.localName,1,"copyCategoryForm",str);
-	            setCopyLocal(list.localContent,2,"copyCategoryForm",str);
-			}
-		});	
+						
 		
 		//搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {
@@ -308,11 +252,9 @@ var CategoryTable = function () {
 		//--------------------------end category---------------------------------------------
 		
 		//-------------------------begin---attribute-----------------------------------
-		//数据载入
-		var logTable=$('#att_table');
-		var viewTable = function(ids){
-			att_cate_id = ids;
-			attTable = logTable.dataTable({
+		//数据载入		
+		var viewTable = function(categoryId){			
+			attTable = $('#att_table').dataTable({
 				"lengthChange":false,
 		    	"filter":false,
 		    	"sort":false,
@@ -325,13 +267,13 @@ var CategoryTable = function () {
 		        // set the initial value
 		        "displayLength": 5,
 		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
-		        "columnDefs": [{                    
+		        "columnDefs": [
+		          {                    
                     'targets': 0,   
                     'render':function(data,type,row){
                     	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
-                    },
-                    //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
-                	}
+                     }                                        
+                  }
 		        ],
 		        "columns": [
 		               {"orderable": false },
@@ -353,28 +295,40 @@ var CategoryTable = function () {
 		 	        				return str;
 		 	        			}
 		 	           },
-		 	           { title: "Content", data: "content"},
-		 	           { title: "Sort", data: "sort" }
+		 	           { title: "Sort", data: "sort" },		 	           
+		 	           { title: "Required", data: "required" },
+		 	           { title: "Values",data: "values"}
 		 	        ],
      	        "serverSide": true,
      	        "serverMethod": "GET",
-     	        "ajaxSource": rootURI+"category/attributeList/"+ids+"?rand="+Math.random()
+     	        "ajaxSource": rootURI+"category/attributeList/"+categoryId+"?rand="+Math.random()
 			});	
-		};
-		
+		};		
 		
 		table.on('click', 'tbody tr a',function(){
 	           var data = oTable.api().row($(this).parents('tr')).data();
-	           var ids=data.categoryId;
+	           var categoryId=data.categoryId;
 	           if(attTable!=null){
 	        	   attTable.fnDestroy();
-	        	   $("#addAttributeForm input[name='attribute.categoryId.categoryId']").val(ids);
-	        	   viewTable(ids); 
-	           }else{
-	        	   viewTable(ids);
-	        	   $("#addAttributeForm input[name='attribute.categoryId.categoryId']").val(ids);
+	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   viewTable(categoryId); 
+	           }else{	        	   
+	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   viewTable(categoryId);
 	           }
-	          });
+	     });
+		
+		//打开添加分类属性窗口
+		$("#openAddAttributeModal").on("click",function(event){
+			//当添加属性窗口关闭时隐藏属性输入框的下拉菜单
+            $('#add_attribute').on("hide.bs.modal", function () {            	
+            	$.each($("#addAttributeForm :text[name^='values']"), function (index, obj) {
+            		$(obj).select2("close");
+            	});
+    		});
+		});
 		
 		//打开分类属性编辑窗口
 		$("#openEditAttributeModal").on("click",function(event){
@@ -384,35 +338,55 @@ var CategoryTable = function () {
 			}
 			else{
 				var data = attTable.api().row($("tr input:checked").parents('tr')).data();
-				$("tr input:checked").parents('span').removeClass("checked");
-				$("tr input:checked").removeAttr("checked");
 				var attributeId = data.attributeId;
+				var required = data.required;
 				var sort = data.sort;
 				var title = data.title;
-				var content = data.content;
+				var values = data.values;
 				var type = data.type;
-				$("#editAttributeForm input[name='attribute.attributeId']").val(attributeId);
-				$("#editAttributeForm input[name='attribute.categoryId.categoryId']").val(att_cate_id);
-				if(type==0){
-					$("#edit_required").html("");
-					$("#editAttributeForm textarea[name='attribute.content']").rules("remove","required");
-				}
+				var titleLocaleList=data.title_locale;
+
+				var valuesLocaleList=data.values_locale;
+	            
+				$("#editAttributeForm input[name='attributeId']").val(attributeId);					
 				$("#editAttributeForm :radio").removeAttr("checked");
 		        $("#editAttributeForm :radio").parents('span').removeClass("checked");
+		        $("#editAttributeForm :radio[name='type']").filter("[value='"+type+"']").attr("checked","true");
+		        $("#editAttributeForm :radio[name='type']").filter("[value='"+type+"']").parents('span').addClass("checked");
+		        $("#editAttributeForm :radio[name='required']").filter("[value='"+required+"']").attr("checked","true");
+		        $("#editAttributeForm :radio[name='required']").filter("[value='"+required+"']").parents('span').addClass("checked");
 		           
-		        $("#editAttributeForm input[name='attribute.sort']").val(sort);
-		        $("#editAttributeForm input[name='attribute.title']").val(title);
-		        $("#editAttributeForm textarea[name='attribute.content']").val(content);
-		        //$(".form-control tags").val(content);
-		            	            	            
-		        $("#editAttributeForm :radio[name='attribute.type']").filter("[value='"+type+"']").attr("checked","true");
-		        $("#editAttributeForm :radio[name='attribute.type']").filter("[value='"+type+"']").parents('span').addClass("checked");
-		        attSelected = [];
-		        var list = loadLocal(2,attributeId);
-	            setLocal(list.localTitle,1,"editAttributeForm");
-	            setLocal(list.localContent,2,"editAttributeForm");
+		        $("#editAttributeForm input[name='sort']").val(sort);
+		        $("#editAttributeForm input[name='title']").val(title);		        	        		            	            	           		        		                   
+	            $.each(titleLocaleList, function (index, titleLocale) {
+	            	 $.each($("#editAttributeForm input[name^='title_locale'][name$='.language.id']"), function (index, obj) {
+	            		 if($(obj).val()==titleLocale.language.id){	            			 
+	            			 $(obj).nextAll("input[name$='.localeValue']").val(titleLocale.localeValue);
+	            			 $(obj).nextAll("input[name$='.localeId']").val(titleLocale.localeId);
+	            			 	            			 
+	            		 }
+	            	 });
+				});	
+	            
+	            $("#editAttributeForm input[name='values']").val(values);
+	            $.each(valuesLocaleList, function (index, valuesLocale) {
+	            	 $.each($("#editAttributeForm input[name^='values_locale'][name$='.language.id']"), function (index, obj) {
+	            		 if($(obj).val()==valuesLocale.language.id){	            			 
+	            			 $(obj).nextAll("input[name$='.localeValue']").val(valuesLocale.localeValue);	            			 	            			 
+	            		 }
+	            	 });
+				});
+	            $("#editAttributeForm :text[name^='values']").select2({tags:[],formatNoMatches: function () { return "&nbsp;"; }});
+	            //当编辑属性窗口关闭时隐藏属性输入框的下拉菜单
+	            $('#edit_attribute').on("hide.bs.modal", function () {
+	            	$.each($("#editAttributeForm :text[name^='values']"), function (index, obj) {
+	            		$(obj).select2("close");
+	            	});
+	            	
+	    		});	            
 			}
 		});
+		
 		
 		
 		//打开删除属性对话框前判断是否已选择要删除的行
@@ -422,28 +396,7 @@ var CategoryTable = function () {
 				return false;
 			}
 		});
-		
-		$("#addAttributeForm :radio").on("change",function(event){
-			if($(this).val()==0){
-				$("#add_required").html("");
-				$("#addAttributeForm textarea[name='attribute.content']").rules("remove","required");
-			}else{
-				$("#add_required").html(" * ");
-				$("#addAttributeForm textarea[name='attribute.content']").rules("add",{required: true});
-			}
-			
-		});
-		
-		$("#editAttributeForm :radio").on("change",function(event){
-			if($(this).val()==0){
-				$("#edit_required").html("");
-				$("#editAttributeForm textarea[name='attribute.content']").rules("remove","required");
-			}else{
-				$("#edit_required").html(" * ");
-				$("#editAttributeForm textarea[name='attribute.content']").rules("add",{required: true});
-			}
-			
-		});
+				
 		
 		//删除分类操作
 		$('#deleteAttBtn').on('click', function (e) {
@@ -495,7 +448,7 @@ var CategoryTable = function () {
         });
         
         //单选
-        logTable.on('change', 'tbody tr .checkboxes', function () {
+        $('#att_table').on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = attTable.api().row($(this).parents('tr')).data();
             var id = data.attributeId;
@@ -509,10 +462,7 @@ var CategoryTable = function () {
                 $(this).parents('span').removeClass("checked");
                 $(this).removeAttr("checked");
             }
-        });
-        
-        
-		
+        });        		
         
 	};
 	
@@ -545,37 +495,10 @@ var CategoryTable = function () {
        });
     };
     
-  //复制添加操作
-	var ajaxCopyCategory=function(form){	
-		$.ajax( {
-		"traditional":true,
-         "dataType": 'json', 
-         "type":'POST', 
-         "url": rootURI+"category/copyCategory", 
-         "data": form.serialize(),
-         "success": function(resp,status){
-        	 if(status == "success"){  
-        		 if(resp.status){						 
-	            	 oTable.api().draw();
-	            	 form[0].reset();
-	            	 selected=[];
-	            	 $("#copy_add_category").modal('hide');
-	            	 handleAlerts("Added the data successfully.","success","#copyFormMsg");		            	 
-				 }
-				 else{
-					 handleAlerts("Failed to add the data.","danger","#copyFormMsg");						 
-				 }
-			}             	 
-         },
-         "error":function(XMLHttpRequest, textStatus, errorThrown){
-        	 alert(errorThrown);
-         }
-       });		
-    };
     
 	//编辑分类操作
 	var ajaxEditCategory=function(){	
-		$.ajax( {
+		$.ajax({
          "dataType": 'json', 
          "type":'POST', 
          "url": rootURI+"category/editCategory", 
@@ -601,18 +524,18 @@ var CategoryTable = function () {
     };
     
 	//添加属性异步操作
-	var ajaxAddAttribute=function(from){
+	var ajaxAddAttribute=function(){
 		$.ajax( {
 		"traditional":true,
          "dataType": 'json', 
          "type":'POST', 
          "url": rootURI+"category/addAttribute", 
-         "data": from.serialize(),
+         "data": $("#addAttributeForm").serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){
         			 attTable.api().draw();
-	            	 from[0].reset();
+        			 $("#addAttributeForm")[0].reset();
 	            	 $("#add_attribute").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#addAttributeFormMsg");		            	 
 				 }
@@ -628,12 +551,12 @@ var CategoryTable = function () {
     };
     
 	//编辑属性异步操作
-	var ajaxEditAttribute=function(form){	
+	var ajaxEditAttribute=function(){	
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
          "url": rootURI+"category/editAttribute", 
-         "data": form.serialize(),
+         "data": $("#editAttributeForm").serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){
@@ -675,186 +598,108 @@ var CategoryTable = function () {
 
     };
     
-    //处理表单验证方法
-    var addFormValidation = function() {
-            var addform = $('#addCategoryForm');
-            var errorDiv = $('.alert-danger', addform);            
-
-            addform.validate({
+    //处理分类表单验证方法
+    var categoryFormValidation = function(formType) {
+    	    var validationForm; 
+	    	if(formType==0){
+	    		validationForm=$('#addCategoryForm');
+	        }
+	        else{
+	        	validationForm=$('#editCategoryForm');
+	        }            
+            var errorDiv = $('.alert-danger', validationForm);
+            validationForm.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    "category.name": {
+                    name: {
                         minlength: 2,
                         required: true
                     }
                 },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit                	
+                invalidHandler: function (event, validator) { //display error alert on form submit 
+                	validationForm.find("a[href$='_category_tab1']").trigger("click");
                     errorDiv.show();                    
                 },
-
                 highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
                 },
-
                 unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
                 },
                 onfocusout: function (element) { // hightlight error inputs
                     $(element).valid();
                 },
                 success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                    label.closest('.form-group').removeClass('has-error'); // set success class to the control group
                 },
-
                 submitHandler: function (form) {                	
                     errorDiv.hide();
-                    ajaxAddCategory(addform);                    
-                }
-            });
-    };
-    
-  //处理表单验证方法
-    var editFormValidation = function() {
-            var addform = $('#editCategoryForm');
-            var errorDiv = $('.alert-danger', addform);            
-
-            addform.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    "category.name": {
-                        minlength: 2,
-                        required: true
+                    if(formType==0){
+                    	ajaxAddCategory();
                     }
-                },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit                	
-                    errorDiv.show();                    
-                },
-
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-                onfocusout: function (element) { // hightlight error inputs
-                    $(element).valid();
-                },
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                    ajaxEditCategory();                    
+                    else{
+                    	ajaxEditCategory();
+                    }
                 }
             });
     };
     
-    var copyFormValidation = function() {
-        var copyform = $('#copyCategoryForm');
-        var errorDiv = $('.alert-danger', copyform);            
-
-        copyform.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block help-block-error', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",  // validate all fields including form hidden input                
-            rules: {
-                "category.name": {
-                    minlength: 2,
-                    required: true
-                }
-            },
-
-            invalidHandler: function (event, validator) { //display error alert on form submit                	
-                errorDiv.show();                    
-            },
-
-            highlight: function (element) { // hightlight error inputs
-                $(element)
-                    .closest('.form-group').addClass('has-error'); // set error class to the control group
-            },
-
-            unhighlight: function (element) { // revert the change done by hightlight
-                $(element)
-                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
-            },
-            onfocusout: function (element) { // hightlight error inputs
-                $(element).valid();
-            },
-            success: function (label) {
-                label
-                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
-            },
-
-            submitHandler: function (form) {                	
-                errorDiv.hide();
-                ajaxCopyCategory(copyform);                      
-            }
-        });
-    };
+    
     //处理分类属性表单
-    var AttributeFormValidation = function(aform,type) {
-        var addform = aform;
-        var errorDiv = $('.alert-danger', addform);            
-
-        addform.validate({
+    var AttributeFormValidation = function(formType) {
+        var addform;
+        var validationForm; 
+    	if(formType==0){
+    		validationForm=$('#addAttributeForm');
+        }
+        else{
+        	validationForm=$('#editAttributeForm');
+        }  
+        var errorDiv = $('.alert-danger', validationForm);  
+                
+        validationForm.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input                
             rules: {
-                "attribute.title": {
+                title: {
                     required: true
                 },
-                "attribute.content": {
-                	required: true
+                values: {
+                	required: true,
+                	sameArraySize:true
+                },
+                sort:{
+                	required: true,
+                	digits:true
                 }
             },
-
-            invalidHandler: function (event, validator) { //display error alert on form submit                	
+            invalidHandler: function (event, validator) { //display error alert on form submit 
+            	validationForm.find("a[href$='_attribute_tab1']").trigger("click");
                 errorDiv.show();                    
             },
-
             highlight: function (element) { // hightlight error inputs
-                $(element)
-                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
             },
-
             unhighlight: function (element) { // revert the change done by hightlight
-                $(element)
-                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
             },
             onfocusout: function (element) { // hightlight error inputs
                 $(element).valid();
             },
             success: function (label) {
-                label
-                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
             },
-
             submitHandler: function (form) {                	
                 errorDiv.hide();
-                if(type=='1'){
-                	ajaxAddAttribute(addform); 
-                }
-                if(type=='2'){
-                	ajaxEditAttribute(addform);
+                if(formType==0){
+                	ajaxAddAttribute(); 
+                }else{                
+                	ajaxEditAttribute();
                 }
                                    
             }
@@ -866,13 +711,12 @@ var CategoryTable = function () {
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-        	addFormValidation();
-        	editFormValidation();
-        	copyFormValidation();
-        	AttributeFormValidation($("#addAttributeForm"),'1');
-        	AttributeFormValidation($("#editAttributeForm"),'2');
+        	categoryFormValidation(0);
+        	categoryFormValidation(1);        	
+        	AttributeFormValidation(0);
+        	AttributeFormValidation(1);
+        	$(".select2_sample3").select2({tags:[],formatNoMatches: function () { return "&nbsp;"; }});
         }
-
     };
 
 }();

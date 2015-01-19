@@ -120,7 +120,7 @@
 									<i class="fa fa-edit"></i><s:message code="category"/>
 								</div>
 								<div class="actions">
-									<a class="btn btn-default btn-sm" data-toggle="modal" href="#copy_add_category" id="openCopyAddCategoryModal"><i class="fa fa-plus"></i><s:message code="category.copy.add" /></a>
+									<a class="btn btn-default btn-sm" href="#" id="CloneSelectedCategory"><i class="fa fa-plus"></i><s:message code="category.copy.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_category"><i class="fa fa-plus"></i> <s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_category" id="openEditCategoryModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_category" id="openDeleteCategoryModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
@@ -161,7 +161,7 @@
 				<!-- END PAGE CONTENT -->
 				
 				<!-- BEGIN ADD MODAL FORM-->
-				<div class="modal" id="add_category" tabindex="-1" data-width="760">
+				<div class="modal" id="add_category" tabindex="-1" data-width="960">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title"><s:message code="category.add"/></h4>
@@ -170,62 +170,83 @@
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="addCategoryForm" action="addCategory" method="post" name="addCategoryForm" class="form-horizontal form-bordered">
+						<form id="addCategoryForm" action="addCategory" method="post" name="addCategoryForm" class="form-horizontal">
+							<input type="hidden" name="type" value="0"/>
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									<s:message code="system.management.user.adduser.message"/>
 								</div>	
-								<input type="hidden" value="true" name="category.status">
-								
-								<ul class="nav nav-tabs">
-								<li class="active"><a href="#cate_add_standard" data-toggle="tab">Standard</a></li>
-								<c:if test="${not empty lanList}">
-									<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 	<li><a href="#cate_add_${status.index}" data-toggle="tab"><img src="${lan.flagImage}">${lan.name}</a></li>
-                  					</c:forEach> 
-                  					</c:if>
-								</ul>
-								
-								<div class="tab-content">
-								
-									<div class="tab-pane fade in active" id="cate_add_standard">
-									 		<div class="form-group">
-												<label class="control-label col-md-3"><s:message code="category.name" /><span class="required"> * </span></label>
-													<div class="col-md-9">										
-														<input name="category.name" class="form-control"/>
+								<div class="portlet box grey-silver tabbable">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="fa fa-gift"></i>Multi-language Form Items
+										</div>
+									</div>
+									<div class="portlet-body">
+										<div class="portlet-tabs">																														
+											<ul class="nav nav-tabs">
+												<c:forEach var="lan" items="${lanList}" varStatus="status">											
+												<li><a href="#add_category_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
+												</c:forEach>	
+												<li class="active"><a href="#add_category_tab1" data-toggle="tab"> Standard</a></li>
+											</ul>
+											<div class="tab-content">												
+												<c:forEach var="lan" items="${lanList}" varStatus="status">
+												<div class="tab-pane" id="add_category_tab${status.index+2}">													
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.name" /></label>
+															<div class="col-md-5">
+																<input type="text" name="categoryName_locale[${status.index}].localeValue" class="form-control"/>	
+																<input type="hidden" name="categoryName_locale[${status.index}].language.id"  value="${lan.id}"/>																											               
+															</div>
+														</div>														
 													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.content" /></label>
+															<div class="col-md-9">
+																<input type="text" name="categoryDescr_locale[${status.index}].localeValue" class="form-control"/>	
+																<input type="hidden" name="categoryDescr_locale[${status.index}].language.id"  value="${lan.id}"/>																																
+															</div>
+														</div>														
+													</div>
+													
+												</div>
+												</c:forEach>
+												<div class="tab-pane active" id="add_category_tab1">
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.name" /><span class="required"> * </span></label>
+															<div class="col-md-5">																	
+																<input type="text" name="name" class="form-control"/>																
+															</div>
+														</div>														
+													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.content" /></label>
+															<div class="col-md-9">																	
+																<input type="text" name="content" class="form-control"/>
+															</div>
+														</div>														
+													</div>
+													
+												</div>
 											</div>
-											<div class="form-group">
-												<label class="control-label col-md-3"><s:message code="category.content" /></label>
-													<div class="col-md-9">
-														<textarea name="category.content" class="form-control" rows="4"></textarea>											
-													</div>
-											</div>
-									 </div>
-									 <c:if test="${not empty lanList}">
-										<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 			<div class="tab-pane fade" id="cate_add_${status.index}">
-									 				<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="category.name" /></label>
-														<div class="col-md-9">										
-															<input name="localizedFieldFirst[${status.index}].localeValue" class="form-control"/>
-															<input name="localizedFieldFirst[${status.index}].language.id" type="hidden" value="${lan.id}"/>		
-															<input name="localizedFieldFirst[${status.index}].tableField" type="hidden" value="name"/>	
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="category.content" /></label>
-														<div class="col-md-9">
-															<textarea name="localizedFieldSecond[${status.index}].localeValue" class="form-control" rows="4"></textarea>											
-															<input name="localizedFieldSecond[${status.index}].language.id" type="hidden" value="${lan.id}"/>		
-															<input name="localizedFieldSecond[${status.index}].tableField" type="hidden" value="content"/>										
-														</div>
-													</div>
-									 			</div>
-                  						</c:forEach> 
-									</c:if>
+										</div>
+									</div>
 								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2"><s:message code="category.status" /></label>
+									<div class="col-md-10">
+										<div class="radio-list">
+											<label class="radio-inline"><input type="radio" name="status" value="true" checked/>True</label>
+											<label class="radio-inline"><input type="radio" name="status" value="false"/>False </label>											
+										</div>																																							
+									</div>
+								</div>													
 								
 							</div>
 							<div class="form-actions" style="border-top:0;">
@@ -243,7 +264,7 @@
 				<!-- END ADD MODAL FORM-->
 				
 				<!-- BEGIN Edit MODAL FORM-->
-				<div class="modal" id="edit_category" tabindex="-1" data-width="760">
+				<div class="modal" id="edit_category" tabindex="-1" data-width="960">
 					<div class="modal-header">
 						<button id="closeEditModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title"><s:message code="category.edit" /></h4>
@@ -252,65 +273,85 @@
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="editCategoryForm" action="editCategoryForm" method="post" name="editCategoryForm" class="form-horizontal form-bordered">
+						<form id="editCategoryForm" action="editCategoryForm" method="post" name="editCategoryForm" class="form-horizontal">
+							<input type="hidden" name="categoryId"/>
+							<input type="hidden" name="type" value="0"/>
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									<s:message code="system.management.user.adduser.message"/>
 								</div>	
-								<input type="hidden" value="true" name="category.status">
-								<input type="hidden" name="category.categoryId">
-								
-								<ul class="nav nav-tabs">
-								<li class="active"><a href="#cate_edit_standard" data-toggle="tab">Standard</a></li>
-								<c:if test="${not empty lanList}"> 
-									<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 		<li><a href="#cate_edit_${status.index}" data-toggle="tab"><img src="${lan.flagImage}">${lan.name}</a></li>
-                  					</c:forEach> 
-                  				</c:if>	
-								</ul>
-								
-								<div class="tab-content">
-								
-									<div class="tab-pane fade in active" id="cate_edit_standard">
-									 		<div class="form-group">
-												<label class="control-label col-md-3"><s:message code="category.name" /><span class="required"> * </span></label>
-													<div class="col-md-9">										
-														<input name="category.name" class="form-control"/>
+								<div class="portlet box grey-silver tabbable">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="fa fa-gift"></i>Multi-language Form Items
+										</div>
+									</div>
+									<div class="portlet-body">
+										<div class="portlet-tabs">																														
+											<ul class="nav nav-tabs">
+												<c:forEach var="lan" items="${lanList}" varStatus="status">											
+												<li><a href="#edit_category_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
+												</c:forEach>	
+												<li class="active"><a href="#edit_category_tab1" data-toggle="tab"> Standard</a></li>
+											</ul>
+											<div class="tab-content">												
+												<c:forEach var="lan" items="${lanList}" varStatus="status">
+												<div class="tab-pane" id="edit_category_tab${status.index+2}">												
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.name" /></label>
+															<div class="col-md-5">
+																<input type="hidden" name="categoryName_locale[${status.index}].language.id"  value="${lan.id}"/>
+																<input type="hidden" name="categoryName_locale[${status.index}].localeId" class="form-control"/>																
+																<input type="text" name="categoryName_locale[${status.index}].localeValue" class="form-control"/>																																												               
+															</div>
+														</div>														
 													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.content" /></label>
+															<div class="col-md-9">																	
+																<input type="hidden" name="categoryDescr_locale[${status.index}].language.id"  value="${lan.id}"/>
+																<input type="hidden" name="categoryDescr_locale[${status.index}].localeId" class="form-control"/>
+																<input type="text" name="categoryDescr_locale[${status.index}].localeValue" class="form-control"/>																																															
+															</div>
+														</div>														
+													</div>													
+												</div>
+												</c:forEach>
+												<div class="tab-pane active" id="edit_category_tab1">
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.name" /><span class="required"> * </span></label>
+															<div class="col-md-5">																	
+																<input type="text" name="name" class="form-control"/>																
+															</div>
+														</div>														
+													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-3"><s:message code="category.content" /></label>
+															<div class="col-md-9">																	
+																<input type="text" name="content" class="form-control"/>
+															</div>
+														</div>														
+													</div>
+													
+												</div>
 											</div>
-											<div class="form-group">
-												<label class="control-label col-md-3"><s:message code="category.content" /></label>
-													<div class="col-md-9">
-														<textarea name="category.content" class="form-control" rows="4"></textarea>											
-													</div>
-											</div>
-									 </div>
-									 <c:if test="${not empty lanList}">
-										<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 			<div class="tab-pane fade" id="cate_edit_${status.index}">
-									 				<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="category.name" /></label>
-														<div class="col-md-9">										
-															<input name="localizedFieldFirst[${status.index}].localeValue" class="form-control"/>
-															<input name="localizedFieldFirst[${status.index}].language.id" type="hidden"/>		
-															<input name="localizedFieldFirst[${status.index}].tableField" type="hidden"/>
-															<input name="localizedFieldFirst[${status.index}].localeId" type="hidden"/>	
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="category.content" /></label>
-														<div class="col-md-9">
-															<textarea name="localizedFieldSecond[${status.index}].localeValue" class="form-control" rows="4"></textarea>											
-															<input name="localizedFieldSecond[${status.index}].language.id" type="hidden"/>		
-															<input name="localizedFieldSecond[${status.index}].tableField" type="hidden"/>
-															<input name="localizedFieldSecond[${status.index}].localeId" type="hidden"/>										
-														</div>
-													</div>
-									 			</div>
-                  						</c:forEach> 
-									</c:if>
-								</div>	
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2"><s:message code="category.status" /></label>
+									<div class="col-md-10">
+										<div class="radio-list">
+											<label class="radio-inline"><input type="radio" name="status" value="true"/>True</label>
+											<label class="radio-inline"><input type="radio" name="status" value="false"/>False </label>											
+										</div>																																							
+									</div>
+								</div>													
 								
 							</div>
 							<div class="form-actions" style="border-top:0;">
@@ -327,98 +368,10 @@
 				</div>		
 				<!-- END EDIT MODAL FORM-->
 				
-				<!-- BEGIN COPY -->
-				
-				<div class="modal" id="copy_add_category" tabindex="-1" data-width="760">
-					<div class="modal-header">
-						<button id="closeCopyModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title"><s:message code="category.copy.add" /></h4>
-					</div>   
-					<div id="copyFormMsg"></div>
-					<!-- <div class="modal-body"> -->
-					<div class="portlet-body form">
-						<!-- BEGIN FORM	-->					
-						<form id="copyCategoryForm" action="copyCategoryForm" method="post" name="copyCategoryForm" class="form-horizontal form-bordered">
-							<div class="form-body">
-								<div class="alert alert-danger display-hide">
-									<button class="close" data-close="alert"></button>
-									<s:message code="system.management.user.adduser.message"/>
-								</div>	
-								<input type="hidden" value="true" name="category.status">
-								<input type="hidden" name="id">
-								
-								<ul class="nav nav-tabs">
-								<li class="active"><a href="#cate_copy_standard" data-toggle="tab">Standard</a></li>
-								<c:if test="${not empty lanList}">
-									<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 	<li><a href="#cate_copy_${status.index}" data-toggle="tab"><img src="${lan.flagImage}">${lan.name}</a></li>
-                  					</c:forEach> 
-                  					</c:if>
-								</ul>
-								
-								<div class="tab-content">
-								
-									<div class="tab-pane fade in active" id="cate_copy_standard">
-									 		<div class="form-group">
-												<label class="control-label col-md-3"><s:message code="category.name" /><span class="required"> * </span></label>
-													<div class="col-md-9">										
-														<input name="category.name" class="form-control"/>
-													</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label col-md-3"><s:message code="category.content" /></label>
-													<div class="col-md-9">
-														<textarea name="category.content" class="form-control" rows="4"></textarea>											
-													</div>
-											</div>
-									 </div>
-									 <c:if test="${not empty lanList}">
-										<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 			<div class="tab-pane fade" id="cate_copy_${status.index}">
-									 				<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="category.name" /></label>
-														<div class="col-md-9">										
-															<input name="localizedFieldFirst[${status.index}].localeValue" class="form-control"/>
-															<input name="localizedFieldFirst[${status.index}].language.id" type="hidden"/>		
-															<input name="localizedFieldFirst[${status.index}].tableField" type="hidden"/>
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="category.content" /></label>
-														<div class="col-md-9">
-															<textarea name="localizedFieldSecond[${status.index}].localeValue" class="form-control" rows="4"></textarea>											
-															<input name="localizedFieldSecond[${status.index}].language.id" type="hidden"/>		
-															<input name="localizedFieldSecond[${status.index}].tableField" type="hidden"/>
-														</div>
-													</div>
-									 			</div>
-                  						</c:forEach> 
-									</c:if>
-								</div>
-								
-							</div>
-							<div class="form-actions" style="border-top:0;">
-								<div class="row">
-									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="copyFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									</div>
-								</div>
-							</div>
-						</form>
-						<!-- END FORM-->
-					</div>					
-				</div>	
-				
-				
-				<!--END COPY  -->
-				
 				<!-- BEGIN DELETE MODAL FORM-->
 				<div class="modal" id="delete_category" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
-						<p>
-							 	<s:message code="system.management.user.deletemessage" />
-						</p>
+						<p><s:message code="system.management.user.deletemessage" /></p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
@@ -427,8 +380,61 @@
 				</div>				
 				<!-- END DELETE MODAL FORM-->
 				
+				
+				
+				<!--BEGIN VIEW ATTRIBUTE  -->
+				<div class="modal" id="view_attribute" tabindex="-1" data-width="960">
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						 <h4 class="modal-title"><s:message code="attribute" /></h4>
+					</div>
+				    
+					<div class="modal-body">
+					    <div id="view_attributeMsg"></div>
+						<div class="col-md-12">
+						<input type="hidden" value="" id="cate_id">
+							<!-- BEGIN EXAMPLE TABLE PORTLET-->
+								<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet box green">
+							<div class="portlet-title">
+									<div class="caption">
+										<!-- <i class="fa fa-edit"></i> --><%-- <s:message code="attribute" /> --%>
+									</div>
+							<div class="actions">
+								<a class="btn btn-default btn-sm" data-toggle="modal" href="#add_attribute" id="openAddAttributeModal"><i class="fa fa-plus"></i><s:message code="category.add.attribute" /></a>
+								<a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_attribute" id="openEditAttributeModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
+								<a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_attribute" id="openDeleteAttributeModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
+							</div>
+							</div>
+							
+							<div class="portlet-body">																
+									<table class="table table-striped table-hover table-bordered" id="att_table">
+										<thead>
+											<tr>
+												<th class="table-checkbox">
+													<input type="checkbox" class="group-checkable" data-set="#att_table .checkboxes"/>
+												</th>
+											    <th>ID</th>
+												<th>Title</th>
+												<th>Type</th>												
+												<th>Sort</th>
+												<th>Required</th>
+												<th>Attribute Values</th>
+											</tr>
+										</thead>
+																							
+									</table>
+								</div>
+						
+							<!-- END EXAMPLE TABLE PORTLET-->
+						</div> 
+						</div>
+					</div>
+			   </div>
+				<!--END VIEW ATTRIBUTE  -->
+	
 				<!--BEGIN ADD ATTRIBUTE  -->
-				<div class="modal" id="add_attribute" tabindex="-1" data-width="760">
+				<div class="modal" id="add_attribute" tabindex="-1" data-width="960">
 					<div class="modal-header">
 						<button id="closeAddAttributeModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title"><s:message code="category.add.attribute" /></h4>
@@ -437,87 +443,107 @@
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="addAttributeForm" action="addAttribute" method="post" name="addAttributeForm" class="form-horizontal form-bordered">
+						<form id="addAttributeForm" action="addAttribute" method="post" name="addAttributeForm" class="form-horizontal">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									<s:message code="system.management.user.adduser.message"/>
 								</div>
-								<input type="hidden" name="attribute.categoryId.categoryId">
-								<input type="hidden" value="true" name="attribute.status">
+								<input type="hidden" value="" name="categoryId.categoryId"/>
+								<input type="hidden" value="true" name="status">
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="attribute.type" /> <span class="required">* </span></label>
-										<div class="col-md-9">										
+									<label class="control-label col-md-2"><s:message code="attribute.type" /> <span class="required">* </span></label>
+										<div class="col-md-10">										
 											<div class="radio-list">
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="0"/>Editbox</label>
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="1" checked/>Radio Button </label>
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="2"/>Checkbox</label>
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="3"/>Dropdown List </label>
+												<label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label>
+												<label class="radio-inline"><input type="radio" name="type" value="1" checked/>Radio Button </label>
+												<label class="radio-inline"><input type="radio" name="type" value="2"/>Checkbox</label>
+												<label class="radio-inline"><input type="radio" name="type" value="3"/>Dropdown List </label>
 											</div>
 										</div>
 								</div>
-								
-								<ul class="nav nav-tabs">
-								<li class="active"><a href="#attr_add_standard" data-toggle="tab">Standard</a></li>
-									<c:if test="${not empty lanList}">
-										<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 		<li><a href="#attr_add_${status.index}" data-toggle="tab"><img src="${lan.flagImage}">${lan.name}</a></li>
-                  						</c:forEach> 
-                  					</c:if>
-								</ul>
-								
-								<div class="tab-content">
-									<div class="tab-pane fade in active" id="attr_add_standard">
-									 	<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="attribute.title" /><span class="required"> * </span></label>
-											<div class="col-md-9">										
-												<input name="attribute.title" class="form-control"/>
-											</div>
-										</div>
-									<div class="form-group">
-										<label class="control-label col-md-3"><s:message code="attribute.content" /><span class="required" id="add_required"> * </span></label>
-										<div class="col-md-9">
-											<textarea name="attribute.content" class="form-control" rows="4"></textarea>	
-										</div>
-									</div>
-								</div>
-								<c:if test="${not empty lanList}">
-									<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 			<div class="tab-pane fade" id="attr_add_${status.index}">
-									 				<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="attribute.title" /></label>
-														<div class="col-md-9">										
-															<input name="localizedFieldFirst[${status.index}].localeValue" class="form-control"/>
-															<input name="localizedFieldFirst[${status.index}].language.id" type="hidden" value="${lan.id}"/>		
-															<input name="localizedFieldFirst[${status.index}].tableField" type="hidden" value="title"/>	
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="attribute.content" /></label>
-														<div class="col-md-9">
-															<textarea name="localizedFieldSecond[${status.index}].localeValue" class="form-control" rows="4"></textarea>											
-															<input name="localizedFieldSecond[${status.index}].language.id" type="hidden" value="${lan.id}"/>		
-															<input name="localizedFieldSecond[${status.index}].tableField" type="hidden" value="content"/>										
-														</div>
-													</div>
-									 			</div>
-                  					  </c:forEach>
-                  					</c:if> 
-								
-								</div>
-								
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="attribute.sort" /></label>
-									<div class="col-md-9">																				
-										<input name="attribute.sort" class="form-control" value="0"/>									
+									<label class="control-label col-md-2"><s:message code="attribute.required" /> <span class="required">* </span></label>
+									<div class="col-md-10">										
+										<div class="radio-list">
+											<label class="radio-inline"><input type="radio" name="required" value="true"/>True</label>
+											<label class="radio-inline"><input type="radio" name="required" value="false" checked/>False</label>											
+										</div>									
 									</div>
-								</div>								
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2"><s:message code="attribute.sort" /></label>
+									<div class="col-md-10">																				
+										<input name="sort" class="form-control input-small" value=""/>									
+									</div>
+								</div>	
+								<div class="portlet box grey-silver tabbable">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="fa fa-gift"></i>Multi-language Form Items
+										</div>
+									</div>
+									<div class="portlet-body">
+										<div class="portlet-tabs">																														
+											<ul class="nav nav-tabs">
+												<c:forEach var="lan" items="${lanList}" varStatus="status">											
+												<li><a href="#add_attribute_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
+												</c:forEach>	
+												<li class="active"><a href="#add_attribute_tab1" data-toggle="tab"> Standard</a></li>
+											</ul>
+											<div class="tab-content">												
+												<c:forEach var="lan" items="${lanList}" varStatus="status">
+												<div class="tab-pane" id="add_attribute_tab${status.index+2}">													
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.title" /></label>
+															<div class="col-md-4">
+																<input type="text" name="title_locale[${status.index}].localeValue" class="form-control"/>	
+																<input type="hidden" name="title_locale[${status.index}].language.id"  value="${lan.id}"/>																													               
+															</div>
+														</div>														
+													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.values" /></label>
+															<div class="col-md-9">																
+																<input type="hidden" name="values_locale[${status.index}].language.id"  value="${lan.id}"/>
+																<input type="text" name="values_locale[${status.index}].localeValue" class="form-control select2_sample3"/>																																	
+															</div>
+														</div>														
+													</div>
+													
+												</div>
+												</c:forEach>
+												<div class="tab-pane active" id="add_attribute_tab1">
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.title" /><span class="required"> * </span></label>
+															<div class="col-md-4">																	
+																<input type="text" name="title" class="form-control"/>																
+															</div>
+														</div>														
+													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.values" /><span class="required"> * </span></label>
+															<div class="col-md-9">																	
+																<input type="text" name="values" class="form-control select2_sample3" value=""/>
+															</div>
+														</div>														
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>																							
 								
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="submit" class="btn green" id="addAttributeFormSubmit"><i class="fa fa-check"></i> Submit</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 									</div>
 								</div>
@@ -527,60 +553,11 @@
 					</div>					
 				</div>
 				<!--END ADD ATTRIBUTE  -->
-				
-				<!--BEGIN VIEW ATTRIBUTE  -->
-				<div class="modal" id="view_attribute" tabindex="-1" data-width="960">
-					<div class="modal-body">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						 <h4 class="modal-title"><s:message code="attribute" /></h4>
-					</div>
-				<div id="view_attributeMsg"></div>
-				<div class="row">
-					<div class="col-md-12">
-					<input type="hidden" value="" id="cate_id">
-						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-							<!-- BEGIN EXAMPLE TABLE PORTLET-->
-					<div class="portlet box green">
-						<div class="portlet-title">
-								<div class="caption">
-									<!-- <i class="fa fa-edit"></i> --><%-- <s:message code="attribute" /> --%>
-								</div>
-						<div class="actions">
-							<a class="btn btn-default btn-sm" data-toggle="modal" href="#add_attribute"><i class="fa fa-plus"></i><s:message code="category.add.attribute" /></a>
-							<a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_attribute" id="openEditAttributeModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
-							<a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_attribute" id="openDeleteAttributeModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
-						</div>
-						</div>
-						
-						<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="att_table">
-									<thead>
-										<tr>
-											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#att_table .checkboxes"/>
-											</th>
-										    <th>ID</th>
-											<th>Title</th>
-											<th>Type</th>
-											<th>Content</th>
-											<th>Sort</th>
-										</tr>
-									</thead>
-																						
-								</table>
-							</div>
-					
-						<!-- END EXAMPLE TABLE PORTLET-->
-					</div> 
-					</div>
-				</div>
-			</div>
-				<!--END VIEW ATTRIBUTE  -->
 	
 	
 	
 				<!--BEGIN EDIT ATTRIBUTE  -->
-				<div class="modal" id="edit_attribute" tabindex="-1" data-width="760">
+				<div class="modal" id="edit_attribute" tabindex="-1" data-width="960">
 					<div class="modal-header">
 						<button id="closeEditAttributeModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title"><s:message code="attribute.edit" /></h4>
@@ -589,90 +566,107 @@
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="editAttributeForm" action="editAttribute" method="post" name="editAttributeForm" class="form-horizontal form-bordered">
+						<form id="editAttributeForm" action="editAttribute" method="post" name="editAttributeForm" class="form-horizontal">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									<s:message code="system.management.user.adduser.message"/>
 								</div>
-								<input type="hidden" value="true" name="attribute.status">
-								<input type="hidden" name="attribute.attributeId">
-								<input type="hidden" name="attribute.categoryId.categoryId">
+								<input type="hidden" value="" name="categoryId.categoryId"/>
+								<input type="hidden" value="" name="attributeId"/>
+								<input type="hidden" value="true" name="status">
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="attribute.type" /> <span class="required">* </span></label>
-										<div class="col-md-9">										
+									<label class="control-label col-md-2"><s:message code="attribute.type" /> <span class="required">* </span></label>
+										<div class="col-md-10">										
 											<div class="radio-list">
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="0"/>Editbox</label>
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="1" checked/>Radio Button </label>
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="2"/>Checkbox</label>
-												<label class="radio-inline"><input type="radio" name="attribute.type" value="3"/>Dropdown List </label>
+												<label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label>
+												<label class="radio-inline"><input type="radio" name="type" value="1" checked/>Radio Button </label>
+												<label class="radio-inline"><input type="radio" name="type" value="2"/>Checkbox</label>
+												<label class="radio-inline"><input type="radio" name="type" value="3"/>Dropdown List </label>
 											</div>
 										</div>
 								</div>
-								
-								<ul class="nav nav-tabs">
-								<li class="active"><a href="#attr_edit_standard" data-toggle="tab">Standard</a></li>
-									<c:if test="${not empty lanList}">
-										<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 		<li><a href="#attr_edit_${status.index}" data-toggle="tab"><img src="${lan.flagImage}">${lan.name}</a></li>
-                  						</c:forEach> 
-                  					</c:if>
-								</ul>
-								
-								<div class="tab-content">
-									<div class="tab-pane fade in active" id="attr_edit_standard">
-									 	<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="attribute.title" /><span class="required"> * </span></label>
-											<div class="col-md-9">										
-												<input name="attribute.title" class="form-control"/>
-											</div>
-										</div>
-									<div class="form-group">
-										<label class="control-label col-md-3"><s:message code="attribute.content" /><span class="required" id="edit_required"> * </span></label>
-										<div class="col-md-9">
-											<textarea name="attribute.content" class="form-control" rows="4"></textarea>	
-										</div>
-									</div>
-								</div>
-								<c:if test="${not empty lanList}">
-									<c:forEach var="lan" items="${lanList}" varStatus="status">
-									 			<div class="tab-pane fade" id="attr_edit_${status.index}">
-									 				<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="attribute.title" /></label>
-														<div class="col-md-9">										
-															<input name="localizedFieldFirst[${status.index}].localeValue" class="form-control"/>
-															<input name="localizedFieldFirst[${status.index}].language.id" type="hidden"/>		
-															<input name="localizedFieldFirst[${status.index}].tableField" type="hidden"/>
-															<input name="localizedFieldFirst[${status.index}].localeId" type="hidden"/>	
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="control-label col-md-3"><s:message code="attribute.content" /></label>
-														<div class="col-md-9">
-															<textarea name="localizedFieldSecond[${status.index}].localeValue" class="form-control" rows="4"></textarea>											
-															<input name="localizedFieldSecond[${status.index}].language.id" type="hidden"/>		
-															<input name="localizedFieldSecond[${status.index}].tableField" type="hidden"/>
-															<input name="localizedFieldSecond[${status.index}].localeId" type="hidden"/>										
-														</div>
-													</div>
-									 			</div>
-                  					  </c:forEach>
-                  					</c:if> 
-								
-								</div>
-								
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="attribute.sort" /></label>
-									<div class="col-md-9">																				
-										<input name="attribute.sort" class="form-control" value="0"/>									
+									<label class="control-label col-md-2"><s:message code="attribute.required" /> <span class="required">* </span></label>
+									<div class="col-md-10">										
+										<div class="radio-list">
+											<label class="radio-inline"><input type="radio" name="required" value="true"/>True</label>
+											<label class="radio-inline"><input type="radio" name="required" value="false" checked/>False</label>											
+										</div>									
 									</div>
-								</div>								
-								
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2"><s:message code="attribute.sort" /></label>
+									<div class="col-md-10">																				
+										<input name="sort" class="form-control input-small" value=""/>									
+									</div>
+								</div>	
+								<div class="portlet box grey-silver tabbable">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="fa fa-gift"></i>Multi-language Form Items
+										</div>
+									</div>
+									<div class="portlet-body">
+										<div class="portlet-tabs">																														
+											<ul class="nav nav-tabs">
+												<c:forEach var="lan" items="${lanList}" varStatus="status">											
+												<li><a href="#edit_attribute_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
+												</c:forEach>	
+												<li class="active"><a href="#edit_attribute_tab1" data-toggle="tab"> Standard</a></li>
+											</ul>
+											<div class="tab-content">												
+												<c:forEach var="lan" items="${lanList}" varStatus="status">
+												<div class="tab-pane" id="edit_attribute_tab${status.index+2}">													
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.title" /></label>
+															<div class="col-md-4">
+																<input type="hidden" name="title_locale[${status.index}].language.id"  value="${lan.id}"/>
+																<input type="hidden" name="title_locale[${status.index}].localeId" class="form-control"/>	
+																<input type="text" name="title_locale[${status.index}].localeValue" class="form-control"/>																																													               
+															</div>
+														</div>														
+													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.values" /></label>
+															<div class="col-md-9">
+																<input type="hidden" name="values_locale[${status.index}].language.id"  value="${lan.id}"/>																	
+																<input type="text" name="values_locale[${status.index}].localeValue" class="form-control select2_sample3"/>																																													               
+															</div>
+														</div>														
+													</div>																										
+												</div>
+												</c:forEach>
+												<div class="tab-pane active" id="edit_attribute_tab1">
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.title" /><span class="required"> * </span></label>
+															<div class="col-md-4">																	
+																<input type=text name="title" class="form-control"/>																
+															</div>
+														</div>														
+													</div>
+													<div class="form-body">														
+														<div class="form-group">
+															<label class="control-label col-md-2"><s:message code="attribute.values" /><span class="required"> * </span></label>
+															<div class="col-md-9">																	
+																<input type="text" name="values" class="form-control select2_sample3"/>
+															</div>
+														</div>														
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>																															
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="submit" class="btn green" id="editAttributeFormSubmit"><i class="fa fa-check"></i> Submit</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 									</div>
 								</div>

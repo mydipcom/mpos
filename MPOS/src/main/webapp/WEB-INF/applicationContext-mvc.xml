@@ -41,14 +41,14 @@
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"> 
 		<property name="defaultLocale" value="en_US"></property>
 	</bean>
-	
+	<!-- 
 	<bean id="defaultUrlMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
 		<property name="interceptors" ref="localeChangeInterceptor" />
 		<property name="order">
 			<value>1</value>
 		</property>
 	</bean>
-	
+	 -->
 	
 	<!--开启请求URL映射的自动注解 
 	<mvc:annotation-driven/>

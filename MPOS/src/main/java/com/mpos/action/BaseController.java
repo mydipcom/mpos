@@ -13,7 +13,10 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.support.RequestContext;
 
 import com.mpos.commons.SystemConfig;
@@ -120,6 +123,15 @@ public class BaseController {
 			return requestContext.getMessage(code);
 		}
 		return requestContext.getMessage(code, args);
+	}
+	
+	public String getLocale(HttpServletRequest request){
+		Locale locale=(Locale)request.getSession().getAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
+		if(locale==null){
+			return "en_US";
+		}
+		return locale.toString();
+		
 	}
 	
 	/**

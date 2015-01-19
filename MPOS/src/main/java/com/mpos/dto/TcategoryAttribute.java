@@ -1,6 +1,8 @@
 package com.mpos.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 分类属性信息
  * @author DavePu
@@ -38,6 +40,15 @@ public class TcategoryAttribute implements Serializable {
 	 * 分类属性显示排序值，越小越先显示
 	 */
 	private Integer sort;
+	
+	/**
+	 * 此属性是否必须的
+	 */
+	private Boolean required = false;
+		
+	private String values;
+	private List<TlocalizedField> title_locale=new ArrayList<TlocalizedField>();
+	private List<TlocalizedField> values_locale=new ArrayList<TlocalizedField>();
 
 	public Integer getAttributeId() {
 		return attributeId;
@@ -69,15 +80,8 @@ public class TcategoryAttribute implements Serializable {
 
 	public void setType(Integer type) {
 		this.type = type;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
+	}		
+	
 
 	public Integer getSort() {
 		return sort;
@@ -85,18 +89,49 @@ public class TcategoryAttribute implements Serializable {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}			
+
+	public List<TlocalizedField> getTitle_locale() {
+		return title_locale;
+	}
+
+	public void setTitle_locale(List<TlocalizedField> title_locale) {
+		this.title_locale = title_locale;
 	}
 	
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	public String getValues() {
+		return values;
+	}
+
+	public void setValues(String values) {
+		this.values = values;
+	}
+
+	public List<TlocalizedField> getValues_locale() {
+		return values_locale;
+	}
+
+	public void setValues_locale(List<TlocalizedField> values_locale) {
+		this.values_locale = values_locale;
+	}
 
 	public TcategoryAttribute() {}
 
 	public TcategoryAttribute(Integer attributeId, Tcategory categoryId,
-			String title, Integer type, String content, Integer sort) {
+			String title, Integer type,Boolean required, Integer sort) {
 		this.attributeId = attributeId;
 		this.categoryId = categoryId;
 		this.title = title;
 		this.type = type;
-		this.content = content;
+		this.required=required;
 		this.sort = sort;
 	}
 
@@ -104,7 +139,7 @@ public class TcategoryAttribute implements Serializable {
 	public String toString() {
 		return "TcategoryAttribute [attributeId=" + attributeId
 				+ ", categoryId=" + categoryId + ", title=" + title + ", type="
-				+ type + ", content=" + content + ", sort=" + sort + "]";
+				+ type + ", required=" + required + ", sort=" + sort + "]";
 	}
 
 }
