@@ -7,10 +7,8 @@
         <id name="attributeId" type="java.lang.Integer">
             <column name="attribute_id" />
             <generator class="identity" />
-        </id>
-         <property name="content" type="java.lang.String">
-            <column name="content" not-null="true"/>
-        </property>
+        </id>        
+                     
         <property name="sort" type="java.lang.Integer">
             <column name="sort" not-null="true"/>
         </property>
@@ -19,6 +17,9 @@
         </property>
         <property name="type" type="java.lang.Integer">
             <column name="type" not-null="true"/>
+        </property>
+        <property name="required" type="java.lang.Boolean">
+            <column name="required" not-null="true"/>
         </property>
         <many-to-one name="categoryId" class="com.mpos.dto.Tcategory">
         	<column name="category_id" not-null="true"></column>
