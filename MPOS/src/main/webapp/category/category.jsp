@@ -147,6 +147,7 @@
 											<th><s:message code="category.id" /></th>
 											<th><s:message code="category.name" /></th>
 											<th><s:message code="category.content" /></th>
+											<th><s:message code="category.type" /></th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -170,8 +171,7 @@
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="addCategoryForm" action="addCategory" method="post" name="addCategoryForm" class="form-horizontal">
-							<input type="hidden" name="type" value="0"/>
+						<form id="addCategoryForm" action="addCategory" method="post" name="addCategoryForm" class="form-horizontal">							
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
@@ -239,6 +239,15 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label class="control-label col-md-2"><s:message code="category.type" /></label>
+									<div class="col-md-10">
+										<div class="radio-list">
+											<label class="radio-inline"><input type="radio" name="type" value="0" checked/><s:message code="category.type.specification" /></label>
+											<label class="radio-inline"><input type="radio" name="type" value="1"/><s:message code="category.type.order" /> </label>											
+										</div>																																							
+									</div>
+								</div>	
+								<div class="form-group">
 									<label class="control-label col-md-2"><s:message code="category.status" /></label>
 									<div class="col-md-10">
 										<div class="radio-list">
@@ -274,8 +283,7 @@
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
 						<form id="editCategoryForm" action="editCategoryForm" method="post" name="editCategoryForm" class="form-horizontal">
-							<input type="hidden" name="categoryId"/>
-							<input type="hidden" name="type" value="0"/>
+							<input type="hidden" name="categoryId"/>							
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
@@ -341,6 +349,15 @@
 												</div>
 											</div>
 										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2"><s:message code="category.type" /></label>
+									<div class="col-md-10">
+										<div class="radio-list">
+											<label class="radio-inline"><input type="radio" name="type" value="0" checked/><s:message code="category.type.specification" /></label>
+											<label class="radio-inline"><input type="radio" name="type" value="1"/><s:message code="category.type.order" /> </label>											
+										</div>																																							
 									</div>
 								</div>
 								<div class="form-group">
@@ -450,14 +467,15 @@
 									<s:message code="system.management.user.adduser.message"/>
 								</div>
 								<input type="hidden" value="" name="categoryId.categoryId"/>
+								<input type="hidden" value="" name="categoryId.type"/>
 								<input type="hidden" value="true" name="status">
-								<div class="form-group">
+								<div class="form-group" id="addAttrType">
 									<label class="control-label col-md-2"><s:message code="attribute.type" /> <span class="required">* </span></label>
 										<div class="col-md-10">										
 											<div class="radio-list">
 												<label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label>
-												<label class="radio-inline"><input type="radio" name="type" value="1" checked/>Radio Button </label>
-												<label class="radio-inline"><input type="radio" name="type" value="2"/>Checkbox</label>
+												<label class="radio-inline"><input type="radio" name="type" value="1"/>Radio Button </label>
+												<label class="radio-inline"><input type="radio" name="type" value="2"checked/>Checkbox</label>
 												<label class="radio-inline"><input type="radio" name="type" value="3"/>Dropdown List </label>
 											</div>
 										</div>
@@ -573,9 +591,10 @@
 									<s:message code="system.management.user.adduser.message"/>
 								</div>
 								<input type="hidden" value="" name="categoryId.categoryId"/>
+								<input type="hidden" value="" name="categoryId.type"/>
 								<input type="hidden" value="" name="attributeId"/>
 								<input type="hidden" value="true" name="status">
-								<div class="form-group">
+								<div class="form-group" id="editAttrType">
 									<label class="control-label col-md-2"><s:message code="attribute.type" /> <span class="required">* </span></label>
 										<div class="col-md-10">										
 											<div class="radio-list">

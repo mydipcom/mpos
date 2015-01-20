@@ -68,18 +68,26 @@ var CategoryTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_attribute" id="openrluesviewmodal">view_attribute</a></div>';
+                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_attribute" id="openrluesviewmodal">Attribute List</a></div>';
                     },
                     'class':'center'
                 }
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "categoryId"},
-	           { title: "Name",    data: "name" },
-	           { title: "Description",  data: "content" },
-	           /*{ title: "Status",    data: "status" },*/
-	           { title: "Action" ,"class":"center"}
+	           { data: "categoryId"},
+	           { data: "name" },
+	           { data: "content" },
+	           { 'render':function(data,type,row){
+	               	if(row.type==0){
+	            		return "Spec Attribute Group";
+	            	}
+	            	else{
+	            		return "Order Attribute Group";
+	            	}	                	
+	               } 
+	           },
+	           { "class":"center"}
 	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
@@ -153,6 +161,7 @@ var CategoryTable = function () {
 				var categoryId = data.categoryId;
 	            var name  = data.name;
 	            var content  = data.content;
+	            var type = data.type;
 	            var status = data.status;
 	            var categoryNameLocaleList=data.categoryName_locale;
 	            var categoryDescrLocaleList=data.categoryDescr_locale;
@@ -182,7 +191,9 @@ var CategoryTable = function () {
 				});
 	            	            	            
 	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");	            
+	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
+	            $("#editCategoryForm :radio[name='type']").filter("[value='"+type+"']").attr("checked","true");
+	            $("#editCategoryForm :radio[name='type']").filter("[value='"+type+"']").parents('span').addClass("checked");
 			}
 		});
 						
@@ -308,20 +319,34 @@ var CategoryTable = function () {
 		table.on('click', 'tbody tr a',function(){
 	           var data = oTable.api().row($(this).parents('tr')).data();
 	           var categoryId=data.categoryId;
+	           var categoryType=data.type;
 	           if(attTable!=null){
 	        	   attTable.fnDestroy();
 	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#addAttributeForm input[name='categoryId.type']").val(categoryType);
 	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#editAttributeForm input[name='categoryId.type']").val(categoryType);
 	        	   viewTable(categoryId); 
 	           }else{	        	   
 	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#addAttributeForm input[name='categoryId.type']").val(categoryType);
 	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#editAttributeForm input[name='categoryId.type']").val(categoryType);
 	        	   viewTable(categoryId);
 	           }
 	     });
 		
 		//打开添加分类属性窗口
 		$("#openAddAttributeModal").on("click",function(event){
+			var groupType=$("#addAttributeForm input[name='categoryId.type']").val();
+			if(groupType=="1"){
+				$("#addAttrType").hide();
+				$("#addCategoryForm :radio[name='type']").filter("[value='"+groupType+"']").attr("checked","true");
+	            $("#addCategoryForm :radio[name='type']").filter("[value='"+groupType+"']").parents('span').addClass("checked");
+			}
+			else{
+				$("#addAttrType").show();
+			}
 			//当添加属性窗口关闭时隐藏属性输入框的下拉菜单
             $('#add_attribute').on("hide.bs.modal", function () {            	
             	$.each($("#addAttributeForm :text[name^='values']"), function (index, obj) {
@@ -469,18 +494,18 @@ var CategoryTable = function () {
 	
 	
 	//添加操作
-	var ajaxAddCategory=function(form){	
+	var ajaxAddCategory=function(){	
 		$.ajax( {
 		"traditional":true,
          "dataType": 'json', 
          "type":'POST', 
          "url": rootURI+"category/addCategory", 
-         "data": form.serialize(),
+         "data": $('#addCategoryForm').serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
-	            	 form[0].reset();
+	            	 $('#addCategoryForm')[0].reset();
 	            	 $("#add_category").modal('hide');
 	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
 				 }
