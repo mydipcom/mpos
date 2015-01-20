@@ -362,6 +362,16 @@ var CategoryTable = function () {
 				return false;				
 			}
 			else{
+				var groupType=$("#editAttributeForm input[name='categoryId.type']").val();
+				if(groupType=="1"){
+					$("#editAttrType").hide();
+					$("#editCategoryForm :radio[name='type']").filter("[value='"+groupType+"']").attr("checked","true");
+		            $("#editCategoryForm :radio[name='type']").filter("[value='"+groupType+"']").parents('span').addClass("checked");
+				}
+				else{
+					$("#editAttrType").show();
+				}
+				
 				var data = attTable.api().row($("tr input:checked").parents('tr')).data();
 				var attributeId = data.attributeId;
 				var required = data.required;
@@ -370,7 +380,6 @@ var CategoryTable = function () {
 				var values = data.values;
 				var type = data.type;
 				var titleLocaleList=data.title_locale;
-
 				var valuesLocaleList=data.values_locale;
 	            
 				$("#editAttributeForm input[name='attributeId']").val(attributeId);					
