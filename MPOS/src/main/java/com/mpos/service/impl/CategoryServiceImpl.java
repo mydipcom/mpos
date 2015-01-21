@@ -9,6 +9,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -143,58 +144,82 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	public void cloneCategoryByIds(Integer[] ids) {		
-		for (Integer id : ids) {
-			Tcategory category = categoryDao.get(id);									
-			List<TcategoryAttribute> categoryAttributeList=attributeDao.findBy("categoryId", category);
-			//Clone all of the category
-			Tcategory newCategory=new Tcategory();
-			BeanUtils.copyProperties(category, newCategory);
-			newCategory.setName("Clone of "+category.getName());
-			newCategory.setCategoryId(null);
-			categoryDao.create(newCategory);
-			
-			for (TcategoryAttribute categoryAttribute : categoryAttributeList) {						
-				List<TattributeValue> attributeValueList=attributeValueDao.findBy("attributeId", categoryAttribute.getAttributeId());
-				List<TlocalizedField> titleLocaleFieldList=localizedFieldDao.findBy(new String[]{"entityId","tableName","tableField"},
-						new Object[]{categoryAttribute.getAttributeId(),SystemConstants.TABLE_NAME_CATE_ATTRIBUTE,SystemConstants.TABLE_FIELD_TITLE});	
-				//Clone all of the category attributes
-				TcategoryAttribute newCategoryAttribute=new TcategoryAttribute();
-				BeanUtils.copyProperties(categoryAttribute, newCategoryAttribute);
-				newCategoryAttribute.setAttributeId(null);
-				newCategoryAttribute.setCategoryId(newCategory);
-				attributeDao.create(newCategoryAttribute);
+		try {
+			for (Integer id : ids) {
+				Tcategory category = categoryDao.get(id);									
+				List<TcategoryAttribute> categoryAttributeList=attributeDao.findBy("categoryId", category);
+				if(categoryAttributeList!=null&&categoryAttributeList.size()>0){
+					//Clone all of the category
+					Tcategory newCategory=new Tcategory();
+					BeanUtils.copyProperties(category, newCategory);
+					newCategory.setName("Clone of "+category.getName());
+					newCategory.setCategoryId(null);
+					categoryDao.create(newCategory);
 				
-				for (TattributeValue attributeValue : attributeValueList) {											
-					List<TlocalizedField> valueLocaleList=localizedFieldDao.findBy(new String[]{"entityId","tableName","tableField"},
-							new Object[]{attributeValue.getValueId(),SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE,SystemConstants.TABLE_FIELD_VALUE});
-					//Clone all of the attribute values
-					TattributeValue newAttributeValue=new TattributeValue();
-					BeanUtils.copyProperties(attributeValue, newAttributeValue);
-					newAttributeValue.setValueId(null);
-					newAttributeValue.setAttributeId(newCategoryAttribute.getAttributeId());
-					attributeValueDao.create(newAttributeValue);
-					
-					for (TlocalizedField localizedField : valueLocaleList) {
-						//Clone all of the localized attribute values
+				
+				
+				List<TlocalizedField> localeFieldList=localizedFieldDao.findBy(new String[]{"entityId","tableName"},new Object[]{category.getCategoryId(),SystemConstants.TABLE_NAME_CATEGORY});
+				if(localeFieldList!=null&&localeFieldList.size()>0){
+					for (TlocalizedField tlocalizedField : localeFieldList) {
 						TlocalizedField newLocalizedField=new TlocalizedField();
-						BeanUtils.copyProperties(localizedField, newLocalizedField);
+						BeanUtils.copyProperties(tlocalizedField, newLocalizedField);
+						newLocalizedField.setEntityId(newCategory.getCategoryId());
 						newLocalizedField.setLocaleId(null);
-						newLocalizedField.setEntityId(newAttributeValue.getValueId());
+						if(tlocalizedField.getTableField().equals(SystemConstants.TABLE_FIELD_NAME)){
+							newLocalizedField.setLocaleValue("Clone of " +tlocalizedField.getLocaleValue());
+						}
 						localizedFieldDao.create(newLocalizedField);
 					}
 				}
-								
 				
-				for (TlocalizedField localizedField : titleLocaleFieldList) {
-					TlocalizedField newLocalizedField=new TlocalizedField();
-					BeanUtils.copyProperties(localizedField, newLocalizedField);
-					newLocalizedField.setLocaleId(null);
-					newLocalizedField.setEntityId(newCategoryAttribute.getAttributeId());
-					localizedFieldDao.create(newLocalizedField);
+				
+				for (TcategoryAttribute categoryAttribute : categoryAttributeList) {						
+					List<TattributeValue> attributeValueList=attributeValueDao.findBy("attributeId", categoryAttribute.getAttributeId());
+					List<TlocalizedField> titleLocaleFieldList=localizedFieldDao.findBy(new String[]{"entityId","tableName","tableField"},
+							new Object[]{categoryAttribute.getAttributeId(),SystemConstants.TABLE_NAME_CATE_ATTRIBUTE,SystemConstants.TABLE_FIELD_TITLE});	
+					//Clone all of the category attributes
+					TcategoryAttribute newCategoryAttribute=new TcategoryAttribute();
+					BeanUtils.copyProperties(categoryAttribute, newCategoryAttribute);
+					newCategoryAttribute.setAttributeId(null);
+					newCategoryAttribute.setCategoryId(newCategory);
+					attributeDao.create(newCategoryAttribute);
+					
+					for (TattributeValue attributeValue : attributeValueList) {											
+						List<TlocalizedField> valueLocaleList=localizedFieldDao.findBy(new String[]{"entityId","tableName","tableField"},
+								new Object[]{attributeValue.getValueId(),SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE,SystemConstants.TABLE_FIELD_VALUE});
+						//Clone all of the attribute values
+						TattributeValue newAttributeValue=new TattributeValue();
+						BeanUtils.copyProperties(attributeValue, newAttributeValue);
+						newAttributeValue.setValueId(null);
+						newAttributeValue.setAttributeId(newCategoryAttribute.getAttributeId());
+						attributeValueDao.create(newAttributeValue);
+						
+						for (TlocalizedField localizedField : valueLocaleList) {
+							//Clone all of the localized attribute values
+							TlocalizedField newLocalizedField=new TlocalizedField();
+							BeanUtils.copyProperties(localizedField, newLocalizedField);
+							newLocalizedField.setLocaleId(null);
+							newLocalizedField.setEntityId(newAttributeValue.getValueId());
+							localizedFieldDao.create(newLocalizedField);
+						}
+					}
+									
+					
+					for (TlocalizedField localizedField : titleLocaleFieldList) {
+						TlocalizedField newLocalizedField=new TlocalizedField();
+						BeanUtils.copyProperties(localizedField, newLocalizedField);
+						newLocalizedField.setLocaleId(null);
+						newLocalizedField.setEntityId(newCategoryAttribute.getAttributeId());
+						localizedFieldDao.create(newLocalizedField);
+					}
+					
 				}
 				
+				}
 			}
-			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

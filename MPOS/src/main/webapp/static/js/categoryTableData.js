@@ -82,8 +82,8 @@ var CategoryTable = function () {
             "columns": [
                {"orderable": false },
 	           { data: "categoryId"},
-	           { data: "name" },
-	           { data: "content" },
+	           { data: "nameLocal" },
+	           { data: "contentLocal" },
 	           { 'render':function(data,type,row){
 	               	if(row.type==0){
 	            		return "Spec Attribute Group";
@@ -163,7 +163,9 @@ var CategoryTable = function () {
 				return false;				
 			}
 			else{
-				var data = oTable.api().row($("tr input:checked").parents('tr')).data();								
+				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+				$("tr input:checked").parents('span').removeClass("checked");
+				$("tr input:checked").removeAttr("checked");
 				var categoryId = data.categoryId;
 	            var name  = data.name;
 	            var content  = data.content;
@@ -200,6 +202,7 @@ var CategoryTable = function () {
 	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
 	            $("#editCategoryForm :radio[name='type']").filter("[value='"+type+"']").attr("checked","true");
 	            $("#editCategoryForm :radio[name='type']").filter("[value='"+type+"']").parents('span').addClass("checked");
+	            selected=[];
 			}
 		});
 						
@@ -313,7 +316,7 @@ var CategoryTable = function () {
 		        ],
 		        "columns": [
 		               {"orderable": false },		 	           
-		 	           { title: "Title",   data: "title" },
+		 	           { title: "Title",   data: "titleLocal" },
 		 	           { title: "Type",  
 		 	        	'render':function(data,type,row){
 		 	        				var tem = row.type;
@@ -332,7 +335,7 @@ var CategoryTable = function () {
 		 	           },
 		 	           { title: "Sort", data: "sort" },		 	           
 		 	           { title: "Required", data: "required" },
-		 	           { title: "Values",data: "values"}
+		 	           { title: "Values",data: "content"}
 		 	        ],
      	        "serverSide": true,
      	        "serverMethod": "GET",
@@ -422,6 +425,8 @@ var CategoryTable = function () {
 				}
 				
 				var data = attTable.api().row($("tr input:checked").parents('tr')).data();
+				$("tr input:checked").parents('span').removeClass("checked");
+				$("tr input:checked").removeAttr("checked");
 				var attributeId = data.attributeId;
 				var required = data.required;
 				var sort = data.sort;
@@ -466,7 +471,8 @@ var CategoryTable = function () {
 	            		$(obj).select2("close");
 	            	});
 	            	
-	    		});	            
+	    		});	  
+	            attSelected=[];
 			}
 		});
 		

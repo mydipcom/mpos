@@ -20,4 +20,8 @@ public interface LocalizedFieldService {
 	
 	List<TlocalizedField> getLocalizedField(Integer entityId,String tableName,String fieldName);
 	
+	TlocalizedField getLocalizedField(Integer entityId,String local,String tableName,String fieldName);
+	
+	TlocalizedField getLocalizedValue(Integer entityId, Integer languageId,String tableName, String fieldName);
+	
 }

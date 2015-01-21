@@ -14,8 +14,10 @@ public interface MenuService {
 	void updateMenu(Tmenu menu);
 	Tmenu getMenu(Integer menuId);
 	PagingData loadMenuList(DataTableParamter rdtp);
+	PagingData loadMenuList(DataTableParamter rdtp,String local);
 	void deleteMenuByIds(Integer[] idArr);
 	public List<Tmenu> getAllMenu();
 	Tmenu getParentMenu(Tmenu menu);
-	List<MenuModel> getNoChildrenMenus();  
+	List<MenuModel> getNoChildrenMenus();
+	List<MenuModel> loadMenu(String local);
 }

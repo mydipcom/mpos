@@ -105,20 +105,47 @@ public class CategoryAttributeServiceImpl implements CategoryAttributeService {
 			attributeValueDao.delete(oldValuesList.get(i));		
 		}		
 		
+		
+		
 		//Save the localized field for the attribute title 
-		List<TlocalizedField> titleLocaleList=attribute.getTitle_locale();			
+		List<TlocalizedField> titleLocaleList=attribute.getTitle_locale();
+		localizedFieldDao.deleteAllByEntityId(attribute.getAttributeId());
 		for (TlocalizedField localizedField : titleLocaleList) {
 			if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
+				localizedField.setLocaleId(null);
 				localizedField.setEntityId(attribute.getAttributeId());
 				localizedField.setTableName(SystemConstants.TABLE_NAME_CATE_ATTRIBUTE);
 				localizedField.setTableField(SystemConstants.TABLE_FIELD_TITLE);
-				localizedFieldDao.saveOrUpdate(localizedField);
+				localizedFieldDao.save(localizedField);
 			}				
 		}
 		
+		for (TattributeValue value : attributeValues) {
+			localizedFieldDao.deleteAllByEntityId(value.getValueId());
+		}
+		
+				//Save the localized field for the attribute values
+				List<TlocalizedField> valuesLocaleList=attribute.getValues_locale();
+				for (TlocalizedField localizedField : valuesLocaleList) {
+					String localeStr=localizedField.getLocaleValue();
+					if(localeStr!=null){
+						String[] valueArr=localeStr.split(",");
+						for (int j = 0; j < attributeValues.size(); j++) {
+							TattributeValue attributeValue=attributeValues.get(j);
+							TlocalizedField valueLocalizedField=new TlocalizedField();
+							valueLocalizedField.setLanguage(localizedField.getLanguage());
+							valueLocalizedField.setEntityId(attributeValue.getValueId());
+							valueLocalizedField.setLocaleValue(valueArr[j]);
+							valueLocalizedField.setTableName(SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE);
+							valueLocalizedField.setTableField(SystemConstants.TABLE_FIELD_VALUE);
+							localizedFieldDao.create(valueLocalizedField);
+						}
+						
+					}
+				}
 		
 		//Save or delete the localized field for the attribute values
-		List<TlocalizedField> valuesLocaleList=attribute.getValues_locale();
+		/*List<TlocalizedField> valuesLocaleList=attribute.getValues_locale();
 		for (TlocalizedField localizedField : valuesLocaleList) {
 			List<TlocalizedField> oldLocaleList=localizedFieldDao.findBy(new String[]{"language","tableName","tableField"},
 					new Object[]{localizedField.getLanguage(),SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE,SystemConstants.TABLE_FIELD_VALUE});
@@ -139,7 +166,7 @@ public class CategoryAttributeServiceImpl implements CategoryAttributeService {
 				localizedFieldDao.delete(oldLocaleList.get(j));
 			}
 						
-		}
+		}*/
 		
 	}
 

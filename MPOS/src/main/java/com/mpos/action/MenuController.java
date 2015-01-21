@@ -34,6 +34,7 @@ import com.mpos.dto.Tmenu;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.MenuModel;
 import com.mpos.model.PageModel;
+import com.mpos.model.PageTempModel;
 import com.mpos.model.PagingData;
 import com.mpos.service.LanguageService;
 import com.mpos.service.LocalizedFieldService;
@@ -65,7 +66,7 @@ public class MenuController extends BaseController {
 	@RequestMapping(value = "/menuList", method = RequestMethod.GET)
 	@ResponseBody
 	public String menuList(HttpServletRequest request, DataTableParamter dtp) {
-		PagingData pagingData = menuService.loadMenuList(dtp);
+		PagingData pagingData = menuService.loadMenuList(dtp,getLocale(request));
 		if (pagingData.getAaData() == null) {
 			Object[] objs = new Object[] {};
 			pagingData.setAaData(objs);
@@ -148,15 +149,20 @@ public class MenuController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try {
 			List<Tmenu> menus = menuService.getAllMenu();
+			Tlanguage language = languageService.get(getLocale(request));
 			List<MenuModel> models = new ArrayList<MenuModel>();
 			if (menus != null && menus.size() > 0) {
 				for (Tmenu tmenu : menus) {
+					TlocalizedField local_title = localizedFieldService.getLocalizedValue(tmenu.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+					if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
+						tmenu.setTitle(local_title.getLocaleValue());
+					}
 					MenuModel model = new MenuModel();
 					model.setId(tmenu.getMenuId());
 					if (tmenu.getPid() == 0) {
 						model.setTitle(tmenu.getTitle());
 					} else {
-						model.setTitle(loadTitle(tmenu, tmenu.getTitle()));
+						model.setTitle(loadTitle(tmenu, tmenu.getTitle(),language));
 					}
 					models.add(model);
 				}
@@ -177,19 +183,15 @@ public class MenuController extends BaseController {
 		return JSON.toJSONString(respJson);
 	}
 
-	@RequestMapping(value = "/getParentTitle/{menuId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getMenu/{menuId}", method = RequestMethod.GET)
 	@ResponseBody
-	public String getParentTitle(HttpServletRequest request,
-			@PathVariable Integer menuId) {
+	public String getParentTitle(HttpServletRequest request,@PathVariable Integer menuId) {
 		JSONObject respJson = new JSONObject();
 		try {
-
-			MenuModel model = new MenuModel();
-			Tmenu tmenu = menuService.getMenu(menuId);
-			model.setId(menuId);
-			model.setTitle(loadTitle(tmenu, tmenu.getTitle()));
+			PageModel page = new PageModel();
+			page.setMenu(menuService.getMenu(menuId));
 			respJson.put("status", true);
-			respJson.put("menu", model);
+			respJson.put("page", page);
 		} catch (MposException be) {
 			// TODO: handle exception
 			respJson.put("status", false);
@@ -199,14 +201,20 @@ public class MenuController extends BaseController {
 		return JSON.toJSONString(respJson);
 	}
 	
-	private String loadTitle(Tmenu menu, String title) {
+	private String loadTitle(Tmenu menu, String title,Tlanguage language) {
 		Tmenu parent = menuService.getMenu(menu.getPid());
-		// String res = "";
+		TlocalizedField local_title = localizedFieldService.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+		if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
+			parent.setTitle(local_title.getLocaleValue());
+		}
 		if (parent != null && parent.getMenuId() != null) {
 			title = parent.getTitle() + " >> " + title;
-			return loadTitle(parent, title);
+			if(parent.getPid()!=0){
+				return loadTitle(parent, title,language);
+			}
+			
 		}
-		// System.out.println(title);
 		return title;
 	}
+
 }

@@ -30,12 +30,10 @@ public class TcategoryAttribute implements Serializable {
 	 * 类型 0 输入框，1单选框，2复选框，3 下拉框
 	 */
 	private Integer type;
-	/**
-	 * 属性内容，当type值为0时，可设置分类属性的默认值，
-	 * 如果type值不为0，则为多个选项的值的联合字符串，
-	 * 以分号分隔。
-	 */
+	
 	private String content;
+	
+	private String titleLocal;
 	/**
 	 * 分类属性显示排序值，越小越先显示
 	 */
@@ -133,6 +131,24 @@ public class TcategoryAttribute implements Serializable {
 		this.type = type;
 		this.required=required;
 		this.sort = sort;
+	}
+
+	
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	
+	public String getTitleLocal() {
+		return titleLocal;
+	}
+
+	public void setTitleLocal(String titleLocal) {
+		this.titleLocal = titleLocal;
 	}
 
 	@Override

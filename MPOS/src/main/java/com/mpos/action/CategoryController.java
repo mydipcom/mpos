@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,6 @@ import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.LocalizedField;
-import com.mpos.model.PageModel;
 import com.mpos.model.PagingData;
 import com.mpos.service.AttributeValueService;
 import com.mpos.service.CategoryAttributeService;
@@ -84,7 +82,10 @@ public class CategoryController extends BaseController {
 				if(categoryDescrLocaleList!=null){
 					category.setCategoryDescr_locale(categoryDescrLocaleList);
 				}
+				changeLocal(getLocale(request),category,SystemConstants.TABLE_NAME_CATEGORY, SystemConstants.TABLE_FIELD_NAME, SystemConstants.TABLE_FIELD_DESCR);
 			}			
+		}else{
+			pagingData.setAaData(new Object[]{});
 		}
 		pagingData.setSEcho(dtp.sEcho);
 		
@@ -140,30 +141,6 @@ public class CategoryController extends BaseController {
 		return JSON.toJSONString(respJson);	
 	}
 	
-	@RequestMapping(value = "/getLocal/{type}/{entityId}", method = RequestMethod.GET)
-	@ResponseBody
-	public String getLocal(HttpServletRequest request, @PathVariable Integer entityId,@PathVariable Integer type) {
-		JSONObject respJson = new JSONObject();
-		try {
-			if(type==1){
-				List<TlocalizedField> nameLocals = localizedFieldService.getLocalizedField(entityId,"Tcategory","name");
-				List<TlocalizedField> contentLocals = localizedFieldService.getLocalizedField(entityId,"Tcategory","content");
-				respJson.put("localName", LocalizedField.setValues(nameLocals));
-				respJson.put("localContent", LocalizedField.setValues(contentLocals));
-			}else if(type==2){
-				List<TlocalizedField> titleLocals = localizedFieldService.getLocalizedField(entityId,"TcategoryAttribute","title");
-				List<TlocalizedField> contentLocals = localizedFieldService.getLocalizedField(entityId,"TcategoryAttribute","content");
-				respJson.put("localTitle", LocalizedField.setValues(titleLocals));
-				respJson.put("localContent", LocalizedField.setValues(contentLocals));
-			}
-			respJson.put("status", true);
-		} catch (MposException be) {
-			respJson.put("status", false);
-			respJson.put("info",getMessage(request, be.getErrorID(), be.getMessage()));
-		}
-		return JSON.toJSONString(respJson);
-	}
-
 	@RequestMapping(value="/delete/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteCategory(@PathVariable String ids,HttpServletRequest request){
@@ -239,7 +216,12 @@ public class CategoryController extends BaseController {
 					valuesLocaleList.add(valueLocalizedField);
 				}
 				categoryAttribute.setValues(values.toString().isEmpty()?"":values.toString().substring(1));
-				categoryAttribute.setValues_locale(valuesLocaleList);				
+				categoryAttribute.setValues_locale(valuesLocaleList);
+				
+				
+				changeTitleLocal(getLocale(request),categoryAttribute,SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
+				
+				changeLocal(getLocale(request),categoryAttribute,SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE, SystemConstants.TABLE_FIELD_VALUE);
 			}			
 		}
 		pagingData.setSEcho(dtp.sEcho);			
@@ -254,6 +236,7 @@ public class CategoryController extends BaseController {
 		try{
 			attributeService.createCategoryAttribute(attribute);			
 			respJson.put("status", true);
+			respJson.put("cateId", attribute.getCategoryId());
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -270,11 +253,69 @@ public class CategoryController extends BaseController {
 		try{
 			attributeService.updateCategoryAttribute(attribute);			
 			respJson.put("status", true);
+			respJson.put("cateId", attribute.getCategoryId());
 		}
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);		
+	}
+	
+	private void changeTitleLocal(String local,TcategoryAttribute attribute,String tableName,String... fieldNames){
+		if(fieldNames!=null&&fieldNames.length>0&&tableName!=null){
+			for (String fieldName : fieldNames) {
+				TlocalizedField localValue = localizedFieldService.getLocalizedField(attribute.getAttributeId(),local,tableName, fieldName);
+				if(fieldName!=null&&!fieldName.isEmpty()){
+					if(fieldName.equals(SystemConstants.TABLE_FIELD_TITLE)){
+						if(localValue!=null&&!localValue.getLocaleValue().isEmpty()){
+							attribute.setTitleLocal(localValue.getLocaleValue());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void changeLocal(String local,TcategoryAttribute attribute,String tableName,String fieldName){
+		List<TattributeValue> attributeValues=attributeValueService.loadAttributeValuesByAttrId(attribute.getAttributeId());
+		StringBuffer values=new StringBuffer();
+		for (TattributeValue attributeValue : attributeValues) {
+			TlocalizedField localValue = localizedFieldService.getLocalizedField(attributeValue.getValueId(), local,tableName, fieldName);
+			if(fieldName!=null&&!fieldName.isEmpty()){
+					if(fieldName.equals(SystemConstants.TABLE_FIELD_VALUE)){
+						if(localValue!=null&&!localValue.getLocaleValue().isEmpty()){
+							values.append(","+localValue.getLocaleValue());
+						}else{
+							values.append(","+attributeValue.getValue());
+						}
+				}
+			}
+								
+		}
+		attribute.setContent(values.toString().isEmpty()?"":values.toString().substring(1));	
+	}
+	
+	private void changeLocal(String local,Tcategory category,String tableName,String... fieldNames){
+		if(fieldNames!=null&&fieldNames.length>0&&tableName!=null){
+			for (String fieldName : fieldNames) {
+				TlocalizedField localValue = localizedFieldService.getLocalizedField(category.getCategoryId(), local,tableName, fieldName);
+				if(fieldName!=null&&!fieldName.isEmpty()){
+					if(fieldName.equals(SystemConstants.TABLE_FIELD_NAME)){
+						if(localValue!=null&&!localValue.getLocaleValue().isEmpty()){
+							category.setNameLocal(localValue.getLocaleValue());
+						}else{
+							category.setNameLocal(category.getName());
+						}
+					}else if(fieldName.equals(SystemConstants.TABLE_FIELD_DESCR)){
+						if(localValue!=null&&!localValue.getLocaleValue().isEmpty()){
+							category.setContentLocal(localValue.getLocaleValue());
+						}else{
+							category.setContentLocal(category.getContent());
+						}
+					}
+				}
+			}
+		}
 	}
 }

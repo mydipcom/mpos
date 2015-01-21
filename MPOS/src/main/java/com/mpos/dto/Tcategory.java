@@ -31,6 +31,10 @@ public class Tcategory implements Serializable {
 	 * 分类描述
 	 */
 	private String content;
+	
+	private String nameLocal;
+	
+	private String contentLocal;
 	/**
 	 * 分类当前状态：0禁用；1启用
 	 */
@@ -95,6 +99,18 @@ public class Tcategory implements Serializable {
 		this.categoryId = categoryId;
 	}
 	
+	public String getNameLocal() {
+		return nameLocal;
+	}
+	public void setNameLocal(String nameLocal) {
+		this.nameLocal = nameLocal;
+	}
+	public String getContentLocal() {
+		return contentLocal;
+	}
+	public void setContentLocal(String contentLocal) {
+		this.contentLocal = contentLocal;
+	}
 	public Tcategory() {}
 	
 	@Override

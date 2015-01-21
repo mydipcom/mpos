@@ -3,6 +3,7 @@ package com.mpos.dao.base;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,6 +22,7 @@ import org.hibernate.internal.CriteriaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
+import com.mpos.model.DaoModel;
 import com.mpos.model.PagingData;
 
 /**
@@ -376,6 +378,28 @@ public class BaseDao<T> extends HibernateDaoSupport
         List list = query.setFirstResult(startNo).setMaxResults(pageSize).list();
         PagingData page = new PagingData(totalCount, totalCount, list.toArray());        
         return page;
+    }
+    
+    public DaoModel findPageList(Criteria criteria, int startNo, int pageSize)
+    {
+    	List<?> list = new ArrayList<>();
+        CriteriaImpl impl = (CriteriaImpl)criteria;
+        Projection projection = impl.getProjection();        
+
+        int totalCount = ((Long)criteria.setProjection(
+            Projections.rowCount()).uniqueResult()).intValue();
+        
+        criteria.setProjection(projection);
+        if (projection == null)
+        {
+            criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+        }        
+        if (totalCount == 0)
+        {
+            return new DaoModel();
+        }
+        list = criteria.setFirstResult(startNo).setMaxResults(pageSize).list();
+        return new DaoModel(totalCount, list);
     }
 
     public PagingData findPageByNamedQuery(final String queryName, final int startNo,

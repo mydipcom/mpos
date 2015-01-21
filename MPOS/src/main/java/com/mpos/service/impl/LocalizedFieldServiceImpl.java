@@ -9,7 +9,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mpos.dao.LanguageDao;
 import com.mpos.dao.LocalizedFieldDao;
+import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.service.LocalizedFieldService;
 @Service
@@ -17,12 +19,14 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 	
 	@Autowired
 	LocalizedFieldDao localizedFieldDao;
+	@Autowired
+	LanguageDao languageDao;
 	
 	public void createLocalizedFieldList(List<TlocalizedField> locals) {
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.size()>0){
 			for (TlocalizedField tlocalizedField : locals) {
-				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null){
+				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null&&!tlocalizedField.getLocaleValue().isEmpty()){
 					localizedFieldDao.save(tlocalizedField);
 				}
 			}
@@ -58,7 +62,7 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.length>0){
 			for (TlocalizedField tlocalizedField : locals) {
-				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null){
+				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null&&!tlocalizedField.getLocaleValue().isEmpty()){
 					localizedFieldDao.save(tlocalizedField);
 				}
 			}
@@ -83,6 +87,23 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 				.add(Restrictions.eq("tableName", tableName))
 				.add(Restrictions.eq("tableField", fieldName))
 				.list();		
+	}
+	
+	public TlocalizedField getLocalizedField(Integer entityId, String local,String tableName, String fieldName) {
+		Criteria criteria=localizedFieldDao.createCriteria();
+		Tlanguage language = languageDao.findUnique("local", local);
+		return (TlocalizedField) criteria.add(Restrictions.eq("entityId", entityId))
+				.add(Restrictions.eq("tableName", tableName))
+				.add(Restrictions.eq("tableField", fieldName))
+				.add(Restrictions.eq("language.id",language.getId())).uniqueResult();		
+	}
+
+
+	@Override
+	public TlocalizedField getLocalizedValue(Integer entityId,
+			Integer languageId, String tableName, String fieldName) {
+		// TODO Auto-generated method stub
+		return localizedFieldDao.getLocalizedValue(entityId, languageId, tableName, fieldName);
 	}
 
 }

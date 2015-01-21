@@ -24,4 +24,6 @@ public interface LanguageService {
 	public PagingData loadLanguageList(DataTableParamter rdtp);
 	
 	List<Tlanguage> loadAllTlanguage();
+	
+	Tlanguage get(String locale);
 }
