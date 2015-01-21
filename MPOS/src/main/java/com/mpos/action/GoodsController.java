@@ -4,6 +4,7 @@ package com.mpos.action;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -33,6 +34,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
+import com.mpos.commons.SystemConstants;
+import com.mpos.dto.TattributeValue;
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.TgoodsAttribute;
@@ -40,13 +43,16 @@ import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Tproduct;
+import com.mpos.dto.TproductAttribute;
 import com.mpos.dto.TproductImage;
 import com.mpos.model.AddAttributevaleModel;
 import com.mpos.model.AddProductModel;
+import com.mpos.model.CategoryAttributeModel;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.FileMeta;
 import com.mpos.model.MenuModel;
 import com.mpos.model.PagingData;
+import com.mpos.service.AttributeValueService;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
 import com.mpos.service.GoodsAttributeService;
@@ -93,6 +99,9 @@ public class GoodsController extends BaseController{
 	@Autowired
 	private LocalizedFieldService localizedFieldService;
 	
+	@Autowired
+	private AttributeValueService attributeValueService;
+	
 	private LinkedHashMap<Integer,FileMeta> filesMap = new LinkedHashMap<Integer,FileMeta>();
 	private int imgIndex=0;	
 	
@@ -100,7 +109,10 @@ public class GoodsController extends BaseController{
 	public ModelAndView Goods(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		List<Tcategory> categorys=categoryService.getallCategory();
-		List<MenuModel> menus=menuService.getNoChildrenMenus();
+		
+		String local=getLocale(request);
+		Tlanguage language=languageService.getLanguageBylocal(local);
+		List<MenuModel> menus=menuService.getNoChildrenMenus(language);
 	//	List<Tmenu> menus=menuService.getAllMenu();
 		mav.addObject("category", categorys);
 		mav.addObject("menu", menus);
@@ -111,28 +123,58 @@ public class GoodsController extends BaseController{
 	@ResponseBody
 	public String goodsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=goodsService.loadGoodsList(dtp);
-		pagingData.setSEcho(dtp.sEcho);
-		if(pagingData.getAaData()==null){
+		String local=getLocale(request);
+		if(pagingData.getITotalRecords()!=0){
+			Object[] objArr=pagingData.getAaData();
+			for (int i = 0; i < objArr.length; i++) {
+				Tproduct product=(Tproduct)objArr[i];
+				TlocalizedField productNameLocal=localizedFieldService.getLocalizedField(product.getId(), 
+						local, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME);
+				if(productNameLocal!=null){
+					product.setProductName(productNameLocal.getLocaleValue());
+				}
+				TlocalizedField categoryNameLocal=localizedFieldService.getLocalizedField(product.getTmenu().getMenuId(), 
+						local, SystemConstants.TABLE_NAME_MENU, SystemConstants.TABLE_FIELD_TITLE);
+				if (categoryNameLocal!=null) {
+					product.getTmenu().setTitle(categoryNameLocal.getLocaleValue());
+				}
+				objArr[i]=product;		
+			}
+			pagingData.setAaData(objArr);
+		}
+		
+		/*if(pagingData.getAaData()==null){
 			Object[] objs=new Object[]{};
 			pagingData.setAaData(objs);
-		}
+		}*/
+		pagingData.setSEcho(dtp.sEcho);
 		String rightsListJson= JSON.toJSONString(pagingData);
 		return rightsListJson;	
 	}
 	@RequestMapping(value="addgoods",method=RequestMethod.GET)
+	@ResponseBody
 	public ModelAndView addGoodsPage(HttpServletRequest request){
 		imgIndex=0;
 		filesMap.clear();
 		ModelAndView mav=new ModelAndView();
-		List<Tcategory> categoryList=categoryService.getallCategory();
-		Map<Integer, String> categoryMap = new HashMap<Integer, String>();  		
-		for (Tcategory tcategory : categoryList) {
-			categoryMap.put(tcategory.getCategoryId(), tcategory.getName());
+		String local=getLocale(request);
+		Tlanguage language=languageService.getLanguageBylocal(local);
+		List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language);
+		List<Tcategory> speccategoryList=categoryService.getallCategory(0,language);
+		Map<Integer, String> ordercategoryMap = new HashMap<Integer, String>();  
+		Map<Integer, String> speccategoryMap = new HashMap<Integer, String>();
+		for (Tcategory tcategory : ordercategoryList) {
+			ordercategoryMap.put(tcategory.getCategoryId(), tcategory.getName());
 		}
-		List<MenuModel> menus=menuService.getNoChildrenMenus();
+		for(Tcategory tcategory : speccategoryList){
+			speccategoryMap.put(tcategory.getCategoryId(), tcategory.getName());
+		}
+		
+		List<MenuModel> menus=menuService.getNoChildrenMenus(language);
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
 		mav.addObject("lanList", languages);
-		mav.addObject("category", categoryMap);
+		mav.addObject("ordercategory", ordercategoryMap);
+		mav.addObject("speccategory", speccategoryMap);
 		mav.addObject("menu", menus);
 		mav.addObject("product", new AddProductModel());
 		mav.setViewName("goods/addgoods");
@@ -175,14 +217,65 @@ public class GoodsController extends BaseController{
 		return JSON.toJSONString(respJson);		
 	}
 	
-	@RequestMapping(value="/getAttributesGroupById/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/getAttributesGroupById/{ids}",method=RequestMethod.GET)
 	@ResponseBody
-	public String getAttributesGroup(@PathVariable int id,HttpServletRequest request){			
+	public String getAttributesGroup(@PathVariable String ids,HttpServletRequest request){			
 		JSONObject respJson = new JSONObject();
+		String[] idstrArr=ids.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
+		List<CategoryAttributeModel>  categoryAttributeModels=new ArrayList<CategoryAttributeModel>();
+		String local=getLocale(request);
+		Tlanguage language=languageService.getLanguageBylocal(local);
 		try {
-			List<TcategoryAttribute> list=CategoryAttributeService.getCategoryAttributeByCategoryid(id);
+			List<TcategoryAttribute> categoryAttributelist=CategoryAttributeService.getCategoryAttributeByCategoryid(idArr[0],language);
+			for(int i=0;i<categoryAttributelist.size();i++){
+				CategoryAttributeModel categoryAttributeModel=new CategoryAttributeModel();
+				categoryAttributeModel.setAttributeId(categoryAttributelist.get(i).getAttributeId());
+				categoryAttributeModel.setCategoryId(categoryAttributelist.get(i).getCategoryId().getCategoryId());
+				categoryAttributeModel.setRequired(categoryAttributelist.get(i).getRequired());
+				categoryAttributeModel.setSort(categoryAttributelist.get(i).getSort());
+				categoryAttributeModel.setTitle(categoryAttributelist.get(i).getTitle());
+				categoryAttributeModel.setType(categoryAttributelist.get(i).getType());
+				TproductAttribute productAttribute=productAttributeService.getAttributeByproductidAndattributeid(idArr[1], categoryAttributelist.get(i).getAttributeId());
+				categoryAttributeModel.setProductAttribute(productAttribute);
+				List<TattributeValue> attributeValuelist=attributeValueService.getattributeValuesbyattributeid(categoryAttributelist.get(i).getAttributeId(),language);
+				categoryAttributeModel.setAttributeValue(attributeValuelist);
+				categoryAttributeModels.add(categoryAttributeModel);
+			}
 			respJson.put("status", true);
-			respJson.put("list", list);
+			respJson.put("list", categoryAttributeModels);
+			SystemConfig.product_AttributeModel_Map.clear();
+		}
+		catch(MposException be){
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
+	}
+
+	@RequestMapping(value="/getAttributesGroupByid/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public String getAttributesGroup(@PathVariable Integer id,HttpServletRequest request){			
+		JSONObject respJson = new JSONObject();
+		List<CategoryAttributeModel>  categoryAttributeModels=new ArrayList<CategoryAttributeModel>();
+		String local=getLocale(request);
+		Tlanguage language=languageService.getLanguageBylocal(local);
+		try {
+			List<TcategoryAttribute> categoryAttributelist=CategoryAttributeService.getCategoryAttributeByCategoryid(id,language);
+			for(int i=0;i<categoryAttributelist.size();i++){
+				CategoryAttributeModel categoryAttributeModel=new CategoryAttributeModel();
+				categoryAttributeModel.setAttributeId(categoryAttributelist.get(i).getAttributeId());
+				categoryAttributeModel.setCategoryId(categoryAttributelist.get(i).getCategoryId().getCategoryId());
+				categoryAttributeModel.setRequired(categoryAttributelist.get(i).getRequired());
+				categoryAttributeModel.setSort(categoryAttributelist.get(i).getSort());
+				categoryAttributeModel.setTitle(categoryAttributelist.get(i).getTitle());
+				categoryAttributeModel.setType(categoryAttributelist.get(i).getType());
+				List<TattributeValue> attributeValuelist=attributeValueService.getattributeValuesbyattributeid(categoryAttributelist.get(i).getAttributeId(),language);
+				categoryAttributeModel.setAttributeValue(attributeValuelist);
+				categoryAttributeModels.add(categoryAttributeModel);
+			}
+			respJson.put("status", true);
+			respJson.put("list", categoryAttributeModels);
 			SystemConfig.product_AttributeModel_Map.clear();
 		}
 		catch(MposException be){

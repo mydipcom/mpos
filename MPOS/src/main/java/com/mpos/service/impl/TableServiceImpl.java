@@ -24,7 +24,7 @@ public class TableServiceImpl implements TableService {
 	@Autowired
 	TableDao tableDao;
 
-	@Override
+	
 	public void create(Ttable table) {
 		Ttable tt = tableDao.findUnique("tableName", table.getTableName());
 		if(tt == null){
@@ -35,17 +35,17 @@ public class TableServiceImpl implements TableService {
 		
 	}
 
-	@Override
+	
 	public void delete(Ttable table) {
 		tableDao.delete(table);
 	}
 
-	@Override
+	
 	public void delete(Integer id) {
 		tableDao.delete(id);
 	}
 
-	@Override
+	
 	public void update(Ttable table) {
 		Ttable tt = tableDao.findUnique("tableName", table.getTableName());
 		if(tt==null||tt.getId()==table.getId()){
@@ -61,17 +61,17 @@ public class TableServiceImpl implements TableService {
 		}
 	}
 
-	@Override
+	
 	public Ttable get(Integer id) {
 		return tableDao.get(id);
 	}
 
-	@Override
+	
 	public List<Ttable> loadAll() {
 		return tableDao.LoadAll();
 	}
 
-	@Override
+	
 	public PagingData loadTableList(DataTableParamter dtp) {
 		String searchJsonStr = dtp.getsSearch();
 		Criteria criteria = tableDao.createCriteria();
@@ -94,7 +94,7 @@ public class TableServiceImpl implements TableService {
 		return tableDao.findPage(criteria,dtp.iDisplayStart, dtp.iDisplayLength);
 	}
 
-	@Override
+	
 	public Boolean tableNameIsExist(String tableName) {
 		Ttable tt = tableDao.findUnique("tableName", tableName);
 		if(tt==null){
@@ -104,12 +104,12 @@ public class TableServiceImpl implements TableService {
 	}
 	
 
-	@Override
+	
 	public void deleteAll(Integer[] ids) {
 		tableDao.deleteAll(ids);
 	}
 
-	@Override
+	
 	public Boolean updateVerification(String tableName) {
 		String[] table = tableName.split(",");
 		Integer id = Integer.valueOf(table[1]);
@@ -120,7 +120,7 @@ public class TableServiceImpl implements TableService {
 		return false;
 	}
 
-	@Override
+	
 	public Ttable get(String tableName) {
 		// TODO Auto-generated method stub
 		return tableDao.findUnique("tableName", tableName);

@@ -1,88 +1,89 @@
 var rootURI="/";
 var Addgoods = function () {
-
-	$('#chooseCategory').on('change',function(e){
-		$("#attributeGroup").empty();
+	
+	$('#chooseSpecCategory').on('change',function(e){
+		$("#specattributeGroup").empty();
 		var id=$(this).val();							
 		$.ajax({
 			"dataType": 'json', 
              "type"   : "GET", 
-             "url"    : rootURI+"goods/getAttributesGroupById/"+id,
+             "url"    : rootURI+"goods/getAttributesGroupByid/"+id,
              "success": function(data,status){
             	 if(status == "success"){ 
             		 if(data.status){
             			 var rows = $();	
             			 var list=data.list;
+            			 var k=0;
+            			 var attributeIds=new Array();
             			 for(var i=0;i<list.length;i++){
             				 var attributeId=list[i].attributeId;
             				 var title=list[i].title;
             				 var type=list[i].type;
-            				 var content=list[i].content;
+            				 var attributevalue=list[i].attributeValue;
+            				 var required=list[i].required;
             				 
             				 var row=$('<div class="form-group">'+
-            							'<label class="control-label col-md-2"></label>'+
+            							'<label class="control-label col-md-2" ></label>'+
             							'<div class="col-md-10"></div>'+						
             						    '</div>');
             				 row.find('.control-label').text(title+": ");
+            				
             				 switch (type) {
-								case 0:
-									row.find('.col-md-10').append('<p class="form-control-static">'+content+'</p>');
-									break;
+								
 								case 1:
 									var radioGroup=$('<div class="radio-list"></div>');
-									var attrArr=content.split(",");
-									for(var n=0;n<attrArr.length;n++){
-									    var attr=attrArr[n];
-										var radioObj='<label class="radio-inline"><input type="radio" name="attr_'+attributeId+'" value="'+n+'"/>'+attr+'</label>';
+									
+									for(var n=0;n<attributevalue.length;n++){
+									    var attr=attributevalue[n].value;
+										var radioObj='<label class="radio-inline"><input type="radio" name="attr_'+attributeId+'" value="'+attributevalue[n].valueId+'"/>'+attr+'</label>';
+										
 										radioGroup.append(radioObj);
 									}
+									if(required){
+										attributeIds[attributeId]=attributeId;
+										row.find('.control-label').append('<span class="required"> * </span>');
+										}
 									row.find('.col-md-10').append(radioGroup);
 									row.append('<input type="hidden" name="attributeId" value="'+attributeId+'"/>');
 									break;
 								case 2:
 									var checkboxGroup=$('<div class="checkbox-list"></div>');
-									var tableGroup=$('<div class="col-md-6"><br/><table class="table table-striped table-bordered">'+
-										        '<thead><tr><th width="40%">Attribute Name</th><th width="60%">Attribute Price</th></tr></thead>'+
-										        '<tbody></tbody></table></div>');													
 									var checkboxes=$();												
-									var attrArr=content.split(",");
-									for(var n=0;n<attrArr.length;n++){
-									    var attr=attrArr[n];
-										var checkboxObj=$('<label class="checkbox-inline"><input type="checkbox" name="attr_'+attributeId+'" value="'+n+'" data="'+attr+'"/>'+attr+'</label>');
+									for(var n=0;n<attributevalue.length;n++){
+										var attr=attributevalue[n].value;
+										var checkboxObj=$('<label class="checkbox-inline"><input type="checkbox" name="attr_'+attributeId+'" value="'+attributevalue[n].valueId+'" data="'+attr+'"/>'+attr+'</label>');
 										checkboxes=checkboxes.add(checkboxObj);
 									}
+									if(required){
+										attributeIds[attributeId]=attributeId;
+										row.find('.control-label').append('<span class="required"> * </span>');
+										}
 									checkboxes.appendTo(checkboxGroup);
 									row.append('<input type="hidden" name="attributeId" value="'+attributeId+'"/>');
 									row.find('.col-md-10').append(checkboxGroup);
-									row.append(tableGroup);
-									checkboxGroup.on('change', ':checkbox', function () {
-										$(this).parents(".form-group").find("tbody").empty();
-										var checkedObj=$(this).parents(".checkbox-list").find(":checked");
-										$.each(checkedObj, function (index, obj) {											
-											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" name="attrPrice_'+attributeId+'" placeholder="0.00"/></td></tr>');
-										});
-							        });
-									
 									break;
 								case 3:											
 									var selectGroup=$('<select class="form-control input-xlarge" name="attr_'+attributeId+'"></select>');
-									var attrArr=content.split(",");
-									for(var n=0;n<attrArr.length;n++){
-									    var attr=attrArr[n];
-										var selectObj='<option value="'+n+'">'+attr+'</option>';
+									for(var n=0;n<attributevalue.length;n++){
+										var attr=attributevalue[n].value;
+										var selectObj='<option value="'+attributevalue[n].valueId+'">'+attr+'</option>';
 										selectGroup.append(selectObj);
 									}
 									row.find('.col-md-10').append(selectGroup);
 									row.append('<input type="hidden" name="attributeId" value="'+attributeId+'"/>');
 									break;
 								default:
-									row.find('.col-md-10').append('<p class="form-control-static">'+content+'</p>');
 									break;
 							}
             				 
             				rows = rows.add(row);
             			 }
-            			 $("#attributeGroup").append(rows);		            			 
+            			 $("#specattributeGroup").append(rows);
+            			for(var i=0;i<attributeIds.length;i++){
+            				if(attributeIds[i]!=undefined){
+            				 $("#addGoodsForm input[name='attr_"+attributeIds[i]+"']").rules("add",{required: true});
+            					}
+            				}
 					 }
 					 else{
 						 alert("Failed to query the attirbute group.");
@@ -95,12 +96,141 @@ var Addgoods = function () {
            
 		});
 	});
-	
+	$('#chooseorderCategory').on('change',function(e){
+		$("#orderattributeGroup").empty();
+		var id=$(this).val();							
+		$.ajax({
+			"dataType": 'json', 
+             "type"   : "GET", 
+             "url"    : rootURI+"goods/getAttributesGroupByid/"+id,
+             "success": function(data,status){
+            	 if(status == "success"){ 
+            		 if(data.status){
+            			 var rows = $();	
+            			 var list=data.list;
+            			 var attributeIds=new Array();
+            			 for(var i=0;i<list.length;i++){
+            				 var attributeId=list[i].attributeId;
+            				 var attributevalue=list[i].attributeValue;
+            				 var title=list[i].title;
+            				 var required=list[i].required;
+            				 attributeIds[attributeId]=attributeId;
+            				 var row=$('<div class="form-group"><br/>'+
+            							'<label class="control-label col-md-2"></label><br/>'+
+            							'<div class="col-md-10"></div>'+
+            							'<label class="control-label col-md-3"></label><br/>'+
+            						    '</div>');
+            				 row.find('.col-md-2').text(title+":");
+            				 row.find('.col-md-2').append('<span class="required"> * </span>');
+            				 //row.find('.col-md-3').text( "");
+									var page=$();
+									var checkboxGroup=$('<div class="checkbox-list"></div>');
+									var tableGroup=$('<div class="col-md-6"><br/><table class="table table-striped table-bordered">'+
+										        '<thead><tr><th width="40%">Options</th><th width="60%">Price adjustment</th></tr></thead>'+
+										        '<tbody></tbody></table></div>');
+									var Requiredlabel=$('<div class="checkbox"></div>');
+									var Requiredlabelbox=$();
+									var RequiredObj=$('<label class="control-label col-md-2">Required:</label><label class="control-label class="col-md-10">'+list[i].required+'</label>');
+									Requiredlabelbox=Requiredlabelbox.add(RequiredObj);
+									Requiredlabelbox.appendTo(Requiredlabel);
+									page=page.add(Requiredlabel);
+									var checkallboxGroup=$('<div class="checkbox"></div>');
+									var checkallboxes=$();
+									var checkboxObj=$('<label class="control-label col-md-2">Options:</label><label class="checkbox-inline class="col-md-10"">&nbsp&nbsp&nbsp<input type="checkbox" />Select All</label>');
+									checkallboxes=checkallboxes.add(checkboxObj);
+									checkallboxes.appendTo(checkallboxGroup);
+									var checkboxes=$();
+									page=page.add(checkallboxGroup);
+									var checkboxes=$();
+									for(var n=0;n<attributevalue.length;n++){
+									    var attr=attributevalue[n].value;
+										var checkboxObj=$('<label class="checkbox-inline">&nbsp&nbsp&nbsp<input type="checkbox" name="attr_'+attributeId+'"  value="'+attributevalue[n].valueId+'" data="'+attr+'"/>'+attr+'</label>');
+										checkboxes=checkboxes.add(checkboxObj);
+									}
+									checkboxes.appendTo(checkboxGroup);
+									page=page.add(checkboxGroup);
+									row.append('<input type="hidden" name="attributeId" value="'+attributeId+'"/>');
+									row.find('.col-md-10').append(page);
+									row.append(tableGroup);
+									checkallboxGroup.on('change',':checkbox',function(){
+										attributeId=$(this).parents(".form-group").find("input[name=attributeId]").val();
+										var checkedallObj=$(this).parents(".checkbox").find(":checked");
+										var prices=new Array();
+										var pricess=$(this).parents(".form-group").find("tbody").find("input[name='attrPrice_"+attributeId+"']");
+										var checkedObjs=$(".checkbox-list").find(".checkbox-inline").find("input[name='attr_"+attributeId+"']");
+										$(checkedObjs).parents(".form-group").find("tbody").empty();
+										if(checkedallObj.length==1){
+											$.each(checkedObjs, function (index, obj) {
+												$(obj).attr("checked", true);
+							                    $(obj).parents('span').addClass("checked");
+												attributeId=$(this).parents(".form-group").find("input[name=attributeId]").val();
+												for(var i=0;i<pricess.length;i++){
+													if($(obj).attr("value")==$(pricess[i]).attr("data")){
+														prices[$(obj).attr("value")]=$(pricess[i]).attr("value");
+													}
+													}
+												if(prices[$(obj).attr("value")]==undefined){
+													$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+												}else{
+												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+prices[$(obj).attr("value")]+'"/></td></tr>');
+												}
+											});
+										}else{
+											$.each(checkedObjs, function (index, obj) {
+												$(obj).removeAttr("checked");
+							                    $(obj).parents('span').removeClass("checked");
+							                   
+										});
+										}
+									});
+									checkboxGroup.on('change', ':checkbox', function () {
+										attributeId=$(this).parents(".form-group").find("input[name=attributeId]").val();
+										var prices=new Array();
+										var pricess=$(this).parents(".form-group").find("tbody").find("input[name='attrPrice_"+attributeId+"']");
+										$(this).parents(".form-group").find("tbody").empty();
+										var checkedObj=$(this).parents(".checkbox-list").find(":checked");
+										$.each(checkedObj, function (index, obj) {
+											attributeId=$(this).parents(".form-group").find("input[name=attributeId]").val();
+											for(var i=0;i<pricess.length;i++){
+												if($(obj).attr("value")==$(pricess[i]).attr("data")){
+													prices[$(obj).attr("value")]=$(pricess[i]).attr("value");
+												}
+												}
+											/*attributeId=$(this).parents(".form-group").find("input[name=attributeId]").val();
+											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" name="attrPrice_'+attributeId+'" placeholder="0.00"/></td></tr>');*/
+											if(prices[$(obj).attr("value")]==undefined){
+												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+											}else{
+											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+prices[$(obj).attr("value")]+'"/></td></tr>');
+											}
+										});
+							        });
+            				rows = rows.add(row);
+            			 }
+            			 $("#orderattributeGroup").append(rows);
+            			 for(var i=0;i<attributeIds.length;i++){
+             				if(attributeIds[i]!=undefined){
+             				 $("#addGoodsForm input[name='attr_"+attributeIds[i]+"']").rules("add",{required: true});
+             					}
+             				}
+					 }
+					 else{
+						 alert("Failed to query the attirbute group.");
+					 } 
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	alert(errorThrown);
+              }
+           
+		});
+	});
 	//处理表单验证方法
     var addFormValidation = function() {
             var addform = $('#addGoodsForm');
             var errorDiv = $('.alert-danger', addform);            
             addform.validate({
+            	
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
@@ -109,6 +239,10 @@ var Addgoods = function () {
 	                price: {
 	                	required: true,
 	                	number:true				            	
+	    			},
+	    			oldPrice: {
+	    				required: true,
+	                	number:true
 	    			},
 	    			unitName: {
 			            required: true,
@@ -125,6 +259,14 @@ var Addgoods = function () {
 	        		  required: true,
 	        		  digits:true        		
 	    			}                   
+                },
+                errorPlacement: function(error, element) {
+                    if ( element.is(":radio") )
+                        error.appendTo( element.parent().next().next() );
+                    else if ( element.is(":checkbox") )
+                        error.appendTo ( element.next() );
+                    else
+                        error.appendTo( element.parent());
                 },
                 invalidHandler: function (event, validator) { //display error alert on form submit                	
                     errorDiv.show();                    
@@ -143,6 +285,8 @@ var Addgoods = function () {
                 },
                 submitHandler: function (form) {                	
                     errorDiv.hide();
+                    //$(form).find("input[name='attributeId']")
+                  var imagetd= $('#uploadedImagesList').find('td');
                     $.each($(form).find("input[name='attributeId']"), function (index, attrIdObj) {
 	            		var attributeId=attrIdObj.value;
 	            		var attrArr=new Array();
@@ -159,9 +303,13 @@ var Addgoods = function () {
 	            		$(form).append('<input type="hidden" name="attributes['+index+'].id" value="'+attributeId+'"/>');
 	            		$(form).append('<input type="hidden" name="attributes['+index+'].attributeValue" value="'+attrArr.join(",")+'"/>');
 	            		$(form).append('<input type="hidden" name="attributes['+index+'].attributePrice" value="'+attrPriceArr.join(",")+'"/>');
-	            		
 	            	});
-	            	form.submit();                    
+                    if(imagetd.length>0){
+	            	form.submit();
+	            	}
+                    else{
+                    	$('#imageerror').html("image not upload");
+                    }
                 }
             });
     };
@@ -245,7 +393,7 @@ var Addgoods = function () {
 
                 FileUploaded: function(up, file, response) {
                     var data = $.parseJSON(response.response);
-
+                    $('#imageerror').html("");
                     if (data.status) {                        
                         $('#uploaded_file_' + file.id + ' > .status').removeClass("label-info").addClass("label-success").html('<i class="fa fa-check"></i> Done'); // set successfull upload
                         var rows = $();

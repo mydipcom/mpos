@@ -21,4 +21,10 @@ public class ProductReleaseDao extends BaseDao<TproductRelease> {
 		query.setParameter(0, true);
 		return (TproductRelease) query.uniqueResult();  
 	}
+	public TproductRelease getUnPublish(){
+		String hql="from TproductRelease where id=(select max(id) from TproductRelease where isPublic=?)";
+		Query query=currentSession().createQuery(hql);
+		query.setParameter(0, false);
+		return (TproductRelease) query.uniqueResult();  
+	}
 }

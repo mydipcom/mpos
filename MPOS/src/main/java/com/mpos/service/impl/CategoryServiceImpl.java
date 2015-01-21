@@ -1,7 +1,9 @@
 package com.mpos.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -22,6 +24,7 @@ import com.mpos.dao.LocalizedFieldDao;
 import com.mpos.dto.TattributeValue;
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
+import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -227,6 +230,31 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<Tcategory> getallCategory() {
 	
 		return categoryDao.getAll();
+	}
+	
+		public List<Tcategory> getallCategory(Integer type,Tlanguage language) {
+		
+		List<Tcategory> Tcategory=categoryDao.getAll(type);
+		if(Tcategory!=null&&Tcategory.size()>0){
+			for (Tcategory category : Tcategory) {
+				Map<String, Object> ssMap=new HashMap<String, Object>();
+				ssMap.put("language", language);
+				ssMap.put("entityId", category.getCategoryId());
+				ssMap.put("tableName",SystemConstants.TABLE_NAME_CATEGORY);
+				ssMap.put("tableField",SystemConstants.TABLE_FIELD_NAME);
+				
+				List<TlocalizedField> localizedFields= localizedFieldDao.find("from TlocalizedField where language=:language and entityId=:entityId and tableName=:tableName and tableField=:tableField", ssMap);
+				if (localizedFields.size()>0) {
+					TlocalizedField localizedField=localizedFields.get(0);
+					if(!localizedField.getLocaleValue().isEmpty()&&localizedField.getLocaleValue()!=null){
+						category.setName(localizedField.getLocaleValue());
+				}
+				}
+				
+			}
+		
+		}
+		return Tcategory;
 	}
 
 }

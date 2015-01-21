@@ -26,4 +26,6 @@ public interface LanguageService {
 	List<Tlanguage> loadAllTlanguage();
 	
 	Tlanguage get(String locale);
+	
+	Tlanguage getLanguageBylocal(String local);
 }

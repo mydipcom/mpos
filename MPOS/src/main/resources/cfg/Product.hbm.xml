@@ -40,6 +40,9 @@
         <property name="sort" type="int">
             <column name="sort" not-null="true" />
         </property>
+         <property name="specid" type="int">
+            <column name="spec_id" />
+        </property>
         <property name="status" type="boolean">
             <column name="status" not-null="true" />
         </property>

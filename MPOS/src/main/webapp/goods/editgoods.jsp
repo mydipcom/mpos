@@ -168,7 +168,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2"><s:message code="product.shortdescr"/></label>
+																<label class="control-label col-md-2"><s:message code="product.shortdescr"/><span class="required"> * </span></label>
 																<div class="col-md-5">																	
 																	<form:textarea path="shortDescr" rows="4" cols="90"/>
 																</div>
@@ -218,7 +218,7 @@
 									<!--/span-->
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="product.oldprice"/></label>
+											<label class="control-label col-md-3"><s:message code="product.oldprice"/><span class="required"> * </span></label>
 											<div class="col-md-9">
 												<form:input path="oldPrice" cssClass="form-control" placeholder="0.00"/>												
 											</div>
@@ -283,19 +283,41 @@
 									<div class="portlet-title">
 										<div class="caption">
 											<i class="icon-equalizer font-red-sunglo"></i>
-											<span class="caption-subject font-red-sunglo bold">Produt Attributes</span>											
+											<span class="caption-subject font-red-sunglo bold">Spec Attributes</span>											
 										</div>
 										<div class="actions">
 											<div class="portlet-input input-inline">
-												<form:select path="attributeGroup.categoryId" cssClass="form-control" name="category" id="chooseCategory">												
-													<option value="0">-- Please product attribute group --</option>
-													<form:options items="${category}"/> 													
+												<form:select path="specid" cssClass="form-control" name="category" id="chooseSpecCategory">												
+													<option value="0">-- Please product spec attribute group --</option>
+													<form:options items="${speccategory}"/> 													
 												</form:select>												
 											</div>											
 										</div>
 									</div>
 									<div class="portlet-body form">
-										<div id="attributeGroup" class="form-horizontal form-row-seperated">
+										<div id="specattributeGroup" class="form-horizontal form-row-seperated">
+											
+										</div>
+									</div>
+								</div>															
+								
+									<div class="portlet light bg-inverse form-fit">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="icon-equalizer font-red-sunglo"></i>
+											<span class="caption-subject font-red-sunglo bold">Order Attributes</span>											
+										</div>
+										<div class="actions">
+											<div class="portlet-input input-inline">
+												<form:select path="attributeGroup.categoryId" cssClass="form-control" name="category" id="chooseorderCategory">												
+													<option value="0">-- Please product order attribute group --</option>
+													<form:options items="${ordercategory}"/> 													
+												</form:select>												
+											</div>											
+										</div>
+									</div>
+									<div class="portlet-body form">
+										<div id="orderattributeGroup" class="form-horizontal form-row-seperated">
 											
 										</div>
 									</div>

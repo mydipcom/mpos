@@ -1,5 +1,6 @@
 package com.mpos.action;
 
+import javax.mail.Flags.Flag;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,9 @@ public class DeviceController extends BaseController {
 	public ModelAndView device(){
 		ModelAndView mav = new ModelAndView();
 		TproductRelease re = productReleaseService.getLatestPublished();
-		String[] res = new String[2];
+		TproductRelease unre=productReleaseService.getUnPublished();
+		String[] res = new String[3];
+		String Flag;
 		if(re!=null){
 			res[0] = re.getId()+"";
 			Long time = re.getPublicTime();
@@ -42,7 +45,15 @@ public class DeviceController extends BaseController {
 			}
 			res[1] = ConvertTools.longToDateString(time);
 		}
+		if(unre!=null){
+			res[2]=unre.getId()+"";
+			Flag="1";
+		}else{
+			res[2]="No Version Unpublish";
+			Flag="2";
+		}
 		mav.addObject("res", res);
+		mav.addObject("flag", Flag);
 		mav.setViewName("device/device");
 		return mav;
 	}

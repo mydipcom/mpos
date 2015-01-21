@@ -27,6 +27,7 @@ public class AddProductModel implements java.io.Serializable{
 	private boolean status=true;
 	private Tmenu menu;
 	private Tcategory attributeGroup;
+	private Integer specid;
 	
 	private List<TlocalizedField> productName_locale=new ArrayList<TlocalizedField>();
 	private List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
@@ -41,6 +42,15 @@ public class AddProductModel implements java.io.Serializable{
 
 	public void setProductId(int productId) {
 		this.productId = productId;
+	}
+
+	
+	public Integer getSpecid() {
+		return specid;
+	}
+
+	public void setSpecid(Integer specid) {
+		this.specid = specid;
 	}
 
 	public int getSku() {

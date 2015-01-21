@@ -36,7 +36,9 @@ public class ProductAttributeServiceImpl implements ProductAttributeService{
 		return productAttributeDao.getByAttributeid(productAttributeId);
 	}
 
-
+	public TproductAttribute getAttributeByproductidAndattributeid(Integer productid,Integer attributeid){
+		return productAttributeDao.getAttributebyid(productid,attributeid);
+	}
 
 	public void updattProductAttribute(TproductAttribute productAttribute) {
 		//productAttributeDao.update(productAttribute);

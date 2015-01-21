@@ -36,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.Tcategory;
@@ -56,6 +57,7 @@ import com.mpos.model.LocalizedField;
 import com.mpos.model.MenuModel;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
+import com.mpos.service.GoodsAttributeService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
 import com.mpos.service.LanguageService;
@@ -90,6 +92,9 @@ private GoodsImageService goodsImageService;
 private LanguageService languageService;
 
 @Autowired
+private GoodsAttributeService goodsAttributeService;
+
+@Autowired
 private ProductReleaseService productReleaseService;
 
 @Autowired
@@ -105,25 +110,29 @@ private int imgIndex=0;
 		ModelAndView mav=new ModelAndView();
 		try {
 			Tproduct product=goodsService.getTproductByid(id);
+			String local=getLocale(request);
+			Tlanguage language=languageService.getLanguageBylocal(local);
 			 List<TlocalizedField> productName_locale=new ArrayList<TlocalizedField>();
 			 List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
 			 List<TlocalizedField> fullDescr_locale=new ArrayList<TlocalizedField>();
 			 List<TlocalizedField> unitName_locale=new ArrayList<TlocalizedField>();
-			List<Tcategory> categoryList=categoryService.getallCategory();
-			Map<Integer, String> categoryMap = new HashMap<Integer, String>();  		
-			for (Tcategory tcategory : categoryList) {
-				categoryMap.put(tcategory.getCategoryId(), tcategory.getName());
-			}
-			mav.addObject("category", categoryMap);
-			List<TcategoryAttribute> categoryAttribute=new ArrayList<TcategoryAttribute>();
-			List<AddAttributevaleModel> addAttributevalemodels = new ArrayList<AddAttributevaleModel>();
-			
-			
-		
-		
+			 List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language);
+				List<Tcategory> speccategoryList=categoryService.getallCategory(0,language);
+				Map<Integer, String> ordercategoryMap = new HashMap<Integer, String>();  
+				Map<Integer, String> speccategoryMap = new HashMap<Integer, String>();
+				for (Tcategory tcategory : ordercategoryList) {
+					ordercategoryMap.put(tcategory.getCategoryId(), tcategory.getName());
+				}
+				for(Tcategory tcategory : speccategoryList){
+					speccategoryMap.put(tcategory.getCategoryId(), tcategory.getName());
+				}
+				mav.addObject("ordercategory", ordercategoryMap);
+				mav.addObject("speccategory", speccategoryMap);
 			//List<Tmenu> menus=menuService.getAllMenu();
-			List<MenuModel> menus=menuService.getNoChildrenMenus();
+				
 			Map<Integer, String> menusMap = new HashMap<Integer, String>(); 
+			List<MenuModel> menus=menuService.getNoChildrenMenus(language);
+		
 			for (MenuModel menu : menus) {
 				menusMap.put(menu.getId(), menu.getTitle());
 			}
@@ -142,6 +151,7 @@ private int imgIndex=0;
 			Productmodel.setMenu(product.getTmenu());
 			Productmodel.setRecommend(product.isRecommend());
 			Productmodel.setProductId(product.getId());
+			Productmodel.setSpecid(product.getSpecid());
 			productName_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "productName");
 			shortDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "shortDescr");
 			fullDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "fullDescr");
@@ -284,6 +294,27 @@ private int imgIndex=0;
 		return new ModelAndView("redirect:/goods");
 		
 	}*/
+	@RequestMapping(value="editgoods/getAttributes/{ids}",method=RequestMethod.GET)
+	@ResponseBody
+	public String getattributes(HttpServletRequest request,@PathVariable String ids){
+		String[] idstrArr=ids.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
+		
+		JSONObject respJson = new JSONObject();
+		try {
+			//TproductAttribute productAttribute=goodsAttributeService.getTproductAttribute(idArr[0], idArr[1]);
+			List<TproductAttribute> list=goodsAttributeService.getTproductAttribute(idArr[0]);
+			respJson.put("status", true);
+			respJson.put("productAttribute", list);
+		}
+		catch(MposException be){
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}
+		return JSON.toJSONString(respJson);
+	}
+	
+	
 	@RequestMapping(value="/editgoods/editgoods",method=RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
@@ -360,7 +391,7 @@ private int imgIndex=0;
 		if (fileMeta.getFileId()!=null) {
 			//Delete old image
 			File file=new File(fileMeta.getUrl());
-			file.deleteOnExit();
+			file.delete();
 			goodsImageService.deleteImagebyid(fileMeta.getFileId());
 			 respJson.put("status", true);
 		     respJson.put("info", "OK");

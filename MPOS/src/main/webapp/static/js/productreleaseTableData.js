@@ -16,104 +16,91 @@
             }
         });
         return serializeObj;
-    };  
+    };
 })(jQuery);
 
 var rootURI="/";
-var oTable;
-var DeviceTable = function () {
-	var handleTable = function () {
-		var selected = [];
-		var table=$('#table_table');
-		oTable = table.dataTable({
+var ReleaseTable = function () {
+	var oTable;
+	var oLogTable;
+	var selected = [];
+	var handleTable = function () {							
+		var table=$('#releases_table');
+		 oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
+        	"processing":true,
         	"scrollX":"100%",
-        	"scrollXInner":"100%",         	
-        	"processing":true,                
-            // set the initial value
+           	"scrollXInner":"100%",
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
             "columnDefs": [{                    
-                'targets': 0,   
-                'render':function(data,type,row){
-                	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
-                	},
-                //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
-            	}
+                    'targets': 0,   
+                    'render':function(data,type,row){
+                    	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
+                    },
+                    //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'   
+                },
+            		{                	
+            	'targets':-1,
+            	'data':null,//定义列名
+            	'render':function(data,type,row){
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_products" id="viewmodal">view</a></div>';
+                },
+                'class':'center'
+            		}
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id","bVisible":false},
-	           { title: "Table Name",    data: "tableName" },
-	           { title: "Status",    
-	        	   		"render":function(data,type,row){
-	        	   			var res ='';
-	        	   			var tem = row.onlineStatus;
-	        	   			if(tem){
-	        	   				res ='<font color="green">ONLINE</font>';
-	        	   			}else{
-	        	   				res ='<font color="red">OFFLINE</font>';
-	        	   			}
-               			return res;
-	        	   		}
-	           },
-	           { title: "Data Version",    data: "dataVersion" },
-	           { title: "Last Report Time", data:"lastReportTimeStr"},
-	           { title: "Last  Sync Time", data:"lastSyncTimeStr"}
-	          ],
+	           { title: "Release Id",   data: "id"  },
+	           { title: "Is Public",   data: "isPublic" },
+	           { title: "Product Ids",    data: "productString" },
+	           { title: "Public Time",  data: "publicTimeStr"},
+	           { title: "Options","class":"center"},
+	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"device/deviceList?rand="+Math.random()
-
+	        "ajaxSource": rootURI+"productrelease/productreleaselist?rand="+Math.random()
 		});		
-
-		//打开删除对话框前判断是否已选择要删除的行
-		$("#openDeleteDeviceModal").on("click",function(event){
-			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete.","warning","");				
-				return false;
-			}
-		});
-		
-		//删除操作
-		$('#deleteBtn').on('click', function (e) {
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "DELETE", 
-             "url": rootURI+"device/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){					
-					 if(data.status){
-						 selected=[];
-		            	 oTable.api().draw();
-		            	 oTable.$('th span').removeClass();
-					 }
-					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        });  
-		//发布
-		$('#PubBtn').on('click', function (e) {
+		 
+		//打开发布对话框前判断是否已选择要发布的行
+			
+			$("#openPublicModal").on("click",function(event){
+				
+				if(selected.length==0){
+					handleAlerts("Please select the rows which you want to public.","warning","");				
+					return false;
+				}else if(selected.length>1){
+					handleAlerts("just can select one row.","warning","");
+					return false;
+				}else {
+					var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+					var ispublic=data.isPublic;
+					if(ispublic){
+					handleAlerts("this release is publicde.","warning","");
+					return false;
+					}
+					}
+			});
+		//发布操作
+		$('#PublicBtn').on('click', function (e) {
+			var tt=selected.join();
 			$.ajax( {
              "dataType": 'json', 
              "type": "POST", 
-             "url": rootURI+"productrelease/publicrelease", 
+             "url": rootURI+"productrelease/publicrelease/"+tt, 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
-						 window.location.href=rootURI+"device"
+						 selected=[];						 
+		            	 oTable.api().draw();
+		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts("delete the adminusers successfully.","success","");
 					 }
 					 else{
-						 handleAlerts("Failed to publish the data. " +data.info,"danger","");
+						 handleAlerts("Failed to delete the adminusers. " +data.info,"danger","");
 					 }
 				}             	 
              },
@@ -122,6 +109,9 @@ var DeviceTable = function () {
              }
            });
         });  
+		
+		
+	
 		//搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {
 			event.preventDefault();
@@ -129,11 +119,9 @@ var DeviceTable = function () {
 			var jsonDataStr=JSON.stringify(jsonData);			
 			oTable.fnFilter(jsonDataStr);
 			return false;
-		});
-				
-                       
+		});	
 		//全选
-        $(".group-checkable").on('change',function () {
+		$(".group-checkable").on('change',function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
             selected=[];
@@ -141,9 +129,9 @@ var DeviceTable = function () {
 	            var api=oTable.api();            
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
-	            	var id = data.id;
-	                var index = $.inArray(id, selected);
-	                selected.push( id );
+	            	var ids=data.id;
+	                var index = $.inArray(ids, selected);
+	                selected.push( ids );
                     $(this).attr("checked", true);
                     $(this).parents('tr').addClass("active");
                     $(this).parents('span').addClass("checked");
@@ -156,6 +144,30 @@ var DeviceTable = function () {
             }
             jQuery.uniform.update(set);
         });
+        
+        
+		 table.on('click', 'tbody tr a',function(){
+	           var data = oTable.api().row($(this).parents('tr')).data();
+	           var ids=data.id;
+				$.ajax( {
+	             "dataType": 'json', 
+	             "type": "GET", 
+	             "url": rootURI+"productrelease/viewrelease/"+ids, 
+	             "success": function(data,status){
+	            	 if(status == "success"){					
+						 if(data.status){
+							 var productRelease=data.productRelease;
+					         $("#viewProduct input[name='id']").val(productRelease.id);
+					         $("#viewProduct input[name='isPublic']").val(productRelease.isPublic);
+					         $("#viewProduct textarea[name='products']").val(productRelease.products);
+						 }
+					}             	 
+	             },
+	             "error":function(XMLHttpRequest, textStatus, errorThrown){
+	            	 alert(errorThrown);
+	             }
+	           });
+	           });
         
         //单选
         table.on('change', 'tbody tr .checkboxes', function () {
@@ -173,11 +185,12 @@ var DeviceTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-                
-        /* handle show/hide columns*/
+               
+ 
+      //  handle show/hide columns
         var tableColumnToggler = $('#column_toggler');		
 		$('input[type="checkbox"]', tableColumnToggler).change(function () {
-		    /* Get the DataTables object again - this is not a recreation, just a get of the object */
+		   //  Get the DataTables object again - this is not a recreation, just a get of the object 
 		    var iCol = parseInt($(this).attr("data-column"));
 		    var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
 		    oTable.fnSetColumnVis(iCol, (bVis ? false : true));
@@ -185,12 +198,10 @@ var DeviceTable = function () {
         
         
 	};
-
+	
+	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {
-		if(position==""){
-			position = $("#msg");
-		}
+	var handleAlerts = function(msg,msgType,position) {         
         Metronic.alert({
             container: position, // alerts parent container(by default placed after the page breadcrumbs)
             place: "prepent", // append or prepent in container 
@@ -199,28 +210,22 @@ var DeviceTable = function () {
             close: true, // make alert closable
             reset: true, // close all previouse alerts first
             focus: false, // auto scroll to the alert after shown
-            closeInSeconds: 5, // auto close after defined seconds, 0 never close
+            closeInSeconds: 10, // auto close after defined seconds, 0 never close
             icon: "warning" // put icon before the message, use the font Awesone icon (fa-[*])
         });        
 
     };
-    
+
+   
+	
+
     return {
+        //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
-        	handleTable(); 
+        	handleTable();  
+        	       	
         }
 
     };
-
 }();
-
-//---------------------------------
-var loadTime = 10000;
-var loadInterval;
-function runLoad(){
-	loadInterval = setInterval("load()",loadTime);
-	}
-function load(){
-	oTable.fnFilter("");
-}

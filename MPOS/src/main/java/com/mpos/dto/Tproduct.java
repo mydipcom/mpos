@@ -26,6 +26,7 @@ public class Tproduct implements java.io.Serializable {
 	private boolean status;
 	private Tmenu tmenu;
 	private Tcategory tcategory;
+	private Integer specid;
 	private String  menuname;
 	private String  categoryname;
 	
@@ -63,6 +64,18 @@ public class Tproduct implements java.io.Serializable {
 	
 	
 	
+	public Integer getSpecid() {
+		return specid;
+	}
+
+
+
+	public void setSpecid(Integer specid) {
+		this.specid = specid;
+	}
+
+
+
 	public String getMenuname() {
 		return tmenu.getTitle();
 	}

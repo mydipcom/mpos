@@ -22,43 +22,43 @@ public class DeviceServiceImpl implements DeviceService {
 	@Autowired
 	DeviceDao deviceDao;
 
-	@Override
+
 	public void create(Tdevice device) {
 		// TODO Auto-generated method stub
 		deviceDao.create(device);
 	}
 
-	@Override
+	
 	public void delete(Tdevice device) {
 		// TODO Auto-generated method stub
 		deviceDao.delete(device);
 	}
 
-	@Override
+	
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		deviceDao.delete(id);
 	}
 
-	@Override
+	
 	public void update(Tdevice device) {
 		// TODO Auto-generated method stub
 		deviceDao.update(device);
 	}
 
-	@Override
+	
 	public Tdevice get(Integer id) {
 		// TODO Auto-generated method stub
 		return deviceDao.get(id);
 	}
 
-	@Override
+	
 	public List<Tdevice> loadAll() {
 		// TODO Auto-generated method stub
 		return deviceDao.LoadAll();
 	}
 
-	@Override
+	
 	public PagingData loadDeviceList(DataTableParamter dtp) {
 		// TODO Auto-generated method stub
 		String searchJsonStr = dtp.getsSearch();
@@ -87,13 +87,13 @@ public class DeviceServiceImpl implements DeviceService {
 		return deviceDao.findPage(criteria,dtp.iDisplayStart, dtp.iDisplayLength);
 	}
 
-	@Override
+	
 	public Tdevice get(String tableName) {
 		// TODO Auto-generated method stub
 		return deviceDao.findUnique("tableName", tableName);
 	}
 
-	@Override
+	
 	public void updateStatus() {
 		// TODO Auto-generated method stub
 		long now = System.currentTimeMillis();
@@ -111,7 +111,7 @@ public class DeviceServiceImpl implements DeviceService {
 		}
 	}
 
-	@Override
+	
 	public void deleteAll(Integer[] ids) {
 		// TODO Auto-generated method stub
 		deviceDao.deleteAll(ids);

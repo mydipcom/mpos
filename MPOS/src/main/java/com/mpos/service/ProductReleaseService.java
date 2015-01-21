@@ -13,4 +13,7 @@ public interface ProductReleaseService {
 
 	TproductRelease getLatestPublished();
 	
+	TproductRelease getUnPublished();
+	void publicreleasebyid(Integer ids);
+	
 }

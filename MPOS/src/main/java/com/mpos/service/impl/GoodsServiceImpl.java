@@ -97,7 +97,7 @@ public class GoodsServiceImpl implements GoodsService{
 				Tproduct goods=getTproductByid(id);
 				goods.setStatus(false);
 				goodsDao.update(goods);
-				
+				Boolean isexist=true;
 				TproductRelease productrelease;
 				if (verId!=0) {
 					 productrelease=productReleaseDao.get(verId);
@@ -106,11 +106,13 @@ public class GoodsServiceImpl implements GoodsService{
 						 String products[]=productids.split(",");
 						 for (int j = 0; j < products.length; j++) {
 							if(products[j].equals(goods.getId().toString())){
-								return;
+								isexist=false;
 							}
 						}
-						 productrelease.setProducts(ids+","+goods.getId());
-						 productReleaseDao.update(productrelease);	 
+						if(isexist){
+						 productrelease.setProducts(productids+","+goods.getId());
+						 productReleaseDao.update(productrelease);	
+						}
 					 }else {
 						 TproductRelease newproductrelease=new TproductRelease();
 						 newproductrelease.setProducts(goods.getId().toString());
@@ -179,8 +181,14 @@ public class GoodsServiceImpl implements GoodsService{
 			product.setRecommend(model.isRecommend());
 			product.setSku(model.getSku());
 			product.setSort(model.getSort());
-			product.setStatus(true);		
+			product.setStatus(true);
 			product.setTmenu(model.getMenu());
+			if(model.getAttributeGroup().getCategoryId()!=0){
+				product.setTcategory(model.getAttributeGroup());
+			}
+			if(model.getSpecid()!=0){
+				product.setSpecid(model.getSpecid());
+			}
 			goodsDao.create(product);
 			List<TgoodsAttribute> productAttributesList=model.getAttributes();
 			for (TgoodsAttribute goodsAttribute : productAttributesList) {
@@ -303,12 +311,19 @@ public class GoodsServiceImpl implements GoodsService{
 			product.setStatus(true);		
 			product.setTmenu(model.getMenu());
 			product.setId(model.getProductId());
+			if(model.getAttributeGroup().getCategoryId()!=0){
+				product.setTcategory(model.getAttributeGroup());
+			}
+			if(model.getSpecid()!=0){
+				product.setSpecid(model.getSpecid());
+			}
 			goodsDao.update(product);
-			/*List<TgoodsAttribute> productAttributesList=model.getAttributes();
+			List<TgoodsAttribute> productAttributesList=model.getAttributes();
+			goodsAttributeDao.DeleteAttributebyproductid(model.getProductId());
 			for (TgoodsAttribute goodsAttribute : productAttributesList) {
 				goodsAttribute.setProductId(product.getId());
-				goodsAttributeDao.update(goodsAttribute);
-			}*/
+				goodsAttributeDao.create(goodsAttribute);
+			}
 			
 			//local language
 			List<TlocalizedField> productNameLocaleList=model.getProductName_locale();
@@ -320,7 +335,7 @@ public class GoodsServiceImpl implements GoodsService{
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("productName");
-					localizedFieldDao.save(localizedField);
+					localizedFieldDao.saveOrUpdate(localizedField);
 				}				
 			}
 			for (TlocalizedField localizedField : shortDescrLocaleList) {
@@ -328,7 +343,7 @@ public class GoodsServiceImpl implements GoodsService{
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("shortDescr");
-					localizedFieldDao.save(localizedField);
+					localizedFieldDao.saveOrUpdate(localizedField);
 				}
 			}
 			for (TlocalizedField localizedField : fullDescrLocaleList) {
@@ -336,7 +351,7 @@ public class GoodsServiceImpl implements GoodsService{
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("fullDescr");
-					localizedFieldDao.save(localizedField);
+					localizedFieldDao.saveOrUpdate(localizedField);
 				}
 			}
 			for (TlocalizedField localizedField : unitNameLocaleList) {
@@ -344,7 +359,7 @@ public class GoodsServiceImpl implements GoodsService{
 					localizedField.setEntityId(product.getId());
 					localizedField.setTableName("Tproduct");
 					localizedField.setTableField("unitName");
-					localizedFieldDao.save(localizedField);
+					localizedFieldDao.saveOrUpdate(localizedField);
 				}
 			}
 			//set images 
@@ -355,6 +370,10 @@ public class GoodsServiceImpl implements GoodsService{
 				TproductImage productImage=new TproductImage();
 				if(fileMeta.getFileId()!=null){
 				productImage.setId(fileMeta.getFileId());
+				}
+				File files=new File(fileMeta.getUrl());
+				if(files.exists()){
+				files.delete();
 				}
 				productImage.setProduct(product);
 				productImage.setImage(fileMeta.getBytes());

@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mpos.dao.ProductReleaseDao;
+import com.mpos.dto.Tcategory;
 import com.mpos.dto.TproductRelease;
+import com.mpos.model.DataTableParamter;
+import com.mpos.model.PagingData;
 import com.mpos.service.ProductReleaseService;
 
 @Service
@@ -60,10 +63,36 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 		
 	}
 
-	@Override
+	
 	public TproductRelease getLatestPublished() {
 		// TODO Auto-generated method stub
 		return productReleaseDao.getLatestPublished();
 	}
+	
+	public PagingData loadproductReleaseList(DataTableParamter rdtp) {
+		// TODO Auto-generated method stub
+		return productReleaseDao.findPage("id", false, rdtp.iDisplayStart, rdtp.iDisplayLength);
+	}
+
+	
+	public void publicreleasebyid(Integer ids) {
+		TproductRelease producRelease = productReleaseDao.get(ids);
+		producRelease.setIsPublic(true);
+		producRelease.setPublicTime(System.currentTimeMillis());
+		productReleaseDao.update(producRelease);
+		
+	}
+
+	
+	public TproductRelease getbyId(Integer ids) {
+		
+		return productReleaseDao.get(ids);
+	}
+
+	public TproductRelease getUnPublished() {
+		
+		return productReleaseDao.getUnPublish();
+	}
+
 
 }

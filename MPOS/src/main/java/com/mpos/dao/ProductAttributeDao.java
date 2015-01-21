@@ -26,4 +26,19 @@ public class ProductAttributeDao extends BaseDao<TproductAttribute>{
 			 return productAttribute;
 		}
 	}
+	public TproductAttribute getAttributebyid(Integer producid,Integer attributeid){
+		String hql="from TproductAttribute where attribute_id=? and product_id=?";
+		Query query=currentSession().createQuery(hql);
+		query.setParameter(0, attributeid);
+		query.setParameter(1, producid);
+		List<TproductAttribute> list=query.list();
+		TproductAttribute productAttribute=new TproductAttribute();
+		if(list.size()==0){
+			return null;
+		}
+		else {
+			productAttribute=list.get(0);
+			 return productAttribute;
+		}
+	}
 }

@@ -73,10 +73,17 @@ public class LanguageServiceImpl implements LanguageService{
 				.list();
 	}
 
-	@Override
+	
 	public Tlanguage get(String locale) {
 		// TODO Auto-generated method stub
 		return languageDao.findUnique("local", locale);
 	}
+		public Tlanguage getLanguageBylocal(String local) {
+		// TODO Auto-generated method stub
+		 
+		return 	languageDao.getlanguagebylocal(local);	
+	
+	}
+
 
 }

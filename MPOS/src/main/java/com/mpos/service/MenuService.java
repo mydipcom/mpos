@@ -2,6 +2,7 @@ package com.mpos.service;
 
 import java.util.List;
 
+import com.mpos.dto.Tlanguage;
 import com.mpos.dto.Tmenu;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.MenuModel;
@@ -20,4 +21,5 @@ public interface MenuService {
 	Tmenu getParentMenu(Tmenu menu);
 	List<MenuModel> getNoChildrenMenus();
 	List<MenuModel> loadMenu(String local);
+	List<MenuModel> getNoChildrenMenus(Tlanguage language);
 }
