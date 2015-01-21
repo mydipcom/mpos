@@ -472,7 +472,7 @@
 									<label class="control-label col-md-2"><s:message code="attribute.type" /> <span class="required">* </span></label>
 										<div class="col-md-10">										
 											<div class="radio-list">
-												<label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label>
+												<!-- <label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label> -->
 												<label class="radio-inline"><input type="radio" name="type" value="1"/>Radio Button </label>
 												<label class="radio-inline"><input type="radio" name="type" value="2"checked/>Checkbox</label>
 												<label class="radio-inline"><input type="radio" name="type" value="3"/>Dropdown List </label>
@@ -597,7 +597,7 @@
 									<label class="control-label col-md-2"><s:message code="attribute.type" /> <span class="required">* </span></label>
 										<div class="col-md-10">										
 											<div class="radio-list">
-												<label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label>
+												<!-- <label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label> -->
 												<label class="radio-inline"><input type="radio" name="type" value="1" checked/>Radio Button </label>
 												<label class="radio-inline"><input type="radio" name="type" value="2"/>Checkbox</label>
 												<label class="radio-inline"><input type="radio" name="type" value="3"/>Dropdown List </label>
