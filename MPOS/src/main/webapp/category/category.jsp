@@ -429,9 +429,8 @@
 										<thead>
 											<tr>
 												<th class="table-checkbox">
-													<input type="checkbox" class="group-checkable" data-set="#att_table .checkboxes"/>
-												</th>
-											    <th>ID</th>
+													<input type="checkbox" class="attr-checkable" data-set="#att_table .checkboxes"/>
+												</th>											    
 												<th>Title</th>
 												<th>Type</th>												
 												<th>Sort</th>
@@ -490,7 +489,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-2"><s:message code="attribute.sort" /></label>
+									<label class="control-label col-md-2"><s:message code="attribute.sort" /> <span class="required">* </span></label>
 									<div class="col-md-10">																				
 										<input name="sort" class="form-control input-small" value=""/>									
 									</div>
@@ -615,7 +614,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-2"><s:message code="attribute.sort" /></label>
+									<label class="control-label col-md-2"><s:message code="attribute.sort" /> <span class="required">* </span></label>
 									<div class="col-md-10">																				
 										<input name="sort" class="form-control input-small" value=""/>									
 									</div>

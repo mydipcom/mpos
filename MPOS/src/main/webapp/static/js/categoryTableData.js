@@ -19,13 +19,20 @@
     };
     
     $.validator.addMethod("sameArraySize", function(value, element) {   
-        var arrSize = value.split(",").length;
+        var arrSize = 0;
+        var attrVal=jQuery.trim(value);
+        if(attrVal!=""){
+        	arrSize=attrVal.split(",").length;
+        }
         var isSame=true;
-        $.each( $(element.form).find(":text[name^='values_']"), function (index, obj) { 
-        	var length=obj.value.split(",").length;
-        	if(length>0){
-	        	if(arrSize!=length){	        		
-	            	isSame=false;	            	
+        $.each( $(element.form).find(":text[name^='values_']"), function (index, obj) {
+        	attrVal=jQuery.trim(obj.value);
+        	if(attrVal!=""){
+	        	var length=attrVal.split(",").length;
+	        	if(length>0){
+		        	if(arrSize!=length){	        		
+		            	isSame=false;	            	
+		        	}
 	        	}
         	}
         });                       
@@ -40,8 +47,7 @@ var CategoryTable = function () {
 	var oTable;
 	var selected = [];
 	var attTable;
-	var attSelected = [];
-	var att_cate_id = '';
+	var attSelected = [];	
 	var handleTable = function () {
 		
 		//-----------------------begin category-----------------------------------
@@ -259,6 +265,25 @@ var CategoryTable = function () {
 		    oTable.fnSetColumnVis(iCol, (bVis ? false : true));
 		});
 		
+		table.on('click', 'tbody tr a',function(){
+	           var data = oTable.api().row($(this).parents('tr')).data();
+	           var categoryId=data.categoryId;
+	           var categoryType=data.type;
+	           if(attTable!=null){
+	        	   attTable.fnDestroy();
+	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#addAttributeForm input[name='categoryId.type']").val(categoryType);
+	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#editAttributeForm input[name='categoryId.type']").val(categoryType);
+	        	   viewTable(categoryId); 
+	           }else{	        	   
+	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#addAttributeForm input[name='categoryId.type']").val(categoryType);
+	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
+	        	   $("#editAttributeForm input[name='categoryId.type']").val(categoryType);
+	        	   viewTable(categoryId);
+	           }
+	     });
 		
 		//--------------------------end category---------------------------------------------
 		
@@ -287,8 +312,7 @@ var CategoryTable = function () {
                   }
 		        ],
 		        "columns": [
-		               {"orderable": false },
-		 	           { title: "ID",   data: "attributeId" },
+		               {"orderable": false },		 	           
 		 	           { title: "Title",   data: "title" },
 		 	           { title: "Type",  
 		 	        	'render':function(data,type,row){
@@ -313,31 +337,56 @@ var CategoryTable = function () {
      	        "serverSide": true,
      	        "serverMethod": "GET",
      	        "ajaxSource": rootURI+"category/attributeList/"+categoryId+"?rand="+Math.random()
-			});	
-		};		
+			});									
+		};				
 		
-		table.on('click', 'tbody tr a',function(){
-	           var data = oTable.api().row($(this).parents('tr')).data();
-	           var categoryId=data.categoryId;
-	           var categoryType=data.type;
-	           if(attTable!=null){
-	        	   attTable.fnDestroy();
-	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
-	        	   $("#addAttributeForm input[name='categoryId.type']").val(categoryType);
-	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
-	        	   $("#editAttributeForm input[name='categoryId.type']").val(categoryType);
-	        	   viewTable(categoryId); 
-	           }else{	        	   
-	        	   $("#addAttributeForm input[name='categoryId.categoryId']").val(categoryId);
-	        	   $("#addAttributeForm input[name='categoryId.type']").val(categoryType);
-	        	   $("#editAttributeForm input[name='categoryId.categoryId']").val(categoryId);
-	        	   $("#editAttributeForm input[name='categoryId.type']").val(categoryType);
-	        	   viewTable(categoryId);
-	           }
-	     });
+		//属性全选
+        $(".attr-checkable").on('change',function () {
+            var set = jQuery(this).attr("data-set");
+            var checked = jQuery(this).is(":checked");
+            attSelected=[];
+            if(checked){            	
+	            var api=attTable.api();            
+	            jQuery(set).each(function () {            	
+	            	var data = api.row($(this).parents('tr')).data();
+	            	var id = data.attributeId;
+	                var index = $.inArray(id, attSelected);
+	                attSelected.push( id );
+                    $(this).attr("checked", true);
+                    $(this).parents('tr').addClass("active");
+                    $(this).parents('span').addClass("checked");
+	            });
+            }
+            else{
+            	jQuery(set).removeAttr("checked");
+            	jQuery(set).parents('tr').removeClass("active");
+            	jQuery(set).parents('span').removeClass("checked");
+            }
+            jQuery.uniform.update(set);
+        });
+        
+        //属性单选
+        $("#att_table").on('change', 'tbody tr .checkboxes', function () {
+            $(this).parents('tr').toggleClass("active");            
+            var data = attTable.api().row($(this).parents('tr')).data();
+            var id = data.attributeId;
+            var index = $.inArray(id, attSelected);     
+            if ( index === -1 ) {
+            	attSelected.push( id );
+                $(this).parents('span').addClass("checked");
+                $(this).attr("checked","checked");
+            } else {
+            	attSelected.splice( index, 1 );
+                $(this).parents('span').removeClass("checked");
+                $(this).removeAttr("checked");
+            }
+        });
+		
 		
 		//打开添加分类属性窗口
 		$("#openAddAttributeModal").on("click",function(event){
+			$("#addAttributeForm :text[name^='values']").val("");
+			$("#addAttributeForm :text[name^='values']").select2({tags:[],formatNoMatches: function () { return "&nbsp;"; }});
 			var groupType=$("#addAttributeForm input[name='categoryId.type']").val();
 			if(groupType=="1"){
 				$("#addAttrType").hide();
@@ -442,7 +491,7 @@ var CategoryTable = function () {
             	 if(status == "success"){					
 					 if(data.status){
 						 attSelected=[];
-						 attTable.api().draw();
+						 attTable.api().draw();	
 						 attTable.$('th span').removeClass();
 					 }
 					 else{
@@ -454,50 +503,7 @@ var CategoryTable = function () {
             	 alert(errorThrown);
              }
            });
-        });
-        
-		//全选
-        $(".group-checkable").on('change',function () {
-            var set = jQuery(this).attr("data-set");
-            var checked = jQuery(this).is(":checked");
-            attSelected=[];
-            if(checked){            	
-	            var api=attTable.api();            
-	            jQuery(set).each(function () {            	
-	            	var data = api.row($(this).parents('tr')).data();
-	            	var id = data.attributeId;
-	                var index = $.inArray(id, attSelected);
-	                attSelected.push( id );
-                    $(this).attr("checked", true);
-                    $(this).parents('tr').addClass("active");
-                    $(this).parents('span').addClass("checked");
-	            });
-            }
-            else{
-            	jQuery(set).removeAttr("checked");
-            	jQuery(set).parents('tr').removeClass("active");
-            	jQuery(set).parents('span').removeClass("checked");
-            }
-            jQuery.uniform.update(set);
-        });
-        
-        //单选
-        $('#att_table').on('change', 'tbody tr .checkboxes', function () {
-            $(this).parents('tr').toggleClass("active");            
-            var data = attTable.api().row($(this).parents('tr')).data();
-            var id = data.attributeId;
-            var index = $.inArray(id, attSelected);     
-            if ( index === -1 ) {
-            	attSelected.push( id );
-                $(this).parents('span').addClass("checked");
-                $(this).attr("checked","checked");
-            } else {
-            	attSelected.splice( index, 1 );
-                $(this).parents('span').removeClass("checked");
-                $(this).removeAttr("checked");
-            }
         });        		
-        
 	};
 	
 	
