@@ -34,9 +34,12 @@ import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
+import com.mpos.dto.TattributeValue;
+import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tcommodity;
 import com.mpos.dto.Tdevice;
 import com.mpos.dto.TgoodsAttribute;
+import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Torder;
@@ -48,11 +51,13 @@ import com.mpos.dto.Ttable;
 import com.mpos.model.AttributeModel;
 import com.mpos.model.CallWaiterInfo;
 import com.mpos.model.ProductModel;
+import com.mpos.service.AttributeValueService;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CommodityService;
 import com.mpos.service.DeviceService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
+import com.mpos.service.LanguageService;
 import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
 import com.mpos.service.OrderItemService;
@@ -114,6 +119,10 @@ public class MobileAPI {
 	private LocalizedFieldService localizedFieldService;
 	@Autowired
 	private ProductReleaseService productReleaseService;
+	@Autowired
+	private AttributeValueService attributeValueService;
+	@Autowired
+	private LanguageService languageService;
 	
 	/**
 	 * Get the system setting parameter
@@ -553,6 +562,7 @@ public class MobileAPI {
 			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
 			info.setCallTime(timeString);
 			SystemConfig.Call_Waiter_Map.put(appId, info);
+			status = 1;
 		} else if(SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==0){
 			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
 			info.setStatus(1);
@@ -566,7 +576,6 @@ public class MobileAPI {
 			info.setStatus(1);
 			info.setType(Integer.valueOf(type));
 			SystemConfig.Call_Waiter_Map.put(appId, info);
-			status = 1;
 		}
 		data.put("type", status);
 		respJson.put("data", data);
@@ -761,14 +770,54 @@ public class MobileAPI {
 		if (attributes != null && attributes.size() > 0) {
 			for (TgoodsAttribute tproductAttribute : attributes) {
 				AttributeModel attribute = new AttributeModel();
-				List<TlocalizedField> attributeValueList = localizedFieldService.getLocalizedField(tproductAttribute.getId(), SystemConstants.TABLE_NAME_PRODUCT_ATTRIBUTE, SystemConstants.TABLE_FIELD_ATTRIBUTE_VALUE);
+				List<TlocalizedField> attributeValueList = new ArrayList<TlocalizedField>();
+				List<Tlanguage> lans = languageService.loadAllTlanguage();
+				if(lans!=null&&lans.size()>0){
+					for (Tlanguage tlanguage : lans) {
+						TlocalizedField tf = new TlocalizedField();
+						tf.setLanguage(tlanguage);
+						tf.setLocaleValue("");
+						attributeValueList.add(tf);
+					}
+				}
+				String value_tem = "";
+				String values = tproductAttribute.getAttributeValue();
+				if(values!=null&&!values.isEmpty()){
+					String[] valueIdStrs = values.split(",");
+					Integer[] valueIdInts = ConvertTools.stringArr2IntArr(valueIdStrs);
+					if(valueIdInts!=null&&valueIdInts.length>0){
+						for (int i = 0; i < valueIdInts.length; i++) {
+							TattributeValue attributeValue= attributeValueService.getAttributeValue(valueIdInts[i]);
+							if(attributeValue.getValue()!=null&&!attributeValue.getValue().isEmpty()){
+								value_tem +=attributeValue.getValue()+",";
+							}
+							List<TlocalizedField> ones = localizedFieldService.getLocalizedField(valueIdInts[i], SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE, SystemConstants.TABLE_FIELD_VALUE);
+							if(ones!=null&&ones.size()>0){
+								for (int j = 0; j < ones.size(); j++) {
+									TlocalizedField loc = ones.get(j);
+									for (int j2 = 0; j2 < attributeValueList.size(); j2++) {
+										TlocalizedField loca = attributeValueList.get(j2);
+										if(loca.getLanguage().getId()==loc.getLanguage().getId()){
+											String str = loca.getLocaleValue();
+											str +=loc.getLocaleValue()+",";
+											loca.setLocaleValue(str);
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 				List<TlocalizedField> attributeTitleList = localizedFieldService.getLocalizedField(tproductAttribute.getId(), SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
 				attribute.setAttributeId(tproductAttribute.getId());
 				attribute.setAttributePrice(tproductAttribute.getAttributePrice());
-				attribute.setAttributeValue(tproductAttribute.getAttributeValue());
+				attribute.setAttributeValue(value_tem);
 				attribute.setAttributeValueLocale(setLocal(attributeValueList));
 				attribute.setAttributeTitle(attributeService.getCategoryAttribute(tproductAttribute.getId()).getTitle());
 				attribute.setAttributeTitleLocale(setLocal(attributeTitleList));
+				TcategoryAttribute tca = attributeService.getCategoryAttribute(tproductAttribute.getId());
+				attribute.setIsRequired(tca.getRequired());
 				attributeModels.add(attribute);
 			}
 		}

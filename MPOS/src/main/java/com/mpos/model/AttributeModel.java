@@ -12,6 +12,7 @@ public class AttributeModel implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -5184544357972159681L;
+	private Boolean isRequired;
 	private Integer attributeId;
 	private String attributeTitle;
 	private String attributeValue;
@@ -54,6 +55,11 @@ public class AttributeModel implements Serializable{
 	public void setAttributeTitleLocale(Object attributeTitleLocale) {
 		this.attributeTitleLocale = attributeTitleLocale;
 	}
-	
+	public Boolean getIsRequired() {
+		return isRequired;
+	}
+	public void setIsRequired(Boolean isRequired) {
+		this.isRequired = isRequired;
+	}
 	
 }
