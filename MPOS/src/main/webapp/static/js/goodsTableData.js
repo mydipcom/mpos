@@ -26,24 +26,7 @@ var GoodsTable = function () {
 	var selected = [];
 	var handleTable = function () {				
 		var table=$('#goods_table');
-		var tt=$('#ttttt');
-		 //单选
-		tt.on('change', '.checkboxes', function () {
-			alert("test");
-            $(this).parents('tr').toggleClass("active");            
-            var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.adminId;
-            var index = $.inArray(id, selected);     
-            if ( index === -1 ) {
-                selected.push( id );
-                $(this).parents('span').addClass("checked");
-                $(this).attr("checked","checked");
-            } else {
-                selected.splice( index, 1 );
-                $(this).parents('span').removeClass("checked");
-                $(this).removeAttr("checked");
-            }
-        });
+		
 		 oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
@@ -79,24 +62,19 @@ var GoodsTable = function () {
 		});		
 		 
 		//打开删除对话框前判断是否已选择要删除的行
-			$("#openDeleteadminsModal").on("click",function(event){
+			$("#openDeletegoodsModal").on("click",function(event){
 					if(selected.length==0){
 						handleAlerts("Please select the rows which you want to delete.","warning","");				
 						return false;
 					}
 				});
-			$("#openActiveadminsModal").on("click",function(event){
+			$("#openActivegoodsModal").on("click",function(event){
 				if(selected.length==0){
 					handleAlerts("Please select the rows which you want to Active.","warning","");				
 					return false;
 				}
 			});
-			$("#openDeactiveadminsModal").on("click",function(event){
-				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to deactive.","warning","");				
-					return false;
-				}
-			});
+			
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
@@ -131,7 +109,7 @@ var GoodsTable = function () {
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});	
-		$("#openEditRightModal").on("click",function(event){
+		$("#openEditgoodsModal").on("click",function(event){
 			if(selected.length>1){
 				handleAlerts("Only one row can be edited.","warning","");
 				event.stopPropagation();
@@ -213,7 +191,10 @@ var GoodsTable = function () {
 	
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {         
+	var handleAlerts = function(msg,msgType,position) {  
+		if(position==""){
+			position = $("#msg");
+		}
         Metronic.alert({
             container: position, // alerts parent container(by default placed after the page breadcrumbs)
             place: "prepent", // append or prepent in container 
@@ -227,165 +208,7 @@ var GoodsTable = function () {
         });        
 
     };
-  //添加操作
-	var AddUsers = function(){
-		event.stopPropagation();
-		$.ajax( {
-         "dataType": 'json', 
-         "type":'POST', 
-         "url": rootURI+"addUsers", 
-         "data": $('#addUsersForm').serialize(),
-         "success": function(resp,status){
-        	 if(status == "success"){  
-        		 if(resp.status){						 
-	            	 oTable.api().draw();
-	            	 handleAlerts("Added the data successfully.","success","");		            	 
-				 }
-				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"the name or email exist","danger","");						 
-				 }
-			}             	 
-         },
-         "error":function(XMLHttpRequest, textStatus, errorThrown){
-        	 alert(errorThrown);
-         }
-       });
-		//$('#add_users').modal('hide');
-    };
-    
-    var AddUsersValidation = function() {
-        var form = $('#addUsersForm');
-        var errorDiv = $('.alert-danger', form);            
-        form.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block help-block-error', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",  // validate all fields including form hidden input                
-            rules: {
-             adminId: {
-            	required: true,
-            	minlength:4,
-                		},
-             password: {
-        		
-        		required: true,
-        		minlength:6,
-        		maxlength:12,
-        	
-    				},
-        	 email: {
-        		
-        		required: true,
-        		email:true,
-        		
-    				}
-
-            },
-           invalidHandler: function (event, validator) { //display error alert on form submit              
-                errorDiv.show();                    
-            },
-
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-
-            success: function (label) {
-                label
-                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
-            },
-            onfocusout:function(element){
-            	$(element).valid();
-            },
-            submitHandler: function (form) { 
-            	errorDiv.hide();
-            	AddUsers();
-            }
-        });
-    };
-    
-	//编辑表单提交操作
-	var EditUsers= function() {
-	  $.ajax( {
-         "dataType": 'json', 
-         "type": "POST", 
-         "url": rootURI+"editUsers", 
-         "data" :$('#editUsersForm').serializeJson(),
-         "success": function(resp,status){
-        	 if(status == "success"){  
-        		 if(resp.status){
-					 selected=[];
-	            	 oTable.api().draw();
-	            	 handleAlerts("Edited the data successfully.","success","");
-				 }
-				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"the email is exist","danger","");
-				 }
-			}             	 
-         },
-         "error":function(XMLHttpRequest, textStatus, errorThrown){
-        	 alert(errorThrown);
-         }
-       });
-	 // $('#edit_users').modal('hide');
-	};
-		
-            
-	var EditUsersValidation = function() {
-		var form = $('#editUsersForm');
-		var errorDiv = $('.alert-danger', form);            
-		form.validate({
-			errorElement: 'span', //default input error message container
-			errorClass: 'help-block help-block-error', // default input error message class
-			focusInvalid: false, // do not focus the last invalid input
-			ignore: "",  // validate all fields including form hidden input                
-			rules: {
-				adminId: {
-					required: true,
-					minlength:4,
-            			},
-            	password: {
-            		minlength:6,
-            		maxlength:12,
-					},
-				email: {
-					required: true,
-					email:true,
-				}
-
-        },
-       invalidHandler: function (event, validator) { //display error alert on form submit              
-            errorDiv.show();                    
-        },
-
-        highlight: function (element) { // hightlight error inputs
-            $(element)
-                .closest('.form-group').addClass('has-error'); // set error class to the control group
-        },
-
-        unhighlight: function (element) { // revert the change done by hightlight
-            $(element)
-                .closest('.form-group').removeClass('has-error'); // set error class to the control group
-        },
-
-        success: function (label) {
-            label
-                .closest('.form-group').removeClass('has-error'); // set success class to the control group
-        },
-        onfocusout:function(element){
-        	$(element).valid();
-        },
-        submitHandler: function (form) { 
-        	errorDiv.hide();
-        	EditUsers();
-        }
-    });
-};
+  
     
 
     return {
@@ -393,8 +216,6 @@ var GoodsTable = function () {
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-        	AddUsersValidation();
-        	EditUsersValidation();        	
         }
 
     };

@@ -66,7 +66,7 @@
 			<div class="page-content">								
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 				
-			
+				<div id="msg"></div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<!-- BEGIN SEARCH FORM -->
 				<div class="portlet-body">
@@ -183,9 +183,9 @@
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i> <s:message code="product.add" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="product.edit" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActiveadminsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditgoodsModal"><i class="fa fa-pencil"></i> <s:message code="product.edit" /></a>
+								    <%-- <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActivegoodsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a> --%>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeletegoodsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
@@ -233,9 +233,7 @@
 						</div>
 						
 						</div>
-						</div>
-					</div>
-				</div>
+					
 				<!-- END PAGE CONTENT -->
 				
 			<!-- BEGIN DELETE MODAL FORM-->
@@ -265,9 +263,7 @@
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->
-			</div>		
-		</div>		
-	</div>	
+		
 	
 	
 	<!-- END CONTAINER -->
@@ -315,8 +311,8 @@
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
 	<script src="../assets/admin/pages/scripts/portfolio.js"></script>
-	<script src="../static/js/UserProfile.js"></script>
-	<script src="../static/js/managersTableData.js"></script>
+	<%-- <script src="../static/js/UserProfile.js"></script>
+	<script src="../static/js/managersTableData.js"></script> --%>
 	 <script src="../static/js/goodsTableData.js"></script>
 	<script>
 	   jQuery(document).ready(function() {       
