@@ -380,7 +380,8 @@ public class BaseDao<T> extends HibernateDaoSupport
         return page;
     }
     
-    public DaoModel findPageList(Criteria criteria, int startNo, int pageSize)
+    @SuppressWarnings("rawtypes")
+	public DaoModel findPageList(Criteria criteria, int startNo, int pageSize)
     {
     	List list = new ArrayList<>();
         CriteriaImpl impl = (CriteriaImpl)criteria;
