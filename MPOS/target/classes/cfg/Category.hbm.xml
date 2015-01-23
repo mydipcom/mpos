@@ -9,6 +9,9 @@
             <column name="category_id" />
             <generator class="identity" />
         </id>
+        <property name="type" type="java.lang.Integer">
+            <column name="type" not-null="true"/>
+        </property>
          <property name="content" type="java.lang.String">
             <column name="descr"/>
         </property>

@@ -1,7 +1,9 @@
 package com.mpos.action;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -24,15 +26,23 @@ public class CallWaiterController extends BaseController {
 	public String checkCall(){
 		JSONObject respJson = new JSONObject();
 		Map<String, CallWaiterInfo> map = SystemConfig.Call_Waiter_Map;
+		List<CallWaiterInfo> infos = new ArrayList<CallWaiterInfo>();
 		boolean status = false;
 		respJson.put("info", "no call");
 		for (String key : map.keySet()) {
 			CallWaiterInfo info = map.get(key);
 			if(info!=null&&info.getStatus()==1){
-				status = true;
-				respJson.put("info", info);
+				if(infos.size()<5){
+					if(!infos.contains(info)){
+						infos.add(info);
+					}
+				}else{
+					break;
+				}
 			}
 		}
+		status = true;
+		respJson.put("info", infos);
 		respJson.put("status", status);
 		return JSON.toJSONString(respJson);
 	}

@@ -334,7 +334,7 @@
 	</script>
 
 	<!-- END JAVASCRIPTS -->
-	
+	<c:import url="/common/notice"/>
 </body>
 <!-- END BODY -->
 </html>

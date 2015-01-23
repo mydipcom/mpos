@@ -214,6 +214,7 @@
 	   SettingTable.init("<c:url value="/"/>");   
 	});
 	</script>
+	<c:import url="/common/notice"/>
 </body>
 <!-- END BODY -->
 

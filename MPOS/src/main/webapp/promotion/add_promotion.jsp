@@ -414,7 +414,7 @@
 
 		});
 	</script>
-
+<c:import url="/common/notice"/>
 
 </body>
 <!-- END BODY -->

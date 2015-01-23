@@ -324,6 +324,6 @@
 	   //Demo.init(); // init demo features
 	   RolesTable.init("<c:url value="/"/>");	   	});
 	</script>
-</body>
+<c:import url="/common/notice"/></body>
 <!-- END BODY -->
 </html>

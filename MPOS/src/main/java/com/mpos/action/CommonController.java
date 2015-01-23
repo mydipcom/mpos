@@ -63,4 +63,11 @@ public class CommonController extends BaseController {
 		mav.setViewName("error/errpage");
 		return mav;
 	}
+	
+	@RequestMapping(value="notice",method=RequestMethod.GET)
+	public ModelAndView notice(HttpServletRequest request){
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("common/notice");
+		return mav;
+	}
 }
