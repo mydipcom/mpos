@@ -383,7 +383,6 @@ public class BaseDao<T> extends HibernateDaoSupport
     @SuppressWarnings("rawtypes")
 	public DaoModel findPageList(Criteria criteria, int startNo, int pageSize)
     {
-    	List list = new ArrayList<>();
         CriteriaImpl impl = (CriteriaImpl)criteria;
         Projection projection = impl.getProjection();        
 
@@ -399,7 +398,7 @@ public class BaseDao<T> extends HibernateDaoSupport
         {
             return new DaoModel();
         }
-        list = criteria.setFirstResult(startNo).setMaxResults(pageSize).list();
+        List list = criteria.setFirstResult(startNo).setMaxResults(pageSize).list();
         return new DaoModel(totalCount, list);
     }
 
