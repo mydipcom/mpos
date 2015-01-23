@@ -382,7 +382,7 @@ public class BaseDao<T> extends HibernateDaoSupport
     
     public DaoModel findPageList(Criteria criteria, int startNo, int pageSize)
     {
-    	List<?> list = new ArrayList<>();
+    	List list = new ArrayList<>();
         CriteriaImpl impl = (CriteriaImpl)criteria;
         Projection projection = impl.getProjection();        
 
