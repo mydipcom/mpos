@@ -321,9 +321,10 @@ private int imgIndex=0;
 		try{
 			goodsService.updateproduct(model, filesMap, request);
 			return new ModelAndView("redirect:/goods");
-		} catch (MposException  e) {
+		} catch (Exception  e) {
+			e.printStackTrace();
 			ModelAndView mav=new ModelAndView();
-			mav.addObject("errorMsg", e.getMessage());
+		/*	mav.addObject("errorMsg", e.getMessage());*/
 			mav.setViewName("goods/addgoods");
 			return mav;
 		}					
