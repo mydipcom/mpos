@@ -460,6 +460,8 @@ public class MobileAPI {
 						Integer productId = pro.getInteger("productId");
 						// 数量
 						Integer count = pro.getInteger("quantity");
+						//属性附加价格
+						Integer attributePrice = pro.getInteger("attributePrice");
 						JSONArray attributes = jsonObj.getJSONArray("attributes");
 						Tcommodity product = commodityService.getTproductByid(productId);
 						if(product == null){
@@ -482,8 +484,8 @@ public class MobileAPI {
 							}
 						}*/
 						//通过优惠列表计算商品价格
-						Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
-						if(price==null){
+						Float price = product.getPrice()+attributePrice;//calculatePrice(product.getOldPrice(), promotions);
+						if(price==null||price==0){
 							price = product.getOldPrice();
 						}
 						float oneMoney = 0;
