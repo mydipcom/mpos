@@ -83,6 +83,7 @@
 						<form:form id="editGoodsForm"  action="editgoods" commandName="product" cssClass="form-horizontal" name="editGoodsForm" method="POST">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
+								<lable>There are some errors below</lable>
 									<button class="close" data-close="alert"></button>									
 								</div>
 								<!--Begin Multi-language Form   -->
@@ -211,7 +212,7 @@
 											<label class="control-label col-md-3"><s:message code="product.price"/><span class="required"> * </span></label>
 											<div class="col-md-9">
 												<form:input path="productId" type="hidden" id="productid"/>
-												<form:input path="price" cssClass="form-control" placeholder="0.00"/>												
+												<form:input path="price" cssClass="form-control"  id="price" onblur="addrules()" placeholder="0.00"/>												
 											</div>
 										</div>
 									</div>

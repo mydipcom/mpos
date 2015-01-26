@@ -1,4 +1,13 @@
 var rootURI="/";
+
+var addrules = function(){
+	var price=$('#price').val();
+	var re=/^[0-9]*$/;
+	if(price!=''&&re.test(price)){
+		 $("#addGoodsForm input[name='oldPrice']").rules("add",{min: price});
+	}
+}
+
 var Addgoods = function () {
 	
 	$('#chooseSpecCategory').on('change',function(e){

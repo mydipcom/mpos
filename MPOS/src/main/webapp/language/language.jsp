@@ -91,7 +91,7 @@
 			
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 
-				
+				<div id="msg"></div>
 
 				<!-- END PAGE TITLE & BREADCRUMB-->
 

@@ -207,7 +207,7 @@
 										<div class="form-group">
 											<label class="control-label col-md-3"><s:message code="product.price"/><span class="required"> * </span></label>
 											<div class="col-md-9">
-												<form:input path="price" cssClass="form-control" placeholder="0.00"/>												
+												<form:input path="price" cssClass="form-control" id="price"  onblur="addrules()" placeholder="0.00"/>												
 											</div>
 										</div>
 									</div>

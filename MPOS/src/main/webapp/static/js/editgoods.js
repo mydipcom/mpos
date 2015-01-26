@@ -11,6 +11,13 @@ function getRootPath(){
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
     return(projectName);
 }
+var addrules = function(){
+	var price=$('#price').val();
+	var re=/^[0-9]*$/;
+	if(price!=''&&re.test(price)){
+		 $("#editGoodsForm input[name='oldPrice']").rules("add",{min: price});
+	}
+}
 var Editgoods = function () {
 
     var handleImages = function() {

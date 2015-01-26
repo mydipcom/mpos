@@ -14,6 +14,7 @@ public class LanguageDao extends BaseDao<Tlanguage>{
 		String hql="from Tlanguage where local=?";
 		Query query=currentSession().createQuery(hql);
 		query.setParameter(0, local);
+		@SuppressWarnings("unchecked")
 		List<Tlanguage> language= query.list();
 		if(language!=null){
 			return language.get(0);

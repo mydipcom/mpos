@@ -272,25 +272,21 @@ public class MenuServiceImpl implements MenuService {
 		List<Tmenu> tmenus = menuDao.getNoChildren();
 		if(tmenus!=null&&tmenus.size()>0){
 			for (Tmenu tmenu : tmenus) {
-				Map<String, Object> ssMap=new HashMap<String, Object>();
-				ssMap.put("language", language);
+				/*Map<String, Object> ssMap=new HashMap<String, Object>();
+				ssMap.put("language", language.getId());
 				ssMap.put("entityId", tmenu.getMenuId());
 				ssMap.put("tableName",SystemConstants.TABLE_NAME_MENU);
 				ssMap.put("tableField",SystemConstants.TABLE_FIELD_TITLE);
 				TlocalizedField localizedField=new TlocalizedField();
-				List<TlocalizedField> localizedFieldlist= localizedFieldDao.find("from TlocalizedField where language=:language and entityId=:entityId and tableName=:tableName and tableField=:tableField", ssMap);
-				if(localizedFieldlist.size()>0){
-					localizedField=localizedFieldlist.get(0);
-				}
+				List<TlocalizedField> localizedFieldlist= localizedFieldDao.find("from TlocalizedField where language=:language and entityId=:entityId and tableName=:tableName and tableField=:tableField", ssMap);*/
+				TlocalizedField localizedField=localizedFieldDao.getLocalizedValue(tmenu.getMenuId(), language.getId(), SystemConstants.TABLE_NAME_MENU, SystemConstants.TABLE_FIELD_TITLE);
 				MenuModel model = new MenuModel();
 				model.setId(tmenu.getMenuId());
 				if (tmenu.getPid() == 0) {
-					/*Boolean t=localizedField.getLocaleValue().isEmpty();*/
-					/*Boolean s=(localizedField.getLocaleValue()==null);*/
-					if(localizedField.getLocaleValue()==null){
-						model.setTitle(tmenu.getTitle());
+					if(localizedField!=null&&!localizedField.getLocaleValue().isEmpty()){
+						model.setTitle(localizedField.getLocaleValue());
 					}else{
-					model.setTitle(localizedField.getLocaleValue());
+						model.setTitle(tmenu.getTitle());
 					}
 				} else {
 					model.setTitle(loadTitle(tmenu, localizedField.getLocaleValue(),language));
@@ -307,28 +303,21 @@ public class MenuServiceImpl implements MenuService {
 	}
 	private String loadTitle(Tmenu menu, String title, Tlanguage language) {
 		Tmenu parent = menuDao.get(menu.getPid());
-		// String res = "";
+		TlocalizedField local_title = localizedFieldDao.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+		if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
+			parent.setTitle(local_title.getLocaleValue());
+		}
 		if (parent != null && parent.getMenuId() != null) {
-			Map<String, Object> ssMap=new HashMap<String, Object>();
-			ssMap.put("language", language);
-			ssMap.put("entityId", parent.getMenuId());
-			ssMap.put("tableName",SystemConstants.TABLE_NAME_MENU);
-			ssMap.put("tableField",SystemConstants.TABLE_FIELD_TITLE);
-			
-			TlocalizedField localizedField=new TlocalizedField();
-			List<TlocalizedField> localizedFieldlist= localizedFieldDao.find("from TlocalizedField where language=:language and entityId=:entityId and tableName=:tableName and tableField=:tableField", ssMap);
-			if(localizedFieldlist.size()>0){
-				localizedField=localizedFieldlist.get(0);
-			}
-			if(title==null){
-				title=parent.getTitle() + " >> " + menu.getTitle();
-			}else if(localizedField.getLocaleValue()==null){
+			if (!title.isEmpty()&&title!=null) {
 				title = parent.getTitle() + " >> " + title;
 			}else {
-				title = localizedField.getLocaleValue() + " >> " + title;
+				
+				title = parent.getTitle() + " >> " + menu.getTitle();
+			}
+			if(parent.getPid()!=0){
+				return loadTitle(parent, title,language);
 			}
 			
-			return loadTitle(parent, title,language);
 		}
 		// System.out.println(title);
 		return title;
