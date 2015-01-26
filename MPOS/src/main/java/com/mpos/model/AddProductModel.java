@@ -21,7 +21,7 @@ public class AddProductModel implements java.io.Serializable{
 	private String unitName;
 	private Float oldPrice;
 	private Float price;
-	private int sku;
+	private Integer sku;
 	private boolean recommend=false;
 	private Integer sort;
 	private boolean status=true;
@@ -53,11 +53,13 @@ public class AddProductModel implements java.io.Serializable{
 		this.specid = specid;
 	}
 
-	public int getSku() {
+	
+
+	public Integer getSku() {
 		return sku;
 	}
 
-	public void setSku(int sku) {
+	public void setSku(Integer sku) {
 		this.sku = sku;
 	}
 

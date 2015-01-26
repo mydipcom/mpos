@@ -715,24 +715,16 @@ var Editgoods = function () {
 	                	number:true				            	
 	    			},
 	    			oldPrice: {
-	    				required: true,
 	                	number:true
 	    			},
-	    			unitName: {
-			            required: true,
-				        maxlength:4
-			    	},
 			    	productName: {
 					   required: true,
 					   maxlength:20
 					},
 					shortDescr: {
 					  required: true,							
-					},												  
-	    			sort: {	        		
-	        		  required: true,
-	        		  digits:true        		
-	    			}                   
+					}											  
+	    			             
                 },
                 errorPlacement: function(error, element) {
                     if ( element.is(":radio") )

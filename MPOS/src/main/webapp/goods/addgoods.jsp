@@ -107,7 +107,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label class="control-label col-md-2"><s:message code="product.product.name"/><span class="required"> * </span></label>
+																<label class="control-label col-md-2"><s:message code="product.product.name"/></label>
 																<div class="col-md-5">
 																	<form:input path="productName_locale[${status.index}].localeValue" cssClass="form-control"/>
 																	<form:hidden path="productName_locale[${status.index}].language.id"  value="${lan.id}"/>													                
@@ -141,7 +141,7 @@
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
-																<label class="control-label col-md-2"><s:message code="product.unitname"/><span class="required"> * </span></label>
+																<label class="control-label col-md-2"><s:message code="product.unitname"/></label>
 																<div class="col-md-5">
 																	<form:input path="unitName_locale[${status.index}].localeValue" cssClass="form-control"/>
 																	<form:hidden path="unitName_locale[${status.index}].language.id"  value="${lan.id}"/>
@@ -186,7 +186,7 @@
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
-																<label class="control-label col-md-2"><s:message code="product.unitname"/><span class="required"> * </span></label>
+																<label class="control-label col-md-2"><s:message code="product.unitname"/></label>
 																<div class="col-md-5">
 																	<form:input path="unitName" cssClass="form-control"/>
 																</div>
@@ -202,54 +202,7 @@
 							
 								<h3 class="form-section">Basic Info</h3>
 								<div class="row">
-									<!--/span-->
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="product.price"/><span class="required"> * </span></label>
-											<div class="col-md-9">
-												<form:input path="price" cssClass="form-control" id="price"  onblur="addrules()" placeholder="0.00"/>												
-											</div>
-										</div>
-									</div>
-									<!--/span-->
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="product.oldprice"/><span class="required"> * </span></label>
-											<div class="col-md-9">
-												<form:input path="oldPrice" cssClass="form-control" placeholder="0.00"/>												
-											</div>
-										</div>
-									</div>
-
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="product.recommend"/></label>
-											<div class="col-md-9">
-												<div class="radio-list">
-													<label class="radio-inline"> 
-													<form:radiobutton path="recommend" value="true"/> True
-													</label> 
-													<label class="radio-inline"> 
-													<form:radiobutton path="recommend" value="false"/> False
-													</label>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="product.sort"/><span class="required"> * </span></label>
-											<div class="col-md-9">
-												<form:input path="sort" cssClass="form-control"/>												
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">										
+								<div class="col-md-6">										
 										<div class="form-group">
 											<label class="control-label col-md-3"><s:message code="product.category.name"/><span class="required"> * </span></label>
 											<div class="col-md-9">
@@ -264,6 +217,38 @@
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="row">
+									<!--/span-->
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label col-md-3"><s:message code="product.price"/><span class="required"> * </span></label>
+											<div class="col-md-9">
+												<form:input path="price" cssClass="form-control" id="price"  onblur="addrules()" placeholder="0.00"/>												
+											</div>
+										</div>
+									</div>
+									<!--/span-->
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label col-md-3"><s:message code="product.oldprice"/></label>
+											<div class="col-md-9">
+												<form:input path="oldPrice" cssClass="form-control" placeholder="0.00"/>												
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<div class="row">
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label col-md-3"><s:message code="product.sort"/></label>
+											<div class="col-md-9">
+												<form:input path="sort" cssClass="form-control"/>												
+											</div>
+										</div>
+									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label col-md-3"><s:message code="product.sku"/></label>
@@ -271,8 +256,28 @@
 												<form:input path="sku" cssClass="form-control"/>												
 											</div>
 										</div>
-									</div>																	
+									</div>	
+									</div>
+									<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label col-md-3"><s:message code="product.recommend"/></label>
+											<div class="col-md-9">
+												<div class="radio-list">
+													<label class="radio-inline"> 
+													<form:radiobutton path="recommend" value="true"/> True
+													</label> 
+													<label class="radio-inline"> 
+													<form:radiobutton path="recommend" value="false"/> False
+													</label>
+												</div>
+											</div>
+										</div>
+																									
 								</div>
+								</div>
+
+								
 								 <div class="portlet light bg-inverse form-fit">
 									<div class="portlet-title">
 										<div class="caption">

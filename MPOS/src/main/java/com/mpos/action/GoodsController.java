@@ -128,15 +128,12 @@ public class GoodsController extends BaseController{
 			Object[] objArr=pagingData.getAaData();
 			for (int i = 0; i < objArr.length; i++) {
 				Tproduct product=(Tproduct)objArr[i];
-				TlocalizedField productNameLocal=localizedFieldService.getLocalizedField(product.getId(), 
-						local, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME);
-				if(productNameLocal!=null){
-					product.setProductName(productNameLocal.getLocaleValue());
+				if(product.getOldPrice()==null){
+					float price=(float) 0.0;
+					product.setOldPrice(price);
 				}
-				TlocalizedField categoryNameLocal=localizedFieldService.getLocalizedField(product.getTmenu().getMenuId(), 
-						local, SystemConstants.TABLE_NAME_MENU, SystemConstants.TABLE_FIELD_TITLE);
-				if (categoryNameLocal!=null) {
-					product.getTmenu().setTitle(categoryNameLocal.getLocaleValue());
+				if(product.getSort()==null){
+					product.setSort(0);
 				}
 				objArr[i]=product;		
 			}

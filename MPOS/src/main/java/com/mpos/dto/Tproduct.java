@@ -22,7 +22,7 @@ public class Tproduct implements java.io.Serializable {
 	private float price;
 	private Integer sku;
 	private boolean recommend;
-	private int sort;
+	private Integer sort;
 	private boolean status;
 	private Tmenu tmenu;
 	private Tcategory tcategory;
@@ -44,7 +44,7 @@ public class Tproduct implements java.io.Serializable {
 	public Tproduct(Tmenu tmenu,  Tcategory tcategory, String productName,
 			String shortDescr, String fullDescr, String unitName,
 			Float oldPrice, float price, Integer sku, boolean recommend,
-			int sort,boolean status) {
+			Integer sort,boolean status) {
 		this.tmenu = tmenu;
 		this.tcategory = tcategory;
 		this.productName = productName;
@@ -204,11 +204,16 @@ public class Tproduct implements java.io.Serializable {
 		this.recommend = recommend;
 	}
 
-	public int getSort() {
-		return this.sort;
+	
+
+
+	public Integer getSort() {
+		return sort;
 	}
 
-	public void setSort(int sort) {
+
+
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
 

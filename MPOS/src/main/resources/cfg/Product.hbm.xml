@@ -37,8 +37,8 @@
         <property name="recommend" type="boolean">
             <column name="recommend" not-null="true" />
         </property>
-        <property name="sort" type="int">
-            <column name="sort" not-null="true" />
+        <property name="sort" type="java.lang.Integer">
+            <column name="sort"/>
         </property>
          <property name="specid" type="int">
             <column name="spec_id" />

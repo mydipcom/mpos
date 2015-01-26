@@ -99,7 +99,7 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 	}
 
 
-	@Override
+	
 	public TlocalizedField getLocalizedValue(Integer entityId,
 			Integer languageId, String tableName, String fieldName) {
 		// TODO Auto-generated method stub

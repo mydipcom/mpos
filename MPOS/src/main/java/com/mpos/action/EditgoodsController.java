@@ -67,7 +67,7 @@ import com.mpos.service.ProductAttributeService;
 import com.mpos.service.ProductReleaseService;
 
 @Controller
-
+@Scope("session")
 public class EditgoodsController extends BaseController{
 @Autowired
 private GoodsService goodsService;

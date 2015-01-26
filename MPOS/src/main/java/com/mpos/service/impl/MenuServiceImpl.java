@@ -161,7 +161,7 @@ public class MenuServiceImpl implements MenuService {
 		return models;
 	}
 	
-	@Override
+	
 	public PagingData loadMenuList(DataTableParamter rdtp, String local) {
 		PageTempModel model = new PageTempModel();
 		model = loadData(rdtp);
@@ -232,7 +232,7 @@ public class MenuServiceImpl implements MenuService {
 		return model;
 	}
 	
-	@Override
+	
 	public List<MenuModel> loadMenu(String local) {
 		List<Tmenu> menus = menuDao.LoadAll();
 		Tlanguage language = languageDao.findUnique("local", local);

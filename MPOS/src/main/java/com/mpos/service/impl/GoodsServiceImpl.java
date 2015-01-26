@@ -179,8 +179,13 @@ public class GoodsServiceImpl implements GoodsService{
 			product.setOldPrice(model.getOldPrice());		
 			product.setUnitName(model.getUnitName());
 			product.setRecommend(model.isRecommend());
-			product.setSku(model.getSku());
+			
+			if (model.getSku()!=null) {
+				product.setSku(model.getSku());
+			}
+			if(model.getSort()!=null){
 			product.setSort(model.getSort());
+			}
 			product.setStatus(true);
 			product.setTmenu(model.getMenu());
 			if(model.getAttributeGroup().getCategoryId()!=0){
