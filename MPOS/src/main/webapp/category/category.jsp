@@ -239,15 +239,16 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-2"><s:message code="category.type" /></label>
-									<div class="col-md-10">
+									<label class="control-label col-md-4"><s:message code="category.type" /></label>
+									<div class="col-md-8">
 										<div class="radio-list">
 											<label class="radio-inline"><input type="radio" name="type" value="0" checked/><s:message code="category.type.specification" /></label>
 											<label class="radio-inline"><input type="radio" name="type" value="1"/><s:message code="category.type.order" /> </label>											
 										</div>																																							
 									</div>
-								</div>	
-								<div class="form-group">
+								</div>
+								<input type="hidden" name="status" value="true"/>	
+								<%-- <div class="form-group">
 									<label class="control-label col-md-2"><s:message code="category.status" /></label>
 									<div class="col-md-10">
 										<div class="radio-list">
@@ -255,7 +256,7 @@
 											<label class="radio-inline"><input type="radio" name="status" value="false"/>False </label>											
 										</div>																																							
 									</div>
-								</div>													
+								</div> --%>													
 								
 							</div>
 							<div class="form-actions" style="border-top:0;">
@@ -352,15 +353,16 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-2"><s:message code="category.type" /></label>
-									<div class="col-md-10">
+									<label class="control-label col-md-4"><s:message code="category.type" /></label>
+									<div class="col-md-8">
 										<div class="radio-list">
 											<label class="radio-inline"><input type="radio" name="type" value="0" checked/><s:message code="category.type.specification" /></label>
 											<label class="radio-inline"><input type="radio" name="type" value="1"/><s:message code="category.type.order" /> </label>											
 										</div>																																							
 									</div>
 								</div>
-								<div class="form-group">
+								<input type="hidden" name="status" value="true"/>
+								<%-- <div class="form-group">
 									<label class="control-label col-md-2"><s:message code="category.status" /></label>
 									<div class="col-md-10">
 										<div class="radio-list">
@@ -368,7 +370,7 @@
 											<label class="radio-inline"><input type="radio" name="status" value="false"/>False </label>											
 										</div>																																							
 									</div>
-								</div>													
+								</div> --%>													
 								
 							</div>
 							<div class="form-actions" style="border-top:0;">

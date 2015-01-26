@@ -270,6 +270,8 @@ public class CategoryController extends BaseController {
 					if(fieldName.equals(SystemConstants.TABLE_FIELD_TITLE)){
 						if(localValue!=null&&!localValue.getLocaleValue().isEmpty()){
 							attribute.setTitleLocal(localValue.getLocaleValue());
+						}else{
+							attribute.setTitleLocal(attribute.getTitle());
 						}
 					}
 				}
