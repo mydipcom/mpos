@@ -15,6 +15,7 @@ public class AttributeModel implements Serializable{
 	private static final long serialVersionUID = -5184544357972159681L;
 	private Boolean isRequired;
 	private Integer attributeId;
+	private Integer attributeType;
 	private String attributeTitle;
 	private Object attributeTitleLocale;
 	private List<ValueModel> attributeValue;
@@ -47,6 +48,12 @@ public class AttributeModel implements Serializable{
 	}
 	public void setAttributeValue(List<ValueModel> attributeValue) {
 		this.attributeValue = attributeValue;
+	}
+	public Integer getAttributeType() {
+		return attributeType;
+	}
+	public void setAttributeType(Integer attributeType) {
+		this.attributeType = attributeType;
 	}
 	
 	

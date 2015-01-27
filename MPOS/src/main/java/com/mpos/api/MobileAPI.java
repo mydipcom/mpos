@@ -99,6 +99,9 @@ public class MobileAPI {
 	 * 活动类型 满减
 	 */
 	public static final int PROMOTION_TYPE_FULL_CUT = 3;
+	
+	public static final int SPEC_TYPE=0;
+	public static final int ORDER_TYPE=1;
 	@Autowired
 	private TableService tableService;
 	@Autowired
@@ -806,7 +809,9 @@ public class MobileAPI {
 				attribute.setAttributeTitle(attributeService.getCategoryAttribute(tproductAttribute.getId()).getTitle());
 				attribute.setAttributeTitleLocale(setLocal(attributeTitleList));
 				TcategoryAttribute tca = attributeService.getCategoryAttribute(tproductAttribute.getId());
+				Integer attType = tca.getCategoryId().getType();
 				attribute.setIsRequired(tca.getRequired());
+				attribute.setAttributeType(attType);
 				List<ValueModel> values = new ArrayList<ValueModel>();
 				if(tproductAttribute.getAttributeValue()!=null){
 					String[] valueIdStrs = tproductAttribute.getAttributeValue().split(",");
@@ -818,7 +823,7 @@ public class MobileAPI {
 							vm.setPrice(0.0f);
 							vm.setValueId(value.getValueId());
 							String pr = tproductAttribute.getAttributePrice();
-							if(pr!=null&&!pr.isEmpty()){
+							if(attType==ORDER_TYPE&&pr!=null&&!pr.isEmpty()){
 								String[] ps = pr.split(",");
 								if(valueInts.length==ps.length){
 									if(ps[value.getSort()]!=null&&!ps[value.getSort()].isEmpty()){
