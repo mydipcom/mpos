@@ -61,7 +61,7 @@ public class CategoryAttributeServiceImpl implements CategoryAttributeService {
 		List<TlocalizedField> valuesLocaleList=attribute.getValues_locale();
 		for (TlocalizedField localizedField : valuesLocaleList) {
 			String localeStr=localizedField.getLocaleValue();
-			if(localeStr!=null){
+			if(localeStr!=null&&!localeStr.isEmpty()){
 				String[] valueArr=localeStr.split(",");
 				for (int i = 0; i < valueArr.length; i++) {
 					TattributeValue attributeValue=attributeValues.get(i);
@@ -131,7 +131,7 @@ public class CategoryAttributeServiceImpl implements CategoryAttributeService {
 				List<TlocalizedField> valuesLocaleList=attribute.getValues_locale();
 				for (TlocalizedField localizedField : valuesLocaleList) {
 					String localeStr=localizedField.getLocaleValue();
-					if(localeStr!=null){
+					if(localeStr!=null&&!localeStr.isEmpty()){
 						String[] valueArr=localeStr.split(",");
 						for (int j = 0; j < attributeValues.size(); j++) {
 							TattributeValue attributeValue=attributeValues.get(j);
