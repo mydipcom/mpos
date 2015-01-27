@@ -316,8 +316,8 @@ var CategoryTable = function () {
 		        ],
 		        "columns": [
 		               {"orderable": false },		 	           
-		 	           { title: "Title",   data: "title" },
-		 	           { title: "Type",  
+		 	           { /*title: "Title",*/   data: "title" },
+		 	           { /*title: "Type",*/  
 		 	        	'render':function(data,type,row){
 		 	        				var tem = row.type;
 		 	        				var str = '';
@@ -333,9 +333,9 @@ var CategoryTable = function () {
 		 	        				return str;
 		 	        			}
 		 	           },
-		 	           { title: "Sort", data: "sort" },		 	           
-		 	           { title: "Required", data: "required" },
-		 	           { title: "Values",data: "values"}
+		 	           {/* title: "Sort",*/ data: "sort" },		 	           
+		 	           { /*title: "Required",*/ data: "required" },
+		 	           { /*title: "Values",*/data: "values"}
 		 	        ],
      	        "serverSide": true,
      	        "serverMethod": "GET",

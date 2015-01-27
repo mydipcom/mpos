@@ -114,9 +114,9 @@ var MenuTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id"},
-	           { title: "Name",    data: "title" },
-	           { title: "Sort",    data: "sort"}
+	           { /*title: "ID", */  data: "id"},
+	           { /*title: "Name",*/    data: "title" },
+	           { /*title: "Sort", */   data: "sort"}
 	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

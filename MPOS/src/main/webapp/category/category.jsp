@@ -433,11 +433,11 @@
 												<th class="table-checkbox">
 													<input type="checkbox" class="attr-checkable" data-set="#att_table .checkboxes"/>
 												</th>											    
-												<th>Title</th>
-												<th>Type</th>												
-												<th>Sort</th>
-												<th>Required</th>
-												<th>Attribute Values</th>
+												<th><s:message code="attribute.title" /></th>
+												<th><s:message code="attribute.type" /></th>												
+												<th><s:message code="attribute.sort" /></th>
+												<th><s:message code="attribute.required" /></th>
+												<th><s:message code="attribute.values" /></th>
 											</tr>
 										</thead>
 																							

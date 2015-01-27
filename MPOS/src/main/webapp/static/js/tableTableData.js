@@ -53,11 +53,11 @@ var TableTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id","bVisible":false},
-	           { title: "Table Name",    data: "tableName" },
-	           { title: "Seat Numbers",    data: "seatingNumber"},
-	           { title: "Description",    data: "descr" },
-	           { title: "Action" ,"class":"center"}
+	           { /*title: "ID",*/   data: "id","bVisible":false},
+	           { /*title: "Table Name",*/    data: "tableName" },
+	           { /*title: "Seat Numbers",*/    data: "seatingNumber"},
+	           { /*title: "Description",*/    data: "descr" },
+	           { /*title: "Action" ,*/"class":"center"}
 	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

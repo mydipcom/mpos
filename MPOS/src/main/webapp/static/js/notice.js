@@ -37,11 +37,12 @@ function getHtml(infos,index){
 	 if(call_type == 0){
 		 call_info = "I Want to Pay!";
 	 }
-	 html ='<div style="color:green">Number:'+appId+'</div>'
-		+'<div style="color:green">Type:'+call_info+'</div>'
-		+'<div style="color:green">Time:'+call_time+'</div>'
-		+'<div style="text-align: right;">'
-		+'<button type="button" class="btn blue" onclick="dealCall(\''+appId+'\')">OK</button>'
+	 html ='<div style="color:black">Number:'+appId+'</div>'
+		+'<div style="color:black">Type:'+call_info+'</div>'
+		+'<div style="color:black">Time:'+call_time+'</div>'
+		+'<div style="border: 1px solid #cbcbcb;"></div>'
+		+'<div style="text-align: center;margin-top:20px">'
+		+'<button type="button" style="width:80px;height:22px;line-height:20px;background-color:green" onclick="dealCall(\''+appId+'\')">OK</button>'
 		+'</div>';
 	 return html;
 }

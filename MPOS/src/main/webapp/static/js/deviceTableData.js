@@ -46,9 +46,9 @@ var DeviceTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id","bVisible":false},
-	           { title: "Table Name",    data: "tableName" },
-	           { title: "Status",    
+	           { /*title: "ID", */  data: "id","bVisible":false},
+	           {/* title: "Table Name",*/    data: "tableName" },
+	           { /*title: "Status", */   
 	        	   		"render":function(data,type,row){
 	        	   			var res ='';
 	        	   			var tem = row.onlineStatus;
@@ -60,9 +60,9 @@ var DeviceTable = function () {
                			return res;
 	        	   		}
 	           },
-	           { title: "Data Version",    data: "dataVersion" },
-	           { title: "Last Report Time", data:"lastReportTimeStr"},
-	           { title: "Last  Sync Time", data:"lastSyncTimeStr"}
+	           { /*title: "Data Version",*/    data: "dataVersion" },
+	           { /*title: "Last Report Time",*/ data:"lastReportTimeStr"},
+	           { /*title: "Last  Sync Time",*/ data:"lastSyncTimeStr"}
 	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
