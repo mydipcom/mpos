@@ -44,6 +44,7 @@ import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Torder;
 import com.mpos.dto.TorderItem;
+import com.mpos.dto.TproductAttribute;
 import com.mpos.dto.TproductImage;
 import com.mpos.dto.TproductRelease;
 import com.mpos.dto.Tpromotion;
@@ -51,10 +52,12 @@ import com.mpos.dto.Ttable;
 import com.mpos.model.AttributeModel;
 import com.mpos.model.CallWaiterInfo;
 import com.mpos.model.ProductModel;
+import com.mpos.model.ValueModel;
 import com.mpos.service.AttributeValueService;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CommodityService;
 import com.mpos.service.DeviceService;
+import com.mpos.service.GoodsAttributeService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
 import com.mpos.service.LanguageService;
@@ -62,6 +65,7 @@ import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
 import com.mpos.service.OrderItemService;
 import com.mpos.service.OrderService;
+import com.mpos.service.ProductAttributeService;
 import com.mpos.service.ProductReleaseService;
 import com.mpos.service.PromotionService;
 import com.mpos.service.TableService;
@@ -101,6 +105,8 @@ public class MobileAPI {
 	private DeviceService deviceService;
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private ProductAttributeService productAttributeService;
 	@Autowired
 	private CommodityService commodityService;
 	@Autowired
@@ -460,9 +466,7 @@ public class MobileAPI {
 						Integer productId = pro.getInteger("productId");
 						// 数量
 						Integer count = pro.getInteger("quantity");
-						//属性附加价格
-						Integer attributePrice = pro.getInteger("attributePrice");
-						JSONArray attributes = jsonObj.getJSONArray("attributes");
+						JSONArray attributes = pro.getJSONArray("attributes");
 						Tcommodity product = commodityService.getTproductByid(productId);
 						if(product == null){
 							respJson.put("status", false);
@@ -484,10 +488,35 @@ public class MobileAPI {
 							}
 						}*/
 						//通过优惠列表计算商品价格
-						Float price = product.getPrice()+attributePrice;//calculatePrice(product.getOldPrice(), promotions);
+						Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
 						if(price==null||price==0){
 							price = product.getOldPrice();
 						}
+						if(attributes!=null){
+							for (Object object2 : attributes) {
+								JSONObject o = (JSONObject) object2;
+								Integer attrId = o.getInteger("attributeId");
+								TproductAttribute att = productAttributeService.getAttributeByproductidAndattributeid(productId, attrId);
+								String valueIds = o.getString("valueIds");
+								if(att!=null){
+									String prices = att.getPrice();
+									if((prices!=null&&!prices.isEmpty())&&(valueIds!=null&&!valueIds.isEmpty())){
+										String[] valueIdss = valueIds.split(",");
+										String[] pr = prices.split(",");
+										Integer[] ids = ConvertTools.stringArr2IntArr(valueIdss);
+										for (Integer id : ids) {
+											TattributeValue value = attributeValueService.getAttributeValue(id);
+											if(value.getSort()<=pr.length){
+												if(pr[value.getSort()]!=null&&!pr[value.getSort()].isEmpty()){
+													price += Float.valueOf(pr[value.getSort()]);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						
 						float oneMoney = 0;
 						float oneOldMoney = 0;
 						oneMoney = price*count;
@@ -772,54 +801,41 @@ public class MobileAPI {
 		if (attributes != null && attributes.size() > 0) {
 			for (TgoodsAttribute tproductAttribute : attributes) {
 				AttributeModel attribute = new AttributeModel();
-				List<TlocalizedField> attributeValueList = new ArrayList<TlocalizedField>();
-				List<Tlanguage> lans = languageService.loadAllTlanguage();
-				if(lans!=null&&lans.size()>0){
-					for (Tlanguage tlanguage : lans) {
-						TlocalizedField tf = new TlocalizedField();
-						tf.setLanguage(tlanguage);
-						tf.setLocaleValue("");
-						attributeValueList.add(tf);
-					}
-				}
-				String value_tem = "";
-				String values = tproductAttribute.getAttributeValue();
-				if(values!=null&&!values.isEmpty()){
-					String[] valueIdStrs = values.split(",");
-					Integer[] valueIdInts = ConvertTools.stringArr2IntArr(valueIdStrs);
-					if(valueIdInts!=null&&valueIdInts.length>0){
-						for (int i = 0; i < valueIdInts.length; i++) {
-							TattributeValue attributeValue= attributeValueService.getAttributeValue(valueIdInts[i]);
-							if(attributeValue.getValue()!=null&&!attributeValue.getValue().isEmpty()){
-								value_tem +=attributeValue.getValue()+",";
-							}
-							List<TlocalizedField> ones = localizedFieldService.getLocalizedField(valueIdInts[i], SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE, SystemConstants.TABLE_FIELD_VALUE);
-							if(ones!=null&&ones.size()>0){
-								for (int j = 0; j < ones.size(); j++) {
-									TlocalizedField loc = ones.get(j);
-									for (int j2 = 0; j2 < attributeValueList.size(); j2++) {
-										TlocalizedField loca = attributeValueList.get(j2);
-										if(loca.getLanguage().getId()==loc.getLanguage().getId()){
-											String str = loca.getLocaleValue();
-											str +=loc.getLocaleValue()+",";
-											loca.setLocaleValue(str);
-											break;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
 				List<TlocalizedField> attributeTitleList = localizedFieldService.getLocalizedField(tproductAttribute.getId(), SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
 				attribute.setAttributeId(tproductAttribute.getId());
-				attribute.setAttributePrice(tproductAttribute.getAttributePrice());
-				attribute.setAttributeValue(value_tem);
-				attribute.setAttributeValueLocale(setLocal(attributeValueList));
 				attribute.setAttributeTitle(attributeService.getCategoryAttribute(tproductAttribute.getId()).getTitle());
 				attribute.setAttributeTitleLocale(setLocal(attributeTitleList));
 				TcategoryAttribute tca = attributeService.getCategoryAttribute(tproductAttribute.getId());
 				attribute.setIsRequired(tca.getRequired());
+				List<ValueModel> values = new ArrayList<ValueModel>();
+				if(tproductAttribute.getAttributeValue()!=null){
+					String[] valueIdStrs = tproductAttribute.getAttributeValue().split(",");
+					Integer[] valueInts = ConvertTools.stringArr2IntArr(valueIdStrs);
+					if(valueInts!=null&&valueInts.length>0){
+						for (Integer valueId : valueInts) {
+							TattributeValue value = attributeValueService.getAttributeValue(valueId);
+							ValueModel vm = new ValueModel();
+							vm.setPrice(0.0f);
+							vm.setValueId(value.getValueId());
+							String pr = tproductAttribute.getAttributePrice();
+							if(pr!=null&&!pr.isEmpty()){
+								String[] ps = pr.split(",");
+								if(valueInts.length==ps.length){
+									if(ps[value.getSort()]!=null&&!ps[value.getSort()].isEmpty()){
+										vm.setPrice(Float.valueOf(ps[value.getSort()]));
+									}
+								}
+							}
+							vm.setValue(value.getValue());
+							List<TlocalizedField> valueList = localizedFieldService.getLocalizedField(value.getValueId(), SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE, SystemConstants.TABLE_FIELD_VALUE);
+							vm.setValueLocale(setLocal(valueList));
+							values.add(vm);
+						}
+						
+					}
+					
+				}
+				attribute.setAttributeValue(values);
 				attributeModels.add(attribute);
 			}
 		}

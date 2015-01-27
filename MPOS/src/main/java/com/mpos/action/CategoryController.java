@@ -82,7 +82,7 @@ public class CategoryController extends BaseController {
 				if(categoryDescrLocaleList!=null){
 					category.setCategoryDescr_locale(categoryDescrLocaleList);
 				}
-				changeLocal(getLocale(request),category,SystemConstants.TABLE_NAME_CATEGORY, SystemConstants.TABLE_FIELD_NAME, SystemConstants.TABLE_FIELD_DESCR);
+				//changeLocal(getLocale(request),category,SystemConstants.TABLE_NAME_CATEGORY, SystemConstants.TABLE_FIELD_NAME, SystemConstants.TABLE_FIELD_DESCR);
 			}			
 		}else{
 			pagingData.setAaData(new Object[]{});
@@ -219,9 +219,9 @@ public class CategoryController extends BaseController {
 				categoryAttribute.setValues_locale(valuesLocaleList);
 				
 				
-				changeTitleLocal(getLocale(request),categoryAttribute,SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
+				//changeTitleLocal(getLocale(request),categoryAttribute,SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
 				
-				changeLocal(getLocale(request),categoryAttribute,SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE, SystemConstants.TABLE_FIELD_VALUE);
+				//changeLocal(getLocale(request),categoryAttribute,SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE, SystemConstants.TABLE_FIELD_VALUE);
 			}			
 		}
 		pagingData.setSEcho(dtp.sEcho);			

@@ -82,8 +82,8 @@ var CategoryTable = function () {
             "columns": [
                {"orderable": false },
 	           { data: "categoryId"},
-	           { data: "nameLocal" },
-	           { data: "contentLocal" },
+	           { data: "name" },
+	           { data: "content" },
 	           { 'render':function(data,type,row){
 	               	if(row.type==0){
 	            		return "Spec Attribute Group";
@@ -316,7 +316,7 @@ var CategoryTable = function () {
 		        ],
 		        "columns": [
 		               {"orderable": false },		 	           
-		 	           { title: "Title",   data: "titleLocal" },
+		 	           { title: "Title",   data: "title" },
 		 	           { title: "Type",  
 		 	        	'render':function(data,type,row){
 		 	        				var tem = row.type;
@@ -335,7 +335,7 @@ var CategoryTable = function () {
 		 	           },
 		 	           { title: "Sort", data: "sort" },		 	           
 		 	           { title: "Required", data: "required" },
-		 	           { title: "Values",data: "content"}
+		 	           { title: "Values",data: "values"}
 		 	        ],
      	        "serverSide": true,
      	        "serverMethod": "GET",

@@ -153,10 +153,10 @@ public class MenuController extends BaseController {
 			List<MenuModel> models = new ArrayList<MenuModel>();
 			if (menus != null && menus.size() > 0) {
 				for (Tmenu tmenu : menus) {
-					TlocalizedField local_title = localizedFieldService.getLocalizedValue(tmenu.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+					/*TlocalizedField local_title = localizedFieldService.getLocalizedValue(tmenu.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
 					if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
 						tmenu.setTitle(local_title.getLocaleValue());
-					}
+					}*/
 					MenuModel model = new MenuModel();
 					model.setId(tmenu.getMenuId());
 					if (tmenu.getPid() == 0) {
@@ -203,10 +203,10 @@ public class MenuController extends BaseController {
 	
 	private String loadTitle(Tmenu menu, String title,Tlanguage language) {
 		Tmenu parent = menuService.getMenu(menu.getPid());
-		TlocalizedField local_title = localizedFieldService.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+		/*TlocalizedField local_title = localizedFieldService.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
 		if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
 			parent.setTitle(local_title.getLocaleValue());
-		}
+		}*/
 		if (parent != null && parent.getMenuId() != null) {
 			title = parent.getTitle() + " >> " + title;
 			if(parent.getPid()!=0){

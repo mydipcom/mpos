@@ -161,7 +161,7 @@ public class MenuServiceImpl implements MenuService {
 		return models;
 	}
 	
-	
+	@Override
 	public PagingData loadMenuList(DataTableParamter rdtp, String local) {
 		PageTempModel model = new PageTempModel();
 		model = loadData(rdtp);
@@ -171,12 +171,12 @@ public class MenuServiceImpl implements MenuService {
 		Tlanguage language = languageDao.findUnique("local", local);
 		List<MenuModel> values = model.getMenus();
 		if(values!=null&&values.size()>0){
-			for (MenuModel value : values) {
+			/*for (MenuModel value : values) {
 				TlocalizedField local_title = localizedFieldDao.getLocalizedValue(value.getId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
 				if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
 					value.setTitle(local_title.getLocaleValue());
 				}
-			}
+			}*/
 			
 			for (MenuModel value : values) {
 				if (value.getPid() != 0) {
@@ -232,17 +232,17 @@ public class MenuServiceImpl implements MenuService {
 		return model;
 	}
 	
-	
+	@Override
 	public List<MenuModel> loadMenu(String local) {
 		List<Tmenu> menus = menuDao.LoadAll();
 		Tlanguage language = languageDao.findUnique("local", local);
 		List<MenuModel> models = new ArrayList<MenuModel>();
 		if (menus != null && menus.size() > 0) {
 			for (Tmenu tmenu : menus) {
-				TlocalizedField local_title = localizedFieldDao.getLocalizedValue(tmenu.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+				/*TlocalizedField local_title = localizedFieldDao.getLocalizedValue(tmenu.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
 				if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
 					tmenu.setTitle(local_title.getLocaleValue());
-				}
+				}*/
 				MenuModel model = new MenuModel();
 				model.setId(tmenu.getMenuId());
 				if (tmenu.getPid() == 0) {
@@ -324,10 +324,10 @@ public class MenuServiceImpl implements MenuService {
 	}
 	private String loadTitleLocal(Integer pid, String title,Tlanguage language) {
 		Tmenu parent = menuDao.get(pid);
-		TlocalizedField local_title = localizedFieldDao.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
-		if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
+		//TlocalizedField local_title = localizedFieldDao.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+		/*if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
 			parent.setTitle(local_title.getLocaleValue());
-		}
+		}*/
 		if (parent != null && parent.getMenuId() != null) {
 			title = parent.getTitle() + " >> " + title;
 			if(parent.getPid()!=0){
