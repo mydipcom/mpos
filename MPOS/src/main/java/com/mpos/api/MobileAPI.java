@@ -506,7 +506,7 @@ public class MobileAPI {
 										Integer[] ids = ConvertTools.stringArr2IntArr(valueIdss);
 										for (Integer id : ids) {
 											TattributeValue value = attributeValueService.getAttributeValue(id);
-											if(value.getSort()<=pr.length){
+											if(value.getSort()<pr.length){
 												if(pr[value.getSort()]!=null&&!pr[value.getSort()].isEmpty()){
 													price += Float.valueOf(pr[value.getSort()]);
 												}
