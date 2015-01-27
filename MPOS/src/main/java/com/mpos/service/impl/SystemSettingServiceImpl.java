@@ -83,7 +83,8 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 		// TODO Auto-generated method stub
 		List <Tsetting> setingList = getAllSystemSetting();
 		String realPath = this.getClass().getResource("/").getPath();
-		realPath = realPath.substring(0, realPath.indexOf("WEB-INF"));
+		realPath = realPath.substring(0, realPath.indexOf("WEB-INF")).replace("%20", " ");
+		
 		SystemConfig.Admin_Setting_Map.clear();
 		SystemConfig.TOKEN = null;
 		File image;
