@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanUtils;
@@ -113,7 +114,9 @@ public class CategoryServiceImpl implements CategoryService {
 			for(String key:keys){
 				String value = json.getString(key);
 				if(value!=null&&!value.isEmpty()){
-					if(key.equals("status")){
+					if(key.equals("name")){
+						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
+					}else if(key.equals("status")){
 						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
 					}else{
 						criterionList.add(Restrictions.eq(key, json.get(key)));
@@ -125,14 +128,7 @@ public class CategoryServiceImpl implements CategoryService {
 			}
 			return categoryDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
 		}
-		
-		try {
-			return categoryDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return categoryDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
 	
@@ -147,7 +143,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	public void cloneCategoryByIds(Integer[] ids) {		
-		try {
+		
 			for (Integer id : ids) {
 				Tcategory category = categoryDao.get(id);									
 				List<TcategoryAttribute> categoryAttributeList=attributeDao.findBy("categoryId", category);
@@ -220,10 +216,7 @@ public class CategoryServiceImpl implements CategoryService {
 				
 				}
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 

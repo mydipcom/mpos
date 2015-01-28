@@ -53,6 +53,7 @@ public class TableController extends BaseController {
 		try {
 			table.setCreateTime(System.currentTimeMillis());
 			tableService.create(table);
+			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			ok = false;
 			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
@@ -69,6 +70,7 @@ public class TableController extends BaseController {
 			String[] idstrArr=ids.split(",");		
 			Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
 			tableService.deleteAll(idArr);
+			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			ok = false;
 			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
@@ -83,6 +85,7 @@ public class TableController extends BaseController {
 		JSONObject res = new JSONObject();
 		try {
 			tableService.update(table);
+			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			ok = false;
 			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));

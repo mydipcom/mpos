@@ -85,6 +85,7 @@ public class MenuController extends BaseController {
 			menuService.saveMenu(page.getMenu());
 			localizedFieldService.createLocalizedFieldList(page.setOneTlocalizedFieldValue(page.getMenu()));
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			respJson.put("status", false);
 			respJson.put("info",
@@ -110,7 +111,7 @@ public class MenuController extends BaseController {
 
 	@RequestMapping(value = "/editMenu", method = RequestMethod.POST)
 	@ResponseBody
-	public String updateRights(HttpServletRequest request, PageModel page) {
+	public String updateMenu(HttpServletRequest request, PageModel page) {
 
 		JSONObject respJson = new JSONObject();
 		try {
@@ -118,6 +119,7 @@ public class MenuController extends BaseController {
 			List<TlocalizedField> ls = page.setOneTlocalizedFieldValue(page.getMenu());
 			localizedFieldService.updateLocalizedFieldList(ls);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			respJson.put("status", false);
 			respJson.put("info",getMessage(request, be.getErrorID(), be.getMessage()));
@@ -135,6 +137,7 @@ public class MenuController extends BaseController {
 		try {
 			menuService.deleteMenuByIds(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			respJson.put("status", false);
 			respJson.put("info",

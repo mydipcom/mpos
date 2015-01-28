@@ -32,8 +32,15 @@ public class ExceptionManagerAdvice implements ThrowsAdvice {
 	 */
 	public void afterThrowing(Method method, Object[] args, Object target,RuntimeException  throwable) {
 		String className=target.toString();
-		className=className.replace("com.bps.service.impl","").split("@")[0];
-		throw new MposException("error."+className+"."+method.getName(),throwable.getMessage());
+		className=className.replace("com.mpos.service.impl","").split("@")[0];
+		if(throwable instanceof MposException){
+			MposException mposEx = (MposException) throwable;
+			if(mposEx.getErrorID()==null&&!mposEx.getErrorID().isEmpty()){
+				throw new MposException("error"+className+"."+method.getName(),throwable.getMessage());
+			}
+		}else{
+			throw new MposException("error"+className+"."+method.getName(),throwable.getMessage());
+		}
 	}
 
 }

@@ -100,6 +100,7 @@ public class CategoryController extends BaseController {
 		try{
 			categoryService.createCategory(category);			
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -116,6 +117,7 @@ public class CategoryController extends BaseController {
 		try{
 			categoryService.updateCategory(category);			
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -133,6 +135,7 @@ public class CategoryController extends BaseController {
 		try{
 			categoryService.cloneCategoryByIds(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -150,6 +153,7 @@ public class CategoryController extends BaseController {
 		try{
 			categoryService.deleteCategoryByIds(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -167,6 +171,7 @@ public class CategoryController extends BaseController {
 		try{
 			attributeService.deleteAttributeByIds(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -237,6 +242,7 @@ public class CategoryController extends BaseController {
 			attributeService.createCategoryAttribute(attribute);			
 			respJson.put("status", true);
 			respJson.put("cateId", attribute.getCategoryId());
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -254,6 +260,7 @@ public class CategoryController extends BaseController {
 			attributeService.updateCategoryAttribute(attribute);			
 			respJson.put("status", true);
 			respJson.put("cateId", attribute.getCategoryId());
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);

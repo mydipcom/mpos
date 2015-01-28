@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanUtils;
@@ -61,7 +62,7 @@ public class MenuServiceImpl implements MenuService {
 			throw new MposException("error.MenuServiceImpl.updateMenu.pid");
 		}
 		if(menu.getMenuId() == menu.getPid()){
-			throw new MposException("Please choose another Parent Categories");
+			throw new MposException("error.MenuServiceImpl.updateMenu.other.pid");
 		}
 		menuDao.update(menu);
 	}
@@ -206,7 +207,13 @@ public class MenuServiceImpl implements MenuService {
 			for(String key:keys){
 				String value = json.getString(key);
 				if(value!=null&&!value.isEmpty()){
-					criterionList.add(Restrictions.eq(key, json.get(key)));
+					if(key=="title"){
+						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
+					}else if(key=="status"){
+						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
+					}else{
+						criterionList.add(Restrictions.eq(key, json.get(key)));
+					}
 				}
 			}
 			for (Criterion criterion : criterionList) {

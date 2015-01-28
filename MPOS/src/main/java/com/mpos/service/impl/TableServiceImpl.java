@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanUtils;
@@ -26,13 +27,13 @@ public class TableServiceImpl implements TableService {
 
 	
 	public void create(Ttable table) {
+		//tableDao.create(table);
 		Ttable tt = tableDao.findUnique("tableName", table.getTableName());
 		if(tt == null){
 			tableDao.create(table);
-		}else{
-			throw new MposException("Table Name is exist!");
+		}else{                       
+			throw new MposException("error.TableServiceImpl.tableName");
 		}
-		
 	}
 
 	
@@ -57,7 +58,7 @@ public class TableServiceImpl implements TableService {
 			}
 			
 		}else{
-			throw new MposException("Table Name is exist!");
+			throw new MposException("error.TableServiceImpl.tableName");
 		}
 	}
 
@@ -83,7 +84,11 @@ public class TableServiceImpl implements TableService {
 			for (String key : keys) {
 				String value = json.getString(key);
 				if (value != null && !value.isEmpty()) {
-					criterionList.add(Restrictions.eq(key, json.get(key)));
+					if(key=="tableName"){
+						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
+					}else{
+						criterionList.add(Restrictions.eq(key, json.get(key)));
+					}					
 				}
 			}
 			for (Criterion criterion : criterionList) {

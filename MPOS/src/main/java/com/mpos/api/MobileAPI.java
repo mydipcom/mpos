@@ -803,17 +803,17 @@ public class MobileAPI {
 		attributes.addAll(product.getAttributes());
 		if (attributes != null && attributes.size() > 0) {
 			for (TgoodsAttribute tproductAttribute : attributes) {
-				AttributeModel attribute = new AttributeModel();
-				List<TlocalizedField> attributeTitleList = localizedFieldService.getLocalizedField(tproductAttribute.getId(), SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
-				attribute.setAttributeId(tproductAttribute.getId());
-				attribute.setAttributeTitle(attributeService.getCategoryAttribute(tproductAttribute.getId()).getTitle());
-				attribute.setAttributeTitleLocale(setLocal(attributeTitleList));
-				TcategoryAttribute tca = attributeService.getCategoryAttribute(tproductAttribute.getId());
-				Integer attType = tca.getCategoryId().getType();
-				attribute.setIsRequired(tca.getRequired());
-				attribute.setAttributeType(attType);
-				List<ValueModel> values = new ArrayList<ValueModel>();
-				if(tproductAttribute.getAttributeValue()!=null){
+				if(tproductAttribute.getAttributeValue()!=null&&!tproductAttribute.getAttributeValue().isEmpty()){
+					AttributeModel attribute = new AttributeModel();
+					List<ValueModel> values = new ArrayList<ValueModel>();
+					List<TlocalizedField> attributeTitleList = localizedFieldService.getLocalizedField(tproductAttribute.getId(), SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
+					attribute.setAttributeId(tproductAttribute.getId());
+					attribute.setAttributeTitle(attributeService.getCategoryAttribute(tproductAttribute.getId()).getTitle());
+					attribute.setAttributeTitleLocale(setLocal(attributeTitleList));
+					TcategoryAttribute tca = attributeService.getCategoryAttribute(tproductAttribute.getId());
+					Integer attType = tca.getCategoryId().getType();
+					attribute.setIsRequired(tca.getRequired());
+					attribute.setAttributeType(attType);
 					String[] valueIdStrs = tproductAttribute.getAttributeValue().split(",");
 					Integer[] valueInts = ConvertTools.stringArr2IntArr(valueIdStrs);
 					if(valueInts!=null&&valueInts.length>0){
@@ -838,10 +838,9 @@ public class MobileAPI {
 						}
 						
 					}
-					
+					attribute.setAttributeValue(values);
+					attributeModels.add(attribute);
 				}
-				attribute.setAttributeValue(values);
-				attributeModels.add(attribute);
 			}
 		}
 		model.setAttributes(attributeModels);

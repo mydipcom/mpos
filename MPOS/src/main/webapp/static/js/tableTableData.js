@@ -68,7 +68,7 @@ var TableTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteTableModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete.","warning","");				
+				handleAlerts("Please select the rows which you want to delete","warning","");				
 				return false;
 			}
 		});
@@ -90,15 +90,15 @@ var TableTable = function () {
              "type": "DELETE", 
              "url": rootURI+"table/"+selected.join(), 
              "success": function(data,status){
-            	 if(status == "success"){					
+            	 if(status == "success"){
+            		 var infoType = "danger";
 					 if(data.status){
 						 selected=[];
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 infoType = "success";
 					 }
-					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
-					 }
+					handleAlerts(data.info,infoType,"");
 				}             	 
              },
              "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -179,15 +179,15 @@ var TableTable = function () {
          "url": rootURI+"table/addTable", 
          "data": formId.serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){
+        		 var infoType = "danger";
         		 if(resp.status){						 
 	            	 oTable.api().draw();
+	            	 infoType = "success";
 	            	 $('#addTableForm')[0].reset();
 	            	 $("#add_table").modal('hide');
-	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
-				 }else{
-					 handleAlerts(resp.info,"danger","#addFormMsg");						 
 				 }
+				handleAlerts(resp.info,infoType,"#addFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -204,15 +204,15 @@ var TableTable = function () {
          "url": rootURI+"table/editTable", 
          "data": formId.serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){ 
+        		 var infoType = "danger";
         		 if(resp.status){						 
 	            	 oTable.api().draw();
 	            	 $('#editTableForm')[0].reset();
 	            	 $("#edit_table").modal('hide');
-	            	 handleAlerts("Added the data successfully.","success","#editFormMsg");		            	 
-				 }else{
-					 handleAlerts(resp.info,"danger","#editFormMsg");						 
+	            	 infoType="success";
 				 }
+				handleAlerts(resp.info,infoType,"#editFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){

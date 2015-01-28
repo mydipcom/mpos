@@ -16,7 +16,7 @@ public class MposException extends RuntimeException {
 	public MposException(Throwable ex) {
 		super(ex);
 		this.msg = ex.getMessage();
-		this.str = "com.bps.BPSException:"
+		this.str = "com.mpos.MposException:"
 				+ "\n    nested exception:" + ex.toString();
 	}
 
@@ -24,7 +24,7 @@ public class MposException extends RuntimeException {
 		super(ex);
 		this.errID = ID;
 		this.msg = ex.getMessage();
-		this.str = "com.bps.BPSException:" + ex.getMessage()
+		this.str = "com.mpos.MposException:" + ex.getMessage()
 				+ "\n    nested exception:" + ex.toString();
 	}
 
@@ -32,7 +32,7 @@ public class MposException extends RuntimeException {
 		super(ex);
 		this.errID = ID;
 		this.msg = message + " nested exception:" + ex.getMessage();
-		this.str = "com.bps.BPSException:" + message
+		this.str = "com.mpos.MposException:" + message
 				+ "\n    nested exception:" + ex.toString();
 	}
 
@@ -40,20 +40,20 @@ public class MposException extends RuntimeException {
 		super(ex);
 		this.errID = String.valueOf(ID);
 		this.msg = message + " nested exception:" + ex.getMessage();
-		this.str = "com.bps.BPSException:" + message
+		this.str = "com.mpos.MposException:" + message
 				+ "\n    nested exception:" + ex.toString();
 	}
 
 	public MposException(String ID, String message) {
 		this.errID = ID;
 		this.msg = message;
-		this.str = "com.bps.BPSException:" + message;
+		this.str = "com.mpos.MposException:" + message;
 	}
 
 	public MposException(int ID, String message) {
 		this.errID = String.valueOf(ID);
 		this.msg = message;
-		this.str = "com.bps.BPSException:" + message;
+		this.str = "com.mpos.MposException:" + message;
 	}
 
 	public MposException(String ID) {

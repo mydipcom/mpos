@@ -87,6 +87,7 @@ var setLocal = function(localTitles){
 		}
 	}
 }
+
 var rootURI="/";
 var MenuTable = function () {
 	var oTable;
@@ -127,7 +128,7 @@ var MenuTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteMenuModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete.","warning","");				
+				handleAlerts("Please select the rows which you want to delete","warning","");				
 				return false;
 			}
 		});
@@ -139,16 +140,16 @@ var MenuTable = function () {
              "type": "DELETE", 
              "url": rootURI+"menu/menu/"+selected.join(), 
              "success": function(data,status){
-            	 if(status == "success"){					
+            	 if(status == "success"){
+            		 var infoType="danger";
 					 if(data.status){
 						 selected=[];
 		            	 oTable.api().draw();
 		            	 loadSelect($("#edit_select"));
 		            	 oTable.$('th span').removeClass();
+		            	 infoType = "success";
 					 }
-					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
-					 }
+					 handleAlerts(data.info,infoType,"");
 				}             	 
              },
              "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -164,7 +165,7 @@ var MenuTable = function () {
 		
 		$("#openEditMenuModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts("One and only one row can be edited.","warning","");		
+				handleAlerts("One and only one row can be edited","warning","");		
 				return false;				
 			}
 			else{
@@ -270,17 +271,16 @@ var MenuTable = function () {
          "url": rootURI+"menu/addMenu", 
          "data": $('#addMenuForm').serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){
+        		 var infoType = "danger";
         		 if(resp.status){						 
 	            	 oTable.api().draw();
 	            	 $('#addMenuForm')[0].reset();
 	            	 $("#add_menu").modal('hide');
 	            	 loadSelect($("#edit_select"));
-	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
+	            	 infoType="success";
 				 }
-				 else{
-					 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
-				 }
+				handleAlerts(resp.info,infoType,"#addFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -298,17 +298,16 @@ var MenuTable = function () {
          "url": rootURI+"menu/editMenu", 
          "data": $('#editMenuForm').serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){
+        		 var infoType ="danger";
         		 if(resp.status){						 
 	            	 oTable.api().draw();
 	            	 $('#editMenuForm')[0].reset();
 	            	 $("#edit_menu").modal('hide');
 	            	 loadSelect($("#edit_select"));
-	            	 handleAlerts("Edit the data successfully.","success","#editFormMsg");		            	 
+	            	 infoType="success";
 				 }
-				 else{
-					 handleAlerts(resp.info,"danger","#editFormMsg");						 
-				 }
+				handleAlerts(resp.info,infoType,"#editFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){

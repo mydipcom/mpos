@@ -41,7 +41,6 @@
     
 })(jQuery);
 
-
 var rootURI="/";
 var CategoryTable = function () {
 	var oTable;
@@ -107,15 +106,15 @@ var CategoryTable = function () {
              "type": "GET", 
              "url": rootURI+"category/clone/"+selected.join(), 
              "success": function(data,status){
-            	 if(status == "success"){					
+            	 if(status == "success"){
+            		 var infoType = "danger";
 					 if(data.status){
 						 selected=[];
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 infoType = "success";
 					 }
-					 else{
-						 handleAlerts("Failed to clone the data. " +data.info,"danger","");
-					 }
+					handleAlerts(data.info,infoType,"");
 				}             	 
              },
              "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -127,7 +126,7 @@ var CategoryTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteCategoryModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete.","warning","");				
+				handleAlerts("Please select the rows which you want to delete","warning","");				
 				return false;
 			}
 		});		
@@ -139,15 +138,15 @@ var CategoryTable = function () {
              "type": "DELETE", 
              "url": rootURI+"category/delete/"+selected.join(), 
              "success": function(data,status){
-            	 if(status == "success"){					
+            	 if(status == "success"){
+            		 var infoType = "danger";
 					 if(data.status){
 						 selected=[];
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 infoType = "success";
 					 }
-					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
-					 }
+					handleAlerts(data.info,infoType,"");
 				}             	 
              },
              "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -159,7 +158,7 @@ var CategoryTable = function () {
 		//打开编辑分类创窗口
 		$("#openEditCategoryModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts("One and only one row can be edited.","warning","");		
+				handleAlerts("One and only one row can be edited","warning","");			
 				return false;				
 			}
 			else{
@@ -494,15 +493,15 @@ var CategoryTable = function () {
              "type": "DELETE", 
              "url": rootURI+"category/attribute/"+attSelected.join(),
              "success": function(data,status){
-            	 if(status == "success"){					
+            	 if(status == "success"){
+            		 var infoType = "danger";
 					 if(data.status){
 						 attSelected=[];
 						 attTable.api().draw();	
 						 attTable.$('th span').removeClass();
+						 infoType = "success";
 					 }
-					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","#view_attributeMsg");
-					 }
+					handleAlerts(data.info,infoType,"#view_attributeMsg");
 				}             	 
              },
              "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -523,16 +522,15 @@ var CategoryTable = function () {
          "url": rootURI+"category/addCategory", 
          "data": $('#addCategoryForm').serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){ 
+        		 var infoType = "danger";
         		 if(resp.status){						 
 	            	 oTable.api().draw();
 	            	 $('#addCategoryForm')[0].reset();
 	            	 $("#add_category").modal('hide');
-	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
+	            	 infoType = "success";
 				 }
-				 else{
-					 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
-				 }
+			  handleAlerts(resp.info,infoType,"#addFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -550,17 +548,16 @@ var CategoryTable = function () {
          "url": rootURI+"category/editCategory", 
          "data": $('#editCategoryForm').serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){ 
+        		 var infoType = "danger";
         		 if(resp.status){
         			 selected=[];
         			 oTable.api().draw();
         			 $('#editCategoryForm')[0].reset();
         			 $("#edit_category").modal('hide');
-	            	 handleAlerts("Edit the data successfully.","success","#editFormMsg");		            	 
+        			 infoType = "success";
 				 }
-				 else{
-					 handleAlerts("Failed to edit the data.","danger","#editCategoryFormMsg");						 
-				 }
+			  handleAlerts(resp.info,infoType,"#editCategoryFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -578,16 +575,15 @@ var CategoryTable = function () {
          "url": rootURI+"category/addAttribute", 
          "data": $("#addAttributeForm").serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){
+        		 var infoType = "danger";
         		 if(resp.status){
         			 attTable.api().draw();
         			 $("#addAttributeForm")[0].reset();
 	            	 $("#add_attribute").modal('hide');
-	            	 handleAlerts("Added the data successfully.","success","#addAttributeFormMsg");		            	 
+	            	 infoType = "success";
 				 }
-				 else{
-					 handleAlerts("Failed to add the data.","danger","#addAttributeFormMsg");						 
-				 }
+        		 handleAlerts(resp.info,infoType,"#addAttributeFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -604,17 +600,16 @@ var CategoryTable = function () {
          "url": rootURI+"category/editAttribute", 
          "data": $("#editAttributeForm").serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){ 
+        		 var infoType="danger";
         		 if(resp.status){
         			 attSelected = [];
         			 attTable.api().draw();
         			 $("#editAttributeForm")[0].reset();
 	            	 $("#edit_attribute").modal('hide');
-	            	 handleAlerts("Edit the data successfully.","success","#editAttributeFormMsg");		            	 
+	            	 infoType="success";
 				 }
-				 else{
-					 handleAlerts("Failed to edit the data.","danger","#editAttributeFormMsg");						 
-				 }
+					handleAlerts(resp.info,infoType,"#editAttributeFormMsg");						 
 			}             	 
          },
          "error":function(XMLHttpRequest, textStatus, errorThrown){
