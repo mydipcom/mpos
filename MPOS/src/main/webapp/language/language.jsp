@@ -115,25 +115,25 @@
 						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Language List
+									<i class="fa fa-edit"></i><s:message code="language.title"></s:message>
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_language"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_language"><i class="fa fa-plus"></i> <s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_language" id="openEditlanguageModal" ><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_language" id="openActivelanguageModal"><i class="fa fa-key"></i>Activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeletelanguageModal"><i class="fa fa-trash-o"></i>Deactivate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_language" id="openActivelanguageModal"><i class="fa fa-key"></i> <s:message code="all.table.activate"/></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeletelanguageModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.deactivate" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">Id</label>
-											<label><input type="checkbox" checked data-column="2">Name</label>
-											<label><input type="checkbox" checked data-column="3">Local</label>
-											<label><input type="checkbox" checked data-column="4">Flag Image</label>
-											<label><input type="checkbox" checked data-column="5">Status</label>
-											<label><input type="checkbox" checked data-column="6">Sort</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="language.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="language.name"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="language.local"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="language.flagimage"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="language.status"/></label>
+											<label><input type="checkbox" checked data-column="6"><s:message code="language.sort"/></label>
 										</div>
 									</div>								    																
 								</div>
@@ -145,12 +145,12 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#languages_table .checkboxes"/>
 											</th>
-											<th>Id</th>
-											<th>Name</th>
-											<th>Local</th>
-											<th>Flag Image</th>
-											<th>Status</th>
-											<th>Sort</th>
+											<th><s:message code="language.id"/></th>
+											<th><s:message code="language.name"/></th>
+											<th><s:message code="language.local"/></th>
+											<th><s:message code="language.flagimage"/></th>
+											<th><s:message code="language.status"/></th>
+											<th><s:message code="language.sort"/></th>
 										</tr>
 										</thead>
 							<!--
@@ -176,7 +176,7 @@
 				<div class="modal" id="add_language" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add language</h4>
+						<h4 class="modal-title"><s:message code="language.add.title"/></h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -189,13 +189,13 @@
 									<s:message code="system.management.user.adduser.message"/>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="language.name"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="name" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-								<label class="control-label col-md-3">flagimage<span class="required"> * </span></label>
+								<label class="control-label col-md-3"><s:message code="language.flagimage"/><span class="required"> * </span></label>
 									<div class="col-md-9">
 										<select name="flagImage" id="country_list" class="form-control">
 															<option value=""></option>
@@ -438,20 +438,20 @@
 													</div>
 												</div>
 									<div class="form-group">
-									<label class="control-label col-md-3">Local<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="language.local"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="local"  class="form-control" readonly="ture"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Sort<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="language.sort"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="sort" class="form-control"/>
 									</div>
 								</div>								
 						
 								<div class="form-group">
-									<label class="control-label col-md-3">Status<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="language.sort"/><span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
@@ -480,7 +480,7 @@
 				<div class="modal" id="edit_language" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit language</h4>
+						<h4 class="modal-title"><s:message code="language.edit.title"/></h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -493,19 +493,19 @@
 									<s:message code="system.management.user.adduser.message"/>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Id<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="language.id"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="id" class="form-control"  readonly="ture"/>										
 									</div>
 								</div>							
 								<div class="form-group">
-									<label class="control-label col-md-3">Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="language.name"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="name" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-								<label class="control-label col-md-3">flagimage</label>
+								<label class="control-label col-md-3"><s:message code="language.flagimage"/></label>
 									<div class="col-md-9">
 										<select name="flagImage" id="country_list2" class="form-control">
 															<option value=""></option>
@@ -748,20 +748,20 @@
 													</div>
 												</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Local<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="language.local"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="local"  class="form-control" readonly="ture"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Sort<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="language.sort"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="sort" class="form-control"/>
 									</div>
 								</div>								
 						
 								<div class="form-group">
-									<label class="control-label col-md-3">Status<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="language.status"/><span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
@@ -790,7 +790,7 @@
 				<div class="modal" id="delete_language" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 <s:message code="system.management.user.deletemessage" />
+							 <s:message code="language.deactive.message" />
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -804,7 +804,7 @@
 				<div class="modal" id="active_language" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 <s:message code="system.management.user.deletemessage" />
+							 <s:message code="language.active.message" />
 						</p>
 					</div>
 					<div class="modal-footer">

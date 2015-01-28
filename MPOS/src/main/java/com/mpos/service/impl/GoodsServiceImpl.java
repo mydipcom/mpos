@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +73,11 @@ public class GoodsServiceImpl implements GoodsService{
 						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
 					}
 					else {
-						criterionsList.add(Restrictions.eq(key, jsonObj.get(key)));
+						/*if (jsonObj.get(key).toString().isEmpty()) {
+							criterionsList.add(Restrictions.like(key, jsonObj.get(key)));
+						}else {*/
+						criterionsList.add(Restrictions.like(key, (String) jsonObj.get(key), MatchMode.ANYWHERE));
+						/*}*/
 					}
 				}
 			}

@@ -86,6 +86,12 @@
 								<lable>There are some errors below</lable>
 									<button class="close" data-close="alert"></button>									
 								</div>
+								<c:if test="${not empty errorMsg}">
+								<div class="alert alert-danger">
+								<button class="close" data-close="alert"></button>
+									<span>${errorMsg}</span>
+								</div>
+								</c:if>
 								<!--Begin Multi-language Form   -->
 								<div class="portlet box grey-silver tabbable">
 									<div class="portlet-title">
@@ -371,7 +377,7 @@
 								<div class="row">
 									<div class="col-md-offset-3 col-md-9">
 										<button type="submit" class="btn green">Submit</button>
-										<button type="button" class="btn default">Cancel</button>
+										<button type="button" class="btn default" onclick="location.href='javascript:history.go(-1);'">Cancel</button>
 									</div>
 								</div>
 							</div>

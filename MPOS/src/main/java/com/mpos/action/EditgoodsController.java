@@ -105,6 +105,8 @@ private int imgIndex=0;
 
 	@RequestMapping(value="/editgoods/{ids}",method=RequestMethod.GET)
 	public ModelAndView eidtgoods(@PathVariable String ids,HttpServletRequest request){
+		imgIndex=0;
+		filesMap.clear();
 		Integer id=Integer.parseInt(ids);
 		JSONObject respJson = new JSONObject();
 		ModelAndView mav=new ModelAndView();
@@ -160,6 +162,12 @@ private int imgIndex=0;
 			Productmodel.setFullDescr_locale(fullDescr_locale);
 			Productmodel.setShortDescr_locale(shortDescr_locale);
 			Productmodel.setUnitName_locale(unitName_locale);
+			Object string=request.getSession().getAttribute("editerrorMsg");
+			if (string!=null) {
+				mav.addObject("errorMsg", string);
+				
+			}
+			request.getSession().setAttribute("editerrorMsg", null);
 			//respJson.put("list", LocalizedField.setValues(list));
 			List<Tlanguage> languages = languageService.loadAllTlanguage();
 			mav.addObject("lanList", languages);
@@ -321,11 +329,12 @@ private int imgIndex=0;
 		try{
 			goodsService.updateproduct(model, filesMap, request);
 			return new ModelAndView("redirect:/goods");
-		} catch (Exception  e) {
+		} catch (MposException  e) {
 			e.printStackTrace();
 			ModelAndView mav=new ModelAndView();
 		/*	mav.addObject("errorMsg", e.getMessage());*/
-			mav.setViewName("goods/addgoods");
+			request.getSession().setAttribute("editerrorMsg", getMessage(request,e.getErrorID(),e.getMessage()));
+			mav.setViewName("redirect:/editgoods/"+model.getProductId());
 			return mav;
 		}					
 

@@ -4,7 +4,8 @@ var addrules = function(){
 	var price=$('#price').val();
 	var re=/^[0-9]*$/;
 	if(price!=''&&re.test(price)){
-		 $("#addGoodsForm input[name='oldPrice']").rules("add",{min: price});
+		var prices=price*1.0;
+		$("#addGoodsForm input[name='oldPrice']").rules("add",{min:prices});
 	}
 }
 
@@ -136,7 +137,7 @@ var Addgoods = function () {
 									var checkboxGroup=$('<div class="checkbox-list"></div>');
 									var tableGroup=$('<div class="col-md-6"><br/><table class="table table-striped table-bordered">'+
 										        '<thead><tr><th width="40%">Options</th><th width="60%">Price adjustment</th></tr></thead>'+
-										        '<tbody></tbody></table></div>');
+										        '<tbody></tbody></table><lable>请为客户端默认属性价格输入一个0</lable></div>');
 									var Requiredlabel=$('<div class="checkbox"></div>');
 									var Requiredlabelbox=$();
 									var RequiredObj=$('<label class="control-label col-md-2">Required:</label><label class="control-label class="col-md-10">'+list[i].required+'</label>');

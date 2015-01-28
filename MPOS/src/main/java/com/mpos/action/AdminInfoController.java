@@ -193,6 +193,7 @@ public class AdminInfoController extends BaseController {
 			    FileImageInputStream inputStream = new FileImageInputStream(file);
 				byte [] avatar=new byte[1048576];
 				inputStream.read(avatar);
+				inputStream.close();
 				bin = new ByteArrayInputStream(avatar);
 			 }else{
 				bin = new ByteArrayInputStream(adminInfo.getAvatar()); 

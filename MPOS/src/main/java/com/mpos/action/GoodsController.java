@@ -156,6 +156,7 @@ public class GoodsController extends BaseController{
 		ModelAndView mav=new ModelAndView();
 		String local=getLocale(request);
 		Tlanguage language=languageService.getLanguageBylocal(local);
+		Object string=request.getSession().getAttribute("adderrorMsg");
 		List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language);
 		List<Tcategory> speccategoryList=categoryService.getallCategory(0,language);
 		Map<Integer, String> ordercategoryMap = new HashMap<Integer, String>();  
@@ -169,11 +170,15 @@ public class GoodsController extends BaseController{
 		
 		List<MenuModel> menus=menuService.getNoChildrenMenus(language);
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
+		if(string!=null){
+			mav.addObject("errorMsg", string);
+		}
 		mav.addObject("lanList", languages);
 		mav.addObject("ordercategory", ordercategoryMap);
 		mav.addObject("speccategory", speccategoryMap);
 		mav.addObject("menu", menus);
 		mav.addObject("product", new AddProductModel());
+		request.getSession().setAttribute("adderrorMsg",null);
 		mav.setViewName("goods/addgoods");
 		return mav;
 		
@@ -392,8 +397,9 @@ public class GoodsController extends BaseController{
 			return new ModelAndView("redirect:/goods");
 		} catch (MposException  e) {
 			ModelAndView mav=new ModelAndView();
-			mav.addObject("errorMsg", e.getMessage());
-			mav.setViewName("goods/addgoods");
+			/*mav.addObject("errorMsg", e.getMessage());*/
+			request.getSession().setAttribute("adderrorMsg", getMessage(request,e.getErrorID(),e.getMessage()));
+			mav.setViewName("redirect:/goods/addgoods");
 			return mav;
 		}							
 	}

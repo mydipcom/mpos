@@ -211,13 +211,13 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#goods_table .checkboxes"/>
 											</th>
-											<th>ID</th>
-											<th>Category Name</th>
-											<th>Product Name</th>
-											<th>Price</th>
-											<th>Old Price</th>
-											<th>Recommend</th>
-											<th>Sort</th>
+											<th><s:message code="system.management.user.searchform.id"/></th>
+											<th><s:message code="product.category.name"/></th>
+											<th><s:message code="product.product.name"/></th>
+											<th><s:message code="product.price"/></th>
+											<th><s:message code="product.oldprice"/></th>
+											<th><s:message code="product.recommend"/></th>
+											<th><s:message code="product.sort"/></th>
 										<!--  	<th>Status</th>-->
 										</tr>
 										</thead>																

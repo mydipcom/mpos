@@ -46,12 +46,12 @@ var LanguagesTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id"  },
-	           { title: "Name",   data: "name" },
-	           { title: "Local",    data: "local" },
-	           { title: "Flag Image",  data: "flagImage"},
-	           { title: "Status", data: "status"},
-	           { title: "Sort", data: "sort"},
+	           {    data: "id"  },
+	           {  	data: "name" },
+	           {    data: "local" },
+	           {  	data: "flagImage"},
+	           { 	data: "status"},
+	           {    data: "sort"},
 	          
 	        ],
 	        "serverSide": true,
