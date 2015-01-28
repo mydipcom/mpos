@@ -286,17 +286,19 @@ public class MenuServiceImpl implements MenuService {
 				ssMap.put("tableField",SystemConstants.TABLE_FIELD_TITLE);
 				TlocalizedField localizedField=new TlocalizedField();
 				List<TlocalizedField> localizedFieldlist= localizedFieldDao.find("from TlocalizedField where language=:language and entityId=:entityId and tableName=:tableName and tableField=:tableField", ssMap);*/
-				TlocalizedField localizedField=localizedFieldDao.getLocalizedValue(tmenu.getMenuId(), language.getId(), SystemConstants.TABLE_NAME_MENU, SystemConstants.TABLE_FIELD_TITLE);
+			//	TlocalizedField localizedField=localizedFieldDao.getLocalizedValue(tmenu.getMenuId(), language.getId(), SystemConstants.TABLE_NAME_MENU, SystemConstants.TABLE_FIELD_TITLE);
 				MenuModel model = new MenuModel();
 				model.setId(tmenu.getMenuId());
 				if (tmenu.getPid() == 0) {
-					if(localizedField!=null&&!localizedField.getLocaleValue().isEmpty()){
+					/*if(localizedField!=null&&!localizedField.getLocaleValue().isEmpty()){
 						model.setTitle(localizedField.getLocaleValue());
 					}else{
 						model.setTitle(tmenu.getTitle());
-					}
+					}*/
+					model.setTitle(tmenu.getTitle());
 				} else {
-					model.setTitle(loadTitle(tmenu, localizedField.getLocaleValue(),language));
+					//model.setTitle(loadTitle(tmenu, localizedField.getLocaleValue(),language));
+					model.setTitle(loadTitle(tmenu, tmenu.getTitle(),language));
 				}
 				models.add(model);
 			}
@@ -310,10 +312,10 @@ public class MenuServiceImpl implements MenuService {
 	}
 	private String loadTitle(Tmenu menu, String title, Tlanguage language) {
 		Tmenu parent = menuDao.get(menu.getPid());
-		TlocalizedField local_title = localizedFieldDao.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
+		/*TlocalizedField local_title = localizedFieldDao.getLocalizedValue(parent.getMenuId(),language.getId(),PageTempModel.T_MENU,PageTempModel.LOCAL_MENU_TITLE);
 		if(local_title!=null&&!local_title.getLocaleValue().isEmpty()){
 			parent.setTitle(local_title.getLocaleValue());
-		}
+		}*/
 		if (parent != null && parent.getMenuId() != null) {
 			if (!title.isEmpty()&&title!=null) {
 				title = parent.getTitle() + " >> " + title;

@@ -180,7 +180,7 @@ var Addgoods = function () {
 													}
 													}
 												if(prices[$(obj).attr("value")]==undefined){
-													$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+													$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="0"/></td></tr>');	
 												}else{
 												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+prices[$(obj).attr("value")]+'"/></td></tr>');
 												}
@@ -209,7 +209,7 @@ var Addgoods = function () {
 											/*attributeId=$(this).parents(".form-group").find("input[name=attributeId]").val();
 											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" name="attrPrice_'+attributeId+'" placeholder="0.00"/></td></tr>');*/
 											if(prices[$(obj).attr("value")]==undefined){
-												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="0"/></td></tr>');	
 											}else{
 											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+prices[$(obj).attr("value")]+'"/></td></tr>');
 											}

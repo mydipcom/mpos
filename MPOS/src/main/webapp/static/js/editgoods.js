@@ -387,7 +387,7 @@ var Editgoods = function () {
 													}
 													}
 												if(prices[$(obj).attr("value")]==undefined){
-													$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+													$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"   value="0"/></td></tr>');	
 												}else{
 												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+prices[$(obj).attr("value")]+'"/></td></tr>');
 												}
@@ -416,7 +416,7 @@ var Editgoods = function () {
 												}
 												}
 											if(prices[$(obj).attr("value")]==undefined){
-												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+												$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00" value="0" /></td></tr>');	
 											}else{
 											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("value")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+prices[$(obj).attr("value")]+'"/></td></tr>');
 											}
@@ -541,6 +541,11 @@ var Editgoods = function () {
 		            		 rows = rows.add(row);
 		            		 }
 		            		 $("#specattributeGroup").append(rows);
+		            		 for(var i=0;i<attributeIds.length;i++){
+		            				if(attributeIds[i]!=undefined){
+		            				 $("#editGoodsForm input[name='attr_"+attributeIds[i]+"']").rules("add",{required: true});
+		            					}
+		            				}
             			 }			            			 
 					 else{
 						 alert("Failed to query the attirbute group.");
@@ -620,7 +625,7 @@ var Editgoods = function () {
 											}
 											}
 										if(price[$(obj).attr("data-order")]==undefined){
-											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data-title")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("data-order")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data-title")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("data-order")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"   value="0"/></td></tr>');	
 										}else{
 											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data-title")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("data-order")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+price[$(obj).attr("data-order")]+'"/></td></tr>');										}
 									});
@@ -679,7 +684,7 @@ var Editgoods = function () {
 										}
 									$.each(checkedObj, function (index, obj) {
 										if(prices[$(obj).attr("data-order")]==undefined){
-											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data-title")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("data-order")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  /></td></tr>');	
+											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data-title")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("data-order")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="0"/></td></tr>');	
 										}else{
 											$(obj).parents(".form-group").find("tbody").append('<tr><td><span>'+$(obj).attr("data-title")+'</span></td><td><span>HK$:</span> <input type="text" data="'+$(obj).attr("data-order")+'" name="attrPrice_'+attributeId+'" placeholder="0.00"  value="'+prices[$(obj).attr("data-order")]+'"/></td></tr>');
 										}
@@ -690,7 +695,7 @@ var Editgoods = function () {
 		            		 $("#orderattributeGroup").append(rows);
 		            		 for(var i=0;i<attributeIds.length;i++){
 		             				if(attributeIds[i]!=undefined){
-		             				 $("#addGoodsForm input[name='attr_"+attributeIds[i]+"']").rules("add",{required: true});
+		             				 $("#editGoodsForm input[name='attr_"+attributeIds[i]+"']").rules("add",{required: true});
 		             					}
 		             				}
             				} 
@@ -770,7 +775,11 @@ var Editgoods = function () {
 	            			attrArr[index]=attrObj.value;
 	            		});
 	            		$.each($(form).find("input[name='attrPrice_"+attributeId+"']"), function (index, attrPriceObj) {
+	            			if(attrPriceObj.value==""){
+	            				attrPriceArr[index]=0;
+	            			}else{
 	            			attrPriceArr[index]=attrPriceObj.value;
+	            			}
 	            		});
 	            		$(form).append('<input type="hidden" name="attributes['+index+'].id" value="'+attributeId+'"/>');
 	            		$(form).append('<input type="hidden" name="attributes['+index+'].attributeValue" value="'+attrArr.join(",")+'"/>');
