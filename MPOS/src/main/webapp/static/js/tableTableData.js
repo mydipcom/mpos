@@ -1,25 +1,5 @@
-//jquery插件把表单序列化成json格式的数据start 
-(function($){
-    $.fn.serializeJson=function(){
-        var serializeObj={};
-        var array=this.serializeArray();
-        var str=this.serialize();
-        $(array).each(function(){
-            if(serializeObj[this.name]){
-                if($.isArray(serializeObj[this.name])){
-                    serializeObj[this.name].push(this.value);
-                }else{
-                    serializeObj[this.name]=[serializeObj[this.name],this.value];
-                }
-            }else{
-                serializeObj[this.name]=this.value;
-            }
-        });
-        return serializeObj;
-    };  
-})(jQuery);
-
 var rootURI="/";
+var locale = "en_US";
 var TableTable = function () {
 	var oTable;
 	var handleTable = function () {
@@ -68,7 +48,7 @@ var TableTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteTableModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete","warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
 				return false;
 			}
 		});
@@ -312,8 +292,9 @@ var TableTable = function () {
     };
     
     return {
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale = locale_value;
         	handleTable(); 
         	FormValidation($('#addTableForm'),"add");
         	FormValidation($('#editTableForm'),"edit");

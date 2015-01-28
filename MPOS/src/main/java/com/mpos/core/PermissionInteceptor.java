@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
@@ -29,6 +30,12 @@ public class PermissionInteceptor implements HandlerInterceptor {
 		String reqMethod=request.getMethod().toUpperCase();
 		String uri=request.getRequestURI();
 		uri=uri.split("/")[2];
+		request.getSession().removeAttribute("locale");
+		Object res = request.getSession().getAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
+		if(res==null){
+			res = "en_US";
+		}
+		request.getSession().setAttribute("locale", res.toString());
 //		String contextPath=request.getContextPath();
 //		if((contextPath+"/login").equalsIgnoreCase(uri)){
 //			return true;
