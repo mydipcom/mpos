@@ -109,11 +109,15 @@ public class GoodsController extends BaseController{
 	public ModelAndView Goods(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		List<Tcategory> categorys=categoryService.getallCategory();
-		
+		Object successstring=request.getSession().getAttribute("addsussess");
+		if(successstring!=null){
+			mav.addObject("Msg", successstring);
+		}
 		String local=getLocale(request);
 		Tlanguage language=languageService.getLanguageBylocal(local);
 		List<MenuModel> menus=menuService.getNoChildrenMenus(language);
 	//	List<Tmenu> menus=menuService.getAllMenu();
+		request.getSession().setAttribute("addsussess", null);
 		mav.addObject("category", categorys);
 		mav.addObject("menu", menus);
 		mav.setViewName("goods/goods");
@@ -156,7 +160,7 @@ public class GoodsController extends BaseController{
 		ModelAndView mav=new ModelAndView();
 		String local=getLocale(request);
 		Tlanguage language=languageService.getLanguageBylocal(local);
-		Object string=request.getSession().getAttribute("adderrorMsg");
+		Object errorstring=request.getSession().getAttribute("adderrorMsg");
 		List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language);
 		List<Tcategory> speccategoryList=categoryService.getallCategory(0,language);
 		Map<Integer, String> ordercategoryMap = new HashMap<Integer, String>();  
@@ -170,8 +174,8 @@ public class GoodsController extends BaseController{
 		
 		List<MenuModel> menus=menuService.getNoChildrenMenus(language);
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
-		if(string!=null){
-			mav.addObject("errorMsg", string);
+		if(errorstring!=null){
+			mav.addObject("Msg", errorstring);
 		}
 		mav.addObject("lanList", languages);
 		mav.addObject("ordercategory", ordercategoryMap);
@@ -193,6 +197,7 @@ public class GoodsController extends BaseController{
 			goodsService.deletegoodsByids(idArr);
 			//goodsService.deleteLanguageByIds(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -393,7 +398,8 @@ public class GoodsController extends BaseController{
 				i++;
 				goodsImageService.CreateImages(productImage);
 			}
-			filesMap.clear();*/			
+			filesMap.clear();*/	
+			request.getSession().setAttribute("addsussess","operate.success");
 			return new ModelAndView("redirect:/goods");
 		} catch (MposException  e) {
 			ModelAndView mav=new ModelAndView();

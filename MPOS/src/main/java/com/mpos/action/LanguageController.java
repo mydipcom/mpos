@@ -61,6 +61,7 @@ public class LanguageController extends BaseController{
 			language.setFlagImage(flagurl);
 			languageService.createLanguage(language);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -78,6 +79,7 @@ public class LanguageController extends BaseController{
 			language.setFlagImage(flagurl);
 			languageService.updateLanguage(language);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
@@ -93,6 +95,7 @@ public class LanguageController extends BaseController{
 		try{
 			languageService.deleteLanguageByIds(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -109,6 +112,7 @@ public class LanguageController extends BaseController{
 		try{
 			languageService.activeLanguageByids(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);

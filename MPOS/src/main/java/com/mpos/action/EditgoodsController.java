@@ -164,7 +164,7 @@ private int imgIndex=0;
 			Productmodel.setUnitName_locale(unitName_locale);
 			Object string=request.getSession().getAttribute("editerrorMsg");
 			if (string!=null) {
-				mav.addObject("errorMsg", string);
+				mav.addObject("Msg", string);
 				
 			}
 			request.getSession().setAttribute("editerrorMsg", null);
@@ -328,6 +328,7 @@ private int imgIndex=0;
 	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
 		try{
 			goodsService.updateproduct(model, filesMap, request);
+			request.getSession().setAttribute("addsussess","operate.success");
 			return new ModelAndView("redirect:/goods");
 		} catch (MposException  e) {
 			e.printStackTrace();

@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale = "en_US";
 var LanguagesTable = function () {
 	var oTable;
 	var oLogTable;
@@ -62,19 +63,19 @@ var LanguagesTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 			$("#openActivelanguageModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to Active.","warning","");				
+					handleAlerts(loadProperties("error.active.select",locale),"warning","");				
 					return false;
 				}
 			});
 			$("#openDeletelanguageModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to deactive.","warning","");				
+					handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
 					return false;
 				}
 			});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
-			var tt=selected.join();
+			//var tt=selected.join();
 			
 			$.ajax( {
              "dataType": 'json', 
@@ -86,10 +87,10 @@ var LanguagesTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("delete the adminusers successfully.","success","");
+		            	 handleAlerts(data.info,"success","");
 					 }
 					 else{
-						 handleAlerts("Failed to delete the adminusers. " +data.info,"danger","");
+						 handleAlerts(data.info,"danger","");
 					 }
 				}             	 
              },
@@ -111,10 +112,10 @@ var LanguagesTable = function () {
 						 selected=[];						 
 		            	oTable.api().draw();
 		            	oTable.$('th span').removeClass();
-		            	 handleAlerts("activateBtn the rules successfully.","success","");
+		            	 handleAlerts(data.info,"success","");
 					 }
 					 else{
-						 alert(data.info);
+						 alert(data.info,"danger","");
 					 }
 				}             	 
              },
@@ -135,13 +136,9 @@ var LanguagesTable = function () {
 		
 		
 		$("#openEditlanguageModal").on("click",function(event){
-			if(selected.length>1){
-				handleAlerts("Only one row can be edited.","warning","");
-				event.stopPropagation();
-			}else if(selected.length==0)
-			{
-				handleAlerts("Please choose one row.","warning","");
-				event.stopPropagation();
+			if(selected.length!=1){
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","");
+				return false;
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
@@ -266,10 +263,10 @@ var LanguagesTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
-	            	 handleAlerts("Added the data successfully.","success","");		            	 
+	            	 handleAlerts(resp.info,"success","");		            	 
 				 }
 				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"  the local exist","danger","");						 
+					 handleAlerts(resp.info,"danger","");						 
 				 }
 			}             	 
          },
@@ -345,10 +342,10 @@ var LanguagesTable = function () {
         		 if(resp.status){
 					 selected=[];
 	            	 oTable.api().draw();
-	            	 handleAlerts("Edited the data successfully.","success","");
+	            	 handleAlerts(resp.info,"success","");
 				 }
 				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"the local is exist","danger","");
+					 handleAlerts(resp.info,"danger","");
 				 }
 			}             	 
          },
@@ -411,9 +408,10 @@ var LanguagesTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
-        	handleTable();  
+        	handleTable();
+        	locale=locale_value;
         	AddlanguagesValidation();
         	EditLanguagesValidation();        	
         }

@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale = "en_US";
 var GoodsTable = function () {
 	var oTable;
 	var oLogTable;
@@ -70,17 +71,17 @@ var GoodsTable = function () {
 		 
 		//打开删除对话框前判断是否已选择要删除的行
 			$("#openDeletegoodsModal").on("click",function(event){
-					if(selected.length==0){
-						handleAlerts("Please select the rows which you want to delete.","warning","");				
-						return false;
-					}
+						if(selected.length==0){
+							handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+							return false;
+						}				
 				});
-			$("#openActivegoodsModal").on("click",function(event){
+			/*$("#openActivegoodsModal").on("click",function(event){
 				if(selected.length==0){
 					handleAlerts("Please select the rows which you want to Active.","warning","");				
 					return false;
 				}
-			});
+			});*/
 			
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
@@ -89,16 +90,15 @@ var GoodsTable = function () {
              "type": "DELETE", 
              "url": rootURI+"goods/deletegoods/"+selected.join(), 
              "success": function(data,status){
-            	 if(status == "success"){					
+            	 if(status == "success"){
+            		 var infoType = "danger";
 					 if(data.status){
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("delete the adminusers successfully.","success","");
+		            	 infoType = "success";
 					 }
-					 else{
-						 handleAlerts("Failed to delete the adminusers. " +data.info,"danger","");
-					 }
+					 handleAlerts(data.info,infoType,"");
 				}             	 
              },
              "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -117,13 +117,9 @@ var GoodsTable = function () {
 			return false;
 		});	
 		$("#openEditgoodsModal").on("click",function(event){
-			if(selected.length>1){
-				handleAlerts("Only one row can be edited.","warning","");
-				event.stopPropagation();
-			}else if(selected.length==0)
-			{
-				handleAlerts("Please choose one row.","warning","");
-				event.stopPropagation();
+			if(selected.length!=1){
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","");
+				return false;
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
@@ -220,8 +216,9 @@ var GoodsTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale=locale_value;
         	handleTable();  
         }
 

@@ -67,6 +67,12 @@
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 				
 				<div id="msg"></div>
+					<c:if test="${not empty Msg}">
+								<div class="alert alert-success">
+								<button class="close" data-close="alert"></button>
+									<span><s:message code="${Msg}"/></span>
+								</div>
+								</c:if>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<!-- BEGIN SEARCH FORM -->
 				<div class="portlet-body">

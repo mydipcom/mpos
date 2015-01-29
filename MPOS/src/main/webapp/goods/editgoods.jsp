@@ -86,10 +86,10 @@
 								<lable>There are some errors below</lable>
 									<button class="close" data-close="alert"></button>									
 								</div>
-								<c:if test="${not empty errorMsg}">
+								<c:if test="${not empty Msg}">
 								<div class="alert alert-danger">
 								<button class="close" data-close="alert"></button>
-									<span>${errorMsg}</span>
+									<span>${Msg}</span>
 								</div>
 								</c:if>
 								<!--Begin Multi-language Form   -->
