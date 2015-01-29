@@ -40,7 +40,7 @@
     }, "Please enter the attribute value with the same options size in Multi-language Form Items.");
     
 })(jQuery);
-
+var locale = "en_US";
 var rootURI="/";
 var CategoryTable = function () {
 	var oTable;
@@ -126,7 +126,7 @@ var CategoryTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteCategoryModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete","warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
 				return false;
 			}
 		});		
@@ -158,7 +158,7 @@ var CategoryTable = function () {
 		//打开编辑分类创窗口
 		$("#openEditCategoryModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts("One and only one row can be edited","warning","");			
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","");			
 				return false;				
 			}
 			else{
@@ -409,7 +409,7 @@ var CategoryTable = function () {
 		//打开分类属性编辑窗口
 		$("#openEditAttributeModal").on("click",function(event){
 			if(attSelected.length!=1){
-				handleAlerts("One and only one row can be add attribute.","warning","#view_attributeMsg");		
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","#view_attributeMsg");		
 				return false;				
 			}
 			else{
@@ -480,7 +480,7 @@ var CategoryTable = function () {
 		//打开删除属性对话框前判断是否已选择要删除的行
 		$("#openDeleteAttributeModal").on("click",function(event){
 			if(attSelected.length==0){
-				handleAlerts("Please select the rows which you want to delete.","warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
 				return false;
 			}
 		});
@@ -749,8 +749,9 @@ var CategoryTable = function () {
     
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale = locale_value;
         	handleTable();  
         	categoryFormValidation(0);
         	categoryFormValidation(1);        	

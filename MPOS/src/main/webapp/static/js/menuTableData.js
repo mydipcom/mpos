@@ -1,23 +1,3 @@
-//jquery插件把表单序列化成json格式的数据start 
-(function($){
-    $.fn.serializeJson=function(){
-        var serializeObj={};
-        var array=this.serializeArray();
-        var str=this.serialize();
-        $(array).each(function(){
-            if(serializeObj[this.name]){
-                if($.isArray(serializeObj[this.name])){
-                    serializeObj[this.name].push(this.value);
-                }else{
-                    serializeObj[this.name]=[serializeObj[this.name],this.value];
-                }
-            }else{
-                serializeObj[this.name]=this.value;
-            }
-        });
-        return serializeObj;
-    };  
-})(jQuery);
 /**
  * 加载数据
  * @returns {String}
@@ -87,7 +67,7 @@ var setLocal = function(localTitles){
 		}
 	}
 }
-
+var locale = "en_US";
 var rootURI="/";
 var MenuTable = function () {
 	var oTable;
@@ -128,7 +108,7 @@ var MenuTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteMenuModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete","warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale),"warning","");
 				return false;
 			}
 		});
@@ -165,7 +145,7 @@ var MenuTable = function () {
 		
 		$("#openEditMenuModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts("One and only one row can be edited","warning","");		
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","");
 				return false;				
 			}
 			else{
@@ -436,8 +416,9 @@ var MenuTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale = locale_value;
         	handleTable();  
         	addFormValidation();
         	editFormValidation();

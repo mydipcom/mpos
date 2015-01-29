@@ -759,20 +759,21 @@
 	<script src="../assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/typeahead/handlebars.min.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
-    
+    <script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
 	<script src="../assets/admin/pages/scripts/components-form-tools.js"></script>
+	<script src="../static/js/common.js"></script>
 	<script src="../static/js/categoryTableData.js"></script>
 	<script>
 	jQuery(document).ready(function() {       
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   CategoryTable.init("<c:url value="/"/>");	
+	   CategoryTable.init("<c:url value="/"/>","${sessionScope.locale}");	
 	   //ComponentsFormTools.init();
 	});
 	</script>
