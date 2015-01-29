@@ -42,11 +42,11 @@ var ManagersTable = function () {
 		        "displayLength": 3,
 		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 		        "columns": [
-		 	           { title: "ID",   data: "id" },
-		 	           { title: "Admin Name",   data: "adminId" },
-		 	           { title: "Content",  data: "content"},
-		 	           { title: "Level", data: "level"},
-		 	           { title: "Create Time", data: "createdTimeStr" },
+		 	           { data: "id" },
+		 	           { data: "adminId" },
+		 	           { data: "content"},
+		 	           { data: "level"},
+		 	           { data: "createdTimeStr" },
 		 	        ],
      	        "serverSide": true,
      	        "serverMethod": "GET",
@@ -84,10 +84,10 @@ var ManagersTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "adminId"  },
-	           { title: "Email",   data: "email" },
-	           { title: "Role Name",    data: "roleName" },
-	           { title: "Status",  
+	           {     data: "adminId"  },
+	           {     data: "email" },
+	           {     data: "roleName" },
+	           {   
 	 	        'render':function(data,status,row){
 	        				var tem = row.status;
 	        				var str = '';
@@ -100,10 +100,10 @@ var ManagersTable = function () {
 	        			}
 	           },
 
-	           { title: "Created By", data: "createdBy" ,"bVisible":false},
-	           { title: "Created Time", data: "createdTimeStr", "bVisible":false},
-	           { title: "Updated By",  data: "updatedBy" ,"bVisible":false},
-	           { title: "Updated Time",    data: "updatedTimeStr" ,"bVisible":false},  
+	           {	 data: "createdBy" ,"bVisible":false},
+	           { 	 data: "createdTimeStr", "bVisible":false},
+	           { 	 data: "updatedBy" ,"bVisible":false},
+	           {     data: "updatedTimeStr" ,"bVisible":false},  
 	           { title: "Action" ,"class":"center"},
 	        ],
 	        "serverSide": true,

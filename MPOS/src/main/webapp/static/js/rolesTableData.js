@@ -58,10 +58,10 @@ var RolesTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "roleId" },	           
-	           { title: "Role Name",  data: "roleName"},	           
-	           { title: "Parent ID",  data: "pid" },	           
-	           { title: "Status",  
+	           {   data: "roleId" },	           
+	           {   data: "roleName"},	           
+	           {   data: "pid" },	           
+	           { 
 		 	    'render':function(data,status,row){
                                 var tem = row.status;
 		        				var str = '';
@@ -73,7 +73,7 @@ var RolesTable = function () {
 		        				return str;
 		        			}
 		           },
-	           { title: "Role Rights",  data: "adminRoleRights" }
+	           {   data: "adminRoleRights" }
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
