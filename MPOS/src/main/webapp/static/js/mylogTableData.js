@@ -64,12 +64,12 @@ var MyLogTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id" },
-	           { title: "Admin Name",   data: "adminId" },
-	           { title: "Content",  data: "content"},
-	           { title: "Level", data: "level"},
-	           { title: "Create Time", data: "createdTimeStr" },
-	           { title: "Action" ,"class":"center"}
+	           { /*title: "ID", */  data: "id" },
+	           { /*title: "Admin Name",*/   data: "adminId" },
+	           { /*title: "Content",*/  data: "content"},
+	           { /*title: "Level",*/ data: "level"},
+	           { /*title: "Create Time",*/ data: "createdTimeStr" },
+	           {/* title: "Action" ,*/"class":"center"}
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

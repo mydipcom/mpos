@@ -171,7 +171,7 @@
 																<div class="col-md-7 value">${order_details['payment_total']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name"><s:message code="oreder.creater"/>:</div>
+																<div class="col-md-5 name"><s:message code="order.creater"/>:</div>
 																<div class="col-md-7 value">${order_details['creater']}</div>
 															</div>
 															<div class="row static-info">
@@ -231,14 +231,14 @@
 										<div id="column_toggler"
 											class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">Product ID</label>
-										    <label><input type="checkbox" checked data-column="3">Unit Price</label>
-											<label><input type="checkbox" checked data-column="2">Quantity</label>
-											<label><input type="checkbox" checked data-column="4">Discount</label>
-											<label><input type="checkbox" checked data-column="5">Curr Price</label>
-											<label><input type="checkbox" checked data-column="6">Attributes</label>
-											<label><input type="checkbox" checked data-column="7">Is Gift</label>
-											<label><input type="checkbox" checked data-column="7">Product Promotion</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="order.details.product.id"/></label>
+										    <label><input type="checkbox" checked data-column="3"><s:message code="order.details.product.unit.price"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="order.details.product.quantity"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="order.details.product.discount"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="order.details.product.curr.price"/></label>
+											<label><input type="checkbox" checked data-column="6"><s:message code="order.details.product.attributes"/></label>
+											<label><input type="checkbox" checked data-column="7"><s:message code="order.details.product.gift"/></label>
+											<label><input type="checkbox" checked data-column="8"><s:message code="order.details.product.promotion"/></label>
 										</div>
 									</div>
 								</div>
@@ -249,14 +249,14 @@
 									<thead>
 										<tr>
 											<th class="table-checkbox"><input type="checkbox"class="group-checkable " data-set="#order_product_table .checkboxes" disabled/></th>
-											<th>Product ID</th>
-											<th>Quantity</th>
-											<th>Unit Price</th>
-											<th>Discount</th>
-											<th>Curr Price</th>
-											<th>Attributes</th>
-											<th>Is Gift</th>
-											<th>Product Promotion</th>	
+											<th><s:message code="order.details.product.id"/></th>
+											<th><s:message code="order.details.product.quantity"/></th>
+											<th><s:message code="order.details.product.unit.price"/></th>
+											<th><s:message code="order.details.product.discount"/></th>
+											<th><s:message code="order.details.product.curr.price"/></th>
+											<th><s:message code="order.details.product.attributes"/></th>
+											<th><s:message code="order.details.product.gift"/></th>
+											<th><s:message code="order.details.product.promotion"/></th>	
 										</tr>
 									</thead>
 									<tbody>

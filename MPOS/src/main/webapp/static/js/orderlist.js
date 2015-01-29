@@ -46,27 +46,27 @@ var OrderList = function () {
 				"columns" : [ {
 					"orderable" : false
 				}, {
-					title : "Order ID",
+					/*title : "Order ID",*/
 					data : "orderId"
 				}, {
-					title : "Order Status",
+					/*title : "Order Status",*/
 					data : "orderStatus"
 				},{
-					title : "Order Total",
+					/*title : "Order Total",*/
 					data : "orderTotal"
 				},  {
-					title : "Order Discount",
+					/*title : "Order Discount",*/
 					data : "orderDiscount"
 				} ,{
-					title : "Create Time",
+					/*title : "Create Time",*/
 					data : "createTime",
 					
 				}, {
-					title : "Creater",
+					/*title : "Creater",*/
 					data : "creater",
 					
 				},{
-					title : "Comment",
+					/*title : "Comment",*/
 					data : "comment"
 				} ],
 				"serverSide" : true,

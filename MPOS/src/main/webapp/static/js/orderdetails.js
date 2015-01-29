@@ -44,30 +44,30 @@ var OrderDetails = function () {
 				"columns" : [ {
 					"orderable" : false
 				}, {
-					title : "Product ID",
+					/*title : "Product ID",*/
 					data : "productId"
 				},{
-					title : "Unit Price",
+					//title : "Unit Price",
 					data : "unitPrice"
 				}, {
-					title : "Quantity",
+					//title : "Quantity",
 					data : "quantity"
 				} , {
-					title : "Discount",
+					//title : "Discount",
 					data : "discount"
 				} ,{
-					title : "Curr Price",
+					//title : "Curr Price",
 					data : "currPrice",
 					
 				}, {
-					title : "Attributes",
+					//title : "Attributes",
 					data : "attributes",
 					
 				},{
-					title : "Is Gift",
+					//title : "Is Gift",
 					data : "isGift"
 				},{
-					title : "Product Promotion",
+					//title : "Product Promotion",
 					data : "productPromotion"
 				} ],
 				"serverSide" : true,

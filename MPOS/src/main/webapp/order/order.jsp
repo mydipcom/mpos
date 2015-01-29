@@ -118,7 +118,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label">Order Status：</label>
+									<label class="col-md-3 control-label"><s:message code="order.status"/></label>
 									<div class="col-md-9">
 										<select class="bs-select form-control" id="status_select" name="orderStatus">
 												<option value="0">Pending</option>
@@ -133,7 +133,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label">Order ID：</label>
+									<label class="col-md-3 control-label"><s:message code="order.id"/></label>
 									<div class="col-md-6">
 										<input name="orderId" type="text" class="form-control">
 									</div>
@@ -141,7 +141,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label">Creater：</label>
+									<label class="col-md-3 control-label"><s:message code="oreder.creater"/></label>
 									<div class="col-md-6">
 										<input name="creater" type="text" class="form-control">
 									</div>
@@ -151,7 +151,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label">Create Time：</label>
+									<label class="col-md-3 control-label"><s:message code="order.time"/></label>
 									
 										<div class="col-md-4">
 											<div class="input-group date form_datetime">
@@ -223,13 +223,13 @@
 										<div id="column_toggler"
 											class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">Order ID</label>
-											<label><input type="checkbox" checked data-column="2">Order Status</label>
-											<label><input type="checkbox" checked data-column="3">Order Total</label>
-											<label><input type="checkbox" checked data-column="4">Order Discount</label>
-											<label><input type="checkbox" checked data-column="5">Create Time</label>
-											<label><input type="checkbox" checked data-column="6">Creater</label>
-											<label><input type="checkbox" checked data-column="7">Comment</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="order.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="order.status"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="payment.total"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="discount.total"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="order.time"/></label>
+											<label><input type="checkbox" checked data-column="6"><s:message code="order.creater"/></label>
+											<label><input type="checkbox" checked data-column="7"><s:message code="order.comment"/></label>
 												
 										</div>
 									</div>
@@ -243,13 +243,13 @@
 											<th class="table-checkbox"><input type="checkbox"
 												class="group-checkable"
 												data-set="#order_list_table .checkboxes" /></th>
-											<th>Order ID</th>
-											<th>Order Status</th>
-											<th>Order Total</th>
-											<th>Order Discount</th>
-											<th>Create Time</th>
-											<th>Creater</th>	
-											<th>Comment</th>
+											<th><s:message code="order.id"/></th>
+											<th><s:message code="order.status"/></th>
+											<th><s:message code="payment.total"/></th>
+											<th><s:message code="discount.total"/></th>
+											<th><s:message code="order.time"/></th>
+											<th><s:message code="order.creater"/></th>	
+											<th><s:message code="order.comment"/></th>
 										</tr>
 									</thead>
 									<tbody>
