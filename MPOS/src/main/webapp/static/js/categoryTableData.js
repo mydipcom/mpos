@@ -480,7 +480,7 @@ var CategoryTable = function () {
 		//打开删除属性对话框前判断是否已选择要删除的行
 		$("#openDeleteAttributeModal").on("click",function(event){
 			if(attSelected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale),"warning","#view_attributeMsg");				
 				return false;
 			}
 		});
