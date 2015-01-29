@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale = "en_US";
 var OrderList = function () {
 	var oTable;
 	var selected = [];
@@ -91,20 +92,20 @@ var OrderList = function () {
 			//选择判断
 			$("#confirm_payment").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to payment.","warning","");				
+					handleAlerts(loadProperties("error.orderlist.payment.select",locale),"warning","");			
 					return false;
 				}
 			});
 			$("#cancel_order").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to cancel.","warning","");				
+					handleAlerts(loadProperties("error.orderlist.cancel.select",locale),"warning","");					
 					return false;
 				}
 			});
 			
 			$("#order_detail_btn").on("click",function(event){
 				if(selected.length != 1){
-					handleAlerts("Please select the one rows .","warning","");				
+					handleAlerts(loadProperties("error.orderlist.orderdetail.select",locale),"warning","");				
 					return false;
 				}else{
 					window.location.href="order_details?order_id="+selected.join();
@@ -128,10 +129,10 @@ var OrderList = function () {
 			  				   $(".group-checkable").parents('span').removeClass("checked");
 			  				   $(".group-checkable").attr("checked", false);;
 			  			     }
-			            	 handleAlerts("payment the order successfully.","success","");
+			            	 handleAlerts(data.info,"success","");
 						 }
 						 else{
-							 handleAlerts("payment the order failure.","danger","");
+							 handleAlerts(data.info,"danger","");
 						 }
 					}             	 
 	             },
@@ -158,10 +159,10 @@ var OrderList = function () {
 			  				   $(".group-checkable").parents('span').removeClass("checked");
 			  				   $(".group-checkable").attr("checked", false);;
 			  			     }
-			            	 handleAlerts("cancel the order successfully.","success","");
+			            	 handleAlerts(data.info,"success","");
 						 }
 						 else{
-							 handleAlerts("cancel the order failure.","danger","");
+							 handleAlerts(data.info,"danger","");
 						 }
 					}             	 
 	             },
@@ -245,7 +246,10 @@ var OrderList = function () {
 	    }
     
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {         
+	var handleAlerts = function(msg,msgType,position) {  
+		if(position==""){
+			position = $("#msg");
+		}
         Metronic.alert({
             container: position, // alerts parent container(by default placed after the page breadcrumbs)
             place: "prepent", // append or prepent in container 
@@ -314,8 +318,9 @@ var OrderList = function () {
     };
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale=locale_value;
         	orderListTable();
         	searchFormValidation();
         	handleDatetimePicker();

@@ -111,6 +111,7 @@
 				<!-- BEGIN PAGE CONTENT-->
 
 				<!-- BEGIN SEARCH FORM -->
+				<div id="msg"></div>
 				<div class="portlet-body from">
 					<form id="searchForm" name="searchForm" action=""
 						class="form-horizontal" method="post">
@@ -357,6 +358,7 @@
 		type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
     <script type="text/javascript" src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js"
@@ -365,12 +367,13 @@
 		type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js"
 		type="text/javascript"></script>
+	<script src="../static/js/common.js"></script>
 	<script src="../static/js/orderlist.js" type="text/javascript"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Metronic.init(); // init metronic core components
 			Layout.init(); // init current layout	
-			OrderList.init("<c:url value="/"/>");
+			OrderList.init("<c:url value="/"/>","${sessionScope.locale}");
 		});
 	</script>
 	<c:import url="/common/notice"/>

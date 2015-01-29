@@ -46,7 +46,13 @@ var SettingTable = function () {
 			name : 'Email_Username',
 			title : 'Enter Email Username',
 			success : function(data) {
-				handleAlerts("modify the email username of success.","success","");
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
+				
 			}
 		});
 
@@ -58,7 +64,12 @@ var SettingTable = function () {
 			name : 'Email_Password',
 			title : 'Enter Email Password',
 			success : function(value) {
-				handleAlerts("modify the email password of success.","success","");
+				var Obj=$.parseJSON(value);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 
@@ -70,7 +81,12 @@ var SettingTable = function () {
 			name : 'Token',
 			title : 'Enter Token',
 			success : function(value) {
-				handleAlerts("modify the token of success.","success","");
+				var Obj=$.parseJSON(value);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 		
@@ -82,7 +98,12 @@ var SettingTable = function () {
 			name : 'Email_Host',
 			title : 'Enter Email Host',
 			success : function(data) {
-				handleAlerts("modify the email host of success.","success","");
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 		$('#max_login_error_times').editable({
@@ -93,7 +114,12 @@ var SettingTable = function () {
 			name : 'Max_Login_Error_Times',
 			title : 'Enter Max Login Error Times',
 			success : function(data) {
-				handleAlerts("modify the max login error times of success.","success","");
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 		$('#login_error_locked').editable({
@@ -104,7 +130,12 @@ var SettingTable = function () {
 			name : 'Login_Error_Locked',
 			title : 'Enter Login Error Locked',
 			success : function(data) {
-				handleAlerts("modify the login error locked of success.","success","");
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 		

@@ -867,14 +867,15 @@
 	<script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
-	
+	<script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/pages/scripts/form-wizard.js"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
-<!--<script src="../static/js/rolesTableData.js"></script>  -->	
+<!--<script src="../static/js/rolesTableData.js"></script>  -->
+	<script src="../static/js/common.js"></script>	
 	<script src="../static/js/LanguageTableData.js"></script>
 	<script>
 
@@ -885,7 +886,7 @@
 
 	   //Demo.init(); // init demo features
 		FormWizard.init();
-		LanguagesTable.init("<c:url value="/"/>");	   
+		LanguagesTable.init("<c:url value="/"/>","${sessionScope.locale}");	   
 	});
 
 	</script>

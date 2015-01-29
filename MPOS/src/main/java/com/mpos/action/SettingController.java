@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.MidiDevice.Info;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -151,8 +152,15 @@ public class SettingController extends BaseController {
         }
     	tsetting.setValue(file.getBytes());
     	FileUtils.copyInputStreamToFile(file.getInputStream(), image);
-    	systemSettingService.updateSystemsetting(tsetting);
-    	resp.put("status", true);
+    	try {
+    		systemSettingService.updateSystemsetting(tsetting);
+    		resp.put("status", true);
+    		resp.put("info", getMessage(request,"operate.success"));
+		} catch (MposException be) {
+			resp.put("status", false);
+			resp.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}
+    	
  	    return JSON.toJSONString(resp);
     	
     	}

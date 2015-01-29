@@ -314,15 +314,15 @@
 	<script src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>	<!-- END CORE PLUGINS -->
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 	<script src="../assets/global/plugins/select2/select2.min.js" type="text/javascript"></script>
-	<script src="../assets/global/plugins/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>	<script src="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js" type="text/javascript"></script>	<script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>    <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>	<!-- END PAGE LEVEL PLUGINS -->
+	<script src="../assets/global/plugins/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>	<script src="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js" type="text/javascript"></script>	<script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>    <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>    <script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
-	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>		<script src="../static/js/rolesTableData.js"></script>
+	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>		<script src="../static/js/common.js"></script>	<script src="../static/js/rolesTableData.js"></script>
 	<script>
 	jQuery(document).ready(function() {       
 	   Metronic.init(); // init metronic core components	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   RolesTable.init("<c:url value="/"/>");	   	});
+	   RolesTable.init("<c:url value="/"/>","${sessionScope.locale}");	   	});
 	</script>
 <c:import url="/common/notice"/></body>
 <!-- END BODY -->

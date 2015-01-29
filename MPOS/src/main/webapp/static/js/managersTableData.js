@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale = "en_US";
 var ManagersTable = function () {
 	var oTable;
 	var oLogTable;
@@ -116,19 +117,19 @@ var ManagersTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 			$("#openDeleteadminsModal").on("click",function(event){
 					if(selected.length==0){
-						handleAlerts("Please select the rows which you want to delete.","warning","");				
+						handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
 						return false;
 					}
 				});
 			$("#openActiveadminsModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to Active.","warning","");				
+					handleAlerts(loadProperties("error.active.select",locale),"warning","");				
 					return false;
 				}
 			});
 			$("#openDeactiveadminsModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to deactive.","warning","");				
+					handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
 					return false;
 				}
 			});
@@ -144,10 +145,10 @@ var ManagersTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("delete the adminusers successfully.","success","");
+		            	 handleAlerts(data.info,"success","");
 					 }
 					 else{
-						 handleAlerts("Failed to delete the adminusers. " +data.info,"danger","");
+						 handleAlerts(data.info,"danger","");
 					 }
 				}             	 
              },
@@ -157,7 +158,7 @@ var ManagersTable = function () {
            });
         });  
 		
-		//激活规则
+		//激活用户
 		$('#activateBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
@@ -169,10 +170,10 @@ var ManagersTable = function () {
 						 selected=[];						 
 		            	oTable.api().draw();
 		            	oTable.$('th span').removeClass();
-		            	 handleAlerts("activateBtn the rules successfully.","success","");
+		            	 handleAlerts(data.info,"success","");
 					 }
 					 else{
-						 alert(data.info);
+						 handleAlerts(data.info,"danger","");
 					 }
 				}             	 
              },
@@ -181,7 +182,7 @@ var ManagersTable = function () {
              }
            });
         }); 
-		//禁用规则
+		//禁用
 		$('#deactivateBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
@@ -193,10 +194,10 @@ var ManagersTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("deactivateBtn the rules successfully.","success","");
+		            	 handleAlerts(data.info,"success","");
 					 }
 					 else{
-						 alert(data.info);
+						 handleAlerts(data.info,"danger","");
 					 }
 				}             	 
              },
@@ -214,13 +215,9 @@ var ManagersTable = function () {
 			return false;
 		});	
 		$("#openEditRightModal").on("click",function(event){
-			if(selected.length>1){
-				handleAlerts("Only one row can be edited.","warning","");
-				event.stopPropagation();
-			}else if(selected.length==0)
-			{
-				handleAlerts("Please choose one row.","warning","");
-				event.stopPropagation();
+			if(selected.length!=1){
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","");
+				return false;
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
@@ -305,7 +302,10 @@ var ManagersTable = function () {
 	
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {         
+	var handleAlerts = function(msg,msgType,position) { 
+		if(position==""){
+			position = $("#msg");
+		}
         Metronic.alert({
             container: position, // alerts parent container(by default placed after the page breadcrumbs)
             place: "prepent", // append or prepent in container 
@@ -331,10 +331,10 @@ var ManagersTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
-	            	 handleAlerts("Added the data successfully.","success","");		            	 
+	            	 handleAlerts(resp.info,"success","");		            	 
 				 }
 				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"the name or email exist","danger","");						 
+					 handleAlerts(resp.info,"danger","");						 
 				 }
 			}             	 
          },
@@ -413,10 +413,10 @@ var ManagersTable = function () {
         		 if(resp.status){
 					 selected=[];
 	            	 oTable.api().draw();
-	            	 handleAlerts("Edited the data successfully.","success","");
+	            	 handleAlerts(resp.info,"success","");
 				 }
 				 else{
-					 handleAlerts("Failed to add the data."+resp.info+"the email is exist","danger","");
+					 handleAlerts(resp.info,"danger","");
 				 }
 			}             	 
          },
@@ -482,8 +482,9 @@ var ManagersTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale=locale_value;
         	handleTable();  
         	AddUsersValidation();
         	EditUsersValidation();        	

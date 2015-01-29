@@ -91,10 +91,10 @@ var OrderDetails = function () {
 							 $('.actions').find('a:eq(1)').addClass("disabled");
 							 $('.actions').find('a:eq(2)').addClass("disabled");
 							 $('.static-info:eq(5)').find('span').text("Payment Complete");
-			            	 handleAlerts("payment the order successfully.","success","");
+			            	 handleAlerts(data.info,"success","");
 						 }
 						 else{
-							 handleAlerts("payment the order failure.","danger","");
+							 handleAlerts(data.info,"danger","");
 						 }
 					}             	 
 	             },
@@ -116,10 +116,10 @@ var OrderDetails = function () {
 							 $('.actions').find('a:eq(1)').addClass("disabled");
 							 $('.actions').find('a:eq(2)').addClass("disabled");
 							 $('.static-info:eq(5)').find('span').text("Rejected");
-			            	 handleAlerts("cancel the order successfully.","success","");
+			            	 handleAlerts(data.info,"success","");
 						 }
 						 else{
-							 handleAlerts("cancel the order failure.","danger","");
+							 handleAlerts(data.info,"danger","");
 						 }
 					}             	 
 	             },
@@ -161,7 +161,10 @@ var OrderDetails = function () {
 		}
 	}
     //提示信息处理方法（是在页面中指定位置显示提示信息的方式）
-	var handleAlerts = function(msg,msgType,position) {         
+	var handleAlerts = function(msg,msgType,position) {  
+		if(position==""){
+			position = $("#msg");
+		}
         Metronic.alert({
             container: position, // alerts parent container(by default placed after the page breadcrumbs)
             place: "prepent", // append or prepent in container 

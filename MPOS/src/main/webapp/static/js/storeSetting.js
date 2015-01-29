@@ -47,7 +47,12 @@ var StoreSetting = function() {
 			name : 'Restaurant_Name',
 			title : 'Enter Restaurant Name',
 			success : function(data) {
-				handleAlerts("modify the restaurant name of success.","success","");
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 
@@ -59,7 +64,12 @@ var StoreSetting = function() {
 			name : 'Access_Password',
 			title : 'Enter Password',
 			success : function(value) {
-				handleAlerts("modify the access password of success.","success","");
+				var Obj=$.parseJSON(value);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 
@@ -71,7 +81,12 @@ var StoreSetting = function() {
 			name : 'Token',
 			title : 'Enter Token',
 			success : function(value) {
-				handleAlerts("modify the token of success.","success","");
+				var Obj=$.parseJSON(value);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 		var currency = [];
@@ -93,7 +108,12 @@ var StoreSetting = function() {
 			inputclass : 'form-control input-medium',
 			source : currency,
 			success : function(value) {
-				handleAlerts("modify the currency of success.","success","");
+				var Obj=$.parseJSON(value);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
 			}
 		});
 		
@@ -110,7 +130,7 @@ var StoreSetting = function() {
 	             "success": function(resp,status){
 	            	 if(status == "success"){  
 	            		 if(resp.status){
-							 handleAlerts("modify the restaurant background successfully.","success","","10");
+	            			 handleAlerts(resp.info,"success","");
 							 $('#background_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
 								 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 150px;\">"+
 	                                     "<img src=\""+$('#background_change').find('img').attr("src")+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
@@ -123,7 +143,7 @@ var StoreSetting = function() {
 						                 );
 			              }
 						 else{
-						     handleAlerts("modify the restaurant background fail.","danger","","10");
+							 handleAlerts(resp.info,"danger","");
 						 }
 	            		 
 					} 
@@ -149,9 +169,9 @@ var StoreSetting = function() {
 	             "success": function(resp,status){
 	            	 if(status == "success"){  
 	            		 if(resp.status){
-							 handleAlerts("modify the restaurant logo successfully.","success","","10");
+	            			 handleAlerts(resp.info,"success","");
 							 $('#logo_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
-							 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 50px;\">"+
+							 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 150px;\">"+
                                      "<img src=\""+$('#logo_change').find('img').attr("src")+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
 									 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
                                      "<div><span class=\"btn default btn-file\"> <span class=\"fileinput-new\"> Select image </span>"+ 
@@ -162,7 +182,7 @@ var StoreSetting = function() {
 					                 );
 						}
 						 else{
-						     handleAlerts("modify the restaurant logo fail.","danger","","10");
+							 handleAlerts(resp.info,"danger","");
 						 }
 	            		 
 					} 

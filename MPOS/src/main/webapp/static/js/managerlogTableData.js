@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale = "en_US";
 var ManagerLogTable = function () {
 	var oTable;
 	var selected = [];
@@ -101,7 +102,7 @@ var ManagerLogTable = function () {
 			//打开删除对话框前判断是否已选择要删除的行
 			$("#openDeleteAdminLogModal").on("click",function(event){
 					if(selected.length==0){
-						handleAlerts("Please select the rows which you want to delete.","warning","");				
+						handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
 						return false;
 					}
 				});
@@ -118,10 +119,10 @@ var ManagerLogTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
-		            	 handleAlerts("delete the adminlog successfully.","success","");
+		            	 handleAlerts(data.info,"success","");
 					 }
 					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
+						 handleAlerts(data.info,"danger","");
 					 }
 				}             	 
              },
@@ -239,8 +240,9 @@ var ManagerLogTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale=locale_value;
         	handleTable();  
         	datePicker();
         }

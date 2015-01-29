@@ -107,6 +107,7 @@
 					</ul>--%>
 				</div> 
 				<!-- END PAGE TITLE & BREADCRUMB-->
+				<div id="msg"></div>
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">

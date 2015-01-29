@@ -235,7 +235,7 @@ var TableTable = function () {
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    "tableName": {
+                    /*"tableName": {
                     	required: true,
                     	remote: {
                     	    url:URL,     //后台处理程序
@@ -251,7 +251,7 @@ var TableTable = function () {
                     	        }
                     	    }
                     	}
-                    },
+                    },*/
                     "seatingNumber": {
                     	required: true,
                     	digits:true,

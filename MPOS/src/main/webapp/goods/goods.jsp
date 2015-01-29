@@ -308,6 +308,7 @@
     <script src="../assets/global/plugins/typeahead/handlebars.min.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
    
     <!-- END PAGE LEVEL PLUGINS -->
    	<script type="text/javascript" src="../assets/global/plugins/jquery-mixitup/jquery.mixitup.min.js"></script>
@@ -319,6 +320,7 @@
 	<script src="../assets/admin/pages/scripts/portfolio.js"></script>
 	<%-- <script src="../static/js/UserProfile.js"></script>
 	<script src="../static/js/managersTableData.js"></script> --%>
+	<script src="../static/js/common.js"></script>
 	 <script src="../static/js/goodsTableData.js"></script>
 	<script>
 	   jQuery(document).ready(function() {       
@@ -327,7 +329,7 @@
 	   //Demo.init(); // init demo features
 	 
 	   Portfolio.init();
-	   GoodsTable.init("<c:url value="/"/>"); 
+	   GoodsTable.init("<c:url value="/"/>","${sessionScope.locale}"); 
 	   //ComponentsFormTools.init();
 	});
 	</script>

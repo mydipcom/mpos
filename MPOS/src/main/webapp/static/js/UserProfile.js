@@ -36,7 +36,7 @@ var UserProfile = function () {
 		            	 if(status == "success"){ 
 		            		
 		            		 if(resp.status){
-								 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+								 handleAlerts(resp.info,"success","#editFormMsg");
 							 }
 							 else{
 								 handleAlerts(resp.info,"danger","#editFormMsg");
@@ -52,9 +52,7 @@ var UserProfile = function () {
 	   
 			
 
-			$('#testsid').on('change',function(e){
-				alert("test");
-				$('#id').modal('show');
+			
 				/*
 				$('#name').empty();
 				var obj=document.getElementById("testsid");
@@ -67,7 +65,7 @@ var UserProfile = function () {
 					$(html).appendTo($('#id'));	
 				}
 				*/
-			});
+		
 	    //修改密码
 	    var ChangePassword = function() {
                   $.ajax( {
@@ -83,7 +81,7 @@ var UserProfile = function () {
 		            		
 		            		 if(resp.status){
 		            			 if(resp.olderror){
-		            				 handleAlerts("Confirm your current password is correct","danger","#changePasswordMsg");
+		            				 handleAlerts(resp.info,"danger","#changePasswordMsg");
 		            			 }else{
 		            				 
 		            				   alert("Change the Password successfully.");
@@ -92,7 +90,7 @@ var UserProfile = function () {
 								 
 							 }
 							 else{
-								 alert(resp.info);
+								 handleAlerts(resp.info,"danger","#changePasswordMsg");
 							 }
 						}             	 
 		             },

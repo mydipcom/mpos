@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale="en_US";
 var RightsTable = function () {
 	var oTable;
 	var handleTable = function () {
@@ -89,7 +90,7 @@ var RightsTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteRightsModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts("Please select the rows which you want to delete.","warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale),"warning","");					
 				return false;
 			}
 		});
@@ -106,9 +107,10 @@ var RightsTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts(data.info,"success","");
 					 }
 					 else{
-						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
+						 handleAlerts(data.info,"danger","");
 					 }
 				}             	 
              },
@@ -121,7 +123,7 @@ var RightsTable = function () {
 		
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts("One and only one row can be edited.","warning","");		
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","");		
 				return false;				
 			}
 			else{
@@ -235,10 +237,10 @@ var RightsTable = function () {
         	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
-	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
+	            	 handleAlerts(resp.info,"success","#addFormMsg");		            	 
 				 }
 				 else{
-					 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
+					 handleAlerts(resp.info,"danger","#addFormMsg");						 
 				 }
 			}             	 
          },
@@ -261,10 +263,10 @@ var RightsTable = function () {
             		 if(resp.status){
 						 selected=[];
 		            	 oTable.api().draw();
-		            	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+		            	 handleAlerts(resp.info,"success","#editFormMsg");
 					 }
 					 else{
-						 handleAlerts("Failed to edit the data.","danger","#editFormMsg");
+						 handleAlerts(resp.info,"danger","#editFormMsg");
 					 }
 				}             	 
              },
@@ -404,8 +406,9 @@ var RightsTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale=locale_value;
         	handleTable();  
         	addFormValidation();
 		editFormValidation();
