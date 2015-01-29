@@ -58,10 +58,11 @@ public class MylogController extends BaseController {
 			TadminLog adminslog=myLogService.getAdminLogById(idArr[0]);
 			respJson.put("status", true);
 			respJson.put("adminslog", adminslog);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);	
 	}

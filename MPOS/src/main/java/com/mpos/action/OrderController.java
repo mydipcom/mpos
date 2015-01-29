@@ -99,8 +99,10 @@ public class OrderController extends BaseController{
 				
 			}
 			resp.put("status", true);
-		}catch(MposException m){
+			resp.put("info", getMessage(request,"operate.success"));
+		}catch(MposException be){
 			resp.put("status", false);
+			resp.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}
 		
 		return JSON.toJSONString(resp);
@@ -122,8 +124,10 @@ public class OrderController extends BaseController{
 				
 			}
 			resp.put("status", true);
-		}catch(MposException m){
+			resp.put("info", getMessage(request,"operate.success"));
+		}catch(MposException be){
 			resp.put("status", false);
+			resp.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}
 		
 		return JSON.toJSONString(resp);

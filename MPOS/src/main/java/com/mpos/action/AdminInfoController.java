@@ -99,7 +99,7 @@ public class AdminInfoController extends BaseController {
 			 String adminId=adminUser.getAdminId();
 			if(user != null && !adminUser.getAdminId().equals(user.getAdminId())){
 				respJson.put("status", false);
-				respJson.put("info", "Email is exists ,Please change another.");
+				respJson.put("info", getMessage(request, "error.email.info"));
 				return JSON.toJSONString(respJson);
 			}
 			if(!adminUser.getEmail().equals(adminInfo.getEmail())){
@@ -118,6 +118,7 @@ public class AdminInfoController extends BaseController {
 			respJson.put("status", true);
 		}catch(MposException be){
 			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}
 		LogManageTools.writeAdminLog(log_content, adminLog);
 		return JSON.toJSONString(respJson);
@@ -144,10 +145,10 @@ public class AdminInfoController extends BaseController {
 				log_content = "success:change pasword.";
 				respJson.put("status", true);
 			}
-			
+			respJson.put("info", getMessage(request,"operate.success"));
 		}catch(MposException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}
 		LogManageTools.writeAdminLog(log_content, adminLog);
 		return JSON.toJSONString(respJson);

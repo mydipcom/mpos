@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,7 @@ public class CallWaiterController extends BaseController {
 
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody  
-	public String checkCall(){
+	public String checkCall(HttpServletRequest request){
 		JSONObject respJson = new JSONObject();
 		Map<String, CallWaiterInfo> map = SystemConfig.Call_Waiter_Map;
 		List<CallWaiterInfo> infos = new ArrayList<CallWaiterInfo>();
@@ -43,6 +45,7 @@ public class CallWaiterController extends BaseController {
 		}
 		status = true;
 		respJson.put("info", infos);
+		respJson.put("locale", getLocale(request));
 		respJson.put("status", status);
 		return JSON.toJSONString(respJson);
 	}

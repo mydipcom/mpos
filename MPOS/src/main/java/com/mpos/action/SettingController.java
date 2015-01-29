@@ -112,9 +112,12 @@ public class SettingController extends BaseController {
 				}
 	            systemSettingService.updateSystemsetting(tsetting);
 	            systemSettingService.cachedSystemSettingData();
+	            resp.put("status", true);
+	            resp.put("info", getMessage(request,"operate.success"));
 			}
-		}catch(MposException m){
-			
+		}catch(MposException be){
+			resp.put("status", false);
+			resp.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,7 +125,7 @@ public class SettingController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		resp.put("status", true);
+		
 		return JSON.toJSONString(resp);
 	}
 	

@@ -23,7 +23,7 @@ function checkCall(){
 	loadInterval = setInterval("checkNotice()",loadTime);
 }
 var flag = 0;
-var xx;
+var locale = "en_US";
 
 function getHtml(infos,index){
 	var html="";
@@ -33,13 +33,18 @@ function getHtml(infos,index){
 	 var call_time = infos[index].callTime;
 	 //呼叫类型 0 买单 1帮助
 	 var call_type = infos[index].type
-	 var call_info = "Need Help!";
-	 if(call_type == 0){
-		 call_info = "I Want to Pay!";
+	 var en_US = {number:"Number",type:"Type",time:"Time",help:"Need Help!",pay:"I Want to Pay!"};
+	 if(locale=="zh_CN"){
+		 en_US = {number:"桌号",type:"呼叫类型",time:"呼叫时间",help:"需要帮助！",pay:"买单！"};
 	 }
-	 html ='<div style="color:black">Number:'+appId+'</div>'
-		+'<div style="color:black">Type:'+call_info+'</div>'
-		+'<div style="color:black">Time:'+call_time+'</div>'
+	 
+	 var call_info = en_US.help;
+	 if(call_type == 0){
+		 call_info = en_US.pay;
+	 }
+	 html ='<div style="color:black">'+en_US.number+':'+appId+'</div>'
+		+'<div style="color:black">'+en_US.type+':'+call_info+'</div>'
+		+'<div style="color:black">'+en_US.time+':'+call_time+'</div>'
 		+'<div style="border: 1px solid #cbcbcb;"></div>'
 		+'<div style="text-align: center;margin-top:20px">'
 		+'<button type="button" style="width:80px;height:22px;line-height:20px;background-color:green" onclick="dealCall(\''+appId+'\')">OK</button>'
@@ -116,6 +121,7 @@ function checkNotice(){
        		 if(resp.status){
        			res = resp.info;
        			createMsg(res);
+       			locale = resp.locale;
 				}
 			}             	 
         }

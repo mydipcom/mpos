@@ -102,6 +102,7 @@ public class ManagerController extends BaseController {
 			adminuser.setEmail(email.toLowerCase());
 			adminUserService.createAdminUser(adminuser);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -137,6 +138,7 @@ public class ManagerController extends BaseController {
 			}
 			adminUserService.updateAdminUser(adminuser);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -155,6 +157,7 @@ public class ManagerController extends BaseController {
 		try{
 			adminUserService.deleteAdminUserByIds(idstrArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -171,6 +174,7 @@ public class ManagerController extends BaseController {
 		try{
 			adminUserService.activateUsersByIds(idstrArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -187,6 +191,7 @@ public class ManagerController extends BaseController {
 		try{
 			adminUserService.deactivateUsersByIds(idstrArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);

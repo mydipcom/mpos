@@ -82,6 +82,7 @@ public class RightsController extends BaseController {
 		try{
 			adminNodesService.createAdminNode(adminNode);			
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -98,6 +99,7 @@ public class RightsController extends BaseController {
 		try{
 			adminNodesService.updateAdminNode(adminNode);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -115,6 +117,7 @@ public class RightsController extends BaseController {
 		try{
 			adminNodesService.deleteAdminNodesByIds(idArr);
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);

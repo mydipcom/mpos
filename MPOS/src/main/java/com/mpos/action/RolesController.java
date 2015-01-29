@@ -88,6 +88,7 @@ public class RolesController extends BaseController {
 		try{
 			adminRole.setStatus(true);
 			adminRoleService.createAdminRole(adminRole);
+			respJson.put("info", getMessage(request,"operate.success"));
 			respJson.put("status", true);
 		}
 		catch(MposException be){
@@ -105,11 +106,12 @@ public class RolesController extends BaseController {
 		try{
 			if(adminRole.getRoleId()==1){
 				respJson.put("status", false);
-				respJson.put("info", "It is not allowed to edit the super user.");
+				respJson.put("info", getMessage(request, "error.edit.role"));
 			}
 			else{
 				adminRoleService.updateAdminRole(adminRole);
 				respJson.put("status", true);
+				respJson.put("info", getMessage(request,"operate.success"));
 			}
 		}
 		catch(MposException be){
@@ -133,6 +135,7 @@ public class RolesController extends BaseController {
 			adminRoleRightsService.saveAdminRoleRights(adminRoleRights);
 			setSessionRights(request,adminRoleRights.getRoleRights());
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
@@ -151,11 +154,12 @@ public class RolesController extends BaseController {
 		try{			
 			if(Arrays.binarySearch(idArr, new Integer(1))>=0){
 				respJson.put("status", false);
-				respJson.put("info", "It is not allowed to delete the super user.");
+				respJson.put("info", getMessage(request, "error.delete.role"));
 			}
 			else{
 				adminRoleService.deleteAdminRolesByIds(idArr);
 				respJson.put("status", true);
+				respJson.put("info", getMessage(request,"operate.success"));
 			}
 		}
 		catch(MposException be){

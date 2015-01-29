@@ -35,6 +35,7 @@ public class ProductReleaseController extends BaseController{
 			TproductRelease productrelease=productReleaseService.getUnPublished();
 			productReleaseService.publicreleasebyid(productrelease.getId());
 			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
