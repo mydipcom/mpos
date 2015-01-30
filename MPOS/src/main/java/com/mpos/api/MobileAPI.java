@@ -843,6 +843,11 @@ public class MobileAPI {
 				}
 			}
 		}
+		Collections.sort(attributeModels, new Comparator<AttributeModel>() {
+			public int compare(AttributeModel arg0, AttributeModel arg1) {
+				return arg0.getAttributeType().compareTo(arg1.getAttributeType());
+			}
+		});
 		model.setAttributes(attributeModels);
 		return model;
 	}
