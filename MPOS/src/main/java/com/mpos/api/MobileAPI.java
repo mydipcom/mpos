@@ -17,6 +17,7 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,6 @@ import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tcommodity;
 import com.mpos.dto.Tdevice;
 import com.mpos.dto.TgoodsAttribute;
-import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Torder;
@@ -57,7 +57,6 @@ import com.mpos.service.AttributeValueService;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CommodityService;
 import com.mpos.service.DeviceService;
-import com.mpos.service.GoodsAttributeService;
 import com.mpos.service.GoodsImageService;
 import com.mpos.service.GoodsService;
 import com.mpos.service.LanguageService;
@@ -70,11 +69,10 @@ import com.mpos.service.ProductReleaseService;
 import com.mpos.service.PromotionService;
 import com.mpos.service.TableService;
 
-
 @Controller
 @RequestMapping("/api")
 public class MobileAPI {
-	
+	 private Logger logger = Logger.getLogger(MobileAPI.class);
 	/**
 	 * 绑定类型为所有
 	 */
@@ -99,9 +97,9 @@ public class MobileAPI {
 	 * 活动类型 满减
 	 */
 	public static final int PROMOTION_TYPE_FULL_CUT = 3;
-	
-	public static final int SPEC_TYPE=0;
-	public static final int ORDER_TYPE=1;
+
+	public static final int SPEC_TYPE = 0;
+	public static final int ORDER_TYPE = 1;
 	@Autowired
 	private TableService tableService;
 	@Autowired
@@ -132,99 +130,100 @@ public class MobileAPI {
 	private AttributeValueService attributeValueService;
 	@Autowired
 	private LanguageService languageService;
-	
+
 	/**
 	 * Get the system setting parameter
+	 * 
 	 * @param response
 	 * @return String
 	 */
-	@RequestMapping(value="getSetting",method=RequestMethod.GET)
+	@RequestMapping(value = "getSetting", method = RequestMethod.GET)
 	@ResponseBody
-	public String getSetting(HttpServletResponse response,HttpServletRequest request,@RequestHeader("InitialAuthCode") String initKey) {
+	public String getSetting(HttpServletResponse response, HttpServletRequest request, @RequestHeader("InitialAuthCode") String initKey) {
 		JSONObject respJson = new JSONObject();
-		if(initKey==null||!initKey.equalsIgnoreCase(SystemConstants.INIT_AUTH_CODE)){
+		if (initKey == null || !initKey.equalsIgnoreCase(SystemConstants.INIT_AUTH_CODE)) {
 			respJson.put("status", false);
-			respJson.put("info", "Error Init API token.");			
+			respJson.put("info", "Error Init API token.");
 			return JSON.toJSONString(respJson);
 		}
-		try{
-			//String path = request.getContextPath();
-			Map<String,String> setting=SystemConfig.Admin_Setting_Map;
-			String pwd=setting.get(SystemConstants.ACCESS_PASSWORD);
-			String token=setting.get(SystemConstants.TOKEN);
-			String currency=setting.get(SystemConstants.CURRENCY);
-			String logo=setting.get(SystemConstants.RESTAURANT_LOGO);
-			String backgroundImage=setting.get(SystemConstants.PAGE_BACKGROUND);
-			String restaurantName=setting.get(SystemConstants.RESTAURANT_NAME);
-			
-			JSONObject dataJson = new JSONObject();	
+		try {
+			// String path = request.getContextPath();
+			Map<String, String> setting = SystemConfig.Admin_Setting_Map;
+			String pwd = setting.get(SystemConstants.ACCESS_PASSWORD);
+			String token = setting.get(SystemConstants.TOKEN);
+			String currency = setting.get(SystemConstants.CURRENCY);
+			String logo = setting.get(SystemConstants.RESTAURANT_LOGO);
+			String backgroundImage = setting.get(SystemConstants.PAGE_BACKGROUND);
+			String restaurantName = setting.get(SystemConstants.RESTAURANT_NAME);
+
+			JSONObject dataJson = new JSONObject();
 			dataJson.put("pwd", pwd);
 			dataJson.put("token", token);
 			dataJson.put("currency", currency);
-			dataJson.put("logo", "/"+ logo);	
+			dataJson.put("logo", "/" + logo);
 			dataJson.put("backgroundImage", "/" + backgroundImage);
 			dataJson.put("storeName", restaurantName);
 			dataJson.put("tables", loadTables());
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", dataJson);
-			
+
+			return JSON.toJSONString(respJson);
+		} catch (MposException e) {
+			respJson.put("status", false);
+			respJson.put("info", e.getMessage());
 			return JSON.toJSONString(respJson);
 		}
-		catch(MposException e){
-			respJson.put("status", false);
-			respJson.put("info", e.getMessage());			
-			return JSON.toJSONString(respJson);
-		}		
 	}
-	
+
 	/**
 	 * Query order status by heartbeat
+	 * 
 	 * @param response
 	 * @param apiKey
 	 * @param jsonStr
 	 * @return String
 	 */
-	@RequestMapping(value="orderCheck",method=RequestMethod.POST)
+	@RequestMapping(value = "orderCheck", method = RequestMethod.POST)
 	@ResponseBody
-	public String orderCheck(HttpServletResponse response,@RequestHeader("Authorization") String apiKey,@RequestBody String jsonStr) {		
-		String apiToken=SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
-		JSONObject jsonObj=null;
-		JSONObject respJson = new JSONObject();						
-		if(apiKey==null||!apiKey.equalsIgnoreCase(apiToken)){
+	public String orderCheck(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr) {
+		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		JSONObject jsonObj = null;
+		JSONObject respJson = new JSONObject();
+		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
 			respJson.put("status", false);
-			respJson.put("info", "Error API token.");			
+			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
 		}
-		
-		if(jsonStr == null||jsonStr.isEmpty()) {
+
+		if (jsonStr == null || jsonStr.isEmpty()) {
 			respJson.put("status", false);
-			respJson.put("info", "The request parameter is required.");			
+			respJson.put("info", "The request parameter is required.");
 			return JSON.toJSONString(respJson);
 		}
-				
-		try{
-			jsonObj= (JSONObject)JSON.parse(jsonStr);
+
+		try {
+			jsonObj = (JSONObject) JSON.parse(jsonStr);
 			String appid = jsonObj.getString("appId");
-			if(appid==null||appid.isEmpty()){
+			if (appid == null || appid.isEmpty()) {
 				respJson.put("status", false);
-				respJson.put("info", "The parameter appId is required.");				
-				return JSON.toJSONString(respJson);				
+				respJson.put("info", "The parameter appId is required.");
+				return JSON.toJSONString(respJson);
 			}
 			String orderIds = jsonObj.getString("orderIds");
-			if(orderIds==null||orderIds.isEmpty()||orderIds.split(",").length==0){
+			if (orderIds == null || orderIds.isEmpty() || orderIds.split(",").length == 0) {
 				respJson.put("status", false);
-				respJson.put("info", "The parameter orderIds is required.");				
-				return JSON.toJSONString(respJson);	
+				respJson.put("info", "The parameter orderIds is required.");
+				return JSON.toJSONString(respJson);
 			}
-			
+
 			String[] orderIdsStr = orderIds.split(",");
 			Integer[] orderIdsInt = ConvertTools.stringArr2IntArr(orderIdsStr);
-			List<Map<String,Integer>> data = new ArrayList<Map<String,Integer>>();
+			List<Map<String, Integer>> data = new ArrayList<Map<String, Integer>>();
 			for (Integer orderId : orderIdsInt) {
 				Torder order = orderService.getTorderById(orderId);
-				if(order !=null){
-					Map<String,Integer> res = new HashMap<String, Integer>();
+				if (order != null) {
+					Map<String, Integer> res = new HashMap<String, Integer>();
 					res.put("orderId", order.getOrderId());
 					res.put("orderStatus", order.getOrderStatus());
 					data.add(res);
@@ -233,107 +232,107 @@ public class MobileAPI {
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", data);
-			
+
+			return JSON.toJSONString(respJson);
+		} catch (MposException e) {
+			respJson.put("status", false);
+			respJson.put("info", e.getMessage());
 			return JSON.toJSONString(respJson);
 		}
-		catch(MposException e){
-			respJson.put("status", false);
-			respJson.put("info", e.getMessage());			
-			return JSON.toJSONString(respJson);
-		}		
 	}
-	
+
 	/**
 	 * Get the menu list
+	 * 
 	 * @param response
 	 * @param apiKey
 	 * @return String
 	 */
-	@RequestMapping(value="getMenu",method=RequestMethod.GET)
+	@RequestMapping(value = "getMenu", method = RequestMethod.GET)
 	@ResponseBody
-	public String getMenu(HttpServletResponse response,@RequestHeader("Authorization") String apiKey) {		
-				
-		JSONObject respJson = new JSONObject();	
-		String apiToken=SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
-		if(apiKey==null||!apiKey.equalsIgnoreCase(apiToken)){
+	public String getMenu(HttpServletResponse response, @RequestHeader("Authorization") String apiKey) {
+
+		JSONObject respJson = new JSONObject();
+		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
 			respJson.put("status", false);
-			respJson.put("info", "Error API token.");			
+			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
 		}
-								
-		try{
-			List<Tmenu> menuList=menuService.getAllMenu();
-			
+
+		try {
+			List<Tmenu> menuList = menuService.getAllMenu();
+
 			for (Tmenu menu : menuList) {
 				JSONArray langJsonArr = null;
-				List<TlocalizedField> list=localizedFieldService.getLocalizedField(menu.getMenuId(), SystemConstants.TABLE_NAME_MENU, SystemConstants.TABLE_FIELD_TITLE);
-				if(list!=null&&list.size()>0){
+				List<TlocalizedField> list = localizedFieldService.getLocalizedField(menu.getMenuId(), SystemConstants.TABLE_NAME_MENU, SystemConstants.TABLE_FIELD_TITLE);
+				if (list != null && list.size() > 0) {
 					langJsonArr = new JSONArray();
 					for (TlocalizedField localizedField : list) {
 						JSONObject jsonObj = new JSONObject();
 						jsonObj.put("language", localizedField.getLanguage().getLocal());
 						jsonObj.put("value", localizedField.getLocaleValue());
 						langJsonArr.add(jsonObj);
-					}															
+					}
 				}
 				menu.setTitleLocale(langJsonArr);
-			}						
+			}
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", menuList);
-			
+
+			return JSON.toJSONString(respJson);
+		} catch (MposException e) {
+			respJson.put("status", false);
+			respJson.put("info", e.getMessage());
 			return JSON.toJSONString(respJson);
 		}
-		catch(MposException e){
-			respJson.put("status", false);
-			respJson.put("info", e.getMessage());			
-			return JSON.toJSONString(respJson);
-		}		
 	}
-	
+
 	/**
 	 * Query the latest products change version
+	 * 
 	 * @param response
 	 * @param apiKey
 	 * @param jsonStr
 	 * @return
 	 */
-	@RequestMapping(value="getProductsVer",method=RequestMethod.POST)
+	@RequestMapping(value = "getProductsVer", method = RequestMethod.POST)
 	@ResponseBody
-	public String getProductsVer(HttpServletResponse response,@RequestHeader("Authorization") String apiKey,@RequestBody String jsonStr) {		
-		String apiToken=SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);		
-		JSONObject respJson = new JSONObject();						
-		if(apiKey==null||!apiKey.equalsIgnoreCase(apiToken)){
+	public String getProductsVer(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr) {
+		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		JSONObject respJson = new JSONObject();
+		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
 			respJson.put("status", false);
-			respJson.put("info", "Error API token.");			
+			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
 		}
-		
-		if(jsonStr == null||jsonStr.isEmpty()) {
+
+		if (jsonStr == null || jsonStr.isEmpty()) {
 			respJson.put("status", false);
-			respJson.put("info", "The request parameter is required.");			
+			respJson.put("info", "The request parameter is required.");
 			return JSON.toJSONString(respJson);
 		}
-				
-		try{
-			
-			JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);
-			int verid=jsonObj.getIntValue("verId");						
-			int latestVerID=0;
-			List<TproductRelease> productReleaseList=productReleaseService.getUpdatedRelease(verid);
+
+		try {
+
+			JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
+			int verid = jsonObj.getIntValue("verId");
+			int latestVerID = 0;
+			List<TproductRelease> productReleaseList = productReleaseService.getUpdatedRelease(verid);
 			JSONArray productsJsonArr = new JSONArray();
 			for (TproductRelease productRelease : productReleaseList) {
-				if(productRelease.getId()>latestVerID){
-					latestVerID=productRelease.getId();
+				if (productRelease.getId() > latestVerID) {
+					latestVerID = productRelease.getId();
 				}
-				String productStr=productRelease.getProducts();
-				String[] productArr=productStr.split(",");
+				String productStr = productRelease.getProducts();
+				String[] productArr = productStr.split(",");
 				for (String str : productArr) {
-					int productId=Integer.parseInt(str);
-					if(!productsJsonArr.contains(productId)){
+					int productId = Integer.parseInt(str);
+					if (!productsJsonArr.contains(productId)) {
 						productsJsonArr.add(productId);
 					}
-				}												
+				}
 			}
 			JSONObject dataJson = new JSONObject();
 			dataJson.put("id", latestVerID);
@@ -341,16 +340,15 @@ public class MobileAPI {
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", dataJson);
-			
+
+			return JSON.toJSONString(respJson);
+		} catch (MposException e) {
+			respJson.put("status", false);
+			respJson.put("info", e.getMessage());
 			return JSON.toJSONString(respJson);
 		}
-		catch(MposException e){
-			respJson.put("status", false);
-			respJson.put("info", e.getMessage());			
-			return JSON.toJSONString(respJson);
-		}		
 	}
-	
+
 	/**
 	 * 
 	 * @param response
@@ -379,7 +377,7 @@ public class MobileAPI {
 		try {
 			// 查询商品
 			Tcommodity product = commodityService.getTproductByid(productId);
-			if(product==null){
+			if (product == null) {
 				respJson.put("status", false);
 				respJson.put("info", "product is not exist");
 				return JSON.toJSONString(respJson);
@@ -387,35 +385,37 @@ public class MobileAPI {
 			// 新建返回数据model
 			ProductModel model = new ProductModel();
 			model.setProductId(product.getId());
-		
-			if(product.isStatus()){
+
+			if (product.isStatus()) {
 				model.setProductId(product.getId());
 				model.setMenuId(product.getTmenu().getMenuId());
 				BeanUtils.copyProperties(product, model, "attributes", "promotions", "images");
-				//装载需要多语言化得字段
-				model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR,SystemConstants.TABLE_FIELD_UNITNAME);
-				//装载商品属性
+				// 装载需要多语言化得字段
+				model = localLoad(model, SystemConstants.TABLE_NAME_PRODUCT, SystemConstants.TABLE_FIELD_PRODUCTNAME, SystemConstants.TABLE_FIELD_SHORTDESCR, SystemConstants.TABLE_FIELD_FULLDESCR, SystemConstants.TABLE_FIELD_UNITNAME);
+				// 装载商品属性
 				model = loadAttribute(model, product);
-				//装载商品图片
+				// 装载商品图片
 				model = loadImage(model, request, product);
-				/*//装载商品优惠活动列表
-				List<Tpromotion> pros = loadProductPromotion(product);
-				//得到通过优先级排序的可叠加优惠列表
-				List<Tpromotion> isShareList = getPromotionList(pros,true);
-				//得到通过优先级排序的不可叠加优惠列表
-				List<Tpromotion> noShareList = getPromotionList(pros,false);
-				//通过比较可叠加与不可叠加的优先级得到最终的优惠列表
-				List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);*/
-				//通过优惠列表计算商品价格
-				Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
-				//model = loadPromotion(model, promotions);
-				if(price==null){
+				/*
+				 * //装载商品优惠活动列表 List<Tpromotion> pros =
+				 * loadProductPromotion(product); //得到通过优先级排序的可叠加优惠列表
+				 * List<Tpromotion> isShareList = getPromotionList(pros,true);
+				 * //得到通过优先级排序的不可叠加优惠列表 List<Tpromotion> noShareList =
+				 * getPromotionList(pros,false); //通过比较可叠加与不可叠加的优先级得到最终的优惠列表
+				 * List<Tpromotion> promotions =
+				 * compareToPriority(isShareList,noShareList);
+				 */
+				// 通过优惠列表计算商品价格
+				Float price = product.getPrice();// calculatePrice(product.getOldPrice(),
+													// promotions);
+				// model = loadPromotion(model, promotions);
+				if (price == null) {
 					price = product.getOldPrice();
 				}
 				model.setPrice(price);
-			} else{
-				model.setStatus(false);	
-			} 
+			} else {
+				model.setStatus(false);
+			}
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", model);
@@ -426,146 +426,153 @@ public class MobileAPI {
 			return JSON.toJSONString(respJson);
 		}
 	}
-	
+
 	@RequestMapping(value = "putOrder", method = RequestMethod.POST)
 	@ResponseBody
-	public String putOrder(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr){
+	public String putOrder(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr) {
 		// 获取缓存apiToken
-				String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
-				JSONObject respJson = new JSONObject();
-				// 判断apiToken是否一致
-				if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
-					respJson.put("status", false);
-					respJson.put("info", "Error API token.");
-					return JSON.toJSONString(respJson);
-				}
+		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		JSONObject respJson = new JSONObject();
+		// 判断apiToken是否一致
+		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+			respJson.put("status", false);
+			respJson.put("info", "Error API token.");
+			return JSON.toJSONString(respJson);
+		}
 
-				// 判断请求参数
-				if (jsonStr == null || jsonStr.isEmpty()) {
+		// 判断请求参数
+		if (jsonStr == null || jsonStr.isEmpty()) {
+			respJson.put("status", false);
+			respJson.put("info", "The request parameter is required.");
+			return JSON.toJSONString(respJson);
+		}
+		try {
+			// 参加满减活动列表
+			// List<Tpromotion> productPromotionList = new
+			// ArrayList<Tpromotion>();
+			//
+			JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
+			// 桌号
+			String appId = jsonObj.getString("appId");
+			Integer peopleNum = jsonObj.getInteger("peopleNum");
+			Float orderMoney = jsonObj.getFloat("totalMount");
+			JSONArray products = jsonObj.getJSONArray("products");
+			float totalMoney = 0;
+			float oldMoey = 0;
+			Torder order = new Torder();
+			order.setCreater(appId);
+			order.setCreateTime(new Date().getTime());
+			order.setOrderStatus(0);
+			order.setOrderDiscount(0);
+			order.setOrderTotal(totalMoney);
+			order.setPeopleNum(peopleNum);
+			orderService.createOrder(order);
+			for (Object object : products) {
+				JSONObject pro = (JSONObject) object;
+				// 商品ID
+				Integer productId = pro.getInteger("productId");
+				// 数量
+				Integer count = pro.getInteger("quantity");
+				JSONArray attributes = pro.getJSONArray("attributes");
+				Tcommodity product = commodityService.getTproductByid(productId);
+				if (product == null) {
 					respJson.put("status", false);
-					respJson.put("info", "The request parameter is required.");
+					respJson.put("info", productId + " product is not exist");
+					orderService.deleteOrder(order);
 					return JSON.toJSONString(respJson);
 				}
-				try {
-					// 参加满减活动列表
-					//List<Tpromotion> productPromotionList = new ArrayList<Tpromotion>();
-					//
-					JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
-					// 桌号
-					String appId = jsonObj.getString("appId");
-					JSONArray products = jsonObj.getJSONArray("products");
-					float totalMoney = 0;
-					float oldMoey = 0;
-					Torder order = new Torder();
-					order.setCreater(appId);
-					order.setCreateTime(new Date().getTime());
-					order.setOrderStatus(0);
-					order.setOrderDiscount(0);
-					order.setOrderTotal(totalMoney);
-					orderService.createOrder(order);
-					for (Object object : products) {
-						JSONObject pro = (JSONObject) object;
-						// 商品ID
-						Integer productId = pro.getInteger("productId");
-						// 数量
-						Integer count = pro.getInteger("quantity");
-						JSONArray attributes = pro.getJSONArray("attributes");
-						Tcommodity product = commodityService.getTproductByid(productId);
-						if(product == null){
-							respJson.put("status", false);
-							respJson.put("info", productId+" product is not exist");
-							orderService.deleteOrder(order);
-							return JSON.toJSONString(respJson);
-						}
-						/*//装载商品优惠活动列表
-						List<Tpromotion> pros = loadProductPromotion(product);
-						//得到通过优先级排序的可叠加优惠列表
-						List<Tpromotion> isShareList = getPromotionList(pros,true);
-						//得到通过优先级排序的不可叠加优惠列表
-						List<Tpromotion> noShareList = getPromotionList(pros,false);
-						//通过比较可叠加与不可叠加的优先级得到最终的优惠列表
-						List<Tpromotion> promotions = compareToPriority(isShareList,noShareList);
-						for (Tpromotion tpromotion : promotions) {
-							if(!productPromotionList.contains(tpromotion)){
-								productPromotionList.add(tpromotion);
-							}
-						}*/
-						//通过优惠列表计算商品价格
-						Float price = product.getPrice();//calculatePrice(product.getOldPrice(), promotions);
-						if(price==null||price==0){
-							price = product.getOldPrice();
-						}
-						if(attributes!=null){
-							for (Object object2 : attributes) {
-								JSONObject o = (JSONObject) object2;
-								Integer attrId = o.getInteger("attributeId");
-								TproductAttribute att = productAttributeService.getAttributeByproductidAndattributeid(productId, attrId);
-								String valueIds = o.getString("valueIds");
-								if(att!=null){
-									String prices = att.getPrice();
-									if((prices!=null&&!prices.isEmpty())&&(valueIds!=null&&!valueIds.isEmpty())){
-										String[] valueIdss = valueIds.split(",");
-										String[] pr = prices.split(",");
-										Integer[] ids = ConvertTools.stringArr2IntArr(valueIdss);
-										for (Integer id : ids) {
-											TattributeValue value = attributeValueService.getAttributeValue(id);
-											if(value.getSort()<pr.length){
-												if(pr[value.getSort()]!=null&&!pr[value.getSort()].isEmpty()){
-													price += Float.valueOf(pr[value.getSort()]);
-												}
-											}
+				/*
+				 * //装载商品优惠活动列表 List<Tpromotion> pros =
+				 * loadProductPromotion(product); //得到通过优先级排序的可叠加优惠列表
+				 * List<Tpromotion> isShareList = getPromotionList(pros,true);
+				 * //得到通过优先级排序的不可叠加优惠列表 List<Tpromotion> noShareList =
+				 * getPromotionList(pros,false); //通过比较可叠加与不可叠加的优先级得到最终的优惠列表
+				 * List<Tpromotion> promotions =
+				 * compareToPriority(isShareList,noShareList); for (Tpromotion
+				 * tpromotion : promotions) {
+				 * if(!productPromotionList.contains(tpromotion)){
+				 * productPromotionList.add(tpromotion); } }
+				 */
+				// 通过优惠列表计算商品价格
+				Float price = product.getPrice();// calculatePrice(product.getOldPrice(),
+													// promotions);
+				if (price == null || price == 0) {
+					price = product.getOldPrice();
+				}
+				if (attributes != null) {
+					for (Object object2 : attributes) {
+						JSONObject o = (JSONObject) object2;
+						Integer attrId = o.getInteger("attributeId");
+						TproductAttribute att = productAttributeService.getAttributeByproductidAndattributeid(productId, attrId);
+						String valueIds = o.getString("valueIds");
+						if (att != null) {
+							String prices = att.getPrice();
+							if ((prices != null && !prices.isEmpty()) && (valueIds != null && !valueIds.isEmpty())) {
+								String[] valueIdss = valueIds.split(",");
+								String[] pr = prices.split(",");
+								Integer[] ids = ConvertTools.stringArr2IntArr(valueIdss);
+								for (Integer id : ids) {
+									TattributeValue value = attributeValueService.getAttributeValue(id);
+									if (value.getSort() < pr.length) {
+										if (pr[value.getSort()] != null && !pr[value.getSort()].isEmpty()) {
+											price += Float.valueOf(pr[value.getSort()]);
 										}
 									}
 								}
 							}
 						}
-						
-						float oneMoney = 0;
-						float oneOldMoney = 0;
-						oneMoney = price*count;
-						oneOldMoney = product.getOldPrice()*count;
-						float oneDis = (product.getOldPrice()-price)*count;
-						TorderItem orderItem = new TorderItem();
-						orderItem.setOrderId(order.getOrderId()+"");
-						orderItem.setProductId(productId);
-						orderItem.setUnitPrice(product.getOldPrice());
-						orderItem.setQuantity(count);
-						orderItem.setCurrPrice(price);
-						orderItem.setDiscount(oneDis);
-						orderItem.setAttributes(JSON.toJSONString(attributes));
-						orderItem.setIsGift(false);
-						orderItemService.createOrderItem(orderItem);
-						totalMoney += oneMoney;
-						oldMoey += oneOldMoney;
 					}
-					/*List<Tpromotion> promotionLast = compareToPriority(getPromotionList(productPromotionList,true),getPromotionList(productPromotionList,false));
-					for (Tpromotion tpromotion : promotionLast) {
-						if(tpromotion.getPromotionType()==PROMOTION_TYPE_FULL_CUT){
-							if(tpromotion.getParamOne()<=totalMoney){
-								totalMoney = totalMoney - Float.valueOf(tpromotion.getParamTwo());
-							}
-						}
-					}*/
-					order.setOrderDiscount(oldMoey-totalMoney);
-					order.setOrderTotal(totalMoney);
-					orderService.update(order);
-					JSONObject data = new JSONObject();
-					data.put("orderId", order.getOrderId());
-					data.put("orderTotal", totalMoney);
-					respJson.put("status", true);
-					respJson.put("info", "OK");
-					respJson.put("data", data);
-					return JSON.toJSONString(respJson);
-				} catch (MposException e) {
-					respJson.put("status", false);
-					respJson.put("info", e.getMessage());
-					return JSON.toJSONString(respJson);
 				}
+
+				float oneMoney = 0;
+				float oneOldMoney = 0;
+				oneMoney = price * count;
+				oneOldMoney = product.getOldPrice() * count;
+				float oneDis = (product.getOldPrice() - price) * count;
+				TorderItem orderItem = new TorderItem();
+				orderItem.setOrderId(order.getOrderId() + "");
+				orderItem.setProductId(productId);
+				orderItem.setUnitPrice(product.getOldPrice());
+				orderItem.setQuantity(count);
+				orderItem.setCurrPrice(price);
+				orderItem.setDiscount(oneDis);
+				orderItem.setAttributes(JSON.toJSONString(attributes));
+				orderItem.setIsGift(false);
+				orderItemService.createOrderItem(orderItem);
+				totalMoney += oneMoney;
+				oldMoey += oneOldMoney;
+			}
+			/*
+			 * List<Tpromotion> promotionLast =
+			 * compareToPriority(getPromotionList
+			 * (productPromotionList,true),getPromotionList
+			 * (productPromotionList,false)); for (Tpromotion tpromotion :
+			 * promotionLast) {
+			 * if(tpromotion.getPromotionType()==PROMOTION_TYPE_FULL_CUT){
+			 * if(tpromotion.getParamOne()<=totalMoney){ totalMoney = totalMoney
+			 * - Float.valueOf(tpromotion.getParamTwo()); } } }
+			 */
+			order.setOrderDiscount(oldMoey - totalMoney);
+			order.setOrderTotal(totalMoney);
+			logger.info(totalMoney-orderMoney);
+			orderService.update(order);
+			JSONObject data = new JSONObject();
+			data.put("orderId", order.getOrderId());
+			data.put("orderTotal", totalMoney);
+			respJson.put("status", true);
+			respJson.put("info", "OK");
+			respJson.put("data", data);
+			return JSON.toJSONString(respJson);
+		} catch (MposException e) {
+			respJson.put("status", false);
+			respJson.put("info", e.getMessage());
+			return JSON.toJSONString(respJson);
+		}
 	}
-	
+
 	@RequestMapping(value = "callWaiter/{appId}/{type}", method = RequestMethod.GET)
 	@ResponseBody
-	public String callWaiter(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable String appId,@PathVariable String type) {
+	public String callWaiter(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable String appId, @PathVariable String type) {
 		// 获取缓存apiToken
 		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
 		JSONObject respJson = new JSONObject();
@@ -587,23 +594,23 @@ public class MobileAPI {
 			return JSON.toJSONString(respJson);
 		}
 		Date nowTime = new Date();
-		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		String timeString = sdf.format(nowTime);
 		Map<String, Object> data = new HashMap<String, Object>();
 		String msg = "OK";
 		Integer status = 0;
-		if (SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==1) {
+		if (SystemConfig.Call_Waiter_Map.get(appId) != null && SystemConfig.Call_Waiter_Map.get(appId).getStatus() == 1) {
 			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
 			info.setCallTime(timeString);
 			SystemConfig.Call_Waiter_Map.put(appId, info);
 			status = 1;
-		} else if(SystemConfig.Call_Waiter_Map.get(appId)!=null&&SystemConfig.Call_Waiter_Map.get(appId).getStatus()==0){
+		} else if (SystemConfig.Call_Waiter_Map.get(appId) != null && SystemConfig.Call_Waiter_Map.get(appId).getStatus() == 0) {
 			CallWaiterInfo info = SystemConfig.Call_Waiter_Map.get(appId);
 			info.setStatus(1);
 			info.setType(Integer.valueOf(type));
 			info.setCallTime(timeString);
 			SystemConfig.Call_Waiter_Map.put(appId, info);
-		}else{
+		} else {
 			CallWaiterInfo info = new CallWaiterInfo();
 			info.setCallMan(appId);
 			info.setCallTime(timeString);
@@ -617,10 +624,10 @@ public class MobileAPI {
 		respJson.put("status", true);
 		return JSON.toJSONString(respJson);
 	}
-	
+
 	@RequestMapping(value = "deviceStatus", method = RequestMethod.POST)
 	@ResponseBody
-	public String updateDeviceStatus(HttpServletResponse response, @RequestHeader("Authorization") String apiKey,@RequestBody String jsonStr){
+	public String updateDeviceStatus(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr) {
 		// 获取缓存apiToken
 		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
 		JSONObject respJson = new JSONObject();
@@ -629,14 +636,14 @@ public class MobileAPI {
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
-			}
+		}
 		// 判断请求参数
 		if (jsonStr == null || jsonStr.isEmpty()) {
 			respJson.put("status", false);
 			respJson.put("info", "The request parameter is required.");
 			return JSON.toJSONString(respJson);
 		}
-		
+
 		try {
 			JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
 			String appId = jsonObj.getString("appId");
@@ -658,23 +665,23 @@ public class MobileAPI {
 				return JSON.toJSONString(respJson);
 			}
 			Tdevice device = deviceService.get(appId);
-			if(device==null){
+			if (device == null) {
 				Ttable table = tableService.get(appId);
 				Tdevice devic = new Tdevice();
 				devic.setCreateTime(System.currentTimeMillis());
 				devic.setLastReportTime(System.currentTimeMillis());
 				devic.setLastSyncTime(verTime);
 				devic.setDataVersion(verId);
-				if(table==null){
+				if (table == null) {
 					devic.setTable(0);
-				}else{
+				} else {
 					devic.setTable(table.getId());
 				}
 				devic.setOnlineStatus(true);
 				devic.setStatus(true);
 				devic.setTableName(appId);
 				deviceService.create(devic);
-			}else{
+			} else {
 				device.setDataVersion(verId);
 				device.setOnlineStatus(true);
 				device.setLastSyncTime(verTime);
@@ -690,7 +697,7 @@ public class MobileAPI {
 			return JSON.toJSONString(respJson);
 		}
 	}
-	
+
 	/**
 	 * 装载优惠信息 将商品参加的所有优惠活动装载到model中
 	 * 
@@ -705,7 +712,7 @@ public class MobileAPI {
 			for (int i = 0; i < promtionList.length; i++) {
 				promtionList[i] = promotions.get(i).getPromotionName();
 			}
-		}    
+		}
 		model.setPromotions(promtionList);
 		return model;
 	}
@@ -728,15 +735,15 @@ public class MobileAPI {
 			}
 		});
 		if (images != null && images.size() > 0) {
-			String qian = request.getSession().getServletContext().getRealPath("/") + File.separator + "upload" + File.separator + "product"+ File.separator;
-			String z =  "/upload/product/";
+			String qian = request.getSession().getServletContext().getRealPath("/") + File.separator + "upload" + File.separator + "product" + File.separator;
+			String z = "/upload/product/";
 			File file = null;
 			for (int i = 0; i < images.size(); i++) {
 				TproductImage tproductImage = images.get(i);
 				String filePath = tproductImage.getImageUrl();
 				file = new File(qian + filePath.substring(filePath.lastIndexOf("/")));
 				if (!file.exists()) {
-					String newPath = qian + product.getId()+"_"+ i + "." + tproductImage.getImageSuffix();
+					String newPath = qian + product.getId() + "_" + i + "." + tproductImage.getImageSuffix();
 					File newImgePath = new File(newPath);
 					try {
 						File uplaodDir = new File(qian);
@@ -746,40 +753,34 @@ public class MobileAPI {
 						if (tproductImage.getImage() != null && !newImgePath.exists()) {
 							ImageOutputStream ios = ImageIO.createImageOutputStream(newImgePath);
 							ios.write(tproductImage.getImage());
-							String loc = z + product.getId()+"_"+ i + "." + tproductImage.getImageSuffix();
+							String loc = z + product.getId() + "_" + i + "." + tproductImage.getImageSuffix();
 							tproductImage.setImageUrl(loc);
-							if(!filePath.equals(loc)){
+							if (!filePath.equals(loc)) {
 								goodsImageService.updeteImages(tproductImage);
 							}
-						}  
+						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
-			/*for (TproductImage tproductImage : images) {
-				String filePath = tproductImage.getImageUrl();
-				file = new File(qian + filePath.substring(filePath.lastIndexOf("/")));
-				if (!file.exists()) {
-					String newPath = qian + tproductImage.getId() + "." + tproductImage.getImageSuffix();
-					File newImgePath = new File(newPath);
-					try {
-						File uplaodDir = new File(qian);
-						if (!uplaodDir.isDirectory()) {
-							uplaodDir.mkdirs();
-						}
-						if (tproductImage.getImage() != null && !newImgePath.exists()) {
-							ImageOutputStream ios = ImageIO.createImageOutputStream(newImgePath);
-							ios.write(tproductImage.getImage());
-							tproductImage.setImageUrl(z + tproductImage.getId() + "." + tproductImage.getImageSuffix());
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}*/
+			/*
+			 * for (TproductImage tproductImage : images) { String filePath =
+			 * tproductImage.getImageUrl(); file = new File(qian +
+			 * filePath.substring(filePath.lastIndexOf("/"))); if
+			 * (!file.exists()) { String newPath = qian + tproductImage.getId()
+			 * + "." + tproductImage.getImageSuffix(); File newImgePath = new
+			 * File(newPath); try { File uplaodDir = new File(qian); if
+			 * (!uplaodDir.isDirectory()) { uplaodDir.mkdirs(); } if
+			 * (tproductImage.getImage() != null && !newImgePath.exists()) {
+			 * ImageOutputStream ios =
+			 * ImageIO.createImageOutputStream(newImgePath);
+			 * ios.write(tproductImage.getImage()); tproductImage.setImageUrl(z
+			 * + tproductImage.getId() + "." + tproductImage.getImageSuffix());
+			 * } } catch (IOException e) { // TODO Auto-generated catch block
+			 * e.printStackTrace(); } } }
+			 */
 
 			imageList = new String[images.size()];
 			for (int i = 0; i < images.size(); i++) {
@@ -803,7 +804,7 @@ public class MobileAPI {
 		attributes.addAll(product.getAttributes());
 		if (attributes != null && attributes.size() > 0) {
 			for (TgoodsAttribute tproductAttribute : attributes) {
-				if(tproductAttribute.getAttributeValue()!=null&&!tproductAttribute.getAttributeValue().isEmpty()){
+				if (tproductAttribute.getAttributeValue() != null && !tproductAttribute.getAttributeValue().isEmpty()) {
 					AttributeModel attribute = new AttributeModel();
 					List<ValueModel> values = new ArrayList<ValueModel>();
 					List<TlocalizedField> attributeTitleList = localizedFieldService.getLocalizedField(tproductAttribute.getId(), SystemConstants.TABLE_NAME_CATE_ATTRIBUTE, SystemConstants.TABLE_FIELD_TITLE);
@@ -816,17 +817,17 @@ public class MobileAPI {
 					attribute.setAttributeType(attType);
 					String[] valueIdStrs = tproductAttribute.getAttributeValue().split(",");
 					Integer[] valueInts = ConvertTools.stringArr2IntArr(valueIdStrs);
-					if(valueInts!=null&&valueInts.length>0){
+					if (valueInts != null && valueInts.length > 0) {
 						for (Integer valueId : valueInts) {
 							TattributeValue value = attributeValueService.getAttributeValue(valueId);
 							ValueModel vm = new ValueModel();
 							vm.setPrice(0.0f);
 							vm.setValueId(value.getValueId());
 							String pr = tproductAttribute.getAttributePrice();
-							if(attType==ORDER_TYPE&&pr!=null&&!pr.isEmpty()){
+							if (attType == ORDER_TYPE && pr != null && !pr.isEmpty()) {
 								String[] ps = pr.split(",");
-								if(valueInts.length==ps.length){
-									if(ps[value.getSort()]!=null&&!ps[value.getSort()].isEmpty()){
+								if (valueInts.length == ps.length) {
+									if (ps[value.getSort()] != null && !ps[value.getSort()].isEmpty()) {
 										vm.setPrice(Float.valueOf(ps[value.getSort()]));
 									}
 								}
@@ -836,7 +837,7 @@ public class MobileAPI {
 							vm.setValueLocale(setLocal(valueList));
 							values.add(vm);
 						}
-						
+
 					}
 					attribute.setAttributeValue(values);
 					attributeModels.add(attribute);
@@ -973,9 +974,9 @@ public class MobileAPI {
 	 * 根据优惠是否可以叠加获取通过优先级排序的活动列表
 	 * 
 	 * @param pros
-	 *             优惠列表
+	 *            优惠列表
 	 * @param isShare
-	 *             true 可叠加 false 不可叠加
+	 *            true 可叠加 false 不可叠加
 	 * @return
 	 */
 	private List<Tpromotion> getPromotionList(List<Tpromotion> pros, boolean isShare) {
@@ -1001,58 +1002,64 @@ public class MobileAPI {
 		});
 		return promotions;
 	}
+
 	/**
-	 * 比较叠加和不可叠加的优先级 
+	 * 比较叠加和不可叠加的优先级
+	 * 
 	 * @param isShareList
 	 * @param unShareList
 	 * @return
 	 */
-	private List<Tpromotion> compareToPriority(List<Tpromotion> isShareList,List<Tpromotion> unShareList){
-		if((isShareList==null||isShareList.size()==0)&&(unShareList!=null&&unShareList.size()>0)){
+	private List<Tpromotion> compareToPriority(List<Tpromotion> isShareList, List<Tpromotion> unShareList) {
+		if ((isShareList == null || isShareList.size() == 0) && (unShareList != null && unShareList.size() > 0)) {
 			Tpromotion un = unShareList.get(0);
 			unShareList.clear();
 			unShareList.add(un);
 			return unShareList;
 		}
-		if(unShareList==null||unShareList.size()==0&&(isShareList!=null&&isShareList.size()>0)){
+		if (unShareList == null || unShareList.size() == 0 && (isShareList != null && isShareList.size() > 0)) {
 			return isShareList;
 		}
-		if((isShareList!=null&&isShareList.size()>0)&&(unShareList!=null&&unShareList.size()>0)){
+		if ((isShareList != null && isShareList.size() > 0) && (unShareList != null && unShareList.size() > 0)) {
 			Tpromotion un = unShareList.get(0);
 			Tpromotion is = isShareList.get(0);
-			if(un.getPriority()<=is.getPriority()){
+			if (un.getPriority() <= is.getPriority()) {
 				unShareList.clear();
 				unShareList.add(un);
 				return unShareList;
-			}else{
+			} else {
 				return isShareList;
 			}
 		}
 		return new ArrayList<Tpromotion>();
 	}
+
 	/**
 	 * 计算商品参加活动后的单价
-	 * @param oldPrice 原价
-	 * @param promotions 活动列表
+	 * 
+	 * @param oldPrice
+	 *            原价
+	 * @param promotions
+	 *            活动列表
 	 * @return
 	 */
-	private float calculatePrice(float oldPrice,List<Tpromotion> promotions){
-		if(promotions!=null&&promotions.size()>0){
+	private float calculatePrice(float oldPrice, List<Tpromotion> promotions) {
+		if (promotions != null && promotions.size() > 0) {
 			for (Tpromotion promotion : promotions) {
-				if(promotion.getPromotionType() == PROMOTION_TYPE_STRAIGHT_DOWN){
+				if (promotion.getPromotionType() == PROMOTION_TYPE_STRAIGHT_DOWN) {
 					oldPrice = oldPrice - promotion.getParamOne();
-				}else if(promotion.getPromotionType() == PROMOTION_TYPE_DISCOUNT){
-					oldPrice = oldPrice * (Float.valueOf(promotion.getParamOne()+"")/100);
+				} else if (promotion.getPromotionType() == PROMOTION_TYPE_DISCOUNT) {
+					oldPrice = oldPrice * (Float.valueOf(promotion.getParamOne() + "") / 100);
 				}
 			}
 		}
 		return oldPrice;
 	}
-	
-	private String[] loadTables(){
+
+	private String[] loadTables() {
 		List<Ttable> tables = tableService.loadAll();
-		String[] tt = null; 
-		if(tables!=null&&tables.size()>0){
+		String[] tt = null;
+		if (tables != null && tables.size() > 0) {
 			tt = new String[tables.size()];
 			for (int i = 0; i < tables.size(); i++) {
 				tt[i] = tables.get(i).getTableName();

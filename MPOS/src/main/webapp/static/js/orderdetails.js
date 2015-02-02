@@ -19,6 +19,40 @@
     };
 })(jQuery);
 
+function getAttributes(id){
+	var res = "";
+	$.ajax({
+        "dataType": 'json', 
+        "type":'GET',
+        "async":false,
+        "url": rootURI+"order/getAtts/"+id+"?rand="+Math.random(), 
+        "success": function(resp,status){
+       	 if(status == "success"){  
+       		 if(resp.status){
+       			 res = resp.attributes;
+				}
+			}             	 
+        }
+      });
+	return res;
+}
+function getProductName(id){
+	var res = "";
+	$.ajax({
+        "dataType": 'json', 
+        "type":'GET',
+        "async":false,
+        "url": rootURI+"order/getProName/"+id+"?rand="+Math.random(), 
+        "success": function(resp,status){
+       	 if(status == "success"){  
+       		 if(resp.status){
+       			 res = resp.name;
+				}
+			}             	 
+        }
+      });
+	return res;
+}
 var rootURI="/";
 var OrderDetails = function () {
 	var oTable;
@@ -48,6 +82,17 @@ var OrderDetails = function () {
 					data : "productId"
 				},{
 					//title : "Unit Price",
+					data : "name",
+					'render' : function(data, type, row) {
+						var temp = "";
+						var xx = getProductName(row.productId);
+						if(xx!=null){
+							temp = xx;
+						}
+						return temp;
+					}
+				},{
+					//title : "Unit Price",
 					data : "unitPrice"
 				}, {
 					//title : "Quantity",
@@ -58,17 +103,20 @@ var OrderDetails = function () {
 				} ,{
 					//title : "Curr Price",
 					data : "currPrice",
-					
 				}, {
 					//title : "Attributes",
 					data : "attributes",
-					
+					'render' : function(data, type, row) {
+						var temp = "";
+						var xx = getAttributes(row.id);
+						if(xx!=null){
+							temp = xx;
+						}
+						return temp;
+					}
 				},{
 					//title : "Is Gift",
 					data : "isGift"
-				},{
-					//title : "Product Promotion",
-					data : "productPromotion"
 				} ],
 				"serverSide" : true,
 				"serverMethod" : "GET",

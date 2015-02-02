@@ -67,7 +67,7 @@ var OrderList = function () {
 					
 				},{
 					/*title : "Comment",*/
-					data : "comment"
+					data : "peopleNum",
 				} ],
 				"serverSide" : true,
 				"serverMethod" : "GET",

@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title><s:message code="order.title"/></title>
+<title><s:message code="order.title" /></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -34,10 +34,14 @@
 
 <!-- END GLOBAL MANDATORY STYLES -->
 
-<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
-<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
-<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
-<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-select/bootstrap-select.min.css" />
 
 
 <!-- BEGIN PAGE LEVEL STYLES -->
@@ -85,18 +89,18 @@
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <body class="page-header-fixed">
 	<!-- BEGIN HEADER -->
-    <c:import url="/common/header"/>
+	<c:import url="/common/header" />
 	<!-- END HEADER -->
 	<!-- BEGIN CONTAINER -->
 	<div class="page-container">
 		<!-- BEGIN SIDEBAR -->
-        <c:import url="/common/left"/>
+		<c:import url="/common/left" />
 		<!-- END SIDEBAR -->
 		<!-- BEGIN CONTENT -->
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				 <div class="page-bar">
+				<div class="page-bar">
 					<%--<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
@@ -105,7 +109,7 @@
 						<li><a href="<c:url value="/"/>order"><s:message code="order.title"/></a></li>
 
 					</ul>--%>
-				</div> 
+				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="spin" class="display-hide"></div>
 				<!-- BEGIN PAGE CONTENT-->
@@ -118,13 +122,15 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label"><s:message code="order.status"/></label>
+									<label class="col-md-3 control-label"><s:message
+											code="order.status" /></label>
 									<div class="col-md-9">
-										<select class="bs-select form-control" id="status_select" name="orderStatus">
-												<option value="0">Pending</option>
-												<option value="1">Paid</option>
-												<option value="2">Cancelled</option>
-												<option value="">All</option>
+										<select class="bs-select form-control" id="status_select"
+											name="orderStatus">
+											<option value="0">Pending</option>
+											<option value="1">Paid</option>
+											<option value="2">Cancelled</option>
+											<option value="">All</option>
 										</select>
 									</div>
 								</div>
@@ -133,7 +139,8 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label"><s:message code="order.id"/></label>
+									<label class="col-md-3 control-label"><s:message
+											code="order.id" /></label>
 									<div class="col-md-6">
 										<input name="orderId" type="text" class="form-control">
 									</div>
@@ -141,7 +148,8 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label"><s:message code="oreder.creater"/></label>
+									<label class="col-md-3 control-label"><s:message
+											code="order.creater" /></label>
 									<div class="col-md-6">
 										<input name="creater" type="text" class="form-control">
 									</div>
@@ -151,38 +159,45 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label"><s:message code="order.time"/></label>
-									
-										<div class="col-md-4">
-											<div class="input-group date form_datetime">
-												<input type="text" size="16" readonly class="form-control" name="startTime">
-                                                <span class="input-group-btn">
-												<button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button>
-												</span>
-												<span class="input-group-btn">
-												<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-												</span>
-												
-									   </div>
+									<label class="col-md-3 control-label"><s:message
+											code="order.time" /></label>
+
+									<div class="col-md-4">
+										<div class="input-group date form_datetime">
+											<input type="text" size="16" readonly class="form-control"
+												name="startTime"> <span class="input-group-btn">
+												<button class="btn default date-reset" type="button">
+													<i class="fa fa-times"></i>
+												</button>
+											</span> <span class="input-group-btn">
+												<button class="btn default date-set" type="button">
+													<i class="fa fa-calendar"></i>
+												</button>
+											</span>
+
 										</div>
-										<div class="col-md-1">TO</div>
-										<div class="col-md-4">
-											<div class="input-group date form_datetime">
-												<input type="text" size="16" readonly class="form-control" name="endTime">
-                                                <span class="input-group-btn">
-												<button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button>
-												</span>
-												<span class="input-group-btn">
-												<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
-												</span>
-												
-									   </div>
+									</div>
+									<div class="col-md-1">TO</div>
+									<div class="col-md-4">
+										<div class="input-group date form_datetime">
+											<input type="text" size="16" readonly class="form-control"
+												name="endTime"> <span class="input-group-btn">
+												<button class="btn default date-reset" type="button">
+													<i class="fa fa-times"></i>
+												</button>
+											</span> <span class="input-group-btn">
+												<button class="btn default date-set" type="button">
+													<i class="fa fa-calendar"></i>
+												</button>
+											</span>
+
 										</div>
-									
+									</div>
+
 								</div>
 							</div>
 						</div>
-						
+
 
 						<div class="row">
 							<div class="col-md-6">
@@ -208,14 +223,17 @@
 						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="order.title"/>
+									<i class="fa fa-edit"></i>
+									<s:message code="order.title" />
 								</div>
 								<div class="actions">
-									<a class="btn btn-default btn-sm" href="#payment_order" id="confirm_payment" data-toggle="modal"><s:message code="confirm.payment"/>
-										</a> <a class="btn btn-default btn-sm"
-										href="#cancel_order_model" id="cancel_order" data-toggle="modal"><s:message code="cancel.order"/></a> <a
-										class="btn btn-default btn-sm" id="order_detail_btn"><s:message code="order.details"/>
-										</a>
+									<a class="btn btn-default btn-sm" href="#payment_order"
+										id="confirm_payment" data-toggle="modal"><s:message
+											code="confirm.payment" /> </a> <a class="btn btn-default btn-sm"
+										href="#cancel_order_model" id="cancel_order"
+										data-toggle="modal"><s:message code="cancel.order" /></a> <a
+										class="btn btn-default btn-sm" id="order_detail_btn"><s:message
+											code="order.details" /> </a>
 									<div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 											Columns <i class="fa fa-angle-down"></i>
@@ -223,14 +241,21 @@
 										<div id="column_toggler"
 											class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1"><s:message code="order.id"/></label>
-											<label><input type="checkbox" checked data-column="2"><s:message code="order.status"/></label>
-											<label><input type="checkbox" checked data-column="3"><s:message code="payment.total"/></label>
-											<label><input type="checkbox" checked data-column="4"><s:message code="discount.total"/></label>
-											<label><input type="checkbox" checked data-column="5"><s:message code="order.time"/></label>
-											<label><input type="checkbox" checked data-column="6"><s:message code="order.creater"/></label>
-											<label><input type="checkbox" checked data-column="7"><s:message code="order.comment"/></label>
-												
+											<label><input type="checkbox" checked data-column="1">
+											<s:message code="order.id" /></label> <label><input
+												type="checkbox" checked data-column="2">
+											<s:message code="order.status" /></label> <label><input
+												type="checkbox" checked data-column="3">
+											<s:message code="payment.total" /></label> <label><input
+												type="checkbox" checked data-column="4">
+											<s:message code="discount.total" /></label> <label><input
+												type="checkbox" checked data-column="5">
+											<s:message code="order.time" /></label> <label><input
+												type="checkbox" checked data-column="6">
+											<s:message code="order.creater" /></label> <label><input
+												type="checkbox" checked data-column="7">
+											<s:message code="order.people.num" /></label>
+
 										</div>
 									</div>
 								</div>
@@ -243,17 +268,17 @@
 											<th class="table-checkbox"><input type="checkbox"
 												class="group-checkable"
 												data-set="#order_list_table .checkboxes" /></th>
-											<th><s:message code="order.id"/></th>
-											<th><s:message code="order.status"/></th>
-											<th><s:message code="payment.total"/></th>
-											<th><s:message code="discount.total"/></th>
-											<th><s:message code="order.time"/></th>
-											<th><s:message code="order.creater"/></th>	
-											<th><s:message code="order.comment"/></th>
+											<th><s:message code="order.id" /></th>
+											<th><s:message code="order.status" /></th>
+											<th><s:message code="payment.total" /></th>
+											<th><s:message code="discount.total" /></th>
+											<th><s:message code="order.time" /></th>
+											<th><s:message code="order.creater" /></th>
+											<th><s:message code="order.people.num" /></th>
 										</tr>
 									</thead>
 									<tbody>
-										
+
 									</tbody>
 								</table>
 							</div>
@@ -263,32 +288,36 @@
 				</div>
 				<!-- END PAGE CONTENT -->
 
-                <!-- BEGIN Activate MODAL FORM-->
-				<div class="modal" id="payment_order" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<!-- BEGIN Activate MODAL FORM-->
+				<div class="modal" id="payment_order" tabindex="-1"
+					data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 <s:message code="sure.confirm.payment"/>
+							<s:message code="sure.confirm.payment" />
 						</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="paymentBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
-					</div>					
-				</div>	
+						<button id="paymentBtn" type="button" data-dismiss="modal"
+							class="btn blue">Confirm</button>
+					</div>
+				</div>
 				<!-- END Activate MODAL FORM-->
-				
+
 				<!-- BEGIN DEActivate MODAL FORM-->
-				<div class="modal" id="cancel_order_model" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<div class="modal" id="cancel_order_model" tabindex="-1"
+					data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							<s:message code="sure.cancel.payment"/>
+							<s:message code="sure.cancel.payment" />
 						</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="cancelBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
-					</div>					
-				</div>				
+						<button id="cancelBtn" type="button" data-dismiss="modal"
+							class="btn blue">Confirm</button>
+					</div>
+				</div>
 				<!-- END DELETE MODAL FORM-->
 
 
@@ -298,7 +327,7 @@
 	</div>
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
-    <c:import url="/common/footer"/>
+	<c:import url="/common/footer" />
 	<!-- END FOOTER -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
@@ -337,7 +366,8 @@
 		src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
 		type="text/javascript"></script>
 	<!-- END CORE PLUGINS -->
-	<script type="text/javascript" src="../assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 	<script src="../assets/global/plugins/select2/select2.min.js"
 		type="text/javascript"></script>
@@ -357,8 +387,11 @@
 		src="../assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"
 		type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
-    <script type="text/javascript" src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script
+		src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js"
+		type="text/javascript"></script>
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js"
@@ -376,7 +409,7 @@
 			OrderList.init("<c:url value="/"/>","${sessionScope.locale}");
 		});
 	</script>
-	<c:import url="/common/notice"/>
+	<c:import url="/common/notice" />
 </body>
 <!-- END BODY -->
 

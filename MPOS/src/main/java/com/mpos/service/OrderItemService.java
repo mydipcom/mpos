@@ -10,4 +10,6 @@ public interface OrderItemService {
 	
 	void createOrderItem(TorderItem orderItem);
 	
+	String get(Integer orderItemId);
+	
 }

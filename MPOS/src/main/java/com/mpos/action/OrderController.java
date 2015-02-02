@@ -27,6 +27,7 @@ import com.mpos.dto.Tpromotion;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.OrderModel;
 import com.mpos.model.PagingData;
+import com.mpos.service.GoodsService;
 import com.mpos.service.OrderItemService;
 import com.mpos.service.OrderService;
 import com.mpos.service.PromotionService;
@@ -43,6 +44,9 @@ public class OrderController extends BaseController{
     
     @Autowired
     private OrderItemService orderItemService;
+    
+    @Autowired
+   private GoodsService goodsService;
     
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView promotion(){
@@ -75,6 +79,7 @@ public class OrderController extends BaseController{
 				orderModel.setCreater(torder.getCreater());
 				orderModel.setOrderPromotion(torder.getOrderPromotion());
 				orderModel.setComment(torder.getComment());
+				orderModel.setPeopleNum(torder.getPeopleNum());
 				objs[i]=orderModel;
 			}
 			pagingData.setAaData(objs);
@@ -144,6 +149,7 @@ public class OrderController extends BaseController{
 		order_details.put("discount_total", torder.getOrderDiscount());
 		order_details.put("payment_total", torder.getOrderTotal());
 		order_details.put("creater", torder.getCreater());
+		order_details.put("peopleNum", torder.getPeopleNum());
 		order_details.put("order_status", SystemConstants.ORDER_STATUS.get(torder.getOrderStatus()));
 		order_details.put("order_status_id", torder.getOrderStatus());
 		String orderPromotion = torder.getOrderPromotion();
@@ -195,5 +201,33 @@ public class OrderController extends BaseController{
 			}
 		}
 		return JSON.toJSONString(pagingData);
+	}
+	@RequestMapping(value="getAtts/{orderItemId}",method=RequestMethod.GET)
+	@ResponseBody
+	public String getProductAttributes(HttpServletRequest request,@PathVariable Integer orderItemId){
+		JSONObject resp = new JSONObject();
+		try {
+			resp.put("status", true);
+			resp.put("attributes", orderItemService.get(orderItemId));
+			resp.put("info", getMessage(request,"operate.success"));
+		} catch (MposException be) {
+			resp.put("status", false);
+			resp.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}
+		return JSON.toJSONString(resp);
+	}
+	@RequestMapping(value="getProName/{productId}",method=RequestMethod.GET)
+	@ResponseBody
+	public String getProductName(HttpServletRequest request,@PathVariable Integer productId){
+		JSONObject resp = new JSONObject();
+		try {
+			resp.put("status", true);
+			resp.put("name", goodsService.getTproductByid(productId).getProductName());
+			resp.put("info", getMessage(request,"operate.success"));
+		} catch (MposException be) {
+			resp.put("status", false);
+			resp.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+		}
+		return JSON.toJSONString(resp);
 	}
 }

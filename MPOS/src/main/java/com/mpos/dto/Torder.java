@@ -18,7 +18,7 @@ public class Torder implements java.io.Serializable {
 	private String creater;
 	private String orderPromotion;
 	private String comment;
-	
+	private int peopleNum;
 	public Torder() {
 	}
 
@@ -105,6 +105,14 @@ public class Torder implements java.io.Serializable {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public int getPeopleNum() {
+		return peopleNum;
+	}
+
+	public void setPeopleNum(int peopleNum) {
+		this.peopleNum = peopleNum;
 	}
 	
 }

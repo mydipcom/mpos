@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title><s:message code="order.details.title"/></title>
+<title><s:message code="order.details.title" /></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -34,9 +34,12 @@
 
 <!-- END GLOBAL MANDATORY STYLES -->
 
-<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
-<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
-<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="../assets/global/plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
 
 
 <!-- BEGIN PAGE LEVEL STYLES -->
@@ -95,7 +98,7 @@
 		<!-- BEGIN CONTENT -->
 		<div class="page-content-wrapper">
 			<div class="page-content">
-			    <div class="page-bar">
+				<div class="page-bar">
 					<%--<ul class="page-breadcrumb">
 						<li><i class="fa fa-home"></i> <a
 							href="<c:url value="/"/>home"><s:message code="home"/></a> <i
@@ -105,7 +108,7 @@
 						<li><a href=""><s:message code="order.details.title" /></a></li>
 
 					</ul>--%>
-				</div> 
+				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				<div id="msg"></div>
 				<div id="spin" class="display-hide"></div>
@@ -120,19 +123,24 @@
 								<div class="portlet">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-shopping-cart"></i><s:message code="order" /> #
-											${order_details['order_id']}<span class="hidden-480">
-												| ${order_details['create_time']} </span>
-											<input type="hidden" value="${order_details['order_id']}"/>
+											<i class="fa fa-shopping-cart"></i>
+											<s:message code="order" />
+											# ${order_details['order_id']}<span class="hidden-480">
+												| ${order_details['create_time']} </span> <input type="hidden"
+												value="${order_details['order_id']}" />
 										</div>
 										<div class="actions">
 											<a href="<c:url value="/"/>order"
 												class="btn default yellow-stripe"> <span
-												class="hidden-480"> <s:message code="back"/> </span>
-											</a> <a  class="btn default yellow-stripe"> <span
-												class="hidden-480" id="paymentBtn"><s:message code="payment"/></span>
-											</a> <a  class="btn default yellow-stripe"><span
-												class="hidden-480" id="cancelBtn"> <s:message code="cancel"/> </span> </a>
+												class="hidden-480"> <s:message code="back" />
+											</span>
+											</a> <a class="btn default yellow-stripe"> <span
+												class="hidden-480" id="paymentBtn"><s:message
+														code="payment" /></span>
+											</a> <a class="btn default yellow-stripe"><span
+												class="hidden-480" id="cancelBtn"> <s:message
+														code="cancel" />
+											</span> </a>
 											<!-- 										<a href="#" class="btn default yellow-stripe"><span class="hidden-480">
 													Print </span>
 											</a>
@@ -148,38 +156,67 @@
 													<div class="portlet yellow-crusta box">
 														<div class="portlet-title">
 															<div class="caption">
-																<i class="fa fa-cogs"></i><s:message code="order.details.title"/>
+																<i class="fa fa-cogs"></i>
+																<s:message code="order.details.title" />
 															</div>
 														</div>
 														<div class="portlet-body">
 															<div class="row static-info">
-																<div class="col-md-5 name"><s:message code="order.id"/>:</div>
+																<div class="col-md-5 name">
+																	<s:message code="order.id" />
+																	:
+																</div>
 																<div class="col-md-7 value">
 																	${order_details['order_id']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name"><s:message code="order.time"/>:</div>
+																<div class="col-md-5 name">
+																	<s:message code="order.time" />
+																	:
+																</div>
 																<div class="col-md-7 value">${order_details['create_time']}</div>
 															</div>
 
 															<div class="row static-info">
-																<div class="col-md-5 name"><s:message code="discount.total"/>:</div>
+																<div class="col-md-5 name">
+																	<s:message code="discount.total" />
+																	:
+																</div>
 																<div class="col-md-7 value">${order_details['discount_total']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name"><s:message code="payment.total"/>:</div>
+																<div class="col-md-5 name">
+																	<s:message code="payment.total" />
+																	:
+																</div>
 																<div class="col-md-7 value">${order_details['payment_total']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name"><s:message code="order.creater"/>:</div>
+																<div class="col-md-5 name">
+																	<s:message code="order.creater" />
+																	:
+																</div>
 																<div class="col-md-7 value">${order_details['creater']}</div>
 															</div>
 															<div class="row static-info">
-																<div class="col-md-5 name"><s:message code="order.status"/>:</div>
+																<div class="col-md-5 name">
+																	<s:message code="order.people.num" />
+																	:
+																</div>
+																<div class="col-md-7 value">
+																	${order_details['peopleNum']}
+																</div>
+															</div>
+															<div class="row static-info">
+																<div class="col-md-5 name">
+																	<s:message code="order.status" />
+																	:
+																</div>
 																<div class="col-md-7 value">
 																	<span class="label label-success">
-																		${order_details['order_status']} </span> 
-																		<input type="hidden" value="${order_details['order_status_id']}" name="order_status"/>
+																		${order_details['order_status']} </span> <input type="hidden"
+																		value="${order_details['order_status_id']}"
+																		name="order_status" />
 																</div>
 															</div>
 														</div>
@@ -217,56 +254,97 @@
 											</div>
 											<div class="row">
 												<div class="col-md-12">
-						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-						<div class="portlet box green">
-							<div class="portlet-title">
-								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="order product"/>
-								</div>
-								<div class="actions">
-									<div class="btn-group">
-										<a class="btn default" href="#" data-toggle="dropdown">
-											Columns <i class="fa fa-angle-down"></i>
-										</a>
-										<div id="column_toggler"
-											class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1"><s:message code="order.details.product.id"/></label>
-										    <label><input type="checkbox" checked data-column="3"><s:message code="order.details.product.unit.price"/></label>
-											<label><input type="checkbox" checked data-column="2"><s:message code="order.details.product.quantity"/></label>
-											<label><input type="checkbox" checked data-column="4"><s:message code="order.details.product.discount"/></label>
-											<label><input type="checkbox" checked data-column="5"><s:message code="order.details.product.curr.price"/></label>
-											<label><input type="checkbox" checked data-column="6"><s:message code="order.details.product.attributes"/></label>
-											<label><input type="checkbox" checked data-column="7"><s:message code="order.details.product.gift"/></label>
-											<label><input type="checkbox" checked data-column="8"><s:message code="order.details.product.promotion"/></label>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="portlet-body">
-								<table class="table table-striped table-hover table-bordered"
-									id="order_product_table">
-									<thead>
-										<tr>
-											<th class="table-checkbox"><input type="checkbox"class="group-checkable " data-set="#order_product_table .checkboxes" disabled/></th>
-											<th><s:message code="order.details.product.id"/></th>
-											<th><s:message code="order.details.product.quantity"/></th>
-											<th><s:message code="order.details.product.unit.price"/></th>
-											<th><s:message code="order.details.product.discount"/></th>
-											<th><s:message code="order.details.product.curr.price"/></th>
-											<th><s:message code="order.details.product.attributes"/></th>
-											<th><s:message code="order.details.product.gift"/></th>
-											<th><s:message code="order.details.product.promotion"/></th>	
-										</tr>
-									</thead>
-									<tbody>
-										
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<!-- END EXAMPLE TABLE PORTLET-->
-					</div>
+													<!-- BEGIN EXAMPLE TABLE PORTLET-->
+													<div class="portlet box green">
+														<div class="portlet-title">
+															<div class="caption">
+																<i class="fa fa-edit"></i>
+																<s:message code="order.product" />
+															</div>
+															<div class="actions">
+																<div class="btn-group">
+																	<a class="btn default" href="#" data-toggle="dropdown">
+																		Columns <i class="fa fa-angle-down"></i>
+																	</a>
+																	<div id="column_toggler"
+																		class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+																		<label><input type="checkbox" checked
+																			data-column="0">Checkbox</label>
+																	<label>
+																	<input
+																			type="checkbox" checked data-column="1">
+																		<s:message code="order.details.product.id" /></label> 
+																		<label>
+																		<input type="checkbox" checked data-column="2">
+																		<s:message code="order.details.product.name" />
+																		</label>
+																		<label>
+																		<input
+																			type="checkbox" checked data-column="3">
+																		<s:message code="order.details.product.unit.price" />
+																		</label>
+																		<label>
+																		<input type="checkbox" checked
+																			data-column="4">
+																		<s:message code="order.details.product.quantity" /></label> 
+																		
+																		<label>
+																		<input
+																			type="checkbox" checked data-column="5">
+																		<s:message code="order.details.product.discount" />
+																		</label> 
+																		<label>
+																		<input
+																			type="checkbox" checked data-column="6">
+																		<s:message code="order.details.product.curr.price" />
+																		</label>
+																		<label>
+																		<input type="checkbox" checked
+																			data-column="7">
+																		<s:message code="order.details.product.attributes" />
+																		</label>
+																		<label>
+																		<input type="checkbox" checked
+																			data-column="8">
+																		<s:message code="order.details.product.gift" />
+																		</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="portlet-body">
+															<table
+																class="table table-striped table-hover table-bordered"
+																id="order_product_table">
+																<thead>
+																	<tr>
+																		<th class="table-checkbox"><input type="checkbox"
+																			class="group-checkable "
+																			data-set="#order_product_table .checkboxes" disabled /></th>
+																		<th><s:message code="order.details.product.id" /></th>
+																		<th><s:message
+																				code="order.details.product.name" /></th>
+																		<th><s:message
+																				code="order.details.product.unit.price" /></th>
+																		<th><s:message
+																				code="order.details.product.quantity" /></th>
+																		<th><s:message
+																				code="order.details.product.discount" /></th>
+																		<th><s:message
+																				code="order.details.product.curr.price" /></th>
+																		<th><s:message
+																				code="order.details.product.attributes" /></th>
+																		<th><s:message code="order.details.product.gift" /></th>
+																	</tr>
+																</thead>
+																<tbody>
+
+																</tbody>
+															</table>
+														</div>
+													</div>
+													<!-- END EXAMPLE TABLE PORTLET-->
+												</div>
 											</div>
 
 										</div>
@@ -342,7 +420,8 @@
 		src="../assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"
 		type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
-    <script type="text/javascript" src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js"
@@ -359,7 +438,7 @@
 			OrderDetails.init("<c:url value="/"/>");
 		});
 	</script>
-	<c:import url="/common/notice"/>
+	<c:import url="/common/notice" />
 </body>
 <!-- END BODY -->
 

@@ -23,6 +23,8 @@ public class OrderModel {
 	
 	private String comment;
 	
+	private int peopleNum;
+	
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -85,6 +87,14 @@ public class OrderModel {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public int getPeopleNum() {
+		return peopleNum;
+	}
+
+	public void setPeopleNum(int peopleNum) {
+		this.peopleNum = peopleNum;
 	}
 
 }

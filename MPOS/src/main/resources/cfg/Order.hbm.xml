@@ -29,6 +29,8 @@
 		<property name="comment" type="string">
 			<column name="comment" length="1000" />
 		</property>
-		
+		<property name="peopleNum" type="int">
+			<column name="peopleNum" length="2" not-null="true" />
+		</property>
 	</class>
 </hibernate-mapping>
