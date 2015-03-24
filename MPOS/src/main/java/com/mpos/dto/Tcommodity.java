@@ -5,6 +5,14 @@ import java.util.Set;
 
 public class Tcommodity implements Serializable{
 	
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
 	/**
 	 * 
 	 */
@@ -18,7 +26,7 @@ public class Tcommodity implements Serializable{
 	private float price;
 	private Integer sku;
 	private boolean recommend;
-	private int sort;
+	private Integer sort;
 	private boolean status;
 	private Tmenu tmenu;
 	private Tcategory tcategory;
@@ -101,13 +109,7 @@ public class Tcommodity implements Serializable{
 		this.recommend = recommend;
 	}
 
-	public int getSort() {
-		return sort;
-	}
-
-	public void setSort(int sort) {
-		this.sort = sort;
-	}
+	
 
 	public boolean isStatus() {
 		return status;

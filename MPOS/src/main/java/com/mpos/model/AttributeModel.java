@@ -9,6 +9,12 @@ import java.util.List;
  * @date 2014年12月25日下午3:01:52
  */
 public class AttributeModel implements Serializable{
+	public Integer getSort() {
+		return sort;
+	}
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
 	/**
 	 * 
 	 */
@@ -16,6 +22,7 @@ public class AttributeModel implements Serializable{
 	private Boolean isRequired;
 	private Integer attributeId;
 	private Integer attributeType;
+	private Integer sort;
 	private String attributeTitle;
 	private Object attributeTitleLocale;
 	private List<ValueModel> attributeValue;

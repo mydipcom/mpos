@@ -815,6 +815,7 @@ public class MobileAPI {
 					Integer attType = tca.getCategoryId().getType();
 					attribute.setIsRequired(tca.getRequired());
 					attribute.setAttributeType(attType);
+					attribute.setSort(tca.getSort());
 					String[] valueIdStrs = tproductAttribute.getAttributeValue().split(",");
 					Integer[] valueInts = ConvertTools.stringArr2IntArr(valueIdStrs);
 					if (valueInts != null && valueInts.length > 0) {
@@ -822,14 +823,18 @@ public class MobileAPI {
 							TattributeValue value = attributeValueService.getAttributeValue(valueId);
 							ValueModel vm = new ValueModel();
 							vm.setPrice(0.0f);
-							vm.setValueId(value.getValueId());
+							//vm.setValueId(value.getValueId());
 							String pr = tproductAttribute.getAttributePrice();
 							if (attType == ORDER_TYPE && pr != null && !pr.isEmpty()) {
 								String[] ps = pr.split(",");
 								if (valueInts.length == ps.length) {
-									if (ps[value.getSort()] != null && !ps[value.getSort()].isEmpty()) {
-										vm.setPrice(Float.valueOf(ps[value.getSort()]));
+									Integer sort = value.getSort();
+									if(sort<ps.length){
+										if (ps[value.getSort()] != null && !ps[value.getSort()].isEmpty()) {
+											vm.setPrice(Float.valueOf(ps[value.getSort()]));
+										}
 									}
+									
 								}
 							}
 							vm.setValue(value.getValue());
