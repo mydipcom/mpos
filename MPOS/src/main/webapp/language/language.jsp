@@ -191,7 +191,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="language.name"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="name" class="form-control"/>										
+										<input name="name" class="form-control" maxLength="20"/>										
 									</div>
 								</div>
 								<div class="form-group">
@@ -501,7 +501,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="language.name"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="name" class="form-control"/>										
+										<input name="name" class="form-control" maxLength="20"/>										
 									</div>
 								</div>
 								<div class="form-group">

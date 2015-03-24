@@ -163,7 +163,7 @@
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.product.name"/><span class="required"> * </span></label>
 																<div class="col-md-5">																	
-																	<form:input path="productName" cssClass="form-control"/>																	
+																	<form:input path="productName" cssClass="form-control" maxLength="300"/>																	
 																</div>
 															</div>
 														</div>

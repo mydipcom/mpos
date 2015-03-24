@@ -167,7 +167,7 @@
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.product.name"/><span class="required"> * </span></label>
 																<div class="col-md-5">																	
-																	<form:input path="productName" cssClass="form-control" value="${product.productName}"/>																	
+																	<form:input path="productName" cssClass="form-control" value="${product.productName}" maxLength="300"/>																	
 																</div>
 															</div>
 														</div>
@@ -177,7 +177,7 @@
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.shortdescr"/><span class="required"> * </span></label>
 																<div class="col-md-5">																	
-																	<form:textarea path="shortDescr" rows="4" cols="90"/>
+																	<form:textarea path="shortDescr" rows="4" cols="90" maxLength="2000"/>
 																</div>
 															</div>
 														</div>
@@ -198,7 +198,7 @@
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.unitname"/></label>
 																<div class="col-md-5">
-																	<form:input path="unitName" cssClass="form-control"/>
+																	<form:input path="unitName" cssClass="form-control" maxLength="20"/>
 																</div>
 															</div>
 														</div>

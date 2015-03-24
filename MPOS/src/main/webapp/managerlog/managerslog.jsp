@@ -93,7 +93,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="system.management.user.logtable.adminame"/></label>
 								<div class="col-md-9">
-									<input name="adminId" type="text" class="form-control">							
+									<input name="adminId" type="text" class="form-control" maxLength="20">							
 								</div>
 							</div>
 						</div>

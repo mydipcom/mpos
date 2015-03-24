@@ -82,7 +82,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="product.product.name"/></label>
 								<div class="col-md-9">
-									<input name="productName" type="text" class="form-control">							
+									<input name="productName" type="text" class="form-control" maxLength="300">							
 								</div>
 							</div>
 						</div>

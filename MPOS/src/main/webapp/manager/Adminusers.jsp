@@ -85,7 +85,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.id"/></label>
 								<div class="col-md-9">
-									<input name="adminId" type="text" class="form-control">							
+									<input name="adminId" type="text" class="form-control" maxLength="20">							
 								</div>
 							</div>
 						</div>
@@ -93,7 +93,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.email"/></label>
 								<div class="col-md-9">
-									<input name="email" type="text" class="form-control">							
+									<input name="email" type="text" class="form-control" maxLength="100">							
 								</div>
 							</div>
 						</div>
@@ -223,19 +223,19 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="adminId" class="form-control"/>										
+										<input name="adminId" class="form-control" maxLength="20"/>										
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="login.form.password"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="password" type="password" class="form-control"/>										
+										<input name="password" type="password" class="form-control" maxLength="100"/>										
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
-										<input name="email" class="form-control"/>
+										<input name="email" class="form-control" maxLength="100"/>
 									</div>
 								</div>									
 								<div class="form-group">
@@ -339,14 +339,14 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="login.form.password"/></label>
 									<div class="col-md-9">																				
-										<input name="password" type="password"  class="form-control"/>
+										<input name="password" type="password"  class="form-control" maxLength="100"/>
 										<span class="help-block"> input a new password or not input password</span>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/></label>
 									<div class="col-md-9">																				
-										<input name="email" class="form-control"/>
+										<input name="email" class="form-control" maxLength="100"/>
 									</div>
 								</div>									
 								<div class="form-group">

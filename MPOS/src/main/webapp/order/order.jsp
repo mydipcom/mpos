@@ -142,7 +142,7 @@
 									<label class="col-md-3 control-label"><s:message
 											code="order.id" /></label>
 									<div class="col-md-6">
-										<input name="orderId" type="text" class="form-control">
+										<input name="orderId" type="text" class="form-control" maxLength="20">
 									</div>
 								</div>
 							</div>
@@ -151,7 +151,7 @@
 									<label class="col-md-3 control-label"><s:message
 											code="order.creater" /></label>
 									<div class="col-md-6">
-										<input name="creater" type="text" class="form-control">
+										<input name="creater" type="text" class="form-control" maxLength="30">
 									</div>
 								</div>
 							</div>

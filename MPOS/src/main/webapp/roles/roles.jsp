@@ -55,7 +55,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="system.management.roles.search.rolename" /></label>
 								<div class="col-md-9">
-									<input name="roleName" type="text" class="form-control">							
+									<input name="roleName" type="text" class="form-control" maxLength="50">							
 								</div>
 							</div>
 						</div>
@@ -152,7 +152,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.roles.search.rolename" /><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="roleName" class="form-control"/>										
+										<input name="roleName" class="form-control" maxLength="50"/>										
 									</div>
 								</div>								
 								<div class="form-group">
@@ -204,7 +204,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.roles.search.rolename" /><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="roleName" class="form-control"/>										
+										<input name="roleName" class="form-control" maxLength="50"/>										
 									</div>
 								</div>								
 								<div class="form-group">
