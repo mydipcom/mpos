@@ -120,6 +120,12 @@ public class ManagerController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		Date sdate = null;
 		try{
+			
+			if(adminuser.getPassword()!=null && !adminuser.getPassword().isEmpty()){
+				adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
+				}else {
+				adminuser = adminUserService.getAdminUserById(adminuser.getAdminId());
+				}
 			try {
 				String ss=adminuser.getCreatedTimeStr();
 				sdate = simpleDateFormat.parse(ss);
@@ -131,17 +137,14 @@ public class ManagerController extends BaseController {
 			adminuser.setUpdatedTime(System.currentTimeMillis());
 			String email = adminuser.getEmail();
 			adminuser.setEmail(email.toLowerCase());
-			if(adminuser.getPassword()!=null){
-			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
-			}else {
-			adminuser.setPassword(adminUserService.getAdminUserById(adminuser.getAdminId()).getPassword());
-			}
+			
 			adminUserService.updateAdminUser(adminuser);
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
+			be.printStackTrace();
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		String str=JSON.toJSONString(respJson);		

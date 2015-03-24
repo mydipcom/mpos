@@ -63,6 +63,7 @@ public class GoodsServiceImpl implements GoodsService{
 				if(val!=null&&!val.isEmpty()){
 					if(key=="recommend"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
+						
 					}
 					else if(key=="tcategory.categoryId"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));

@@ -33,7 +33,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 		orderItemDao.create(orderItem);
 	}
 
-	@Override
+	
 	public String get(Integer orderItemId) {
 		// TODO Auto-generated method stub
 		StringBuffer attributes = new StringBuffer();

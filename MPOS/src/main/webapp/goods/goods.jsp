@@ -111,9 +111,9 @@
 										<label class="radio-inline">
 										<input type="radio" name="recommend" value="" checked/>All </label>
 										<label class="radio-inline">
-										<input type="radio" name="recommend" value="1"/>True</label>
+										<input type="radio" name="recommend" value="true"/>True</label>
 										<label class="radio-inline">
-										<input type="radio" name="recommend" value="0"/>False</label>
+										<input type="radio" name="recommend" value="false"/>False</label>
 									</div>									
 								</div>
 							</div>

@@ -115,6 +115,7 @@ public class AdminInfoController extends BaseController {
 			adminInfo.setAdminId(adminId);
 			adminInfoService.updateAdminInfo(adminInfo);
 			log_content="success:edit profile.";
+			respJson.put("info", getMessage(request, "edit success."));
 			respJson.put("status", true);
 		}catch(MposException be){
 			respJson.put("status", false);
