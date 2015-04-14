@@ -2,6 +2,7 @@ package com.mpos.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -68,7 +69,7 @@ public class TableServiceImpl implements TableService {
 	}
 
 	
-	public List<Ttable> loadAll() {
+	public List<Ttable> loadAll(Integer storeId) {
 		return tableDao.LoadAll();
 	}
 
@@ -130,6 +131,12 @@ public class TableServiceImpl implements TableService {
 	public Ttable get(String tableName) {
 		// TODO Auto-generated method stub
 		return tableDao.findUnique("tableName", tableName);
+	}
+
+
+	public List<Ttable> select(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return tableDao.select(hql, params);
 	}
 
 }

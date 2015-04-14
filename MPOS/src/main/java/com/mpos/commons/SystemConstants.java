@@ -26,6 +26,7 @@ public class SystemConstants {
 	 * 命名规则 ”logo_“+storeId;"backgroud_"+storeId
 	 */
 	public static final String STORE_SET_PATH = File.separator+"upload"+File.separator+"store"+File.separator;
+	public static final String STORE_UP_PATH = "/upload/store/";
 	/**
 	 * 店铺产品图片存放路径
 	 * 命名规则 storeId+"_"+productId+"_"+图片序号

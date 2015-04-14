@@ -1,6 +1,7 @@
 package com.mpos.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.mpos.dto.Ttable;
 import com.mpos.model.DataTableParamter;
@@ -15,8 +16,10 @@ public interface TableService {
 	void update(Ttable table);
 	Ttable get(String tableName);
 	Ttable get(Integer id);
-	List<Ttable> loadAll();
+	List<Ttable> loadAll(Integer storeId);
 	PagingData loadTableList(DataTableParamter dtp);
 	Boolean tableNameIsExist(String tableName,Integer storeId);
 	Boolean updateVerification(String tableName,Integer storeId);
+	
+	public List<Ttable> select(String hql,Map<String, Object> params);
 }

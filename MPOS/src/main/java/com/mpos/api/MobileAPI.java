@@ -1,7 +1,9 @@
 package com.mpos.api;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +19,7 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,7 @@ import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tcommodity;
 import com.mpos.dto.Tdevice;
 import com.mpos.dto.TgoodsAttribute;
+import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.dto.Torder;
@@ -48,6 +52,7 @@ import com.mpos.dto.TproductAttribute;
 import com.mpos.dto.TproductImage;
 import com.mpos.dto.TproductRelease;
 import com.mpos.dto.Tpromotion;
+import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
 import com.mpos.model.AttributeModel;
 import com.mpos.model.CallWaiterInfo;
@@ -67,6 +72,7 @@ import com.mpos.service.OrderService;
 import com.mpos.service.ProductAttributeService;
 import com.mpos.service.ProductReleaseService;
 import com.mpos.service.PromotionService;
+import com.mpos.service.StoreService;
 import com.mpos.service.TableService;
 
 @Controller
@@ -130,6 +136,8 @@ public class MobileAPI {
 	private AttributeValueService attributeValueService;
 	@Autowired
 	private LanguageService languageService;
+	@Autowired
+	private StoreService storeService;
 
 	/**
 	 * Get the system setting parameter
@@ -141,35 +149,74 @@ public class MobileAPI {
 	@ResponseBody
 	public String getSetting(HttpServletResponse response, HttpServletRequest request, @RequestHeader("Authorization") String apiKey) {
 		JSONObject respJson = new JSONObject();
-		if (SystemConfig.STORE_TAKEN_MAP.get(apiKey)==null) {
+		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
+		if (storeId==null) {
 			respJson.put("status", false);
 			respJson.put("info", "Error Init API token.");
 			return JSON.toJSONString(respJson);
 		}
 		try {
-			// String path = request.getContextPath();
-			Map<String, String> setting = SystemConfig.Admin_Setting_Map;
-			String pwd = setting.get(SystemConstants.ACCESS_PASSWORD);
-			String token = setting.get(SystemConstants.TOKEN);
-			String currency = setting.get(SystemConstants.CURRENCY);
-			String logo = setting.get(SystemConstants.RESTAURANT_LOGO);
-			String backgroundImage = setting.get(SystemConstants.PAGE_BACKGROUND);
-			String restaurantName = setting.get(SystemConstants.RESTAURANT_NAME);
-
+			List<Tlanguage> langs = languageService.getLangListByStoreId(storeId);
+			List<Map<String,Object>> languages = new ArrayList<Map<String,Object>>();
+			for (Tlanguage lang : langs) {
+				Map<String,Object> map = new HashMap<String, Object>();
+				map.put("name", lang.getName());
+				map.put("local", lang.getLocal());
+				languages.add(map);
+			}
+			Tstore store = storeService.get(storeId);
+			
+			String realPath = request.getSession().getServletContext().getRealPath("/");
+			String logoPath = SystemConstants.STORE_SET_PATH+"logo_"+storeId+"."+"jpg";
+			String backPath = SystemConstants.STORE_SET_PATH+"background_"+storeId+"."+"jpg";
+			
+			byte[] logo_file = store.getStoreLogo();
+			InputStream is = null;
+			if(logo_file!=null){
+				File	logo = new File(realPath+logoPath);
+				if(!logo.exists()){
+					is = new ByteArrayInputStream(logo_file);
+					FileUtils.copyInputStreamToFile(is, logo);
+				}
+				logoPath = SystemConstants.STORE_UP_PATH+"logo_"+storeId+"."+"jpg";
+			}else{
+				logoPath = SystemConstants.STORE_UP_PATH+"logo_"+0+"."+"jpg";
+			}
+			
+			byte[] back_file = store.getStoreBackground();
+			if(back_file!=null){
+				File back = new File(realPath+backPath);
+				if(!back.exists()){
+					is = new ByteArrayInputStream(back_file);
+					FileUtils.copyInputStreamToFile(is, back);
+				}
+				backPath = SystemConstants.STORE_UP_PATH+"background_"+storeId+"."+"jpg";
+			}else{
+				backPath = SystemConstants.STORE_UP_PATH+"background_"+0+"."+"jpg";
+			}
+		
 			JSONObject dataJson = new JSONObject();
-			dataJson.put("pwd", pwd);
-			dataJson.put("token", token);
-			dataJson.put("currency", currency);
-			dataJson.put("logo", "/" + logo);
-			dataJson.put("backgroundImage", "/" + backgroundImage);
-			dataJson.put("storeName", restaurantName);
-			dataJson.put("tables", loadTables());
+			//客户端密码
+			dataJson.put("pwd", store.getClientPwd());
+			//货币符号
+			dataJson.put("currency", store.getStoreCurrency());
+			//logo图片路径
+			dataJson.put("logo", logoPath);
+			//背景图片路径
+			dataJson.put("backgroundImage", backPath);
+			//店铺名称
+			dataJson.put("storeName", store.getStoreName());
+			//店铺桌号
+			dataJson.put("tables", loadTables(storeId));
+			//多语言设置
+			dataJson.put("languages", languages);
+			
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", dataJson);
 
 			return JSON.toJSONString(respJson);
-		} catch (MposException e) {
+		} catch (Exception e) {
 			respJson.put("status", false);
 			respJson.put("info", e.getMessage());
 			return JSON.toJSONString(respJson);
@@ -1067,8 +1114,12 @@ public class MobileAPI {
 		return oldPrice;
 	}
 
-	private String[] loadTables() {
-		List<Ttable> tables = tableService.loadAll();
+	private String[] loadTables(Integer storeId) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("status", true);
+		params.put("storeId", storeId);
+		String query = "from Ttable where status=:status and storeId=:storeId";
+		List<Ttable> tables = tableService.select(query, params);
 		String[] tt = null;
 		if (tables != null && tables.size() > 0) {
 			tt = new String[tables.size()];

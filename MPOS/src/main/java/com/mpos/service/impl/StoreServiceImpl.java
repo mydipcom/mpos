@@ -123,4 +123,9 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.getObject(hql, params);
 	}
 
+	public Tstore get(Integer storeId) {
+		// TODO Auto-generated method stub
+		return storeDao.get(storeId);
+	}
+
 }

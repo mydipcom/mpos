@@ -12,6 +12,7 @@ public interface StoreService {
 		public void delete(Tstore store);
 		public void delete(Integer storeId);
 		public void update(Tstore store);
+		public Tstore get(Integer storeId);
 		public PagingData loadList(DataTableParamter rdtp);
 		
 		public void delete(String hql,Map<String, Object> params);
