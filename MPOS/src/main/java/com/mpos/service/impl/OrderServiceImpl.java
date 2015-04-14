@@ -2,6 +2,7 @@ package com.mpos.service.impl;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.criterion.Criterion;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
-import com.mpos.commons.MposException;
 import com.mpos.dao.OrderDao;
 import com.mpos.dto.Torder;
 import com.mpos.model.DataTableParamter;
@@ -81,5 +81,10 @@ public class OrderServiceImpl implements OrderService {
 	public void deleteOrder(Torder torder) {
 		// TODO Auto-generated method stub
 		orderDao.delete(torder);
+	}
+
+	public List<Torder> select(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return orderDao.select(hql, params);
 	}
 }

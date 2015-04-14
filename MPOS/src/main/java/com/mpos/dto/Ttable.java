@@ -16,6 +16,7 @@ public class Ttable implements java.io.Serializable {
 	private String descr;
 	private Boolean status = true;
 	private Long createTime;
+	private Integer storeId;
 
 	public Ttable() {
 	}
@@ -71,5 +72,14 @@ public class Ttable implements java.io.Serializable {
 	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
+	
 	
 }

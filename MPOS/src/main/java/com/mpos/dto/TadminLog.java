@@ -19,6 +19,7 @@ public class TadminLog implements java.io.Serializable {
 	private String content;
 	private short level;
 	private Long createdTime;
+	private Integer nodeId;
 	
 	@SuppressWarnings("unused")
 	private String createdTimeStr;
@@ -91,5 +92,14 @@ public class TadminLog implements java.io.Serializable {
 	public void setCreatedTime(long createdTime) {
 		this.createdTime = createdTime;
 	}
+
+	public Integer getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+		this.nodeId = nodeId;
+	}
+	
 
 }

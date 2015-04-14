@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,17 +33,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
-import com.mpos.commons.SystemConstants;
 import com.mpos.dto.TattributeValue;
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
-import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.Tlanguage;
-import com.mpos.dto.TlocalizedField;
-import com.mpos.dto.Tmenu;
 import com.mpos.dto.Tproduct;
 import com.mpos.dto.TproductAttribute;
-import com.mpos.dto.TproductImage;
 import com.mpos.model.AddAttributevaleModel;
 import com.mpos.model.AddProductModel;
 import com.mpos.model.CategoryAttributeModel;
@@ -108,14 +102,14 @@ public class GoodsController extends BaseController{
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView Goods(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-		List<Tcategory> categorys=categoryService.getallCategory();
+		List<Tcategory> categorys=categoryService.getallCategory(getSessionUser(request).getStoreId());
 		Object successstring=request.getSession().getAttribute("addsussess");
 		if(successstring!=null){
 			mav.addObject("Msg", successstring);
 		}
 		String local=getLocale(request);
 		Tlanguage language=languageService.getLanguageBylocal(local);
-		List<MenuModel> menus=menuService.getNoChildrenMenus(language);
+		List<MenuModel> menus=menuService.getNoChildrenMenus(language,getSessionUser(request).getStoreId());
 	//	List<Tmenu> menus=menuService.getAllMenu();
 		request.getSession().setAttribute("addsussess", null);
 		mav.addObject("category", categorys);
@@ -125,7 +119,8 @@ public class GoodsController extends BaseController{
 	}
 	@RequestMapping(value="/goodslist",method=RequestMethod.GET)
 	@ResponseBody
-	public String goodsList(HttpServletRequest request,DataTableParamter dtp){		
+	public String goodsList(HttpServletRequest request,DataTableParamter dtp){
+		addStoreCondition(request, dtp);
 		PagingData pagingData=goodsService.loadGoodsList(dtp);
 		String local=getLocale(request);
 		if(pagingData.getITotalRecords()!=0){
@@ -160,9 +155,10 @@ public class GoodsController extends BaseController{
 		ModelAndView mav=new ModelAndView();
 		String local=getLocale(request);
 		Tlanguage language=languageService.getLanguageBylocal(local);
+		Integer storeId = getSessionUser(request).getStoreId();
 		Object errorstring=request.getSession().getAttribute("adderrorMsg");
-		List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language);
-		List<Tcategory> speccategoryList=categoryService.getallCategory(0,language);
+		List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language,storeId);
+		List<Tcategory> speccategoryList=categoryService.getallCategory(0,language,storeId);
 		Map<Integer, String> ordercategoryMap = new HashMap<Integer, String>();  
 		Map<Integer, String> speccategoryMap = new HashMap<Integer, String>();
 		for (Tcategory tcategory : ordercategoryList) {
@@ -172,7 +168,7 @@ public class GoodsController extends BaseController{
 			speccategoryMap.put(tcategory.getCategoryId(), tcategory.getName());
 		}
 		
-		List<MenuModel> menus=menuService.getNoChildrenMenus(language);
+		List<MenuModel> menus=menuService.getNoChildrenMenus(language,getSessionUser(request).getStoreId());
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
 		if(errorstring!=null){
 			mav.addObject("Msg", errorstring);
@@ -313,6 +309,7 @@ public class GoodsController extends BaseController{
 	@ResponseBody
 	public ModelAndView addGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
 		try{
+			addStore(model, request);
 			goodsService.createproduct(model, filesMap, request);
 			
 /*		Tproduct product=new Tproduct();

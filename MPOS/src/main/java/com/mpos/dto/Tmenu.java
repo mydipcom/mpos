@@ -37,6 +37,7 @@ public class Tmenu implements Serializable {
 	private Integer sort;
 	
 	private Integer styleType;
+	private Integer storeId;
 	
 	public Integer getMenuId() {
 		return menuId;
@@ -85,6 +86,13 @@ public class Tmenu implements Serializable {
 	}
 	public void setStyleType(Integer styleType) {
 		this.styleType = styleType;
+	}
+	
+	public Integer getStoreId() {
+		return storeId;
+	}
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 	@Override
 	public String toString() {

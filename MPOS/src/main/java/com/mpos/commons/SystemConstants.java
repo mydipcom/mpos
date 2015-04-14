@@ -20,6 +20,7 @@ import java.util.Map;
  *  
  */
 public class SystemConstants {
+	
 	public static final String LOGINED="Logined";
 	
 	public static final String RIGHTS="rights";  
@@ -33,7 +34,11 @@ public class SystemConstants {
 	public static final String LOG_FAILURE="failure";
 	
 	public static final String LOG_SEPARATOR="-";
+	/**
+	 * --------------------系统服务配置--------------------------
+	 */
 	
+	public static final String[] SYS_SET = {"Email_Host","Email_Username","Email_Password","Max_Login_Error_Times","Login_Error_Locked","Company_Name"};
 	public static final String EMAIL_HOST="Email_Host";
 	
 	public static final String EMAIL_NAME="Email_Username";
@@ -42,9 +47,11 @@ public class SystemConstants {
 	
 	public static final String MAX_LOGIN_ERROR_TIMES="Max_Login_Error_Times";
 	
-	public static final String INIT_AUTH_CODE="1596fa2bbd11959414d3267230013bf3";
-	
 	public static final String LOGIN_ERROR_LOCK="Login_Error_Locked";
+	
+	public static final String COMPANY_NAME="Company_Name";
+	
+	
 	
 	public static final String TABLE_NAME_MENU="Tmenu";
 	public static final String TABLE_NAME_CATEGORY="Tcategory";

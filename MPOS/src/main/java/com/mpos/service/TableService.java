@@ -17,6 +17,6 @@ public interface TableService {
 	Ttable get(Integer id);
 	List<Ttable> loadAll();
 	PagingData loadTableList(DataTableParamter dtp);
-	Boolean tableNameIsExist(String tableName);
-	Boolean updateVerification(String tableName);
+	Boolean tableNameIsExist(String tableName,Integer storeId);
+	Boolean updateVerification(String tableName,Integer storeId);
 }

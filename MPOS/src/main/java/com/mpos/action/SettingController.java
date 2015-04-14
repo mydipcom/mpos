@@ -57,16 +57,13 @@ public class SettingController extends BaseController {
 			for(int i=0;i<objs.length;i++){
 				list = new ArrayList<String>();
 				Tsetting tsetting = (Tsetting)objs[i];
-				list.add(new String(tsetting.getValue(),"UTF-8"));
+				list.add(tsetting.getValue());
 				list.add(tsetting.getDescr());
 				system_setting.put(tsetting.getName(), list);
 			}
 		}catch(MposException m){
 			
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		mav.addObject("system_setting",system_setting);
 	    mav.setViewName("settings/systemsetting");
 		return mav;
@@ -83,16 +80,13 @@ public class SettingController extends BaseController {
 			for(int i=0;i<objs.length;i++){
 				list = new ArrayList<String>();
 				Tsetting tsetting = (Tsetting)objs[i];
-				list.add(new String(tsetting.getValue(),"UTF-8"));
+				list.add(tsetting.getValue());
 				list.add(tsetting.getDescr());
 				store_setting.put(tsetting.getName(), list);
 			}
 		}catch(MposException m){
 			
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		mav.addObject("store_setting",store_setting);
 		mav.setViewName("settings/storesetting");
 		return mav;
@@ -107,9 +101,9 @@ public class SettingController extends BaseController {
 			Tsetting tsetting = systemSettingService.getSystemSettingByName(name);
 			if(tsetting != null){
 				if(SystemConstants.ACCESS_PASSWORD.equals(name)||SystemConstants.EMAIl_PASSWORD.equals(name) || SystemConstants.TOKEN.equals(name)){
-				    tsetting.setValue(SecurityTools.MD5(value).getBytes("UTF-8"));
+				    tsetting.setValue(SecurityTools.MD5(value));
 				}else{
-					tsetting.setValue(value.getBytes("UTF-8"));
+					tsetting.setValue(value);
 				}
 	            systemSettingService.updateSystemsetting(tsetting);
 	            systemSettingService.cachedSystemSettingData();
@@ -150,7 +144,7 @@ public class SettingController extends BaseController {
         	}
     		tsetting = systemSettingService.getSystemSettingByName(SystemConstants.RESTAURANT_LOGO_File);
         }
-    	tsetting.setValue(file.getBytes());
+    	//tsetting.setValue(file.getBytes());
     	FileUtils.copyInputStreamToFile(file.getInputStream(), image);
     	try {
     		systemSettingService.updateSystemsetting(tsetting);

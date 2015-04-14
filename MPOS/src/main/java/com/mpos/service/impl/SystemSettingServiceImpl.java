@@ -78,16 +78,16 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 		return settingDao.LoadAll();
 	}
 	
-	
 	public void cachedSystemSettingData() throws IOException {
 		// TODO Auto-generated method stub
-		List <Tsetting> setingList = getAllSystemSetting();
-		String realPath = this.getClass().getResource("/").getPath();
-		realPath = realPath.substring(0, realPath.indexOf("WEB-INF")).replace("%20", " ");
-		
+		//List <Tsetting> setingList = getAllSystemSetting();
 		SystemConfig.Admin_Setting_Map.clear();
-		SystemConfig.TOKEN = null;
-		File image;
+	//	String realPath = this.getClass().getResource("/").getPath();
+		//realPath = realPath.substring(0, realPath.indexOf("WEB-INF")).replace("%20", " ");
+		
+	
+		//SystemConfig.TOKEN = null;
+		/*File image;
 		for(Tsetting setting:setingList){
 			SystemConfig.Admin_Setting_Map.put(setting.getName(),new String(setting.getValue(),"UTF-8"));
 			if(SystemConstants.RESTAURANT_LOGO_File.equals((setting.getName()))){
@@ -103,8 +103,8 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 				}
 				FileUtils.copyInputStreamToFile(new ByteArrayInputStream(setting.getValue()), image);
 			}
-		}
-		SystemConfig.TOKEN=SystemConfig.Admin_Setting_Map.get(SystemConstants.TOKEN);
+		}*/
+		//SystemConfig.TOKEN=SystemConfig.Admin_Setting_Map.get(SystemConstants.TOKEN);
 	}
 
 
@@ -119,6 +119,14 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 	public Tsetting getSystemSettingByName(String name) {
 		// TODO Auto-generated method stub
 		return settingDao.findUnique("name", name);
+	}
+
+
+	public void cachedSystemSet() {
+		List<Tsetting> sets = settingDao.LoadAll();
+		for (Tsetting set : sets) {
+			SystemConfig.Admin_Setting_Map.put(set.getName(), set.getValue());
+		}
 	}
 
 	

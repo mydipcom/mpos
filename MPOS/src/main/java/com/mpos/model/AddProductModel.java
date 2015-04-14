@@ -28,6 +28,7 @@ public class AddProductModel implements java.io.Serializable{
 	private Tmenu menu;
 	private Tcategory attributeGroup;
 	private Integer specid;
+	private Integer storeId;
 	
 	private List<TlocalizedField> productName_locale=new ArrayList<TlocalizedField>();
 	private List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
@@ -189,6 +190,14 @@ public class AddProductModel implements java.io.Serializable{
 
 	public void setAttributes(List<TgoodsAttribute> attributes) {
 		this.attributes = attributes;
+	}
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}	
 
 		

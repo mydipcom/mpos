@@ -117,9 +117,9 @@ public class MenuServiceImpl implements MenuService {
 
 	}
 
-	public List<Tmenu> getAllMenu() {
+	public List<Tmenu> getAllMenu(Integer storeId) {
 		Criteria criteria = menuDao.createCriteria();
-		return criteria.add(Restrictions.eq("status", true)).list();
+		return criteria.add(Restrictions.eq("status", true)).add(Restrictions.eq("storeId", storeId)).list();
 		// return menuDao.LoadAll();
 	}
 
@@ -138,10 +138,10 @@ public class MenuServiceImpl implements MenuService {
 		}
 	}
 
-	public List<MenuModel> getNoChildrenMenus() {
+	public List<MenuModel> getNoChildrenMenus(Integer storeId) {
 		// TODO Auto-generated method stub
 		List<MenuModel> models = new ArrayList<MenuModel>();
-		List<Tmenu> tmenus = menuDao.getNoChildren();
+		List<Tmenu> tmenus = menuDao.getNoChildren(storeId);
 		if(tmenus!=null&&tmenus.size()>0){
 			for (Tmenu tmenu : tmenus) {
 				MenuModel model = new MenuModel();
@@ -273,10 +273,10 @@ public class MenuServiceImpl implements MenuService {
 		// System.out.println(title);
 		return title;
 	}
-	public List<MenuModel> getNoChildrenMenus(Tlanguage language) {
+	public List<MenuModel> getNoChildrenMenus(Tlanguage language,Integer storeId) {
 		// TODO Auto-generated method stub
 		List<MenuModel> models = new ArrayList<MenuModel>();
-		List<Tmenu> tmenus = menuDao.getNoChildren();
+		List<Tmenu> tmenus = menuDao.getNoChildren(storeId);
 		if(tmenus!=null&&tmenus.size()>0){
 			for (Tmenu tmenu : tmenus) {
 				/*Map<String, Object> ssMap=new HashMap<String, Object>();

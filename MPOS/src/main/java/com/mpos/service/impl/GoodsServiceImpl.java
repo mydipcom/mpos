@@ -277,7 +277,7 @@ public class GoodsServiceImpl implements GoodsService{
 			}
 			filesMap.clear();
 			//add productReleaseService
-			Integer verId=productReleaseDao.getMaxintergerValue("id");
+			Integer verId=productReleaseDao.getMaxId("id",model.getStoreId());
 			TproductRelease productrelease;
 			if (verId!=0) {
 				 productrelease=productReleaseDao.get(verId);
@@ -294,6 +294,7 @@ public class GoodsServiceImpl implements GoodsService{
 				 }else {
 					 TproductRelease newproductrelease=new TproductRelease();
 					 newproductrelease.setProducts(product.getId().toString());
+					 newproductrelease.setStoreId(model.getStoreId());
 					 newproductrelease.setIsPublic(false);
 					 productReleaseDao.create(newproductrelease);
 				}
@@ -302,6 +303,7 @@ public class GoodsServiceImpl implements GoodsService{
 				TproductRelease productrelease1=new TproductRelease();
 				productrelease1.setProducts(product.getId().toString());
 				productrelease1.setIsPublic(false);
+				productrelease1.setStoreId(model.getStoreId());
 				productReleaseDao.create(productrelease1);
 			}
 			
@@ -414,7 +416,7 @@ public class GoodsServiceImpl implements GoodsService{
 			}
 			filesMap.clear();
 			//add productReleaseService
-			Integer verId=productReleaseDao.getMaxintergerValue("id");
+			Integer verId=productReleaseDao.getMaxId("id",model.getStoreId());
 			TproductRelease productrelease;
 			if (verId!=0) {
 				 productrelease=productReleaseDao.get(verId);
@@ -432,6 +434,7 @@ public class GoodsServiceImpl implements GoodsService{
 					 TproductRelease newproductrelease=new TproductRelease();
 					 newproductrelease.setProducts(product.getId().toString());
 					 newproductrelease.setIsPublic(false);
+					 newproductrelease.setStoreId(model.getStoreId());
 					 productReleaseDao.create(newproductrelease);
 				}
 			}
@@ -439,10 +442,9 @@ public class GoodsServiceImpl implements GoodsService{
 				TproductRelease productrelease1=new TproductRelease();
 				productrelease1.setProducts(product.getId().toString());
 				productrelease1.setIsPublic(false);
+				productrelease1.setStoreId(model.getStoreId());
 				productReleaseDao.create(productrelease1);
 			}
 		}
-		
-		
 
 }

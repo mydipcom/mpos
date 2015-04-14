@@ -3,9 +3,9 @@ package com.mpos.dao.base;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -220,6 +220,59 @@ public class BaseDao<T> extends HibernateDaoSupport
         return createCriteria(orderBy, isAsc,
             new Criterion[] {criterion});
     }
+    
+    public void update(String hql,Map<String, Object> params){
+    	Query update = currentSession().createQuery(hql);
+    	for (String key : params.keySet()) {
+			Object o = params.get(key);
+			if(o.getClass().isArray()){
+				update.setParameterList(key, (Object[])o);
+			}else{
+				update.setParameter(key, o);
+			}
+		}
+    	update.executeUpdate();
+    }
+    
+    public void delete(String hql,Map<String, Object> params){
+    	Query update = currentSession().createQuery(hql);
+    	for (String key : params.keySet()) {
+			Object o = params.get(key);
+			if(o.getClass().isArray()){
+				update.setParameterList(key, (Object[])o);
+			}else{
+				update.setParameter(key, o);
+			}
+		}
+    	update.executeUpdate();
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<T> select(String hql,Map<String, Object> params){
+    	Query query = currentSession().createQuery(hql);
+    	if(params!=null&&params.size()>0){
+    		for (String key : params.keySet()) {
+    			Object o = params.get(key);
+    			if(o.getClass().isArray()){
+    				query.setParameterList(key, (Object[])o);
+    			}else{
+    				query.setParameter(key, o);
+    			}
+    		}
+    	}
+    	return query.list();
+    }
+    
+    @SuppressWarnings("unchecked")
+	public T getOne(String hql,Map<String, Object> params){
+    	Query query = currentSession().createQuery(hql);
+    	if(params!=null&&params.size()>0){
+    		for (String key : params.keySet()) {
+    				query.setParameter(key, params.get(key));
+    		}
+    	}
+    	return (T) query.uniqueResult();
+    }
 
     public Criteria createCriteria(String orderBy, boolean isAsc,Criterion[] criterions)
     {
@@ -271,7 +324,6 @@ public class BaseDao<T> extends HibernateDaoSupport
     	return (Integer)res;
     	
     }    
-        
 	@SuppressWarnings("rawtypes")
 	public List findByHqlName(String hqlName)
     {

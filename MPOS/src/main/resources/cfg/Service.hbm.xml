@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-1-12 10:32:00 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.Tservice" table="mpos_service" catalog="mpos_cloud" optimistic-lock="version">
+        <id name="serviceId" type="java.lang.Integer">
+            <column name="service_id" />
+            <generator class="identity" />
+        </id>
+        <property name="serviceName" type="string">
+            <column name="service_name" length="45"/>
+        </property>
+        <property name="servicePrice" type="float">
+            <column name="service_price" not-null="true" />
+        </property>
+        <property name="content" type="string">
+            <column name="content" length="1024" />
+        </property>
+        <property name="validDays" type="int">
+            <column name="valid_days" />
+        </property>
+        <property name="status" type="boolean">
+            <column name="status" not-null="true" />
+        </property>
+        <property name="roleId" type="int">
+        <column name="role_id" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

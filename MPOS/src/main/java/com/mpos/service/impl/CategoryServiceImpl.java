@@ -220,14 +220,14 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 
-	public List<Tcategory> getallCategory() {
+	public List<Tcategory> getallCategory(Integer storeId) {
 	
-		return categoryDao.getAll();
+		return categoryDao.findBy("storeId", storeId);
 	}
 	
-		public List<Tcategory> getallCategory(Integer type,Tlanguage language) {
+		public List<Tcategory> getallCategory(Integer type,Tlanguage language,Integer storeId) {
 		
-		List<Tcategory> Tcategory=categoryDao.getAll(type);
+		List<Tcategory> Tcategory=categoryDao.getAll(type,storeId);
 		if(Tcategory!=null&&Tcategory.size()>0){
 			for (Tcategory category : Tcategory) {
 				Map<String, Object> ssMap=new HashMap<String, Object>();

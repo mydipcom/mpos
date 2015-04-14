@@ -58,6 +58,7 @@ public class OrderController extends BaseController{
 	@RequestMapping(value="orderlist",method=RequestMethod.GET)
 	@ResponseBody
 	public String orderList(HttpServletRequest request,DataTableParamter dtp){
+		addStoreCondition(request, dtp);
 		PagingData pagingData = orderService.loadOrderList(dtp);
 		pagingData.setSEcho(dtp.getsEcho());
 		Object[]objs = pagingData.getAaData();

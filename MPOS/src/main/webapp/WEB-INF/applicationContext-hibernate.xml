@@ -59,6 +59,9 @@
           <value>cfg/Commodity.hbm.xml</value>
           <value>cfg/Table.hbm.xml</value>
           <value>cfg/Device.hbm.xml</value>
+          <value>cfg/Store.hbm.xml</value>
+          <value>cfg/Service.hbm.xml</value>
+          <value>cfg/ServiceOrder.hbm.xml</value>
 	  </list>
 	</property>
 	 

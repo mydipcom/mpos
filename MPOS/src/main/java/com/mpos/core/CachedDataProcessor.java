@@ -9,13 +9,12 @@
  */ 
 package com.mpos.core;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+import com.mpos.commons.SystemConfig;
 import com.mpos.service.AdminNodesService;
+import com.mpos.service.StoreService;
 import com.mpos.service.SystemSettingService;
 
 /** 
@@ -33,18 +32,21 @@ public class CachedDataProcessor implements ApplicationListener<ContextRefreshed
     		
     		SystemSettingService systemSettingService =(SystemSettingService)event.getApplicationContext().getBean("systemSettingService");
     		
+    		StoreService storeService = (StoreService)event.getApplicationContext().getBean("storeService");
+    		
     		if(adminNodesService!=null){
     			adminNodesService.cachedNodesData();    			
     		}
+    		if(storeService !=null){
+    			storeService.cacheStoreTaken();
+    			for (String key : SystemConfig.STORE_TAKEN_MAP.keySet()) {
+					System.out.println("key:"+key+":-------------------->value:"+SystemConfig.STORE_TAKEN_MAP.get(key));
+				}
+    		}
     		if(systemSettingService != null){
-    			try {
-					systemSettingService.cachedSystemSettingData();
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+    			systemSettingService.cachedSystemSet();
+    			for (String key : SystemConfig.Admin_Setting_Map.keySet()) {
+					System.out.println("key:"+key+":-------------------->value:"+SystemConfig.Admin_Setting_Map.get(key));
 				}
     		}
     	}

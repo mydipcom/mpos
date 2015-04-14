@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.mpos.dto.TadminInfo" table="mpos_admin_info" catalog="mpos">
+    <class name="com.mpos.dto.TadminInfo" table="mpos_admin_info" catalog="mpos_cloud">
         <id name="adminId" type="string">
             <column name="admin_id" length="20" />
             <generator class="assigned" />

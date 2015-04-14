@@ -23,5 +23,8 @@
         <property name="title" type="java.lang.String">
             <column name="title"/>
         </property>
+        <property name="storeId" type="int">
+        <column name="store_id" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

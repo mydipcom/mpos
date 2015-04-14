@@ -19,9 +19,18 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.support.RequestContext;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.TadminUser;
+import com.mpos.dto.Tcategory;
+import com.mpos.dto.Tmenu;
+import com.mpos.dto.Tproduct;
+import com.mpos.dto.TproductRelease;
+import com.mpos.dto.Ttable;
+import com.mpos.model.AddProductModel;
+import com.mpos.model.DataTableParamter;
 import com.mpos.model.LoginFailureModel;
 
 
@@ -191,6 +200,44 @@ public class BaseController {
 				requestContext.changeLocale(locale);
 			}	
 		}		
+	}
+	/**
+	 * 添加当前登录用户过滤条件
+	 * @param request
+	 * @param dtp
+	 */
+	public void addStoreCondition(HttpServletRequest request,DataTableParamter dtp){
+		String jsonStr = dtp.getsSearch();
+		Integer storeId = getSessionUser(request).getStoreId();
+		JSONObject json = new JSONObject() ;
+		if(!jsonStr.isEmpty()){
+			json = (JSONObject) JSON.parse(jsonStr);
+			json.put("storeId", storeId);
+		}
+		dtp.setsSearch(JSON.toJSONString(json));
+	}
+	/**
+	 * 绑定当前登录用户店铺信息
+	 * @param bean
+	 * @param request
+	 */
+	public void addStore(Object bean,HttpServletRequest request){
+		Integer storeId = getSessionUser(request).getStoreId();
+		if(bean instanceof Tcategory){
+			((Tcategory)bean).setStoreId(storeId);
+		}else if(bean instanceof Tmenu){
+			((Tmenu)bean).setStoreId(storeId);
+		}else if(bean instanceof Tproduct){
+			((Tproduct)bean).setStoreId(storeId);
+		}else if(bean instanceof TproductRelease){
+			((TproductRelease)bean).setStoreId(storeId);
+		}else if(bean instanceof Ttable){
+			((Ttable)bean).setStoreId(storeId);
+		}else if(bean instanceof TadminUser){
+			((TadminUser)bean).setStoreId(storeId);
+		}else if(bean instanceof AddProductModel){
+			((AddProductModel)bean).setStoreId(storeId);
+		}
 	}
 	
 	/**

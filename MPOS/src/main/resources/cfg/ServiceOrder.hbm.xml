@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-1-12 10:32:00 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.TserviceOrder" table="mpos_service_order" catalog="mpos_cloud" optimistic-lock="version">
+        <id name="serviceOrderId" type="java.lang.Integer">
+            <column name="service_order_id" />
+            <generator class="identity" />
+        </id>
+        <property name="serviceId" type="int">
+            <column name="service_id" />
+        </property>
+        <property name="price" type="float">
+            <column name="price" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" />
+        </property>
+        <property name="createTime" type="long">
+            <column name="create_time" />
+        </property>
+        <property name="status" type="boolean">
+            <column name="status" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

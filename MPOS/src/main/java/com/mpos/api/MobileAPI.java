@@ -139,9 +139,9 @@ public class MobileAPI {
 	 */
 	@RequestMapping(value = "getSetting", method = RequestMethod.GET)
 	@ResponseBody
-	public String getSetting(HttpServletResponse response, HttpServletRequest request, @RequestHeader("InitialAuthCode") String initKey) {
+	public String getSetting(HttpServletResponse response, HttpServletRequest request, @RequestHeader("Authorization") String apiKey) {
 		JSONObject respJson = new JSONObject();
-		if (initKey == null || !initKey.equalsIgnoreCase(SystemConstants.INIT_AUTH_CODE)) {
+		if (SystemConfig.STORE_TAKEN_MAP.get(apiKey)==null) {
 			respJson.put("status", false);
 			respJson.put("info", "Error Init API token.");
 			return JSON.toJSONString(respJson);
@@ -187,10 +187,10 @@ public class MobileAPI {
 	@RequestMapping(value = "orderCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String orderCheck(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr) {
-		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
 		JSONObject jsonObj = null;
 		JSONObject respJson = new JSONObject();
-		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+		if (storeId == null) {
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -220,14 +220,16 @@ public class MobileAPI {
 			String[] orderIdsStr = orderIds.split(",");
 			Integer[] orderIdsInt = ConvertTools.stringArr2IntArr(orderIdsStr);
 			List<Map<String, Integer>> data = new ArrayList<Map<String, Integer>>();
-			for (Integer orderId : orderIdsInt) {
-				Torder order = orderService.getTorderById(orderId);
-				if (order != null) {
-					Map<String, Integer> res = new HashMap<String, Integer>();
-					res.put("orderId", order.getOrderId());
-					res.put("orderStatus", order.getOrderStatus());
-					data.add(res);
-				}
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("storeId", storeId);
+			params.put("orderIds", orderIdsInt);
+			String hql = "select new Torder(orderId,orderStatus) from Torder where storeId=:storeId and orderId in (:orderIds)";
+			List<Torder> orders = orderService.select(hql, params);
+			for (Torder order : orders) {
+				Map<String, Integer> res = new HashMap<String, Integer>();
+				res.put("orderId", order.getOrderId());
+				res.put("orderStatus", order.getOrderStatus());
+				data.add(res);
 			}
 			respJson.put("status", true);
 			respJson.put("info", "OK");
@@ -251,17 +253,16 @@ public class MobileAPI {
 	@RequestMapping(value = "getMenu", method = RequestMethod.GET)
 	@ResponseBody
 	public String getMenu(HttpServletResponse response, @RequestHeader("Authorization") String apiKey) {
-
 		JSONObject respJson = new JSONObject();
-		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
-		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
+		if (storeId == null) {
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
 		}
 
 		try {
-			List<Tmenu> menuList = menuService.getAllMenu();
+			List<Tmenu> menuList = menuService.getAllMenu(storeId);
 
 			for (Tmenu menu : menuList) {
 				JSONArray langJsonArr = null;
@@ -300,9 +301,9 @@ public class MobileAPI {
 	@RequestMapping(value = "getProductsVer", method = RequestMethod.POST)
 	@ResponseBody
 	public String getProductsVer(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr) {
-		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
 		JSONObject respJson = new JSONObject();
-		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+		if (storeId == null) {
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -319,7 +320,7 @@ public class MobileAPI {
 			JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
 			int verid = jsonObj.getIntValue("verId");
 			int latestVerID = 0;
-			List<TproductRelease> productReleaseList = productReleaseService.getUpdatedRelease(verid);
+			List<TproductRelease> productReleaseList = productReleaseService.getUpdatedRelease(verid,storeId);
 			JSONArray productsJsonArr = new JSONArray();
 			for (TproductRelease productRelease : productReleaseList) {
 				if (productRelease.getId() > latestVerID) {

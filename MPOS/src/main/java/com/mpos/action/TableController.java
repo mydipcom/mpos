@@ -36,7 +36,8 @@ public class TableController extends BaseController {
 	
 	@RequestMapping(value="/tableList",method=RequestMethod.GET)
 	@ResponseBody
-	public String tableList(DataTableParamter dtp){
+	public String tableList(DataTableParamter dtp,HttpServletRequest request){
+		addStoreCondition(request, dtp);
 		PagingData pagingData=tableService.loadTableList(dtp);
 		if(pagingData.getAaData()==null){
 			Object[] objs=new Object[]{};
@@ -51,6 +52,7 @@ public class TableController extends BaseController {
 	public String addTable(HttpServletRequest request,Ttable table){
 		JSONObject res = new JSONObject();
 		try {
+			addStore(table,request);
 			table.setCreateTime(System.currentTimeMillis());
 			tableService.create(table);
 			res.put("info", getMessage(request,"operate.success"));
@@ -84,6 +86,7 @@ public class TableController extends BaseController {
 	public String editTable(HttpServletRequest request,Ttable table){
 		JSONObject res = new JSONObject();
 		try {
+			addStore(table,request);
 			tableService.update(table);
 			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
@@ -100,8 +103,9 @@ public class TableController extends BaseController {
 	 */
 	@RequestMapping(value="/checkTableName",method=RequestMethod.POST)
 	@ResponseBody
-	public String checkTableName(String tableName){
-		return JSON.toJSONString(!tableService.tableNameIsExist(tableName));
+	public String checkTableName(String tableName,HttpServletRequest request){
+		Integer storeId = getSessionUser(request).getStoreId();
+		return JSON.toJSONString(!tableService.tableNameIsExist(tableName,storeId));
 	}
 	/**
 	 * 修改验证tableName
@@ -110,8 +114,9 @@ public class TableController extends BaseController {
 	 */
 	@RequestMapping(value="/verification",method=RequestMethod.POST)
 	@ResponseBody
-	public String updateVerification(String tableName){
-		return JSON.toJSONString(tableService.updateVerification(tableName));
+	public String updateVerification(String tableName,HttpServletRequest request){
+		Integer storeId = getSessionUser(request).getStoreId();
+		return JSON.toJSONString(tableService.updateVerification(tableName,storeId));
 	}
 	
 }

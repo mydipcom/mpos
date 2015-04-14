@@ -68,7 +68,8 @@ public class CategoryController extends BaseController {
 	
 	@RequestMapping(value="/categoryList",method=RequestMethod.GET)
 	@ResponseBody
-	public String categoryList(HttpServletRequest request,DataTableParamter dtp){		
+	public String categoryList(HttpServletRequest request,DataTableParamter dtp){	
+		addStoreCondition(request, dtp);
 		PagingData pagingData=categoryService.loadCategoryList(dtp);
 		if(pagingData.getITotalRecords()!=0){
 			Object[] objArr=pagingData.getAaData();
@@ -98,6 +99,7 @@ public class CategoryController extends BaseController {
 	public String addCategory(HttpServletRequest request,Tcategory category){			
 		JSONObject respJson = new JSONObject();
 		try{
+			addStore(category,request);
 			categoryService.createCategory(category);			
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
@@ -115,6 +117,7 @@ public class CategoryController extends BaseController {
 
 		JSONObject respJson = new JSONObject();
 		try{
+			addStore(category,request);
 			categoryService.updateCategory(category);			
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));

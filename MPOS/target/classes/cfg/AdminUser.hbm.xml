@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping default-lazy="false">
-	<class name="com.mpos.dto.TadminUser" table="mpos_admin">
+	<class name="com.mpos.dto.TadminUser" table="mpos_admin" catalog="mpos_cloud"> 
 		<id name="adminId" type="string">
 			<column name="admin_id" />
 			<generator class="assigned"></generator>
@@ -34,5 +34,8 @@
         <property name="updatedTime" type="java.lang.Long">
             <column name="updated_time" length="20" not-null="false"/>              
         </property>        
+                <property name="storeId" type="java.lang.Integer">
+            <column name="store_id" not-null="true"/>
+        </property>
 	</class>
 </hibernate-mapping>

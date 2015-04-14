@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-1-12 10:32:00 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.mpos.dto.Tstore" table="mpos_store" catalog="mpos_cloud" optimistic-lock="version">
+        <id name="storeId" type="java.lang.Integer">
+            <column name="store_id" />
+            <generator class="identity" />
+        </id>
+        <property name="storeName" type="string">
+            <column name="store_name" length="128"/>
+        </property>
+        <property name="storeLogo" type="binary">
+            <column name="store_logo"  />
+        </property>
+        <property name="storeBackground" type="binary">
+            <column name="store_background"  />
+        </property>
+        <property name="clientPwd" type="string">
+            <column name="client_pwd" length="8" />
+        </property>
+        <property name="storeCurrency" type="string">
+            <column name="store_currency" />
+        </property>
+        <property name="autoSyncStatus" type="java.lang.Boolean">
+            <column name="auto_sync_status" />
+        </property>
+        <property name="status" type="java.lang.Boolean">
+            <column name="status" />
+        </property>
+        <property name="content" type="string">
+            <column name="content" />
+        </property>
+        <property name="publicKey" type="string">
+            <column name="public_key" />
+        </property>
+         <property name="storeLangId" type="string">
+            <column name="store_lang_id" />
+        </property>
+        <property name="serviceId" type="int">
+        <column name="service_id" not-null="true"/>
+        </property>
+         <property name="serviceDate" type="long">
+        <column name="service_date" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

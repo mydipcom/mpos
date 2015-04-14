@@ -134,13 +134,13 @@ public class PromotionController extends BaseController{
 	
 	@RequestMapping(value="promotion_bind_product",method=RequestMethod.GET)
 	@ResponseBody
-	public String getPromotionBindProduct(){
+	public String getPromotionBindProduct(HttpServletRequest request){
 		JSONObject resp  = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		JSONObject jsonObject = null;
 		List<Tproduct> products = goodsService.loadAll();
-		List<Tcategory> categorys = categoryService.getallCategory();
-		List<Tmenu> menus = menuService.getAllMenu();
+		List<Tcategory> categorys = categoryService.getallCategory(getSessionUser(request).getStoreId());
+		List<Tmenu> menus = menuService.getAllMenu(getSessionUser(request).getStoreId());
 		for(Tproduct product : products){
 			jsonObject = new JSONObject();
 			jsonObject.put("id",product.getId().toString());

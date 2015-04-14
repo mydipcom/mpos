@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping  default-lazy="false">
-    <class name="com.mpos.dto.Tproduct" table="mpos_product" catalog="mpos">
+    <class name="com.mpos.dto.Tproduct" table="mpos_product" catalog="mpos_cloud">
         <id name="id" type="java.lang.Integer">
             <column name="product_id" />
             <generator class="identity" />
@@ -45,6 +45,9 @@
         </property>
         <property name="status" type="boolean">
             <column name="status" not-null="true" />
+        </property>
+        <property name="storeId" type="int">
+        <column name="store_id" not-null="true"/>
         </property>
         
  <!--        <set name="attributes" table="mpos_product_attribute" inverse="true" lazy="true" fetch="select">

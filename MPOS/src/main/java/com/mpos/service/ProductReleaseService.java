@@ -7,13 +7,13 @@ import com.mpos.dto.TproductRelease;
 public interface ProductReleaseService {
 
 	
-	List<TproductRelease> getUpdatedRelease(Integer verId);
+	List<TproductRelease> getUpdatedRelease(Integer verId,Integer storeId);
 	
-	void createOrupdateProductRelease(Integer id);
+	void createOrupdateProductRelease(Integer id,Integer storeId);
 
-	TproductRelease getLatestPublished();
+	TproductRelease getLatestPublished(Integer storeId);
 	
-	TproductRelease getUnPublished();
+	TproductRelease getUnPublished(Integer storeId);
 	void publicreleasebyid(Integer ids);
 	
 }

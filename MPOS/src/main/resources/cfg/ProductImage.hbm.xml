@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Dec 18, 2014 11:18:20 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.mpos.dto.TproductImage" table="mpos_product_image" catalog="mpos">
+    <class name="com.mpos.dto.TproductImage" table="mpos_product_image" catalog="mpos_cloud">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />

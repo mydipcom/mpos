@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 2014-12-24 14:03:34 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.mpos.dto.TgoodsAttribute" table="mpos_product_attribute" catalog="mpos" optimistic-lock="version">
+    <class name="com.mpos.dto.TgoodsAttribute" table="mpos_product_attribute" catalog="mpos_cloud" optimistic-lock="version">
         <composite-id>
             <key-property name="id" type="int">
                 <column name="attribute_id" />

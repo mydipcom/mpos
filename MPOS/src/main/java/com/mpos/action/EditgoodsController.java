@@ -118,8 +118,9 @@ private int imgIndex=0;
 			 List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
 			 List<TlocalizedField> fullDescr_locale=new ArrayList<TlocalizedField>();
 			 List<TlocalizedField> unitName_locale=new ArrayList<TlocalizedField>();
-			 List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language);
-				List<Tcategory> speccategoryList=categoryService.getallCategory(0,language);
+			 Integer storeId = getSessionUser(request).getStoreId();
+			 List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language,storeId);
+				List<Tcategory> speccategoryList=categoryService.getallCategory(0,language,storeId);
 				Map<Integer, String> ordercategoryMap = new HashMap<Integer, String>();  
 				Map<Integer, String> speccategoryMap = new HashMap<Integer, String>();
 				for (Tcategory tcategory : ordercategoryList) {
@@ -133,7 +134,7 @@ private int imgIndex=0;
 			//List<Tmenu> menus=menuService.getAllMenu();
 				
 			Map<Integer, String> menusMap = new HashMap<Integer, String>(); 
-			List<MenuModel> menus=menuService.getNoChildrenMenus(language);
+			List<MenuModel> menus=menuService.getNoChildrenMenus(language,getSessionUser(request).getStoreId());
 		
 			for (MenuModel menu : menus) {
 				menusMap.put(menu.getId(), menu.getTitle());
@@ -327,6 +328,7 @@ private int imgIndex=0;
 	@ResponseBody
 	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
 		try{
+			addStore(model, request);
 			goodsService.updateproduct(model, filesMap, request);
 			request.getSession().setAttribute("addsussess","operate.success");
 			return new ModelAndView("redirect:/goods");

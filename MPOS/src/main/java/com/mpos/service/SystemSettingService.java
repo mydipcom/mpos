@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import com.mpos.dto.Tsetting;
-import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 
 public interface SystemSettingService {
@@ -24,6 +23,7 @@ public interface SystemSettingService {
 	public PagingData loadSystemsetting();
 
 	public void cachedSystemSettingData() throws UnsupportedEncodingException, IOException;
+	public void cachedSystemSet();
 	
 	public PagingData getStoreSetting();
 	

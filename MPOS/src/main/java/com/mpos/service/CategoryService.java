@@ -16,7 +16,7 @@ public interface CategoryService {
 	PagingData loadCategoryList(DataTableParamter dtp);
 	void deleteCategoryByIds(Integer[] idArr);
 	void cloneCategoryByIds(Integer[] ids);
-	public List<Tcategory> getallCategory();
-	public List<Tcategory> getallCategory(Integer type,Tlanguage language);
+	public List<Tcategory> getallCategory(Integer storeId);
+	public List<Tcategory> getallCategory(Integer type,Tlanguage language,Integer storeId);
 	
 }

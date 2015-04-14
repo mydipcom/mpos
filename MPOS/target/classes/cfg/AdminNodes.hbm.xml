@@ -3,13 +3,13 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.mpos.dto.TadminNodes" table="mpos_admin_nodes" catalog="mpos">
+    <class name="com.mpos.dto.TadminNodes" table="mpos_admin_nodes" catalog="mpos_cloud">
         <id name="nodeId" type="java.lang.Integer">
             <column name="node_id" />
             <generator class="identity" />
         </id>
         <property name="bitFlag" type="long">
-            <column name="bit_flag" not-null="true" unique="true" />
+            <column name="bit_flag" not-null="true" />
         </property>
         <property name="name" type="string">
             <column name="name" length="100" not-null="true" />

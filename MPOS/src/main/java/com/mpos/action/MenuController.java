@@ -34,7 +34,6 @@ import com.mpos.dto.Tmenu;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.MenuModel;
 import com.mpos.model.PageModel;
-import com.mpos.model.PageTempModel;
 import com.mpos.model.PagingData;
 import com.mpos.service.LanguageService;
 import com.mpos.service.LocalizedFieldService;
@@ -66,6 +65,7 @@ public class MenuController extends BaseController {
 	@RequestMapping(value = "/menuList", method = RequestMethod.GET)
 	@ResponseBody
 	public String menuList(HttpServletRequest request, DataTableParamter dtp) {
+		addStoreCondition(request, dtp);
 		PagingData pagingData = menuService.loadMenuList(dtp,getLocale(request));
 		if (pagingData.getAaData() == null) {
 			Object[] objs = new Object[] {};
@@ -82,6 +82,7 @@ public class MenuController extends BaseController {
 	public String addMenu(HttpServletRequest request, PageModel page) {
 		JSONObject respJson = new JSONObject();
 		try {
+			addStore(page.getMenu(),request);
 			menuService.saveMenu(page.getMenu());
 			localizedFieldService.createLocalizedFieldList(page.setOneTlocalizedFieldValue(page.getMenu()));
 			respJson.put("status", true);
@@ -115,6 +116,7 @@ public class MenuController extends BaseController {
 
 		JSONObject respJson = new JSONObject();
 		try {
+			addStore(page.getMenu(),request);
 			menuService.updateMenu(page.getMenu());
 			List<TlocalizedField> ls = page.setOneTlocalizedFieldValue(page.getMenu());
 			localizedFieldService.updateLocalizedFieldList(ls);
@@ -151,7 +153,7 @@ public class MenuController extends BaseController {
 	public String loadMenu(HttpServletRequest request) {
 		JSONObject respJson = new JSONObject();
 		try {
-			List<Tmenu> menus = menuService.getAllMenu();
+			List<Tmenu> menus = menuService.getAllMenu(getSessionUser(request).getStoreId());
 			Tlanguage language = languageService.get(getLocale(request));
 			List<MenuModel> models = new ArrayList<MenuModel>();
 			if (menus != null && menus.size() > 0) {

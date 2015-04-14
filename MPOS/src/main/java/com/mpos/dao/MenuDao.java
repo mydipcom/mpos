@@ -29,9 +29,10 @@ public class MenuDao extends BaseDao<Tmenu> {
 		return list;  
 	}
 	
-	public List<Tmenu> getNoChildren(){
-		String hql="from Tmenu where status=true and menuId not in (select distinct pid from Tmenu)";
+	public List<Tmenu> getNoChildren(Integer storeId){
+		String hql="from Tmenu where status=true and storeId=:storeId and menuId not in (select distinct pid from Tmenu)";
 		Query query=currentSession().createQuery(hql);
+		query.setParameter("storeId", storeId);
 		List<Tmenu> list=query.list();
 		return list;
 	}

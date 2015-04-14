@@ -39,6 +39,7 @@ public class Tcategory implements Serializable {
 	 * 分类当前状态：0禁用；1启用
 	 */
 	private Boolean status = true;
+	private Integer storeId;
 	
 	
 	private List<TlocalizedField> categoryName_locale=new ArrayList<TlocalizedField>();
@@ -110,6 +111,13 @@ public class Tcategory implements Serializable {
 	}
 	public void setContentLocal(String contentLocal) {
 		this.contentLocal = contentLocal;
+	}
+	
+	public Integer getStoreId() {
+		return storeId;
+	}
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 	public Tcategory() {}
 	

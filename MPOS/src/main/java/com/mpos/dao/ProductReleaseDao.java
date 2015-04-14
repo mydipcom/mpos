@@ -2,7 +2,10 @@ package com.mpos.dao;
 
 // Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.mpos.dao.base.BaseDao;
@@ -15,16 +18,24 @@ import com.mpos.dto.TproductRelease;
  */
 @Repository
 public class ProductReleaseDao extends BaseDao<TproductRelease> {
-	public TproductRelease getLatestPublished(){
-		String hql="from TproductRelease where id=(select max(id) from TproductRelease where isPublic=?)";
+	public TproductRelease getLatestPublished(Integer storeId){
+		String hql="from TproductRelease where id=(select max(id) from TproductRelease where isPublic=:status and storeId=:storeId)";
 		Query query=currentSession().createQuery(hql);
-		query.setParameter(0, true);
+		query.setParameter("status", true);
+		query.setParameter("storeId", storeId);
 		return (TproductRelease) query.uniqueResult();  
 	}
-	public TproductRelease getUnPublish(){
-		String hql="from TproductRelease where id=(select max(id) from TproductRelease where isPublic=?)";
+	public TproductRelease getUnPublish(Integer storeId){
+		String hql="from TproductRelease where id=(select max(id) from TproductRelease where isPublic=:status and storeId=:storeId)";
 		Query query=currentSession().createQuery(hql);
-		query.setParameter(0, false);
+		query.setParameter("status", false);
+		query.setParameter("storeId", storeId);
 		return (TproductRelease) query.uniqueResult();  
+	}
+	public Integer getMaxId(String propertyName,Integer storeId){
+		Criteria criteria =createCriteria(); 
+		criteria.add(Restrictions.eq("storeId", storeId));
+		criteria.setProjection(Projections.max(propertyName));
+		return (Integer)criteria.uniqueResult();
 	}
 }

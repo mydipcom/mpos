@@ -1,6 +1,5 @@
 package com.mpos.dto;
 
-import java.util.Set;
 
 // Generated Dec 18, 2014 11:18:19 AM by Hibernate Tools 4.0.0
 
@@ -19,8 +18,16 @@ public class Torder implements java.io.Serializable {
 	private String orderPromotion;
 	private String comment;
 	private int peopleNum;
+	private Integer storeId;
 	public Torder() {
 	}
+
+	
+	public Torder(Integer orderId, int orderStatus) {
+		this.orderId = orderId;
+		this.orderStatus = orderStatus;
+	}
+
 
 	public Torder(int orderStatus, float orderTotal, float orderDiscount,
 			long createTime, String creater) {
@@ -113,6 +120,14 @@ public class Torder implements java.io.Serializable {
 
 	public void setPeopleNum(int peopleNum) {
 		this.peopleNum = peopleNum;
+	}
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 	
 }

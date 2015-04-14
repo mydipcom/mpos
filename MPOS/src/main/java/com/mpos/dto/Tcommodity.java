@@ -36,6 +36,8 @@ public class Tcommodity implements Serializable{
 	private Set<TgoodsAttribute> attributes;
 	
 	private Set<Tpromotion> promotions;
+	
+	private Integer storeId;
 
 	public Integer getId() {
 		return id;
@@ -157,6 +159,14 @@ public class Tcommodity implements Serializable{
 
 	public void setPromotions(Set<Tpromotion> promotions) {
 		this.promotions = promotions;
+	}
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 	
 }

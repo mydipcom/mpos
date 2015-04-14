@@ -38,6 +38,14 @@ public class TadminUser implements Serializable {
 	private TadminRole adminRole;
 	
 	private TadminInfo adminInfo; 
+	
+	private Integer storeId;
+	
+
+	public TadminUser(String email, Integer storeId) {
+		this.email = email;
+		this.storeId = storeId;
+	}
 
 	public TadminUser() {
 	}
@@ -145,6 +153,14 @@ public class TadminUser implements Serializable {
 
 	public void setAdminRole(TadminRole adminRole) {
 		this.adminRole = adminRole;
+	}
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 
 	/**

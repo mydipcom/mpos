@@ -22,11 +22,12 @@ public class CategoryDao extends BaseDao<Tcategory> {
 		List<Tcategory> list=query.list();
 		return list;
     }
-    public List<Tcategory> getAll(Integer type){
-    	String hql="from Tcategory where status=? and type=?";
+    public List<Tcategory> getAll(Integer type,Integer storeId){
+    	String hql="from Tcategory where status=? and type=? and storeId=?";
     	Query query = currentSession().createQuery(hql);
     	query.setParameter(0, true);
     	query.setParameter(1, type);
+    	query.setParameter(2, storeId);
     	List<Tcategory> list=query.list();
 		
 		return list;

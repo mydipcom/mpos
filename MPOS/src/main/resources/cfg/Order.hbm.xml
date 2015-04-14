@@ -32,5 +32,8 @@
 		<property name="peopleNum" type="int">
 			<column name="peopleNum" length="2" not-null="true" />
 		</property>
+		<property name="storeId" type="int">
+        <column name="store_id" not-null="true"/>
+        </property>
 	</class>
 </hibernate-mapping>

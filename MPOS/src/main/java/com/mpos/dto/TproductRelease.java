@@ -15,6 +15,7 @@ public class TproductRelease implements java.io.Serializable {
 	private String products;
 	private boolean isPublic;
 	private Long publicTime;
+	private Integer storeId;
 
 	public TproductRelease() {
 	}
@@ -28,6 +29,14 @@ public class TproductRelease implements java.io.Serializable {
 		this.products = products;
 		this.isPublic = isPublic;
 		this.publicTime = publicTime;
+	}
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 
 	public Integer getId() {

@@ -23,16 +23,16 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 	@Autowired
 	private  ProductReleaseDao productReleaseDao;
 	
-	public List<TproductRelease> getUpdatedRelease(Integer verId) {
+	public List<TproductRelease> getUpdatedRelease(Integer verId,Integer storeId) {
 		Criteria criteria=productReleaseDao.createCriteria();
 		return criteria.add(Restrictions.eq("isPublic", true))
-				.add(Restrictions.gt("id", verId))				
+				.add(Restrictions.gt("id", verId))	.add(Restrictions.eq("storeId", storeId))	
 				.list();		
 	}
 
-	public void createOrupdateProductRelease(Integer id) {
+	public void createOrupdateProductRelease(Integer id,Integer storeId) {
 		TproductRelease productrelease;
-		Integer verId=productReleaseDao.getMaxintergerValue("id");
+		Integer verId=productReleaseDao.getMaxId("id",storeId);
 		if (verId!=0) {
 			 productrelease=productReleaseDao.get(verId);
 			 if(productrelease!=null&&!productrelease.isIsPublic()){
@@ -46,6 +46,7 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 				 productrelease.setProducts(ids+","+id);
 				 productReleaseDao.update(productrelease);	 
 			 }else {
+				 productrelease.setStoreId(storeId);
 				 productrelease.setProducts(id.toString());
 				 productrelease.setIsPublic(false);
 				 productReleaseDao.create(productrelease);
@@ -55,6 +56,7 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 			TproductRelease productrelease1=new TproductRelease();
 			productrelease1.setProducts(id.toString());
 			productrelease1.setIsPublic(false);
+			productrelease1.setStoreId(storeId);
 			productReleaseDao.create(productrelease1);
 		}
 		
@@ -64,9 +66,9 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 	}
 
 	
-	public TproductRelease getLatestPublished() {
+	public TproductRelease getLatestPublished(Integer storeId) {
 		// TODO Auto-generated method stub
-		return productReleaseDao.getLatestPublished();
+		return productReleaseDao.getLatestPublished(storeId);
 	}
 	
 	public PagingData loadproductReleaseList(DataTableParamter rdtp) {
@@ -89,9 +91,9 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 		return productReleaseDao.get(ids);
 	}
 
-	public TproductRelease getUnPublished() {
+	public TproductRelease getUnPublished(Integer storeId) {
 		
-		return productReleaseDao.getUnPublish();
+		return productReleaseDao.getUnPublish(storeId);
 	}
 
 

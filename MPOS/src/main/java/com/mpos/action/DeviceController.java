@@ -31,10 +31,10 @@ public class DeviceController extends BaseController {
 	private Boolean ok = true;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView device(){
+	public ModelAndView device(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
-		TproductRelease re = productReleaseService.getLatestPublished();
-		TproductRelease unre=productReleaseService.getUnPublished();
+		TproductRelease re = productReleaseService.getLatestPublished(getSessionUser(request).getStoreId());
+		TproductRelease unre=productReleaseService.getUnPublished(getSessionUser(request).getStoreId());
 		String[] res = new String[3];
 		String Flag;
 		if(re!=null){

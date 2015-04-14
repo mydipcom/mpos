@@ -100,8 +100,8 @@ public class TableServiceImpl implements TableService {
 	}
 
 	
-	public Boolean tableNameIsExist(String tableName) {
-		Ttable tt = tableDao.findUnique("tableName", tableName);
+	public Boolean tableNameIsExist(String tableName,Integer storeId) {
+		Ttable tt = tableDao.findUnique(new String[]{"tableName","storeId"}, new String[]{tableName,storeId+""});;
 		if(tt==null){
 			return false;
 		}
@@ -115,10 +115,11 @@ public class TableServiceImpl implements TableService {
 	}
 
 	
-	public Boolean updateVerification(String tableName) {
+	public Boolean updateVerification(String tableName,Integer storeId) {
 		String[] table = tableName.split(",");
 		Integer id = Integer.valueOf(table[1]);
-		Ttable tt = tableDao.findUnique("tableName", table[0]);
+		//Ttable tt = tableDao.findUnique("tableName", table[0]);
+		Ttable tt = tableDao.findUnique(new String[]{"tableName","storeId"}, new String[]{tableName,storeId+""});;
 		if(tt==null||tt.getId()==id){
 			return true;
 		}

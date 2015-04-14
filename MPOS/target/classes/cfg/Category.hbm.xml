@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.mpos.dto.Tcategory" table="mpos_category" catalog="mpos">
+    <class name="com.mpos.dto.Tcategory" table="mpos_category" catalog="mpos_cloud">
     	<!--ID  -->
         <id name="categoryId" type="java.lang.Integer">
             <column name="category_id" />
@@ -21,6 +21,8 @@
         <property name="status" type="java.lang.Boolean">
             <column name="status" not-null="true"/>
         </property>
-       
+        <property name="storeId" type="java.lang.Integer">
+            <column name="store_id" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

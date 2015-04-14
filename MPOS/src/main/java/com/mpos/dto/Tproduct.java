@@ -29,6 +29,7 @@ public class Tproduct implements java.io.Serializable {
 	private Integer specid;
 	private String  menuname;
 	private String  categoryname;
+	private Integer storeId;
 	
 	private Set<TproductImage> images;
 	
@@ -84,6 +85,18 @@ public class Tproduct implements java.io.Serializable {
 
 	public void setMenuname(String menuname) {
 		this.menuname = menuname;
+	}
+
+
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 
 
