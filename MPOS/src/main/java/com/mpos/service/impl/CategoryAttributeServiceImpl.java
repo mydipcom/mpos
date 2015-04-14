@@ -218,6 +218,7 @@ public class CategoryAttributeServiceImpl implements CategoryAttributeService {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<TcategoryAttribute> getCategoryAttributeByCategoryid(
 			Integer id, Tlanguage language) {
 		Criteria criteria=attributeDao.createCriteria();

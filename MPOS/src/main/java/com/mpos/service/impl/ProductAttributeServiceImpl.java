@@ -1,7 +1,5 @@
 package com.mpos.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mpos.commons.SystemConfig;

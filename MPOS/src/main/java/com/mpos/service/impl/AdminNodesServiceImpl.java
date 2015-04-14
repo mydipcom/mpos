@@ -235,7 +235,9 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 		SystemConfig.Admin_Nodes_Group_Map.clear();
 		for (TadminNodes adminNodes : nodesList) {    				
 			SystemConfig.Admin_Nodes_Url_Map.put(adminNodes.getMethod()+"@"+adminNodes.getUri(), adminNodes.getBitFlag());
-			    
+			if(!adminNodes.isIsMenu()){
+				SystemConfig.STORE_NODES_URL_MAP.put(adminNodes.getMethod()+"@"+adminNodes.getUri(), adminNodes.getNodeId());  
+			}
 			//Build menu mapping
 			if(adminNodes.isIsMenu()&&adminNodes.getPid()==0){
 				List<TadminNodes> menuList=getAdminNodesMenuByPid(adminNodes.getNodeId());
@@ -250,6 +252,8 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 				SystemConfig.Admin_Nodes_Group_Map.put(groupName, groupList);
 			}    				
 			groupList.add(adminNodes);
+			
+			
 		}
 	}
 	

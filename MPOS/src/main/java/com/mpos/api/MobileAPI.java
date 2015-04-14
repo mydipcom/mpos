@@ -706,6 +706,7 @@ public class MobileAPI {
 	 * @param product
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private ProductModel loadPromotion(ProductModel model, List<Tpromotion> promotions) {
 		String[] promtionList = null;
 		if (promotions != null && promotions.size() > 0) {
@@ -905,6 +906,7 @@ public class MobileAPI {
 	 * @param product
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private List<Tpromotion> loadProductPromotion(Tcommodity product) {
 		List<Tpromotion> promotionList = new ArrayList<Tpromotion>();
 		//
@@ -985,6 +987,7 @@ public class MobileAPI {
 	 *            true 可叠加 false 不可叠加
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private List<Tpromotion> getPromotionList(List<Tpromotion> pros, boolean isShare) {
 		List<Tpromotion> promotions = new ArrayList<Tpromotion>();
 		if (pros != null && pros.size() > 0) {
@@ -1016,6 +1019,7 @@ public class MobileAPI {
 	 * @param unShareList
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private List<Tpromotion> compareToPriority(List<Tpromotion> isShareList, List<Tpromotion> unShareList) {
 		if ((isShareList == null || isShareList.size() == 0) && (unShareList != null && unShareList.size() > 0)) {
 			Tpromotion un = unShareList.get(0);
@@ -1049,6 +1053,7 @@ public class MobileAPI {
 	 *            活动列表
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private float calculatePrice(float oldPrice, List<Tpromotion> promotions) {
 		if (promotions != null && promotions.size() > 0) {
 			for (Tpromotion promotion : promotions) {

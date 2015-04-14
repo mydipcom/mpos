@@ -13,6 +13,7 @@ import com.mpos.dto.TlocalizedField;
 @Repository
 public class LocalizedFieldDao extends BaseDao<TlocalizedField>{
 	
+	@SuppressWarnings("unchecked")
 	public List<TlocalizedField> find(String hql, Map<String, Object> params) {
 		Query query = currentSession().createQuery(hql);
 		if (params != null && !params.isEmpty()) {

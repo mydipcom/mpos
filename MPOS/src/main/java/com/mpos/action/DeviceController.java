@@ -1,6 +1,5 @@
 package com.mpos.action;
 
-import javax.mail.Flags.Flag;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;

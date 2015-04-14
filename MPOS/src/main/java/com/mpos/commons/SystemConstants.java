@@ -9,6 +9,7 @@
 */ 
 package com.mpos.commons;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,16 @@ import java.util.Map;
  *  
  */
 public class SystemConstants {
+	/**
+	 * 店铺logo和background图片存放路径
+	 * 命名规则 ”logo_“+storeId;"backgroud_"+storeId
+	 */
+	public static final String STORE_SET_PATH = File.separator+"upload"+File.separator+"store"+File.separator;
+	/**
+	 * 店铺产品图片存放路径
+	 * 命名规则 storeId+"_"+productId+"_"+图片序号
+	 */
+	public static final String STORE_PRODOUCT_PATH = File.separator+"upload"+File.separator+"product"+File.separator;
 	
 	public static final String LOGINED="Logined";
 	

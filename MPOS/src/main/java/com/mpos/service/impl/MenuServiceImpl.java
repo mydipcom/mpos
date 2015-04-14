@@ -3,9 +3,7 @@ package com.mpos.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -23,7 +21,6 @@ import com.mpos.dao.LanguageDao;
 import com.mpos.dao.LocalizedFieldDao;
 import com.mpos.dao.MenuDao;
 import com.mpos.dto.Tlanguage;
-import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
 import com.mpos.model.DaoModel;
 import com.mpos.model.DataTableParamter;
@@ -31,7 +28,6 @@ import com.mpos.model.MenuModel;
 import com.mpos.model.PageTempModel;
 import com.mpos.model.PagingData;
 import com.mpos.service.MenuService;
-import com.mpos.commons.SystemConstants;
 @Service
 public class MenuServiceImpl implements MenuService {
 	@Autowired
@@ -117,10 +113,10 @@ public class MenuServiceImpl implements MenuService {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Tmenu> getAllMenu(Integer storeId) {
 		Criteria criteria = menuDao.createCriteria();
 		return criteria.add(Restrictions.eq("status", true)).add(Restrictions.eq("storeId", storeId)).list();
-		// return menuDao.LoadAll();
 	}
 
 	public Tmenu getParentMenu(Tmenu menu) {
@@ -194,6 +190,7 @@ public class MenuServiceImpl implements MenuService {
 		return new PagingData(model.getTotalCount(),model.getTotalCount(),values.toArray());
 	}
 	
+	@SuppressWarnings("unchecked")
 	public PageTempModel loadData(DataTableParamter rdtp){
 		PageTempModel model = new PageTempModel();
 		DaoModel daoModel = new DaoModel();

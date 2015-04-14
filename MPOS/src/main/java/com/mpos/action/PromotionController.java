@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -40,6 +41,7 @@ import com.mpos.service.PromotionService;
 @RequestMapping("promotion")
 public class PromotionController extends BaseController{
 	
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(PromotionController.class);	
 	
 	@Autowired

@@ -1,8 +1,6 @@
 package com.mpos.action;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,7 +32,8 @@ import com.mpos.service.PromotionService;
 @Controller
 @RequestMapping("order")
 public class OrderController extends BaseController{
-    private Logger logger = Logger.getLogger(OrderController.class);
+    @SuppressWarnings("unused")
+	private Logger logger = Logger.getLogger(OrderController.class);
     
     @Autowired
     private OrderService orderService;
@@ -173,6 +172,7 @@ public class OrderController extends BaseController{
 		return mav;
 	}
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value="order_product",method=RequestMethod.GET)
 	@ResponseBody
 	public String orderProductList(HttpServletRequest request,DataTableParamter dtp){

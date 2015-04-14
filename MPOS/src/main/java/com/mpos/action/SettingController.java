@@ -11,12 +11,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.MidiDevice.Info;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,12 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.Tsetting;
-import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.SystemSettingService;
 
@@ -40,8 +35,6 @@ import com.mpos.service.SystemSettingService;
 @RequestMapping(value="settings")
 public class SettingController extends BaseController {
 
-	private Logger logger = Logger.getLogger(RightsController.class);
-	
 	@Resource
 	private SystemSettingService systemSettingService;
 		

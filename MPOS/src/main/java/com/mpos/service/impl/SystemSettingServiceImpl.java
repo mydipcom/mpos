@@ -1,13 +1,8 @@
 package com.mpos.service.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +12,6 @@ import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dao.SettingDao;
 import com.mpos.dto.Tsetting;
-import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.SystemSettingService;
 @Service
@@ -73,6 +67,7 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 	}
 
 
+	@SuppressWarnings("unused")
 	private List<Tsetting> getAllSystemSetting() {
 		// TODO Auto-generated method stub
 		return settingDao.LoadAll();

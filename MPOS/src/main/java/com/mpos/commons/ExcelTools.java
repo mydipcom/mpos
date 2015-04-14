@@ -51,7 +51,8 @@ public class ExcelTools {
      * @return
      * @throws Exception
      */
-    private static List <String[]> readExcelPOI2003(MultipartFile excelFile, Integer rCons)
+    @SuppressWarnings("static-access")
+	private static List <String[]> readExcelPOI2003(MultipartFile excelFile, Integer rCons)
             throws Exception {
         List<String[]> datasList = new ArrayList<String[]>();
         
@@ -83,7 +84,7 @@ public class ExcelTools {
                                 cellValue = cell.getStringCellValue();
                             }
                             if (cellValueType == cell.CELL_TYPE_NUMERIC) {
-                                Double number = cell.getNumericCellValue();
+                                //Double number = cell.getNumericCellValue();
                                  
                              
                                 cellValue = cell.getNumericCellValue() + "";
@@ -107,7 +108,8 @@ public class ExcelTools {
      * @return
      * @throws Exception
      */
-    private static List<String[]> readExcelPOI2007(MultipartFile excelFile, Integer rCons) throws Exception {
+    @SuppressWarnings("static-access")
+	private static List<String[]> readExcelPOI2007(MultipartFile excelFile, Integer rCons) throws Exception {
         List<String[]> datasList = new ArrayList<String[]>();
         InputStream input = excelFile.getInputStream();
         org.apache.poi.ss.usermodel.Workbook workBook = WorkbookFactory.create(input);
@@ -137,7 +139,7 @@ public class ExcelTools {
                                 cellValue = cell.getStringCellValue();
                             }
                             if (cellValueType == cell.CELL_TYPE_NUMERIC) {
-                                Double number = cell.getNumericCellValue();
+//                               / Double number = cell.getNumericCellValue();
                                 cellValue = cell.getNumericCellValue() + "";
                             }
                             datas[k] = cellValue;

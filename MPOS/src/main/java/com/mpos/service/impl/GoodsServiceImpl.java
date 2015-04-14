@@ -25,7 +25,6 @@ import com.mpos.dao.GoodsDao;
 import com.mpos.dao.GoodsImageDao;
 import com.mpos.dao.LocalizedFieldDao;
 import com.mpos.dao.ProductReleaseDao;
-import com.mpos.dto.Tcategory;
 import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tproduct;
@@ -72,6 +71,8 @@ public class GoodsServiceImpl implements GoodsService{
 						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
 					}else if(key=="status"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
+					}else if(key=="storeId"){
+						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
 					}
 					else {
 						/*if (jsonObj.get(key).toString().isEmpty()) {

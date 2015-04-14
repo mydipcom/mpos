@@ -11,6 +11,7 @@ import com.mpos.dto.TproductAttributeId;
 @Repository
 public class ProductAttributeDao extends BaseDao<TproductAttribute>{
 
+	@SuppressWarnings("unchecked")
 	public TproductAttribute getByAttributeid(TproductAttributeId productAttributeId){
 		String hql="from TproductAttribute where attribute_id=? and product_id=?";
 		Query query=currentSession().createQuery(hql);
@@ -26,6 +27,7 @@ public class ProductAttributeDao extends BaseDao<TproductAttribute>{
 			 return productAttribute;
 		}
 	}
+	@SuppressWarnings("unchecked")
 	public TproductAttribute getAttributebyid(Integer producid,Integer attributeid){
 		String hql="from TproductAttribute where attribute_id=? and product_id=?";
 		Query query=currentSession().createQuery(hql);

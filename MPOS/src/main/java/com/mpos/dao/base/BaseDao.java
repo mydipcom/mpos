@@ -221,6 +221,15 @@ public class BaseDao<T> extends HibernateDaoSupport
             new Criterion[] {criterion});
     }
     
+    public Object getObject(String hql,Map<String, Object> params){
+    	Query query = currentSession().createQuery(hql);
+    	for (String key : params.keySet()) {
+    		Object o = params.get(key);
+    		query.setParameter(key, o);
+    	}
+    	return query.uniqueResult();
+    }
+    
     public void update(String hql,Map<String, Object> params){
     	Query update = currentSession().createQuery(hql);
     	for (String key : params.keySet()) {

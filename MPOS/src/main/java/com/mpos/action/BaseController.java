@@ -9,13 +9,13 @@
 */ 
 package com.mpos.action;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.support.RequestContext;
 
@@ -115,6 +115,10 @@ public class BaseController {
 		return request.getContextPath()+url;
 	}
 	
+	public Map<String,Object> getHashMap(){
+		return new HashMap<String,Object>();
+	}
+	
 	/**
 	 * <p>Description:根据资源code获取资源文件中对应的消息</p>
 	 * @Title: getMessage 
@@ -209,11 +213,11 @@ public class BaseController {
 	public void addStoreCondition(HttpServletRequest request,DataTableParamter dtp){
 		String jsonStr = dtp.getsSearch();
 		Integer storeId = getSessionUser(request).getStoreId();
-		JSONObject json = new JSONObject() ;
-		if(!jsonStr.isEmpty()){
-			json = (JSONObject) JSON.parse(jsonStr);
-			json.put("storeId", storeId);
+		JSONObject json = (JSONObject) JSON.parse(jsonStr);
+		if(json==null){
+			json = new JSONObject();
 		}
+		json.put("storeId", storeId);
 		dtp.setsSearch(JSON.toJSONString(json));
 	}
 	/**

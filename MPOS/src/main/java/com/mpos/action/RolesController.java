@@ -44,6 +44,7 @@ import com.mpos.service.AdminRoleService;
 @RequestMapping(value="roles")
 public class RolesController extends BaseController {
 
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(RolesController.class);
 
 	@Resource

@@ -30,6 +30,7 @@ import com.mpos.dto.TadminUser;
 @RequestMapping("/common")
 public class CommonController extends BaseController {
 
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(CommonController.class);
 	
 	@RequestMapping(value="header",method=RequestMethod.GET)

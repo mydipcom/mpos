@@ -2,7 +2,7 @@ package com.mpos.model;
 
 import java.io.Serializable;
 import java.util.List;
-
+@SuppressWarnings("rawtypes")
 public class DaoModel implements Serializable{
 	/**
 	 * 

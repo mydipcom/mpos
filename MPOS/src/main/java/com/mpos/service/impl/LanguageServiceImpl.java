@@ -1,15 +1,17 @@
 package com.mpos.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mpos.commons.ConvertTools;
 import com.mpos.dao.LanguageDao;
 import com.mpos.dto.Tlanguage;
-import com.mpos.dto.Tproduct;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.LanguageService;
@@ -67,6 +69,7 @@ public class LanguageServiceImpl implements LanguageService{
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public List<Tlanguage> loadAllTlanguage() {
 		Criteria criteria=languageDao.createCriteria();
 		return criteria.add(Restrictions.eq("status",true))				
@@ -84,6 +87,19 @@ public class LanguageServiceImpl implements LanguageService{
 		return 	languageDao.getlanguagebylocal(local);	
 	
 	}
+
+		public List<Tlanguage> getLangListByStoreId(Integer storeId) {
+			Map<String, Object> params = new HashMap<String, Object>();
+			String query = "select storeLangId from Tstore where storeId=:storeId";
+			String queryList = "from Tlanguage where status=:status and id in(:ids)";
+			params.put("storeId", storeId);
+			String storeLangIds = (String) languageDao.getObject(query, params);
+			params.clear();
+			params.put("status", true);
+			String[] ids =  storeLangIds.split(",");
+			params.put("ids",ConvertTools.stringArr2IntArr(ids));
+			return languageDao.select(queryList, params);
+		}
 
 
 }

@@ -46,6 +46,7 @@ import com.mpos.service.AdminUserService;
 @RequestMapping(value="userprofile")
 public class AdminInfoController extends BaseController {
 
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(AdminInfoController.class);
 	@Autowired
 	private AdminInfoService adminInfoService;

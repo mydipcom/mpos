@@ -3,7 +3,6 @@ package com.mpos.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tproduct;
 

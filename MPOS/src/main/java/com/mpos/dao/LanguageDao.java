@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mpos.dao.base.BaseDao;
 import com.mpos.dto.Tlanguage;
-import com.mpos.dto.TproductAttribute;
 @Repository
 public class LanguageDao extends BaseDao<Tlanguage>{
 	public Tlanguage getlanguagebylocal(String local){

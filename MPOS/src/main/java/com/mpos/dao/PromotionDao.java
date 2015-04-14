@@ -16,6 +16,7 @@ import com.mpos.dto.Tpromotion;
 @Repository
 public class PromotionDao extends BaseDao<Tpromotion> {
 	
+	@SuppressWarnings("unchecked")
 	public List<Tpromotion> find(String hql, Map<String, Object> params) {
 		Query query = currentSession().createQuery(hql);
 		if (params != null && !params.isEmpty()) {

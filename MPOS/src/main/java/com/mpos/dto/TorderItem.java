@@ -1,6 +1,5 @@
 package com.mpos.dto;
 
-import java.util.Set;
 
 // Generated Dec 18, 2014 11:18:19 AM by Hibernate Tools 4.0.0
 
@@ -9,7 +8,11 @@ import java.util.Set;
  */
 public class TorderItem implements java.io.Serializable {
 
-    private Integer id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 522720481688308894L;
+	private Integer id;
 	private String orderId;
 	private int productId;
 	private int quantity;

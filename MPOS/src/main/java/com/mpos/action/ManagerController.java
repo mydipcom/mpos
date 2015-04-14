@@ -28,6 +28,7 @@ import com.mpos.service.AdminUserService;
 @Controller
 @RequestMapping(value="manager")
 public class ManagerController extends BaseController {
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(ManagerController.class);	
 	
 	@Resource

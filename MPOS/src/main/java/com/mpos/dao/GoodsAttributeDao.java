@@ -10,6 +10,7 @@ import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.TproductAttribute;
 @Repository
 public class GoodsAttributeDao extends BaseDao<TgoodsAttribute>{
+	@SuppressWarnings("unchecked")
 	public TproductAttribute getAttribute(Integer productid,Integer AttributeId){
 		String hql="from TproductAttribute where attribute_id=? and product_id=?";
 		Query query=currentSession().createQuery(hql);
@@ -25,6 +26,7 @@ public class GoodsAttributeDao extends BaseDao<TgoodsAttribute>{
 			 return productAttribute;
 		}
 	}
+	@SuppressWarnings("unchecked")
 	public List<TproductAttribute> getAttributebyproductid(Integer productid){
 		String hql="from TproductAttribute where product_id=?";
 		Query query=currentSession().createQuery(hql);

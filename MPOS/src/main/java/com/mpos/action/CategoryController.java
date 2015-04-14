@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.mpos.commons.ConvertTools;
+import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.TattributeValue;
@@ -29,7 +30,6 @@ import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.model.DataTableParamter;
-import com.mpos.model.LocalizedField;
 import com.mpos.model.PagingData;
 import com.mpos.service.AttributeValueService;
 import com.mpos.service.CategoryAttributeService;
@@ -42,6 +42,7 @@ import com.mpos.service.LocalizedFieldService;
 @RequestMapping(value="/category")
 public class CategoryController extends BaseController {
 
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(CategoryController.class);
 	
 	@Resource
@@ -54,13 +55,20 @@ public class CategoryController extends BaseController {
 	private LocalizedFieldService localizedFieldService;
 	@Resource
 	private AttributeValueService attributeValueService;
+	/**
+	 * 操作内容
+	 */
+	private String handleContent = "";
+	/**
+	 * 日志级别
+	 */
+	private short level = LogManageTools.NOR_LEVEL;
 		
 
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView category(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-		logger.info("category");
-		List<Tlanguage> languages = languageService.loadAllTlanguage();
+		List<Tlanguage> languages = languageService.getLangListByStoreId(getSessionUser(request).getStoreId());
 		mav.addObject("lanList", languages);
 		mav.setViewName("category/category");
 		return mav;
@@ -100,14 +108,18 @@ public class CategoryController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try{
 			addStore(category,request);
-			categoryService.createCategory(category);			
+			categoryService.createCategory(category);
+			handleContent = "添加分类组:"+category.getName()+"成功;新增ID为:"+category.getCategoryId();
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			handleContent = "添加分类组:"+category.getName()+"失败";
+			level = LogManageTools.FAIL_LEVEL;
 		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);
 	}
 	
@@ -118,14 +130,18 @@ public class CategoryController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try{
 			addStore(category,request);
-			categoryService.updateCategory(category);			
+			categoryService.updateCategory(category);		
+			handleContent = "修改分类组:"+category.getName()+"成功;操作ID为:"+category.getCategoryId();
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			handleContent = "修改分类组:"+category.getName()+"失败";
+			level = LogManageTools.FAIL_LEVEL;
 		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);		
 	}
 	
@@ -137,13 +153,17 @@ public class CategoryController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try{
 			categoryService.cloneCategoryByIds(idArr);
+			handleContent = "复制创建分类组成功;操作ID为:"+idArr.toString();
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			handleContent = "复制创建分类组:"+idArr.toString()+"失败";
+			level = LogManageTools.FAIL_LEVEL;
 		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);	
 	}
 	
@@ -155,13 +175,17 @@ public class CategoryController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try{
 			categoryService.deleteCategoryByIds(idArr);
+			handleContent = "删除分类组成功;操作ID为:"+idArr.toString();
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			handleContent = "删除分类组:"+idArr.toString()+"失败";
+			level = LogManageTools.FAIL_LEVEL;
 		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);	
 	}
 	
@@ -272,6 +296,7 @@ public class CategoryController extends BaseController {
 		return JSON.toJSONString(respJson);		
 	}
 	
+	@SuppressWarnings("unused")
 	private void changeTitleLocal(String local,TcategoryAttribute attribute,String tableName,String... fieldNames){
 		if(fieldNames!=null&&fieldNames.length>0&&tableName!=null){
 			for (String fieldName : fieldNames) {
@@ -289,6 +314,7 @@ public class CategoryController extends BaseController {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void changeLocal(String local,TcategoryAttribute attribute,String tableName,String fieldName){
 		List<TattributeValue> attributeValues=attributeValueService.loadAttributeValuesByAttrId(attribute.getAttributeId());
 		StringBuffer values=new StringBuffer();
@@ -308,6 +334,7 @@ public class CategoryController extends BaseController {
 		attribute.setContent(values.toString().isEmpty()?"":values.toString().substring(1));	
 	}
 	
+	@SuppressWarnings("unused")
 	private void changeLocal(String local,Tcategory category,String tableName,String... fieldNames){
 		if(fieldNames!=null&&fieldNames.length>0&&tableName!=null){
 			for (String fieldName : fieldNames) {

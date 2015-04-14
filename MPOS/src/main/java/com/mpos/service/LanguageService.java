@@ -28,4 +28,6 @@ public interface LanguageService {
 	Tlanguage get(String locale);
 	
 	Tlanguage getLanguageBylocal(String local);
+	
+	List<Tlanguage> getLangListByStoreId(Integer storeId);
 }

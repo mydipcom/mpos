@@ -43,6 +43,7 @@ import com.mpos.service.AdminUserService;
 @RequestMapping("/home")
 public class HomeController extends BaseController {
 
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(HomeController.class);
 	
 	@Autowired

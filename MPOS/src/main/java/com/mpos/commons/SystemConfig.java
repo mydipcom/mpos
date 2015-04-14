@@ -14,6 +14,8 @@ public class SystemConfig {
 		
 	public static String TOKEN;  
 	
+	public static Map<String, Integer> STORE_NODES_URL_MAP = new LinkedHashMap<String, Integer>();
+	
 	public static Map<String, Integer> STORE_TAKEN_MAP = new LinkedHashMap<String, Integer>();
 	
 	public static Map<String,Long> Admin_Nodes_Url_Map=new LinkedHashMap<String,Long>();

@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,9 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -38,22 +32,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
-import com.mpos.commons.SystemConfig;
 import com.mpos.dto.Tcategory;
-import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
-import com.mpos.dto.Tmenu;
 import com.mpos.dto.Tproduct;
 import com.mpos.dto.TproductAttribute;
-import com.mpos.dto.TproductAttributeId;
 import com.mpos.dto.TproductImage;
-import com.mpos.model.AddAttributevaleModel;
-import com.mpos.model.AddGoodsModel;
 import com.mpos.model.AddProductModel;
-import com.mpos.model.AddgoodsLocal;
 import com.mpos.model.FileMeta;
-import com.mpos.model.LocalizedField;
 import com.mpos.model.MenuModel;
 import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
@@ -103,6 +89,7 @@ private LocalizedFieldService localizedFieldService;
 private LinkedHashMap<Integer,FileMeta> filesMap = new LinkedHashMap<Integer,FileMeta>();
 private int imgIndex=0;	
 
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/editgoods/{ids}",method=RequestMethod.GET)
 	public ModelAndView eidtgoods(@PathVariable String ids,HttpServletRequest request){
 		imgIndex=0;

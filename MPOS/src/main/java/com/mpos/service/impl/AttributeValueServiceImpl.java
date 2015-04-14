@@ -14,7 +14,6 @@ import com.mpos.commons.SystemConstants;
 import com.mpos.dao.AttributeValueDao;
 import com.mpos.dao.LocalizedFieldDao;
 import com.mpos.dto.TattributeValue;
-import com.mpos.dto.Tcategory;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.service.AttributeValueService;
@@ -66,6 +65,7 @@ public class AttributeValueServiceImpl implements AttributeValueService {
 	public List<TattributeValue> getAllAttributeValue() {
 		return attributeValueDao.LoadAll();		
 	}	
+	@SuppressWarnings("unchecked")
 	public List<TattributeValue> getattributeValuesbyattributeid(Integer id,Tlanguage language) {
 		Criteria criteria=attributeValueDao.createCriteria();
 		List<TattributeValue> list= criteria.add(Restrictions.eq("attributeId", id))				

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.mpos.dao.GoodsImageDao;
 import com.mpos.dto.TproductImage;
 import com.mpos.service.GoodsImageService;
-import com.mpos.service.GoodsService;
 @Service
 public class GoodsImageServiceImpl implements GoodsImageService{
 

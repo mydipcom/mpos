@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 public class ClassTools {
+	@SuppressWarnings("rawtypes")
 	public static List<Class> getClassByPackage(String packageName) throws ClassNotFoundException{
 		List<Class> clazzs = null;
 		try {
@@ -37,6 +38,7 @@ public class ClassTools {
 		return clazzs;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static List<Class> findClass(File file ,String packagePath) throws ClassNotFoundException{
 	     List<Class> classes = new ArrayList<Class>();
 		if(!file.exists()){

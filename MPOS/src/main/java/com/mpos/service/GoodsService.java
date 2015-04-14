@@ -5,13 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mpos.dto.Tcategory;
 import com.mpos.dto.Tproduct;
 import com.mpos.model.AddProductModel;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.FileMeta;
 import com.mpos.model.PagingData;
-import com.sun.xml.bind.v2.model.core.ID;
 
 public interface GoodsService {
 	

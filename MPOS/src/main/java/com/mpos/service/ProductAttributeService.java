@@ -1,7 +1,5 @@
 package com.mpos.service;
 
-import java.util.List;
-
 import com.mpos.dto.TproductAttribute;
 import com.mpos.dto.TproductAttributeId;
 import com.mpos.model.AddAttributevaleModel;

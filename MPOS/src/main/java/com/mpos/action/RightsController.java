@@ -39,6 +39,7 @@ import com.mpos.service.AdminNodesService;
 @RequestMapping(value="rights")
 public class RightsController extends BaseController {
 
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(RightsController.class);
 	
 	@Resource

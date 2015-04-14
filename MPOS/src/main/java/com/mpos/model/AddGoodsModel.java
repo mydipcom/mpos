@@ -1,8 +1,5 @@
 package com.mpos.model;
 
-import java.io.File;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public class AddGoodsModel {
 

@@ -27,7 +27,9 @@ public class Tproduct implements java.io.Serializable {
 	private Tmenu tmenu;
 	private Tcategory tcategory;
 	private Integer specid;
+	@SuppressWarnings("unused")
 	private String  menuname;
+	@SuppressWarnings("unused")
 	private String  categoryname;
 	private Integer storeId;
 	

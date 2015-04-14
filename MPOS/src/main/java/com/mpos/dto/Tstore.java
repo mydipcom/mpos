@@ -51,7 +51,7 @@ public class Tstore implements Serializable {
 	/**
 	 * 店铺多语言ID，多个以“,”分隔
 	 */
-	private Integer storeLangId;
+	private String storeLangId;
 	/**
 	 * 订阅服务套餐ID
 	 */
@@ -126,10 +126,10 @@ public class Tstore implements Serializable {
 	public void setPublicKey(String publicKey) {
 		this.publicKey = publicKey;
 	}
-	public Integer getStoreLangId() {
+	public String getStoreLangId() {
 		return storeLangId;
 	}
-	public void setStoreLangId(Integer storeLangId) {
+	public void setStoreLangId(String storeLangId) {
 		this.storeLangId = storeLangId;
 	}
 	public Integer getServiceId() {

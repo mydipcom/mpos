@@ -118,4 +118,9 @@ public class StoreServiceImpl implements StoreService {
 		storeDao.delete(storeId);
 	}
 
+	public Object getObject(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return storeDao.getObject(hql, params);
+	}
+
 }

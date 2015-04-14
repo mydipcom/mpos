@@ -43,6 +43,7 @@ import com.mpos.service.MenuService;
 @RequestMapping(value = "/menu")
 public class MenuController extends BaseController {
 
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(MenuController.class);
 
 	@Resource
@@ -55,8 +56,7 @@ public class MenuController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView menu(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		logger.info("menu");
-		List<Tlanguage> languages = languageService.loadAllTlanguage();
+		List<Tlanguage> languages = languageService.getLangListByStoreId(getSessionUser(request).getStoreId());
 		mav.addObject("lanList", languages);
 		mav.setViewName("menu/menu");
 		return mav;

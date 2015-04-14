@@ -117,6 +117,7 @@ public class GoodsController extends BaseController{
 		mav.setViewName("goods/goods");
 		return mav;
 	}
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/goodslist",method=RequestMethod.GET)
 	@ResponseBody
 	public String goodsList(HttpServletRequest request,DataTableParamter dtp){
@@ -169,7 +170,7 @@ public class GoodsController extends BaseController{
 		}
 		
 		List<MenuModel> menus=menuService.getNoChildrenMenus(language,getSessionUser(request).getStoreId());
-		List<Tlanguage> languages = languageService.loadAllTlanguage();
+		List<Tlanguage> languages = languageService.getLangListByStoreId(getSessionUser(request).getStoreId());
 		if(errorstring!=null){
 			mav.addObject("Msg", errorstring);
 		}

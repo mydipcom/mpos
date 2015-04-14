@@ -21,8 +21,9 @@ public class PermissionInteceptor implements HandlerInterceptor {
 		
 	}
 
-	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1,
-			Object arg2, ModelAndView arg3) throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response,
+			Object object, ModelAndView view) throws Exception {
+		//System.out.println(object.toString());
 	}
 
 	public boolean preHandle(HttpServletRequest request,
