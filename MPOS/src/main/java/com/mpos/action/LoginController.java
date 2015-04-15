@@ -129,7 +129,7 @@ public class LoginController extends BaseController {
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
 			
 		}
-		LogManageTools.writeAdminLog(log_content,adminLog);
+		LogManageTools.writeAdminLog(log_content,adminLog,request);
 		return mav;
 	}
 	
@@ -156,7 +156,7 @@ public class LoginController extends BaseController {
 			EMailTool.send(message);
 			adminUserService.updateAdminUserPassword(adminUser);
 			mav.addObject(ERROR_MSG_KEY,"password reset success.");
-			LogManageTools.writeAdminLog(log_content, adminLog);
+			LogManageTools.writeAdminLog(log_content, adminLog,request);
 		}
 		mav.addObject("user",adminUser);
 		mav.setViewName("login");
@@ -173,14 +173,15 @@ public class LoginController extends BaseController {
 	 * @throws 
 	 */ 
 	@RequestMapping(value="/logout")
-	public String logout(HttpSession session){
+	public String logout(HttpSession session,HttpServletRequest request){
 		TadminLog adminLog = new TadminLog();
 		if((TadminUser)session.getAttribute(SystemConstants.LOGINED)!=null){
 		adminLog.setAdminId(((TadminUser)session.getAttribute(SystemConstants.LOGINED)).getAdminId());
 		}
-		session.removeAttribute(SystemConstants.LOGINED);
 		log_content="success:login out.";
-		LogManageTools.writeAdminLog(log_content, adminLog);
+		LogManageTools.writeAdminLog(log_content, adminLog,request);
+		session.removeAttribute(SystemConstants.LOGINED);
+		session.invalidate();
 		return "forward:login";
 	}
 }

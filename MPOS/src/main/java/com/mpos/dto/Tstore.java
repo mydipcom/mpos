@@ -61,6 +61,10 @@ public class Tstore implements Serializable {
 	 */
 	private Long serviceDate;
 	
+	public Tstore(Integer serviceId, Long serviceDate) {
+		this.serviceId = serviceId;
+		this.serviceDate = serviceDate;
+	}
 	public Tstore(String publicKey) {
 		this.publicKey = publicKey;
 	}

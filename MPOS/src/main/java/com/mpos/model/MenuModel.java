@@ -13,6 +13,7 @@ public class MenuModel implements Serializable{
 	private String name;
 	private Integer sort;
 	private Integer styleType;
+	private Integer storeId;
 	public Integer getId() {
 		return id;
 	}
@@ -49,5 +50,12 @@ public class MenuModel implements Serializable{
 	public void setStyleType(Integer styleType) {
 		this.styleType = styleType;
 	}
+	public Integer getStoreId() {
+		return storeId;
+	}
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
+	
 	
 }

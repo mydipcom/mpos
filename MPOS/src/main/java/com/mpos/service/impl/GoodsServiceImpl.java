@@ -186,7 +186,7 @@ public class GoodsServiceImpl implements GoodsService{
 			product.setOldPrice(model.getOldPrice());		
 			product.setUnitName(model.getUnitName());
 			product.setRecommend(model.isRecommend());
-			
+			product.setStoreId(model.getStoreId());
 			if (model.getSku()!=null) {
 				product.setSku(model.getSku());
 			}
@@ -254,7 +254,7 @@ public class GoodsServiceImpl implements GoodsService{
 				productImage.setProduct(product);
 				productImage.setImage(fileMeta.getBytes());
 				productImage.setImageSuffix(fileMeta.getSuffix());
-				String filename=product.getId()+"_"+i+"."+fileMeta.getSuffix();
+				String filename=product.getStoreId()+"_"+product.getId()+"_"+i+"."+fileMeta.getSuffix();
 				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
                 //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
             	String fileUrl="/upload/product/"+filename;
@@ -325,6 +325,7 @@ public class GoodsServiceImpl implements GoodsService{
 			product.setStatus(true);		
 			product.setTmenu(model.getMenu());
 			product.setId(model.getProductId());
+			product.setStoreId(model.getStoreId());
 			if(model.getAttributeGroup().getCategoryId()!=0){
 				product.setTcategory(model.getAttributeGroup());
 			}
@@ -392,7 +393,7 @@ public class GoodsServiceImpl implements GoodsService{
 				productImage.setProduct(product);
 				productImage.setImage(fileMeta.getBytes());
 				productImage.setImageSuffix(fileMeta.getSuffix());
-				String filename=product.getId()+"_"+i+"."+fileMeta.getSuffix();
+				String filename=product.getStoreId()+"_"+product.getId()+"_"+i+"."+fileMeta.getSuffix();
 				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
                 //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
             	String fileUrl="/upload/product/"+filename;

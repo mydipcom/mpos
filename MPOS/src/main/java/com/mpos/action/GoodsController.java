@@ -310,7 +310,6 @@ public class GoodsController extends BaseController{
 	@ResponseBody
 	public ModelAndView addGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
 		try{
-			addStore(model, request);
 			goodsService.createproduct(model, filesMap, request);
 			
 /*		Tproduct product=new Tproduct();

@@ -13,7 +13,7 @@ public class TserviceOrder implements Serializable {
 	private Float price;
 	private String email;
 	private Long createTime;
-	private Integer status;
+	private Boolean status;
 	@Override
 	public String toString() {
 		return "TserviceOrder [serviceOrderId=" + serviceOrderId
@@ -51,10 +51,10 @@ public class TserviceOrder implements Serializable {
 	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
-	public Integer getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
-	public void setStatus(Integer status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 	

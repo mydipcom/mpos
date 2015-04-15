@@ -129,7 +129,6 @@ public class CategoryController extends BaseController {
 
 		JSONObject respJson = new JSONObject();
 		try{
-			addStore(category,request);
 			categoryService.updateCategory(category);		
 			handleContent = "修改分类组:"+category.getName()+"成功;操作ID为:"+category.getCategoryId();
 			respJson.put("status", true);
@@ -138,6 +137,7 @@ public class CategoryController extends BaseController {
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			be.printStackTrace();
 			handleContent = "修改分类组:"+category.getName()+"失败";
 			level = LogManageTools.FAIL_LEVEL;
 		}	
@@ -160,6 +160,7 @@ public class CategoryController extends BaseController {
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			be.printStackTrace();
 			handleContent = "复制创建分类组:"+idArr.toString()+"失败";
 			level = LogManageTools.FAIL_LEVEL;
 		}	

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,10 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @see com.bps.service.AdminUserService#getAdminUserById(java.lang.String) 
 	 */
 	public TadminUser getAdminUserById(String userId) {
-		return adminUserDao.get(userId);	
+		Criteria criteria = adminUserDao.createCriteria();
+		criteria.add(Restrictions.eq("status", true));
+		criteria.add(Restrictions.or(Restrictions.eq("adminId", userId),Restrictions.eq("email", userId)));
+		return (TadminUser) criteria.uniqueResult();	
 	}
 
 	/**

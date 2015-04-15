@@ -176,6 +176,7 @@ var CategoryTable = function () {
 	            $("#editCategoryForm :radio").parents('span').removeClass("checked");
 	            
 	            $("#editCategoryForm input[name='categoryId']").val(categoryId);
+	            $("#editCategoryForm input[name='storeId']").val(data.storeId);
 	            
 	            $("#editCategoryForm input[name='name']").val(name);	            
 	            $.each(categoryNameLocaleList, function (index, categoryNameLocale) {

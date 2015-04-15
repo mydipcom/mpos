@@ -18,6 +18,7 @@ public interface StoreService {
 		public void delete(String hql,Map<String, Object> params);
 		public void update(String hql,Map<String, Object> params);
 		public List<Tstore> select(String hql,Map<String, Object> params);
+		public Tstore selectOne(String hql,Map<String, Object> params);
 		public Object getObject(String hql,Map<String, Object> params);
 		public void cacheStoreTaken();		
 }

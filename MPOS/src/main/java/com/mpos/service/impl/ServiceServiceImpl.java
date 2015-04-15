@@ -88,4 +88,9 @@ public class ServiceServiceImpl implements ServiceService {
 		return serviceDao.select(hql, params);
 	}
 
+	public Tservice get(Integer serviceId) {
+		// TODO Auto-generated method stub
+		return serviceDao.get(serviceId);
+	}
+
 }

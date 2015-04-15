@@ -31,7 +31,7 @@ public class Tservice implements Serializable {
 	/**
 	 * 状态
 	 */
-	private Integer status;
+	private Boolean status;
 	/**
 	 * 角色ID
 	 */
@@ -66,10 +66,10 @@ public class Tservice implements Serializable {
 	public void setValidDays(Integer validDays) {
 		this.validDays = validDays;
 	}
-	public Integer getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
-	public void setStatus(Integer status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 	public Integer getRoleId() {

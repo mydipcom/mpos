@@ -57,6 +57,17 @@ public class BaseController {
 	protected TadminUser getSessionUser(HttpServletRequest request){
 		return (TadminUser)request.getSession().getAttribute(SystemConstants.LOGINED);
 	}
+	
+	/** 
+	 * <p>Description:Get the login storeId from session</p>
+	 * @Title: getSessionStoreId
+	 * @param request
+	 * @return storeId
+	 * @throws 
+	 */ 
+	protected Integer getSessionStoreId(HttpServletRequest request){
+		return ((TadminUser)request.getSession().getAttribute(SystemConstants.LOGINED)).getStoreId();
+	}
 		
 	/** 
 	 * <p>Description:Save the login user into session</p>
@@ -212,12 +223,12 @@ public class BaseController {
 	 */
 	public void addStoreCondition(HttpServletRequest request,DataTableParamter dtp){
 		String jsonStr = dtp.getsSearch();
-		Integer storeId = getSessionUser(request).getStoreId();
 		JSONObject json = (JSONObject) JSON.parse(jsonStr);
-		if(json==null){
-			json = new JSONObject();
-		}
-		json.put("storeId", storeId);
+		Integer storeId = getSessionUser(request).getStoreId();
+			if(json==null){
+				json = new JSONObject();
+			}
+			json.put("storeId", storeId);
 		dtp.setsSearch(JSON.toJSONString(json));
 	}
 	/**
@@ -227,21 +238,21 @@ public class BaseController {
 	 */
 	public void addStore(Object bean,HttpServletRequest request){
 		Integer storeId = getSessionUser(request).getStoreId();
-		if(bean instanceof Tcategory){
-			((Tcategory)bean).setStoreId(storeId);
-		}else if(bean instanceof Tmenu){
-			((Tmenu)bean).setStoreId(storeId);
-		}else if(bean instanceof Tproduct){
-			((Tproduct)bean).setStoreId(storeId);
-		}else if(bean instanceof TproductRelease){
-			((TproductRelease)bean).setStoreId(storeId);
-		}else if(bean instanceof Ttable){
-			((Ttable)bean).setStoreId(storeId);
-		}else if(bean instanceof TadminUser){
-			((TadminUser)bean).setStoreId(storeId);
-		}else if(bean instanceof AddProductModel){
-			((AddProductModel)bean).setStoreId(storeId);
-		}
+			if(bean instanceof Tcategory){
+				((Tcategory)bean).setStoreId(storeId);
+			}else if(bean instanceof Tmenu){
+				((Tmenu)bean).setStoreId(storeId);
+			}else if(bean instanceof Tproduct){
+				((Tproduct)bean).setStoreId(storeId);
+			}else if(bean instanceof TproductRelease){
+				((TproductRelease)bean).setStoreId(storeId);
+			}else if(bean instanceof Ttable){
+				((Ttable)bean).setStoreId(storeId);
+			}else if(bean instanceof TadminUser){
+				((TadminUser)bean).setStoreId(storeId);
+			}else if(bean instanceof AddProductModel){
+				((AddProductModel)bean).setStoreId(storeId);
+			}
 	}
 	
 	/**

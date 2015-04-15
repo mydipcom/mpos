@@ -166,6 +166,7 @@ var MenuTable = function () {
 	            
 	            $("#editMenuForm select[name='menu.pid']").children("option[value='"+pid+"']").attr("selected","true");
 	            $("#editMenuForm input[name='menu.menuId']").val(menuId);
+	            $("#editMenuForm input[name='menu.storeId']").val(data.storeId);
 	            
 	            $("#editMenuForm :radio[name='menu.styleType']").filter("[value='"+style+"']").attr("checked","true");
 	            $("#editMenuForm :radio[name='menu.styleType']").filter("[value='"+style+"']").parents('span').addClass("checked");

@@ -142,6 +142,7 @@ private int imgIndex=0;
 			Productmodel.setRecommend(product.isRecommend());
 			Productmodel.setProductId(product.getId());
 			Productmodel.setSpecid(product.getSpecid());
+			Productmodel.setStoreId(product.getStoreId());
 			productName_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "productName");
 			shortDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "shortDescr");
 			fullDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "fullDescr");
@@ -315,7 +316,6 @@ private int imgIndex=0;
 	@ResponseBody
 	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
 		try{
-			addStore(model, request);
 			goodsService.updateproduct(model, filesMap, request);
 			request.getSession().setAttribute("addsussess","operate.success");
 			return new ModelAndView("redirect:/goods");

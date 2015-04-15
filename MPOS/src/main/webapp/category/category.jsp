@@ -284,7 +284,8 @@
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
 						<form id="editCategoryForm" action="editCategoryForm" method="post" name="editCategoryForm" class="form-horizontal">
-							<input type="hidden" name="categoryId"/>							
+							<input type="hidden" name="categoryId"/>	
+							<input type="hidden" name="storeId"/>							
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>

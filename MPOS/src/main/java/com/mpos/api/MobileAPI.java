@@ -177,6 +177,7 @@ public class MobileAPI {
 				if(!logo.exists()){
 					is = new ByteArrayInputStream(logo_file);
 					FileUtils.copyInputStreamToFile(is, logo);
+					//FileCopyUtils.copy(logo_file, new FileOutputStream(realPath+logoPath));
 				}
 				logoPath = SystemConstants.STORE_UP_PATH+"logo_"+storeId+"."+"jpg";
 			}else{
@@ -383,11 +384,17 @@ public class MobileAPI {
 				}
 			}
 			JSONObject dataJson = new JSONObject();
-			dataJson.put("id", latestVerID);
-			dataJson.put("products", productsJsonArr);
-			respJson.put("status", true);
-			respJson.put("info", "OK");
-			respJson.put("data", dataJson);
+			if(productsJsonArr==null||productsJsonArr.size()==0){
+				respJson.put("status", false);
+				respJson.put("info", "no data");
+			}else{
+				dataJson.put("id", latestVerID);
+				dataJson.put("products", productsJsonArr);
+				respJson.put("status", true);
+				respJson.put("info", "OK");
+				respJson.put("data", dataJson);
+			}
+			
 
 			return JSON.toJSONString(respJson);
 		} catch (MposException e) {
@@ -408,10 +415,10 @@ public class MobileAPI {
 	@ResponseBody
 	public String getProduct(HttpServletRequest request, HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @PathVariable Integer productId) {
 		// 获取缓存apiToken
-		String apiToken = SystemConfig.Admin_Setting_Map.get(SystemConstants.CONFIG_API_TOKEN);
+		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
 		JSONObject respJson = new JSONObject();
 		// 判断apiToken是否一致
-		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+		if (storeId == null) {
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -745,6 +752,129 @@ public class MobileAPI {
 			return JSON.toJSONString(respJson);
 		}
 	}
+	/**
+	 * 订单同步
+	 * @param request
+	 * @param apiKey  taken
+	 * @param jsonStr  请求参数
+	 * @return
+	 */
+	@RequestMapping(value="/syncOrder",method=RequestMethod.POST)
+	@ResponseBody
+	public String syncOrder(HttpServletRequest request,@RequestHeader("Authorization") String apiKey,@RequestBody String jsonStr){
+				// 获取缓存apiToken
+				Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
+				JSONObject respJson = new JSONObject();
+				// 判断apiToken是否一致
+				if (storeId == null) {
+					respJson.put("status", false);
+					respJson.put("info", "Error API token.");
+					return JSON.toJSONString(respJson);
+				}
+
+				// 判断请求参数
+				if (jsonStr == null || jsonStr.isEmpty()) {
+					respJson.put("status", false);
+					respJson.put("info", "The request parameter is required.");
+					return JSON.toJSONString(respJson);
+				}
+				try {
+					JSONObject jsonObj = (JSONObject) JSON.parse(jsonStr);
+					// 桌号
+					String appId = jsonObj.getString("appId");
+					Integer peopleNum = jsonObj.getInteger("peopleNum");
+					Float orderMoney = jsonObj.getFloat("totalMount");
+					JSONArray products = jsonObj.getJSONArray("products");
+					float totalMoney = 0;
+					float oldMoey = 0;
+					Torder order = new Torder();
+					order.setCreater(appId);
+					order.setCreateTime(new Date().getTime());
+					order.setOrderStatus(1);
+					order.setOrderDiscount(0);
+					order.setOrderTotal(totalMoney);
+					order.setPeopleNum(peopleNum);
+					order.setStoreId(storeId);
+					orderService.createOrder(order);
+					for (Object object : products) {
+						JSONObject pro = (JSONObject) object;
+						// 商品ID
+						Integer productId = pro.getInteger("productId");
+						// 数量
+						Integer count = pro.getInteger("quantity");
+						JSONArray attributes = pro.getJSONArray("attributes");
+						Tcommodity product = commodityService.getTproductByid(productId);
+						if (product == null) {
+							respJson.put("status", false);
+							respJson.put("info", productId + " product is not exist");
+							orderService.deleteOrder(order);
+							return JSON.toJSONString(respJson);
+						}
+						// 通过优惠列表计算商品价格
+						Float price = product.getPrice();
+						if (price == null || price == 0) {
+							price = product.getOldPrice();
+						}
+						if (attributes != null) {
+							for (Object object2 : attributes) {
+								JSONObject o = (JSONObject) object2;
+								Integer attrId = o.getInteger("attributeId");
+								TproductAttribute att = productAttributeService.getAttributeByproductidAndattributeid(productId, attrId);
+								String valueIds = o.getString("valueIds");
+								if (att != null) {
+									String prices = att.getPrice();
+									if ((prices != null && !prices.isEmpty()) && (valueIds != null && !valueIds.isEmpty())) {
+										String[] valueIdss = valueIds.split(",");
+										String[] pr = prices.split(",");
+										Integer[] ids = ConvertTools.stringArr2IntArr(valueIdss);
+										for (Integer id : ids) {
+											TattributeValue value = attributeValueService.getAttributeValue(id);
+											if (value.getSort() < pr.length) {
+												if (pr[value.getSort()] != null && !pr[value.getSort()].isEmpty()) {
+													price += Float.valueOf(pr[value.getSort()]);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+
+						float oneMoney = 0;
+						float oneOldMoney = 0;
+						oneMoney = price * count;
+						oneOldMoney = product.getOldPrice() * count;
+						float oneDis = (product.getOldPrice() - price) * count;
+						TorderItem orderItem = new TorderItem();
+						orderItem.setOrderId(order.getOrderId() + "");
+						orderItem.setProductId(productId);
+						orderItem.setUnitPrice(product.getOldPrice());
+						orderItem.setQuantity(count);
+						orderItem.setCurrPrice(price);
+						orderItem.setDiscount(oneDis);
+						orderItem.setAttributes(JSON.toJSONString(attributes));
+						orderItem.setIsGift(false);
+						orderItemService.createOrderItem(orderItem);
+						totalMoney += oneMoney;
+						oldMoey += oneOldMoney;
+					}
+					order.setOrderDiscount(oldMoey - totalMoney);
+					order.setOrderTotal(totalMoney);
+					logger.info(totalMoney-orderMoney);
+					orderService.update(order);
+					JSONObject data = new JSONObject();
+					data.put("orderId", order.getOrderId());
+					data.put("orderTotal", totalMoney);
+					respJson.put("status", true);
+					respJson.put("info", "OK");
+					respJson.put("data", data);
+					return JSON.toJSONString(respJson);
+				} catch (MposException e) {
+					respJson.put("status", false);
+					respJson.put("info", e.getMessage());
+					return JSON.toJSONString(respJson);
+				}
+	}
 
 	/**
 	 * 装载优惠信息 将商品参加的所有优惠活动装载到model中
@@ -792,7 +922,7 @@ public class MobileAPI {
 				String filePath = tproductImage.getImageUrl();
 				file = new File(qian + filePath.substring(filePath.lastIndexOf("/")));
 				if (!file.exists()) {
-					String newPath = qian + product.getId() + "_" + i + "." + tproductImage.getImageSuffix();
+					String newPath = qian + product.getStoreId()+"_"+product.getId() + "_" + i + "." + tproductImage.getImageSuffix();
 					File newImgePath = new File(newPath);
 					try {
 						File uplaodDir = new File(qian);
@@ -802,7 +932,7 @@ public class MobileAPI {
 						if (tproductImage.getImage() != null && !newImgePath.exists()) {
 							ImageOutputStream ios = ImageIO.createImageOutputStream(newImgePath);
 							ios.write(tproductImage.getImage());
-							String loc = z + product.getId() + "_" + i + "." + tproductImage.getImageSuffix();
+							String loc = z + product.getStoreId()+"_"+product.getId() + "_" + i + "." + tproductImage.getImageSuffix();
 							tproductImage.setImageUrl(loc);
 							if (!filePath.equals(loc)) {
 								goodsImageService.updeteImages(tproductImage);

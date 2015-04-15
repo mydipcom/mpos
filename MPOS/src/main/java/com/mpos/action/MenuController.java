@@ -116,7 +116,7 @@ public class MenuController extends BaseController {
 
 		JSONObject respJson = new JSONObject();
 		try {
-			addStore(page.getMenu(),request);
+			//addStore(page.getMenu(),request);
 			menuService.updateMenu(page.getMenu());
 			List<TlocalizedField> ls = page.setOneTlocalizedFieldValue(page.getMenu());
 			localizedFieldService.updateLocalizedFieldList(ls);

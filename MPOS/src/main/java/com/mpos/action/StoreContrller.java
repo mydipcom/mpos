@@ -15,11 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.TadminUser;
+import com.mpos.dto.Tservice;
+import com.mpos.dto.TserviceOrder;
+import com.mpos.dto.Tstore;
+import com.mpos.service.ServiceOrderService;
+import com.mpos.service.ServiceService;
 import com.mpos.service.StoreService;
 /**
  * 店铺控制器
@@ -32,6 +38,10 @@ public class StoreContrller extends BaseController {
 	
 	@Autowired
 	private StoreService storeService;
+	@Autowired
+	private ServiceService serviceService;
+	@Autowired
+	private ServiceOrderService serviceOrderService;
 	/**
 	 * 返回页面状态
 	 */
@@ -162,7 +172,106 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="/changeLangSet",method=RequestMethod.POST)
 	@ResponseBody
-	public String changeLangSet(HttpServletRequest request,String storeLangId){
-		return JSON.toJSONString("");
+	public String changeLangSet(HttpServletRequest request,String storeLangIds){
+		Map<String, Object> res = getHashMap();
+		//更新参数
+		Map<String, Object> params = getHashMap();
+		params.put("storeId", getSessionStoreId(request));
+		params.put("storeLangId", storeLangIds);
+		String updateLangHql = "update Tstore set storeLangId=:storeLangId where storeId=:storeId";
+		try {
+			storeService.update(updateLangHql, params);
+			info = getMessage(request,"operate.success");
+		} catch (MposException be) {
+			info = getMessage(request, be.getErrorID(), be.getMessage());
+			status = false;
+		}
+		return JSON.toJSONString(res);
+	}
+	
+	/**
+	 * 修改店铺名称
+	 * @return
+	 */
+	@RequestMapping(value="/changeStoreName",method=RequestMethod.POST)
+	@ResponseBody
+	public String changeStoreName(HttpServletRequest request,String storeName){
+		Map<String, Object> res = getHashMap();
+		//更新参数
+		Map<String, Object> params = getHashMap();
+		params.put("storeId", getSessionStoreId(request));
+		params.put("storeName", storeName);
+		String updateLangHql = "update Tstore set storeName=:storeName where storeId=:storeId";
+		try {
+			storeService.update(updateLangHql, params);
+			info = getMessage(request,"operate.success");
+		} catch (MposException be) {
+			info = getMessage(request, be.getErrorID(), be.getMessage());
+			status = false;
+		}
+		return JSON.toJSONString(res);
+	}
+	
+	/**
+	 * 修改店铺货币符号
+	 * @return
+	 */
+	@RequestMapping(value="/changeStoreCurrency",method=RequestMethod.POST)
+	@ResponseBody
+	public String changeStoreCurrency(HttpServletRequest request,String storeCurrency){
+		Map<String, Object> res = getHashMap();
+		//更新参数storeCurrency
+		Map<String, Object> params = getHashMap();
+		params.put("storeId", getSessionStoreId(request));
+		params.put("storeCurrency", storeCurrency);
+		String updateLangHql = "update Tstore set storeCurrency=:storeCurrency where storeId=:storeId";
+		try {
+			storeService.update(updateLangHql, params);
+			info = getMessage(request,"operate.success");
+		} catch (MposException be) {
+			info = getMessage(request, be.getErrorID(), be.getMessage());
+			status = false;
+		}
+		return JSON.toJSONString(res);
+	}
+	
+	/**
+	 * 修改订阅服务
+	 * @return
+	 */
+	@RequestMapping(value="/changeService",method=RequestMethod.POST)
+	@ResponseBody
+	public String changeService(HttpServletRequest request,Integer serviceId){
+		Map<String, Object> res = getHashMap();
+		//更新参数
+		Map<String, Object> params = getHashMap();
+		Integer storeId = getSessionStoreId(request);
+		params.put("storeId", storeId);
+		//查询以前的服务日期
+		String queryStoreHql = "select newTstore(serviceId,serviceDate) from Tstore where storeId=:storeId";
+		//更新新的订阅服务
+		String updateServiceHql = "update Tstore set serviceId=:serviceId,serviceDate=:serviceDate where storeId=:storeId";
+		try {
+			Tstore store = storeService.selectOne(queryStoreHql, params);
+			long serviceDate = store.getServiceDate();
+			Tservice service = serviceService.get(serviceId);
+			Integer validDays = service.getValidDays();
+			
+			
+			params.put("serviceId", serviceId);
+			params.put("serviceDate", ConvertTools.longTimeAIntDay(serviceDate, validDays));
+			storeService.update(updateServiceHql, params);
+			TserviceOrder serviceOrder = new TserviceOrder();
+			serviceOrder.setCreateTime(System.currentTimeMillis());
+			serviceOrder.setPrice(service.getServicePrice());
+			serviceOrder.setServiceId(serviceId);
+			serviceOrder.setEmail(getSessionUser(request).getEmail());
+			serviceOrder.setStatus(false);
+			info = getMessage(request,"operate.success");
+		} catch (MposException be) {
+			info = getMessage(request, be.getErrorID(), be.getMessage());
+			status = false;
+		}
+		return JSON.toJSONString(res);
 	}
 }

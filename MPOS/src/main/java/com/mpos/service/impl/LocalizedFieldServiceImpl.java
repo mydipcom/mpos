@@ -39,7 +39,9 @@ public class LocalizedFieldServiceImpl implements LocalizedFieldService{
 		// TODO Auto-generated method stub
 		if(locals!=null&&locals.size()>0){
 			for (TlocalizedField tlocalizedField : locals) {
-				localizedFieldDao.update(tlocalizedField);
+				if(tlocalizedField!=null&&tlocalizedField.getEntityId()!=null&&!tlocalizedField.getLocaleValue().isEmpty()){
+					localizedFieldDao.update(tlocalizedField);
+				}
 			}
 		}
 	}

@@ -43,13 +43,15 @@ public class LogManageTools {
 	}	
 	
 	
-	public static void writeAdminLog(String content,Object obj){
+	public static void writeAdminLog(String content,Object obj,HttpServletRequest request){
 		StackTraceElement[] ste = new Exception().getStackTrace();
 		AdminuserLogService adminuserLogService = (AdminuserLogService) MyApplicationContextUtil.getContext().getBean("adminuserLogService");
 	    clazz=ste[1].getClassName();
 		method=ste[1].getMethodName();
 		time=System.currentTimeMillis();
 	    TadminLog adminLog = (TadminLog) obj;
+	    adminId=((TadminUser)request.getSession().getAttribute(SystemConstants.LOGINED)).getAdminId();
+	    adminLog.setAdminId(adminId);
 		adminLog.setCreatedTime(time);
 	    adminLog.setContent(clazz+SystemConstants.LOG_SEPARATOR+method+SystemConstants.LOG_SEPARATOR+content);
 	    adminuserLogService.createAdminLog(adminLog);

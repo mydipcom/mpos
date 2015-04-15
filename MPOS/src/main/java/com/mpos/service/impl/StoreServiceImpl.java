@@ -128,4 +128,9 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.get(storeId);
 	}
 
+	public Tstore selectOne(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return storeDao.getOne(hql, params);
+	}
+
 }

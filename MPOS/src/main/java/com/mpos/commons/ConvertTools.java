@@ -12,6 +12,7 @@ package com.mpos.commons;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
@@ -85,5 +86,18 @@ public class ConvertTools {
 	public static long dateStringToLong(String date) throws ParseException{
 		SimpleDateFormat sdf =new SimpleDateFormat("dd/mm/yyyy hh:mm");
 		return sdf.parse(date).getTime();
+	}
+	
+	public static long longTimeAIntDay(long time,int days){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(time);
+		calendar.add(Calendar.DAY_OF_YEAR, days);
+		return calendar.getTimeInMillis();
+	}
+	
+	public static void main(String[] args) {
+		long now = System.currentTimeMillis();
+		System.out.println(longToDateString(now));
+		System.out.println(longToDateString(longTimeAIntDay(now,20)));
 	}
 }

@@ -11,6 +11,7 @@ public interface ServiceService {
 	public void save(Tservice service);
 	public void delete(Tservice service);
 	public void delete(Integer serviceId);
+	public Tservice get(Integer serviceId);
 	public void update(Tservice service);
 	public PagingData loadList(DataTableParamter rdtp);
 	

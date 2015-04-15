@@ -7,6 +7,6 @@
 <link href="../assets/global/plugins/jquery-toastmessage/css/jquery.toastmessage.css" rel="stylesheet" type="text/css"/>
 <script>
 	jQuery(document).ready(function() {       
-	   checkCall();
+	   //checkCall();
 	});
 </script>
