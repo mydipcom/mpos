@@ -63,6 +63,14 @@ public class SystemConstants {
 	
 	public static final String COMPANY_NAME="Company_Name";
 	
+	public static final String PUSH_IOS_API_KEY="Push_IOS_API_Key";
+	
+	public static final String PUSH_IOS_SECRET_KEY="Push_IOS_Secret_Key";
+	
+	public static final String PUSH_ANDROID_API_KEY="Push_Android_API_Key";
+	
+	public static final String PUSH_ANDROID_SECRET_KEY="Push_Android_Secret_Key";
+	
 	
 	
 	public static final String TABLE_NAME_MENU="Tmenu";

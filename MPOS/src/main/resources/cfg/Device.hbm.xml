@@ -18,22 +18,28 @@
             <column name="table_id"/>
         </property>
         <property name="onlineStatus" type="boolean">
-            <column name="online_status" not-null="true" />
+            <column name="online_status"  />
         </property>
         <property name="dataVersion" type="string">
-            <column name="data_version" length="45" not-null="true" />
+            <column name="data_version" length="45" />
         </property>
         <property name="lastSyncTime" type="long">
-            <column name="last_sync_time" not-null="true" />
+            <column name="last_sync_time"  />
         </property>
         <property name="lastReportTime" type="long">
-            <column name="last_report_time" not-null="true" />
+            <column name="last_report_time"  />
         </property>
         <property name="status" type="java.lang.Boolean">
             <column name="status" />
         </property>
         <property name="createTime" type="java.lang.Long">
             <column name="create_time" />
+        </property>
+         <property name="deviceType" type="java.lang.Integer">
+            <column name="device_type" />
+        </property>
+        <property name="channelId" type="java.lang.String">
+            <column name="channel_id" />
         </property>
     </class>
 </hibernate-mapping>
