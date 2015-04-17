@@ -143,11 +143,33 @@
     	<artifactId>poi-ooxml-schemas</artifactId>
     	<version>3.10.1</version>
     </dependency>
+    
     <dependency>
     	<groupId>javax.mail</groupId>
     	<artifactId>mail</artifactId>
     	<version>1.4.7</version>
     </dependency>
+   
+   <dependency>
+    <groupId>net.sf.json-lib</groupId>
+    <artifactId>json-lib</artifactId>
+    <version>2.4</version>
+</dependency>
+      
+    <dependency> 
+    		<groupId>bdpush</groupId> 
+    		<artifactId>bccs-api</artifactId> 
+    		<version>3.0.0</version> 
+    		<scope>system</scope> 
+    		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/bccs-api-3.0.0.jar 
+    </systemPath> 
+
+</dependency>
+       <!--  <dependency>
+    	<groupId>bdpush</groupId>
+    	<artifactId>bccs-api</artifactId>
+    	<version>3.0.0</version>
+    </dependency> -->
   </dependencies>
   <build>
     <finalName>mpos</finalName>

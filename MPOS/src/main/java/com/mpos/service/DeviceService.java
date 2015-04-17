@@ -18,4 +18,6 @@ public interface DeviceService {
 	Tdevice get(Integer id);
 	List<Tdevice> loadAll();
 	PagingData loadDeviceList(DataTableParamter dtp);
+	Integer getCountByStoreIdAndDeviceType(Integer storeId,Integer deviceType);
+	Integer getCount(Integer deviceType,String channelId);
 }

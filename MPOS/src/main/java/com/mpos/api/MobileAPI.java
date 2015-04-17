@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mpos.commons.BaiduPushTool;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
@@ -222,6 +223,66 @@ public class MobileAPI {
 			respJson.put("info", e.getMessage());
 			return JSON.toJSONString(respJson);
 		}
+	}
+	/**
+	 * bing push set
+	 * @param response
+	 * @param apiKey
+	 * @param jsonStr
+	 * @return
+	 */
+	@RequestMapping(value = "bingPushSet", method = RequestMethod.POST)
+	@ResponseBody
+	public String bingPushSet(HttpServletResponse response, @RequestHeader("Authorization") String apiKey, @RequestBody String jsonStr){
+		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
+		JSONObject jsonObj = null;
+		JSONObject respJson = new JSONObject();
+		if (storeId == null) {
+			respJson.put("status", false);
+			respJson.put("info", "Error API token.");
+			return JSON.toJSONString(respJson);
+		}
+		if (jsonStr == null || jsonStr.isEmpty()) {
+			respJson.put("status", false);
+			respJson.put("info", "The request parameter is required.");
+			return JSON.toJSONString(respJson);
+		}
+		try {
+			Tdevice device = new Tdevice();
+			jsonObj = (JSONObject) JSON.parse(jsonStr);
+			Integer deviceType = jsonObj.getInteger("deviceType");
+			String tableName = jsonObj.getString("tableName");
+			String channelId = jsonObj.getString("channelId");
+			device.setChannelId(channelId);
+			device.setDeviceType(deviceType);
+			device.setStoreId(storeId);
+			device.setTableName(tableName);
+			device.setCreateTime(System.currentTimeMillis());
+			device.setStatus(true);
+			Integer count = deviceService.getCountByStoreIdAndDeviceType(storeId, deviceType);
+			Integer ok = deviceService.getCount(deviceType, channelId);
+			if(count==0){
+				BaiduPushTool.createTag(deviceType, storeId+"");
+			}
+			if(ok==0){
+				Boolean success = BaiduPushTool.addDevicesToTag(new String[]{channelId}, storeId+"", deviceType);
+				if(success){
+					respJson.put("status", true);
+					respJson.put("info", "OK");
+					deviceService.create(device);
+					return JSON.toJSONString(respJson);
+				}
+			}else{
+				respJson.put("status", false);
+				respJson.put("info", "channelId exsit");
+				return JSON.toJSONString(respJson);
+			}
+			
+		} catch (MposException e) {
+		}
+		respJson.put("status", false);
+		respJson.put("info", "error");
+		return JSON.toJSONString(respJson);
 	}
 
 	/**

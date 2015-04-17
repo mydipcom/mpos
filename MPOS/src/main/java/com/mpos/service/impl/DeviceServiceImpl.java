@@ -116,5 +116,20 @@ public class DeviceServiceImpl implements DeviceService {
 		// TODO Auto-generated method stub
 		deviceDao.deleteAll(ids);
 	}
+
+
+	public Integer getCountByStoreIdAndDeviceType(Integer storeId,
+			Integer deviceType) {
+		Criteria criteria = deviceDao.createCriteria();
+		criteria.add(Restrictions.eq("storeId", storeId)).add(Restrictions.eq("deviceType", deviceType));
+		return criteria.list().size();
+	}
+
+
+	public Integer getCount(Integer deviceType, String channelId) {
+		Criteria criteria = deviceDao.createCriteria();
+		criteria.add(Restrictions.eq("channelId", channelId)).add(Restrictions.eq("deviceType", deviceType));
+		return criteria.list().size();
+	}
 	
 }

@@ -36,10 +36,13 @@
             <column name="create_time" />
         </property>
          <property name="deviceType" type="java.lang.Integer">
-            <column name="device_type" />
+            <column name="device_type"  not-null="true"/>
         </property>
         <property name="channelId" type="java.lang.String">
-            <column name="channel_id" />
+            <column name="channel_id" not-null="true" />
+        </property>
+        <property name="storeId" type="java.lang.Integer">
+            <column name="store_id"  not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

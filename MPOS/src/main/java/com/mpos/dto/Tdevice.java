@@ -23,8 +23,9 @@ public class Tdevice implements java.io.Serializable {
 	private Long lastReportTime;
 	private Boolean status;
 	private Long createTime;
-	private Integer daviceType;
+	private Integer deviceType;
 	private String channelId;
+	private Integer storeId;
 	
 	@SuppressWarnings("unused")
 	private String lastSyncTimeStr;
@@ -90,11 +91,11 @@ public class Tdevice implements java.io.Serializable {
 	}
 	public Tdevice() {}
 	
-	public Integer getDaviceType() {
-		return daviceType;
+	public Integer getDeviceType() {
+		return deviceType;
 	}
-	public void setDaviceType(Integer daviceType) {
-		this.daviceType = daviceType;
+	public void setDeviceType(Integer deviceType) {
+		this.deviceType = deviceType;
 	}
 	public String getChannelId() {
 		return channelId;
@@ -114,4 +115,12 @@ public class Tdevice implements java.io.Serializable {
 	public void setLastReportTimeStr(String lastReportTimeStr) {
 		this.lastReportTimeStr = lastReportTimeStr;
 	}
+	public Integer getStoreId() {
+		return storeId;
+	}
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
+
+	
 }
