@@ -8,9 +8,7 @@
             <column name="service_order_id" />
             <generator class="identity" />
         </id>
-        <property name="serviceId" type="int">
-            <column name="service_id" />
-        </property>
+        <many-to-one name="serviceId" column="service_id" class="com.mpos.dto.Tservice" not-null="true"/>  
         <property name="price" type="float">
             <column name="price" not-null="true" />
         </property>

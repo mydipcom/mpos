@@ -1,5 +1,6 @@
 package com.mpos.action;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
+import com.mpos.dto.TadminRole;
 import com.mpos.dto.Tservice;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
+import com.mpos.service.AdminRoleService;
 import com.mpos.service.ServiceService;
 
 /**
@@ -30,6 +34,8 @@ public class ServiceController extends BaseController {
 	
 	@Autowired
 	private ServiceService serviceService;
+	@Autowired
+	private AdminRoleService adminRoleService;
 	
 	/**
 	 * 返回页面状态
@@ -39,6 +45,15 @@ public class ServiceController extends BaseController {
 	 * 返回消息
 	 */
 	private String info ="";
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView service(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		List<TadminRole> roles = adminRoleService.getAllAdminRoles();
+		mav.addObject("roles", roles);
+		mav.setViewName("service/service");
+		return mav;
+	}
 	
 	@RequestMapping(value = "/serviceList", method = RequestMethod.GET)
 	@ResponseBody
@@ -102,7 +117,7 @@ public class ServiceController extends BaseController {
 	 * @param service
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteService/{serviceIds}", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete/{serviceIds}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteService(HttpServletRequest request,@PathVariable String serviceIds){
 		Map<String, Object> res = getHashMap();
@@ -115,6 +130,29 @@ public class ServiceController extends BaseController {
 			serviceService.delete(deleteHql, params);
 			info = getMessage(request,"operate.success");
 		} catch (MposException e) {
+			status = false;
+			info = e.getMessage();
+		}
+		res.put("status", status);
+		res.put("info", info);
+		return JSON.toJSONString(res);
+	}
+	/**
+	 * 通过角色ID查询角色信息
+	 * @param request
+	 * @param roleId
+	 * @return
+	 */
+	@RequestMapping(value = "/getRole/{roleId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String getRole(HttpServletRequest request,@PathVariable Integer roleId){
+		Map<String, Object> res = getHashMap();
+		try {
+			TadminRole role = adminRoleService.getAdminRoleById(roleId);
+			res.put("msg", role.getRoleName());
+			info = getMessage(request,"operate.success");
+		} catch (MposException e) {
+			e.printStackTrace();
 			status = false;
 			info = e.getMessage();
 		}

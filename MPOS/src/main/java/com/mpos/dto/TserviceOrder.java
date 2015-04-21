@@ -1,6 +1,8 @@
 package com.mpos.dto;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TserviceOrder implements Serializable {
 
@@ -9,28 +11,48 @@ public class TserviceOrder implements Serializable {
 	 */
 	private static final long serialVersionUID = -4698996227062389909L;
 	private Integer serviceOrderId;
-	private Integer serviceId;
+	private Tservice serviceId;
 	private Float price;
 	private String email;
 	private Long createTime;
 	private Boolean status;
-	@Override
-	public String toString() {
-		return "TserviceOrder [serviceOrderId=" + serviceOrderId
-				+ ", serviceId=" + serviceId + ", price=" + price + ", email="
-				+ email + ", createTime=" + createTime + ", status=" + status
-				+ "]";
+	@SuppressWarnings("unused")
+	private String createTimeStr;
+	@SuppressWarnings("unused")
+	private String serviceName;
+	
+	public String getCreateTimeStr() {
+		if(createTime!=null){
+			Date date=new Date(createTime);
+			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			return sdf.format(date);		
+			}else
+			return null;
 	}
+
+	public void setCreateTimeStr(String createTimeStr) {
+		this.createTimeStr = createTimeStr;
+	}
+
+	public String getServiceName() {
+		return serviceId.getServiceName();
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
 	public Integer getServiceOrderId() {
 		return serviceOrderId;
 	}
 	public void setServiceOrderId(Integer serviceOrderId) {
 		this.serviceOrderId = serviceOrderId;
 	}
-	public Integer getServiceId() {
+
+	public Tservice getServiceId() {
 		return serviceId;
 	}
-	public void setServiceId(Integer serviceId) {
+	public void setServiceId(Tservice serviceId) {
 		this.serviceId = serviceId;
 	}
 	public Float getPrice() {

@@ -333,7 +333,7 @@ public class StoreContrller extends BaseController {
 			TserviceOrder serviceOrder = new TserviceOrder();
 			serviceOrder.setCreateTime(System.currentTimeMillis());
 			serviceOrder.setPrice(service.getServicePrice());
-			serviceOrder.setServiceId(serviceId);
+			serviceOrder.setServiceId(service);
 			serviceOrder.setEmail(getSessionUser(request).getEmail());
 			serviceOrder.setStatus(false);
 			info = getMessage(request,"operate.success");
