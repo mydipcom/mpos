@@ -243,6 +243,19 @@ public class BaseDao<T> extends HibernateDaoSupport
     	update.executeUpdate();
     }
     
+    public void updateImage(String hql,Map<String, Object> params){
+    	Query update = currentSession().createQuery(hql);
+    	for (String key : params.keySet()) {
+			Object o = params.get(key);
+			if(o.getClass().isArray()){
+				update.setBinary(key, o.toString().getBytes());
+			}else{
+				update.setParameter(key, o);
+			}
+		}
+    	update.executeUpdate();
+    }
+    
     public void delete(String hql,Map<String, Object> params){
     	Query update = currentSession().createQuery(hql);
     	for (String key : params.keySet()) {

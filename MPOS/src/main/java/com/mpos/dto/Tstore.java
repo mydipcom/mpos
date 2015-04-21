@@ -61,6 +61,22 @@ public class Tstore implements Serializable {
 	 */
 	private Long serviceDate;
 	
+	private String logoPath;
+	private String backgroundPath;
+	
+	
+	public String getLogoPath() {
+		return logoPath;
+	}
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
+	}
+	public String getBackgroundPath() {
+		return backgroundPath;
+	}
+	public void setBackgroundPath(String backgroundPath) {
+		this.backgroundPath = backgroundPath;
+	}
 	public Tstore(Integer serviceId, Long serviceDate) {
 		this.serviceId = serviceId;
 		this.serviceDate = serviceDate;

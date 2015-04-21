@@ -113,14 +113,6 @@
 											<td style="width: 35%"><span class="text-muted">
 													${system_setting['Email_Password'][1]} </span></td>
 										</tr>
- 										<tr>
-											<td style="width: 15%"><s:message code="token"/></td>
-											<td style="width: 50%"><a href="#" id="token"
-												data-type="password" data-pk="1"
-												data-original-title="Enter Token"> [hidden] </a></td>
-											<td style="width: 35%"><span class="text-muted">
-													${system_setting['Token'][1]} </span></td>
-										</tr> 
 										<tr>
 											<td style="width: 15%">Email Host</td>
 											<td style="width: 50%"><a href="#" id="email_host"
@@ -141,9 +133,42 @@
 											<td style="width: 15%">Login ErrorLocked</td>
 											<td style="width: 50%"><a href="#" id="login_error_locked"
 												data-type="text" data-pk="1"
-												data-original-title="Enter Login_Error_Locked="> ${system_setting['Login_Error_Locked'][0]} </a></td>
+												data-original-title="Enter Login_Error_Locked"> ${system_setting['Login_Error_Locked'][0]} </a></td>
 											<td style="width: 35%"><span class="text-muted">
 													${system_setting['Login_Error_Locked'][1]} </span></td>
+										</tr>
+										<tr>
+											<td style="width: 15%">Push Android API Key </td>
+											<td style="width: 50%"><a href="#" id="push_android_api_key"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Push_Android_API_Key"> ${system_setting['Push_Android_API_Key'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Push_Android_API_Key'][1]} </span></td>
+										</tr>
+										<tr>
+											<td style="width: 15%">Push Android Secret Key</td>
+											<td style="width: 50%"><a href="#" id="push_android_secret_key"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Push_Android_Secret_Key"> ${system_setting['Push_Android_Secret_Key'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Push_Android_Secret_Key'][1]} </span></td>
+										</tr>
+										<tr>
+											<td style="width: 15%">Push IOS API Key</td>
+											<td style="width: 50%"><a href="#" id="push_ios_api_key"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Push_IOS_API_Key"> ${system_setting['Push_IOS_API_Key'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Push_IOS_API_Key'][1]} </span></td>
+										</tr>
+										
+										<tr>
+											<td style="width: 15%">Push IOS Secret Key</td>
+											<td style="width: 50%"><a href="#" id="push_ios_secret_key"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Push_IOS_Secret_Key"> ${system_setting['Push_IOS_Secret_Key'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Push_IOS_Secret_Key'][1]} </span></td>
 										</tr>
 										
 									</tbody>

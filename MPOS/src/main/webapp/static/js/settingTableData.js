@@ -139,7 +139,73 @@ var SettingTable = function () {
 			}
 		});
 		
+		$('#push_android_api_key').editable({
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
+			type : 'text',
+			pk : 1,
+			disabled:true,
+			name : 'Push_Android_API_Key',
+			title : 'Enter Push_Android_API_Key',
+			success : function(data) {
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
+			}
+		});
 		
+		$('#push_android_secret_key').editable({
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
+			type : 'text',
+			pk : 1,
+			disabled:true,
+			name : 'Push_Android_Secret_Key',
+			title : 'Enter Push_Android_Secret_Key',
+			success : function(data) {
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
+			}
+		});
+		
+		$('#push_ios_api_key').editable({
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
+			type : 'text',
+			pk : 1,
+			disabled:true,
+			name : 'Push_IOS_API_Key',
+			title : 'Enter Push_IOS_API_Key',
+			success : function(data) {
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
+			}
+		});
+		
+		$('#push_ios_secret_key').editable({
+			url : rootURI + "settings/editsetting?rand=" + Math.random(),
+			type : 'text',
+			pk : 1,
+			disabled:true,
+			name : 'Push_IOS_Secret_Key',
+			title : 'Enter Push_IOS_Secret_Key',
+			success : function(data) {
+				var Obj=$.parseJSON(data);
+				if(Obj.status){
+					handleAlerts(Obj.info,"success","");
+				}else{
+					handleAlerts(Obj.info,"danger","");
+				}
+			}
+		});
 		
 	}	
                 

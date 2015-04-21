@@ -19,6 +19,7 @@ import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dao.AdminUserDao;
 import com.mpos.dao.StoreDao;
+import com.mpos.dto.ImageModel;
 import com.mpos.dto.TadminUser;
 import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
@@ -131,6 +132,16 @@ public class StoreServiceImpl implements StoreService {
 	public Tstore selectOne(String hql, Map<String, Object> params) {
 		// TODO Auto-generated method stub
 		return storeDao.getOne(hql, params);
+	}
+
+	public void updateImage(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		storeDao.updateImage(hql, params);
+	}
+
+	public void updateImage(ImageModel model) {
+		// TODO Auto-generated method stub
+		storeDao.updateImage(model);
 	}
 
 }

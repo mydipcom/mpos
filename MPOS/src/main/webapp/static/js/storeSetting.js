@@ -37,55 +37,43 @@ var StoreSetting = function() {
 
 		// global settings
 		$.fn.editable.defaults.inputclass = 'form-control';
-		$.fn.editable.defaults.url = '/post';
-
+		//$.fn.editable.defaults.url = '/post';
+		$.fn.editable.defaults.ajaxOptions={ type:'POST',dataType: 'json'};
 		$('#restaurant_name').editable({
-			url : rootURI + "settings/editsetting?rand=" + Math.random(),
-			type : 'text',
+			url : rootURI + "storeSetting/changeStoreName?rand=" + Math.random(),
 			disabled:true,
-			pk : 1,
-			name : 'Restaurant_Name',
-			title : 'Enter Restaurant Name',
-			success : function(data) {
-				var Obj=$.parseJSON(data);
-				if(Obj.status){
-					handleAlerts(Obj.info,"success","");
+			success : function(obj) {
+				if(obj.status){
+					handleAlerts(obj.info,"success","");
+					$('#storeName').html(obj.msg);
 				}else{
-					handleAlerts(Obj.info,"danger","");
+					handleAlerts(obj.info,"danger","");
 				}
 			}
 		});
 
 		$('#password').editable({
-			url : rootURI + "settings/editsetting?rand=" + Math.random(),
-			type : 'text',
-			pk : 1,
+			url : rootURI + "storeSetting/changeKey?rand=" + Math.random(),
 			disabled:true,
-			name : 'Access_Password',
-			title : 'Enter Password',
-			success : function(value) {
-				var Obj=$.parseJSON(value);
-				if(Obj.status){
-					handleAlerts(Obj.info,"success","");
+			success : function(res) {
+				if(res.status){
+					handleAlerts(res.info,"success","");
+					$('#publicKey').html(res.msg);
 				}else{
-					handleAlerts(Obj.info,"danger","");
+					handleAlerts(res.info,"danger","");
 				}
 			}
 		});
 
 		$('#token').editable({
 			url : rootURI + "settings/editsetting?rand=" + Math.random(),
-			type : 'text',
-			pk : 1,
 			disabled:true,
-			name : 'Token',
-			title : 'Enter Token',
-			success : function(value) {
-				var Obj=$.parseJSON(value);
-				if(Obj.status){
-					handleAlerts(Obj.info,"success","");
+			success : function(res) {
+				if(res.status){
+					handleAlerts(res.info,"success","");
+					$('#storeCurrency').html(res.msg);
 				}else{
-					handleAlerts(Obj.info,"danger","");
+					handleAlerts(res.info,"danger","");
 				}
 			}
 		});
@@ -102,26 +90,37 @@ var StoreSetting = function() {
 		});
 
 		$('#currency').editable({
-			url : rootURI + "settings/editsetting?rand=" + Math.random(),
-			name : 'Currency',
+			url : rootURI + "storeSetting/changeStoreCurrency?rand=" + Math.random(),
 			disabled:true,
 			inputclass : 'form-control input-medium',
 			source : currency,
-			success : function(value) {
-				var Obj=$.parseJSON(value);
-				if(Obj.status){
-					handleAlerts(Obj.info,"success","");
+			validate: function(value) {
+				  alert(value);
+				},
+			success : function(res) {
+				if(res.status){
+					handleAlerts(res.info,"success","");
+					$('#storeCurrency').html(res.msg);
 				}else{
-					handleAlerts(Obj.info,"danger","");
+					handleAlerts(res.info,"danger","");
 				}
-			}
+			},
+			  error: function(data) {
+			        var msg = '';
+			        if(data.errors) {              //validation error
+			            $.each(data.errors, function(k, v) { msg += k+": "+v+"<br>"; });  
+			        } else if(data.responseText) {   //ajax error
+			            msg = data.responseText; 
+			        }
+			        alert(msg);
+			    }
 		});
 		
 		//修改商店背景
 		$("#background_change").on("submit", function(event) {
 			 $.ajaxFileUpload( {
 	             "type": "POST", 
-	             "url": rootURI+"settings/editstoreimage?flag=1&rand="+Math.random(), 
+	             "url": rootURI+"storeSetting/uploadBackground?rand="+Math.random(), 
 	             "secureuri": false,
 	             "fileElementId":"backgroundimages", 
 	             "dataType": "json",
@@ -132,7 +131,7 @@ var StoreSetting = function() {
 	            		 if(resp.status){
 	            			 handleAlerts(resp.info,"success","");
 							 $('#background_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
-								 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 150px;\">"+
+								 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+
 	                                     "<img src=\""+$('#background_change').find('img').attr("src")+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
 										 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
 	                                     "<div><span class=\"btn default btn-file\"> <span class=\"fileinput-new\"> Select image </span>"+ 
@@ -160,7 +159,7 @@ var StoreSetting = function() {
 		$("#logo_change").on("submit", function(event) {
 			 $.ajaxFileUpload( {
 	             "type": "POST", 
-	             "url": rootURI+"settings/editstoreimage?flag=0&rand="+Math.random(), 
+	             "url": rootURI+"storeSetting/uploadLogo?rand="+Math.random(), 
 	             "secureuri": false,
 	             "fileElementId":"logo_image", 
 	             "dataType": "json",
@@ -171,7 +170,7 @@ var StoreSetting = function() {
 	            		 if(resp.status){
 	            			 handleAlerts(resp.info,"success","");
 							 $('#logo_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
-							 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 150px;\">"+
+							 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+
                                      "<img src=\""+$('#logo_change').find('img').attr("src")+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
 									 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
                                      "<div><span class=\"btn default btn-file\"> <span class=\"fileinput-new\"> Select image </span>"+ 

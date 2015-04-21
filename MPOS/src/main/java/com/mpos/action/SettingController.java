@@ -2,7 +2,6 @@ package com.mpos.action;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -99,21 +98,14 @@ public class SettingController extends BaseController {
 					tsetting.setValue(value);
 				}
 	            systemSettingService.updateSystemsetting(tsetting);
-	            systemSettingService.cachedSystemSettingData();
+	            systemSettingService.cachedSystemSet();
 	            resp.put("status", true);
 	            resp.put("info", getMessage(request,"operate.success"));
 			}
 		}catch(MposException be){
 			resp.put("status", false);
 			resp.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		} 
 		return JSON.toJSONString(resp);
 	}
 	
