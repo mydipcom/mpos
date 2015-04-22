@@ -1,5 +1,6 @@
 package com.mpos.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,16 +90,21 @@ public class LanguageServiceImpl implements LanguageService{
 	}
 
 		public List<Tlanguage> getLangListByStoreId(Integer storeId) {
+			List<Tlanguage> langs = new ArrayList<Tlanguage>();
 			Map<String, Object> params = new HashMap<String, Object>();
 			String query = "select storeLangId from Tstore where storeId=:storeId";
 			String queryList = "from Tlanguage where status=:status and id in(:ids)";
 			params.put("storeId", storeId);
 			String storeLangIds = (String) languageDao.getObject(query, params);
 			params.clear();
-			params.put("status", true);
-			String[] ids =  storeLangIds.split(",");
-			params.put("ids",ConvertTools.stringArr2IntArr(ids));
-			return languageDao.select(queryList, params);
+			if(!storeLangIds.isEmpty()&&!storeLangIds.equals(",")){
+				params.put("status", true);
+				String[] ids =  storeLangIds.split(",");
+				params.put("ids",ConvertTools.stringArr2IntArr(ids));
+				langs= languageDao.select(queryList, params);
+			}
+			
+			return langs;
 		}
 
 

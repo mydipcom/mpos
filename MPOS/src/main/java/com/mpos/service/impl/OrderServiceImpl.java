@@ -34,10 +34,11 @@ public class OrderServiceImpl implements OrderService {
 				if(val!=null&&!val.isEmpty()){
 					if(key=="creater"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getString(key)));
-					}
-					else if(key=="orderStatus"){
+					}else if(key=="orderStatus"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
 					}else if(key=="orderId"){
+						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
+					}else if(key=="storeId"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
 					}
 				}

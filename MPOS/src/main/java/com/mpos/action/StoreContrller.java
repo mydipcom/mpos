@@ -61,27 +61,61 @@ public class StoreContrller extends BaseController {
 	 * 返回消息
 	 */
 	private String info ="";
-	@RequestMapping(value="getStoreInfo",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView getStoreSetting(HttpServletRequest request){
 		Integer storeId = getSessionStoreId(request);
 		ModelAndView mav = new ModelAndView();
 		try {
-			List<Tlanguage> languages = languageService.loadAllTlanguage();
-			Tstore store = storeService.get(storeId);
-			String logoPath = getImagePath(store.getStoreLogo(), storeId, request, "logo");
-			String backgroundPath = getImagePath(store.getStoreLogo(), storeId, request, "background");
-			store.setStoreLogo(null);
-			store.setStoreBackground(null);
-			store.setLogoPath(logoPath);
-			store.setBackgroundPath(backgroundPath);
-			mav.addObject("store", store);
-			mav.addObject("langs", languages);
-			mav.addObject("langIds", store.getStoreLangId());
+			putInfo(request, storeId, mav);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		mav.setViewName("store/storesetting");
 		return mav;
+	}
+
+	private void putInfo(HttpServletRequest request, Integer storeId,
+			ModelAndView mav) {
+		List<Tlanguage> languages = languageService.loadAllTlanguage();
+		String hql = "select new Tstore(storeId,storeName) from Tstore";
+		List<Tstore> stores = storeService.select(hql, null);
+		Tstore store = getInfo(request, storeId);
+		mav.addObject("store", store);
+		mav.addObject("langs", languages);
+		mav.addObject("role", getSessionUser(request).getAdminRole().getRoleId());
+		mav.addObject("stores",stores);
+		mav.addObject("langIds", store.getStoreLangId());
+	}
+	
+	@RequestMapping(value="search/{storeId}",method=RequestMethod.GET)
+	public ModelAndView getStoreSetting(HttpServletRequest request,@PathVariable Integer storeId){
+		if(storeId == null||storeId==-1){
+			storeId = getSessionStoreId(request);
+		}
+		ModelAndView mav = new ModelAndView();
+		try {
+			TadminUser user = getSessionUser(request);
+			if(user.getAdminRole().getRoleId()==1){
+				putInfo(request, storeId, mav);
+				mav.setViewName("store/storesetting");
+			}else{
+				mav.setViewName("login");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+
+	private Tstore getInfo(HttpServletRequest request, Integer storeId) {
+		Tstore store = storeService.get(storeId);
+		String logoPath = getImagePath(store.getStoreLogo(), storeId, request, "logo");
+		String backgroundPath = getImagePath(store.getStoreLogo(), storeId, request, "background");
+		store.setStoreLogo(null);
+		store.setStoreBackground(null);
+		store.setLogoPath(logoPath);
+		store.setBackgroundPath(backgroundPath);
+		return store;
 	}
 	/**
 	 * 上传或者跟新logo
@@ -252,6 +286,11 @@ public class StoreContrller extends BaseController {
 		//更新参数
 		Map<String, Object> params = getHashMap();
 		params.put("storeId", getSessionStoreId(request));
+		if(storeLangIds.equals(",")){
+			storeLangIds="";
+		}else{
+			storeLangIds = storeLangIds.substring(storeLangIds.indexOf(",")+1);
+		}
 		params.put("storeLangId", storeLangIds);
 		String updateLangHql = "update Tstore set storeLangId=:storeLangId where storeId=:storeId";
 		try {

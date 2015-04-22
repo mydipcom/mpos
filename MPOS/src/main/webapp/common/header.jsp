@@ -10,7 +10,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="<c:url value="/"/>home">
-			<img src="../assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+			<img src="${pageContext.request.contextPath}/assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
 			</a>
 			<div class="menu-toggler sidebar-toggler hide">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -28,18 +28,18 @@
 				<!-- BEGIN LANGUAGE BAR -->
 				<li class="dropdown dropdown-language">
 					<a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="<s:message code="locale.flag.img"/>">
+					<img alt="" src="${pageContext.request.contextPath}<s:message code="locale.flag.img"/>">
 					<span class="langname"><s:message code="locale.langname"/></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">
 					    <li>
 							<a href="<c:url value="/"/>settings/locale?locale=en_US">
-							<img alt="" src="../assets/global/img/flags/us.png"> US </a>
+							<img alt="" src="${pageContext.request.contextPath}/assets/global/img/flags/us.png"> US </a>
 						</li>
 						<li>
 							<a href="<c:url value="/"/>settings/locale?locale=zh_CN">
-							<img alt="" src="../assets/global/img/flags/cn.png"> Chinese </a>
+							<img alt="" src="${pageContext.request.contextPath}/assets/global/img/flags/cn.png"> Chinese </a>
 						</li>						
 					</ul>
 				</li>
@@ -47,7 +47,7 @@
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" class="img-circle hide1" src="<%=request.getContextPath()%>/userprofile/getAvatar"/>
+					<img alt="" class="img-circle hide1" src="${pageContext.request.contextPath}/userprofile/getAvatar"/>
 					<span class="username username-hide-on-mobile">
 					${user.adminId} </span>
 					<i class="fa fa-angle-down"></i>

@@ -39,6 +39,7 @@ import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.Tproduct;
 import com.mpos.dto.TproductAttribute;
+import com.mpos.dto.Tstore;
 import com.mpos.model.AddAttributevaleModel;
 import com.mpos.model.AddProductModel;
 import com.mpos.model.CategoryAttributeModel;
@@ -57,6 +58,7 @@ import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
 import com.mpos.service.ProductAttributeService;
 import com.mpos.service.ProductReleaseService;
+import com.mpos.service.StoreService;
 
 @Controller
 @Scope("session")
@@ -95,6 +97,8 @@ public class GoodsController extends BaseController{
 	
 	@Autowired
 	private AttributeValueService attributeValueService;
+	@Autowired
+	private StoreService storeService;
 	
 	private LinkedHashMap<Integer,FileMeta> filesMap = new LinkedHashMap<Integer,FileMeta>();
 	private int imgIndex=0;	
@@ -112,6 +116,10 @@ public class GoodsController extends BaseController{
 		List<MenuModel> menus=menuService.getNoChildrenMenus(language,getSessionUser(request).getStoreId());
 	//	List<Tmenu> menus=menuService.getAllMenu();
 		request.getSession().setAttribute("addsussess", null);
+		String hql = "select new Tstore(storeId,storeName) from Tstore";
+		List<Tstore> stores = storeService.select(hql, null);
+		mav.addObject("role", getSessionUser(request).getAdminRole().getRoleId());
+		mav.addObject("stores",stores);
 		mav.addObject("category", categorys);
 		mav.addObject("menu", menus);
 		mav.setViewName("goods/goods");

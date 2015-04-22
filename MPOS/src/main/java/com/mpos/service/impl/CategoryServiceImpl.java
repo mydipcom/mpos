@@ -117,6 +117,8 @@ public class CategoryServiceImpl implements CategoryService {
 						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
 					}else if(key.equals("status")){
 						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
+					}else if(key.equals("storeId")){
+						criterionList.add(Restrictions.eq(key, json.getInteger(key)));
 					}else{
 						criterionList.add(Restrictions.eq(key, json.get(key)));
 					}

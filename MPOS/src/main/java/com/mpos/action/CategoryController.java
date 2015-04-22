@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ import com.mpos.dto.Tcategory;
 import com.mpos.dto.TcategoryAttribute;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
+import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.AttributeValueService;
@@ -36,6 +38,7 @@ import com.mpos.service.CategoryAttributeService;
 import com.mpos.service.CategoryService;
 import com.mpos.service.LanguageService;
 import com.mpos.service.LocalizedFieldService;
+import com.mpos.service.StoreService;
 
 
 @Controller
@@ -55,6 +58,8 @@ public class CategoryController extends BaseController {
 	private LocalizedFieldService localizedFieldService;
 	@Resource
 	private AttributeValueService attributeValueService;
+	@Autowired
+	private StoreService storeService;
 	/**
 	 * 操作内容
 	 */
@@ -69,6 +74,10 @@ public class CategoryController extends BaseController {
 	public ModelAndView category(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		List<Tlanguage> languages = languageService.getLangListByStoreId(getSessionUser(request).getStoreId());
+		String hql = "select new Tstore(storeId,storeName) from Tstore";
+		List<Tstore> stores = storeService.select(hql, null);
+		mav.addObject("role", getSessionUser(request).getAdminRole().getRoleId());
+		mav.addObject("stores",stores);
 		mav.addObject("lanList", languages);
 		mav.setViewName("category/category");
 		return mav;

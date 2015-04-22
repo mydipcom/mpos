@@ -208,6 +208,8 @@ public class MenuServiceImpl implements MenuService {
 						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
 					}else if(key=="status"){
 						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
+					}else if(key=="storeId"){
+						criterionList.add(Restrictions.eq(key, json.getInteger(key)));
 					}else{
 						criterionList.add(Restrictions.eq(key, json.get(key)));
 					}

@@ -87,12 +87,29 @@
 					<form id="searchForm" name="searchForm" action="categoryList" class="form-horizontal" method="post">
 					<input type="hidden" name="status" value="true"/>
 					<div class="row">
-						<div class="col-md-6">					
+						<div class="col-md-4">					
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="category.name"/></label>
 								<div class="col-md-9">
 									<input name="name" type="text" class="form-control">
 								</div>
+							</div>
+						</div>
+						
+							<div class="col-md-4">					
+							<div class="form-group">
+							<c:if test="${role==1}">
+							<label class="col-md-3 control-label">Store Name</label>
+								<div class="col-md-9">
+									<select name="storeId"  class="form-control">
+										<c:if test="${not empty stores}">
+										<c:forEach var="store" items="${stores }">
+										<option value="${store.storeId}">${store.storeName}</option>
+										</c:forEach>
+										</c:if>
+									</select>					
+								</div>
+								</c:if>
 							</div>
 						</div>
 						

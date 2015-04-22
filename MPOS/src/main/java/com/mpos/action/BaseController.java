@@ -227,8 +227,12 @@ public class BaseController {
 		Integer storeId = getSessionUser(request).getStoreId();
 			if(json==null){
 				json = new JSONObject();
+				json.put("storeId", storeId);
+			}else{
+				if(json.get("storeId")==null){
+					json.put("storeId", storeId);
+				}
 			}
-			json.put("storeId", storeId);
 		dtp.setsSearch(JSON.toJSONString(json));
 	}
 	/**

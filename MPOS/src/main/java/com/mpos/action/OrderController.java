@@ -1,7 +1,9 @@
 package com.mpos.action;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -22,6 +24,7 @@ import com.mpos.commons.SystemConstants;
 import com.mpos.dto.Torder;
 import com.mpos.dto.TorderItem;
 import com.mpos.dto.Tpromotion;
+import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.OrderModel;
 import com.mpos.model.PagingData;
@@ -29,6 +32,7 @@ import com.mpos.service.GoodsService;
 import com.mpos.service.OrderItemService;
 import com.mpos.service.OrderService;
 import com.mpos.service.PromotionService;
+import com.mpos.service.StoreService;
 @Controller
 @RequestMapping("order")
 public class OrderController extends BaseController{
@@ -46,10 +50,16 @@ public class OrderController extends BaseController{
     
     @Autowired
    private GoodsService goodsService;
+    @Resource
+    private StoreService storeService;
     
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView promotion(){
+	public ModelAndView promotion(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
+		String hql = "select new Tstore(storeId,storeName) from Tstore";
+		List<Tstore> stores = storeService.select(hql, null);
+		mav.addObject("role", getSessionUser(request).getAdminRole().getRoleId());
+		mav.addObject("stores",stores);
 		mav.setViewName("order/order");
 		return mav;
 	}

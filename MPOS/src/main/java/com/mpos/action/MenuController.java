@@ -31,6 +31,7 @@ import com.mpos.commons.MposException;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
 import com.mpos.dto.Tmenu;
+import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.MenuModel;
 import com.mpos.model.PageModel;
@@ -38,6 +39,7 @@ import com.mpos.model.PagingData;
 import com.mpos.service.LanguageService;
 import com.mpos.service.LocalizedFieldService;
 import com.mpos.service.MenuService;
+import com.mpos.service.StoreService;
 
 @Controller
 @RequestMapping(value = "/menu")
@@ -52,15 +54,22 @@ public class MenuController extends BaseController {
 	private LanguageService languageService;
 	@Resource
 	private LocalizedFieldService localizedFieldService;
+	@Resource
+	private StoreService storeService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView menu(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		List<Tlanguage> languages = languageService.getLangListByStoreId(getSessionUser(request).getStoreId());
+		String hql = "select new Tstore(storeId,storeName) from Tstore";
+		List<Tstore> stores = storeService.select(hql, null);
+		mav.addObject("role", getSessionUser(request).getAdminRole().getRoleId());
+		mav.addObject("stores",stores);
 		mav.addObject("lanList", languages);
 		mav.setViewName("menu/menu");
 		return mav;
 	}
+	
 
 	@RequestMapping(value = "/menuList", method = RequestMethod.GET)
 	@ResponseBody

@@ -213,7 +213,13 @@ var StoreSetting = function() {
 
 	};
 	
-	
+	$("#search").click(function(){
+		var storeId = "-1";
+		if($("#storeId").val()!=null&&$("#storeId").val()!=''){
+			storeId = $("#storeId").val();
+		}
+		window.location.href=rootURI + "storeSetting/search/"+storeId;
+	});
 	$('#editLan').click(function() {
 		var str = document.getElementsByName("storeLangIds");
 		var chestr=",";
@@ -254,7 +260,7 @@ var StoreSetting = function() {
 		// main function to initiate the module
 		init : function(rootPath) {
 			rootURI = rootPath;
-          
+         // alert(rootPath);
 			// init editable elements
 			initEditables();
 

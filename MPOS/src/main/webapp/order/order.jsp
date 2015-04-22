@@ -135,6 +135,22 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-6">					
+							<div class="form-group">
+							<c:if test="${role==1}">
+							<label class="col-md-3 control-label">Store Name</label>
+								<div class="col-md-9">
+									<select name="storeId"  class="form-control">
+										<c:if test="${not empty stores}">
+										<c:forEach var="store" items="${stores }">
+										<option value="${store.storeId}">${store.storeName}</option>
+										</c:forEach>
+										</c:if>
+									</select>					
+								</div>
+								</c:if>
+							</div>
+						</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">

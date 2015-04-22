@@ -144,4 +144,9 @@ public class StoreServiceImpl implements StoreService {
 		storeDao.updateImage(model);
 	}
 
+	public List<Tstore> loadAll() {
+		// TODO Auto-generated method stub
+		return storeDao.LoadAll();
+	}
+
 }
