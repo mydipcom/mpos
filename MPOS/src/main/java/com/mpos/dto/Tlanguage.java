@@ -79,6 +79,10 @@ public class Tlanguage implements java.io.Serializable {
 	public void setSort(int sort) {
 		this.sort = sort;
 	}
+	
+	public String getIdStr(){
+		return id+"";
+	}
 
 	@Override
 	public String toString() {

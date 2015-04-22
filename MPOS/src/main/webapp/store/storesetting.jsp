@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -131,14 +132,28 @@
 											<td style="width: 35%"><span class="text-muted" id="publicKey">
 													${store.publicKey} </span></td>
 										</tr>
-<%-- 										<tr>
-											<td style="width: 15%"><s:message code="token"/></td>
-											<td style="width: 50%"><a href="#" id="token"
-												data-type="password" data-pk="1"
-												data-original-title="Enter Token"> [hidden] </a></td>
-											<td style="width: 35%"><span class="text-muted">
-													${store_setting['Token'][1]} </span></td>
-										</tr> --%>
+										<tr>
+											<td style="width: 15%">Language Setting</td>
+											<td style="width: 50%">
+												<c:if test="${not empty langs}">
+													<c:forEach var="lan" items="${langs }">
+													<c:if test="${langIds.contains(lan.idStr)==true}">
+													<!-- <label class="checkbox-inline"> -->
+															<input type="checkbox" name="storeLangIds" value="${lan.id}" checked/>${lan.name}
+														<!-- </label> -->
+													</c:if>
+													<c:if test="${langIds.contains(lan.idStr)==false}">
+													<!-- <label class="checkbox-inline"> -->
+															<input type="checkbox" name="storeLangIds" value="${lan.id}"/>${lan.name}
+														<!-- </label> -->
+													</c:if>
+													</c:forEach>
+													<input type="button" class="btn green" value="Edit"  id="editLan"/>
+												</c:if>
+											</td>
+											<td style="width: 35%"><span class="text-muted" id="lanMsg" >
+													Language Setting</span></td>
+										</tr>
 										<tr>
 											<td><s:message code="currency"/></td>
 											<td><a href="#" id="currency" data-type="select2"

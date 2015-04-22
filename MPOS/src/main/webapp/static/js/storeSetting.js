@@ -214,7 +214,42 @@ var StoreSetting = function() {
 	};
 	
 	
-
+	$('#editLan').click(function() {
+		var str = document.getElementsByName("storeLangIds");
+		var chestr=",";
+		for (i=0;i<str.length;i++)
+		{
+		  if(str[i].checked == true)
+		  {
+		   chestr+=str[i].value+",";
+		  }
+		}
+		$.ajax({
+	        "dataType": 'json', 
+	        "type":'GET',
+	        "async":false,
+	        "url": rootURI+"storeSetting/changeLangSet/"+chestr+"?rand="+Math.random(), 
+	        "success": function(resp,status){
+	       	 if(status == "success"){  
+	       		 if(resp.status){
+	       			/*for (i=0;i<str.length;i++){
+	       				var che = str[i];
+	       				if(chestr.indexOf(che.value)>0){
+	       					che.checked=true;
+	       				}else{
+	       					che.checked=false;
+	       				}
+	       			}*/
+	       				handleAlerts(resp.info,"success","");
+					}else{
+						handleAlerts(obj.info,"danger","");
+					}
+				}             	 
+	        }
+	      });
+	});
+	
+	
 	return {
 		// main function to initiate the module
 		init : function(rootPath) {

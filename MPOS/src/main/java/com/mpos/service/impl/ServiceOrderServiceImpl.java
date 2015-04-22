@@ -61,6 +61,7 @@ public class ServiceOrderServiceImpl implements ServiceOrderService{
 						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
 					}else if(key.equals("status")){
 						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
+					}else if(key.equals("startTime")||key.equals("endTime")){
 					}else{
 						criterionList.add(Restrictions.eq(key, json.get(key)));
 					}
@@ -70,7 +71,7 @@ public class ServiceOrderServiceImpl implements ServiceOrderService{
 			String endTime = json.getString("endTime");
 			if((startTime!=null&&!startTime.isEmpty())&&(endTime!=null&&!endTime.isEmpty())){
 				try {
-					criterionList.add(Restrictions.between("createTime", ConvertTools.dateStringToLong(startTime), ConvertTools.dateStringToLong(endTime)));
+					criterionList.add(Restrictions.between("createTime", ConvertTools.dateString2Long(startTime), ConvertTools.dateString2Long(endTime)));
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}

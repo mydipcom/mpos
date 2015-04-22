@@ -94,6 +94,11 @@ public class ConvertTools {
 		return sdf.parse(date).getTime();
 	}
 	
+	public static long dateString2Long(String date) throws ParseException{
+		SimpleDateFormat sdf =new SimpleDateFormat("dd-mm-yyyy");
+		return sdf.parse(date).getTime();
+	}
+	
 	public static long longTimeAIntDay(long time,int days){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(time);
@@ -102,9 +107,12 @@ public class ConvertTools {
 	}
 	
 	public static void main(String[] args) {
-		long now = System.currentTimeMillis();
-		System.out.println(longToDateString(now));
-		System.out.println(longToDateString(longTimeAIntDay(now,20)));
+		try {
+			System.out.println(dateString2Long("22/04/2015"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
     /**  

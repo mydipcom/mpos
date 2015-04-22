@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,9 +28,11 @@ import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.ImageModel;
 import com.mpos.dto.TadminUser;
+import com.mpos.dto.Tlanguage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.TserviceOrder;
 import com.mpos.dto.Tstore;
+import com.mpos.service.LanguageService;
 import com.mpos.service.ServiceOrderService;
 import com.mpos.service.ServiceService;
 import com.mpos.service.StoreService;
@@ -47,6 +51,8 @@ public class StoreContrller extends BaseController {
 	private ServiceService serviceService;
 	@Autowired
 	private ServiceOrderService serviceOrderService;
+	@Autowired
+	private LanguageService languageService;
 	/**
 	 * 返回页面状态
 	 */
@@ -60,6 +66,7 @@ public class StoreContrller extends BaseController {
 		Integer storeId = getSessionStoreId(request);
 		ModelAndView mav = new ModelAndView();
 		try {
+			List<Tlanguage> languages = languageService.loadAllTlanguage();
 			Tstore store = storeService.get(storeId);
 			String logoPath = getImagePath(store.getStoreLogo(), storeId, request, "logo");
 			String backgroundPath = getImagePath(store.getStoreLogo(), storeId, request, "background");
@@ -68,6 +75,8 @@ public class StoreContrller extends BaseController {
 			store.setLogoPath(logoPath);
 			store.setBackgroundPath(backgroundPath);
 			mav.addObject("store", store);
+			mav.addObject("langs", languages);
+			mav.addObject("langIds", store.getStoreLangId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -236,9 +245,9 @@ public class StoreContrller extends BaseController {
 	 * 修改客户语言配置
 	 * @return
 	 */
-	@RequestMapping(value="/changeLangSet",method=RequestMethod.POST)
+	@RequestMapping(value="/changeLangSet/{storeLangIds}",method=RequestMethod.GET)
 	@ResponseBody
-	public String changeLangSet(HttpServletRequest request,String storeLangIds){
+	public String changeLangSet(HttpServletRequest request,@PathVariable String storeLangIds){
 		Map<String, Object> res = getHashMap();
 		//更新参数
 		Map<String, Object> params = getHashMap();
@@ -252,6 +261,8 @@ public class StoreContrller extends BaseController {
 			info = getMessage(request, be.getErrorID(), be.getMessage());
 			status = false;
 		}
+		res.put("status", status);
+		res.put("info", info);
 		return JSON.toJSONString(res);
 	}
 	

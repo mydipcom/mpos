@@ -28,7 +28,7 @@ public class ServiceOrderController extends BaseController {
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView trade(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("mylog/tradelog");
+		mav.setViewName("trade/tradelog");
 		return mav;
 	}
 	
