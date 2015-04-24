@@ -123,7 +123,7 @@ public class LoginController extends BaseController {
 			if(StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()==1){
 				toUrl="/home";
 			}else if (StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()!=1) {
-				toUrl="/home";	
+				toUrl="/menu";	
 			}			
 			mav.setViewName("redirect:"+toUrl);
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
