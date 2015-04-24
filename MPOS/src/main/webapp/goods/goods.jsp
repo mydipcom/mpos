@@ -123,7 +123,7 @@
 							<c:if test="${role==1}">
 							<label class="col-md-3 control-label">Store Name</label>
 								<div class="col-md-9">
-									<select name="storeId"  class="form-control">
+									<select name="storeId"  class="form-control" id="storeId">
 										<c:if test="${not empty stores}">
 										<c:forEach var="store" items="${stores }">
 										<option value="${store.storeId}">${store.storeName}</option>
@@ -204,7 +204,7 @@
 									<i class="fa fa-edit"></i><s:message code="product.list.table.title"/>
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm"  href="<c:url value="/"/>goods/addgoods"><i class="fa fa-plus"></i> <s:message code="product.add" /></a>
+								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#add_good" id="openAddGoodModal"><i class="fa fa-plus" ></i> <s:message code="product.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditgoodsModal"><i class="fa fa-pencil"></i> <s:message code="product.edit" /></a>
 								    <%-- <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActivegoodsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a> --%>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeletegoodsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>

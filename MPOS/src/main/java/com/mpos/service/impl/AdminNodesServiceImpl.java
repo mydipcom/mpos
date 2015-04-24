@@ -15,6 +15,7 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,6 +207,8 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 				if(val!=null&&!val.isEmpty()){
 					if(key=="isMenu"||key=="status"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
+					}else if(key=="name"){
+						criterionsList.add(Restrictions.like(key, jsonObj.getString(key), MatchMode.ANYWHERE));
 					}					
 					else{
 						criterionsList.add(Restrictions.eq(key, jsonObj.get(key)));

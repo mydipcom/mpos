@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
+import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
 import com.mpos.dto.Ttable;
 import com.mpos.model.DataTableParamter;
@@ -26,6 +27,14 @@ public class TableController extends BaseController {
 	TableService tableService;
 	
 	private Boolean ok = true;
+	/**
+	 * 操作内容
+	 */
+	private String handleContent = "";
+	/**
+	 * 日志级别
+	 */
+	private short level = LogManageTools.NOR_LEVEL;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView table(){
@@ -55,11 +64,15 @@ public class TableController extends BaseController {
 			addStore(table,request);
 			table.setCreateTime(System.currentTimeMillis());
 			tableService.create(table);
+			handleContent = "添加桌号:"+table.getTableName()+"成功;新增ID为:"+table.getId();
 			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			ok = false;
 			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}
+			handleContent = "添加桌号:"+table.getTableName()+"失败;";
+			level = LogManageTools.FAIL_LEVEL;
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", ok);
 		return JSON.toJSONString(res);
 	}
@@ -68,15 +81,20 @@ public class TableController extends BaseController {
 	@ResponseBody
 	public String deleteTable(HttpServletRequest request,@PathVariable String ids){
 		JSONObject res = new JSONObject();
+		Integer[] idArr=null;
 		try {
 			String[] idstrArr=ids.split(",");		
-			Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
+			idArr=ConvertTools.stringArr2IntArr(idstrArr);
 			tableService.deleteAll(idArr);
+			handleContent = "删除桌号:"+idArr.toString()+"成功;";
 			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			ok = false;
 			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}
+			handleContent = "删除桌号:"+idArr.toString()+"失败;";
+			level = LogManageTools.FAIL_LEVEL;
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", ok);
 		return JSON.toJSONString(res);
 	}
@@ -88,11 +106,15 @@ public class TableController extends BaseController {
 		try {
 			addStore(table,request);
 			tableService.update(table);
+			handleContent = "修改桌号:"+table.getTableName()+"成功";
 			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			ok = false;
 			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}
+			handleContent = "修改桌号:"+table.getTableName()+"失败";
+			level = LogManageTools.FAIL_LEVEL;
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", ok);
 		return JSON.toJSONString(res);
 	}

@@ -1,4 +1,6 @@
 package com.mpos.commons;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.mpos.dto.TadminLog;
@@ -28,13 +30,24 @@ public class LogManageTools {
 		reqUrl=request.getRequestURI();
 		reqUrl=reqUrl.split("/")[2];
 		String reqPath=reqMethod+"@"+"/"+reqUrl;
+		
 		Integer nodeId = SystemConfig.STORE_NODES_URL_MAP.get(reqPath);
 	    TadminLog adminLog = new TadminLog();
 	    if(nodeId==null){
-	    	adminLog.setNodeId(-1);
-	    }else{
-	    	adminLog.setNodeId(nodeId);
+	    	Set<String> keys=SystemConfig.STORE_NODES_URL_MAP.keySet();
+			for (String key : keys) {
+				if(key.endsWith("*")){
+					if(reqPath.startsWith(key.substring(0, key.length()-2))){
+						nodeId=SystemConfig.STORE_NODES_URL_MAP.get(key);
+						break;
+					}
+				}
+			}
+			if(nodeId==null){
+				nodeId=-1;
+			}
 	    }
+	    adminLog.setNodeId(nodeId);
 	    adminLog.setLevel(level);
 		adminLog.setCreatedTime(time);
 		adminLog.setAdminId(adminId);

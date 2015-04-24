@@ -23,6 +23,12 @@ public class TadminRole implements Serializable {
 	public TadminRole() {
 	}
 	
+	public TadminRole(int roleId) {
+		this.roleId = roleId;
+	}
+
+
+
 	public TadminRole(int roleId,String roleName,int pid,boolean status) {
 		this.roleId=roleId;
 		this.roleName=roleName;

@@ -158,4 +158,9 @@ public TadminUser getTadminUsersByEmail(String email) {
 	return adminUserDao.findUnique("email", email);
 }
 
+public TadminUser getUserByStoreId(Integer storeId) {
+	// TODO Auto-generated method stub
+	return adminUserDao.findUnique("storeId", storeId);
+}
+
 }

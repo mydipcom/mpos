@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
+import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.TlocalizedField;
@@ -56,6 +57,15 @@ public class MenuController extends BaseController {
 	private LocalizedFieldService localizedFieldService;
 	@Resource
 	private StoreService storeService;
+	
+	/**
+	 * 操作内容
+	 */
+	private String handleContent = "";
+	/**
+	 * 日志级别
+	 */
+	private short level = LogManageTools.NOR_LEVEL;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView menu(HttpServletRequest request) {
@@ -94,13 +104,17 @@ public class MenuController extends BaseController {
 			addStore(page.getMenu(),request);
 			menuService.saveMenu(page.getMenu());
 			localizedFieldService.createLocalizedFieldList(page.setOneTlocalizedFieldValue(page.getMenu()));
+			handleContent = "添加客户端菜单:"+page.getMenu().getTitle()+"成功;新增ID为:"+page.getMenu().getMenuId();
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			respJson.put("status", false);
 			respJson.put("info",
 					getMessage(request, be.getErrorID(), be.getMessage()));
+			handleContent = "添加客户端菜单:"+page.getMenu().getTitle()+"失败";
+			level = LogManageTools.FAIL_LEVEL;
 		}
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);
 	}
 
@@ -129,12 +143,16 @@ public class MenuController extends BaseController {
 			menuService.updateMenu(page.getMenu());
 			List<TlocalizedField> ls = page.setOneTlocalizedFieldValue(page.getMenu());
 			localizedFieldService.updateLocalizedFieldList(ls);
+			handleContent = "修改客户端菜单:"+page.getMenu().getTitle()+"成功;";
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			respJson.put("status", false);
 			respJson.put("info",getMessage(request, be.getErrorID(), be.getMessage()));
+			handleContent = "修改客户端菜单:"+page.getMenu().getTitle()+"失败;";
+			level = LogManageTools.FAIL_LEVEL;
 		}
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);
 	}
 
@@ -147,13 +165,17 @@ public class MenuController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try {
 			menuService.deleteMenuByIds(idArr);
+			handleContent = "删除菜单:"+idArr.toString()+"成功;";
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
 			respJson.put("status", false);
 			respJson.put("info",
 					getMessage(request, be.getErrorID(), be.getMessage()));
+			handleContent = "删除菜单:"+idArr.toString()+"失败;";
+			level = LogManageTools.FAIL_LEVEL;
 		}
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);
 	}
 

@@ -280,7 +280,7 @@ public class GoodsServiceImpl implements GoodsService{
 			//add productReleaseService
 			Integer verId=productReleaseDao.getMaxId("id",model.getStoreId());
 			TproductRelease productrelease;
-			if (verId!=0) {
+			if (verId!=null&&verId!=0) {
 				 productrelease=productReleaseDao.get(verId);
 				 if(productrelease!=null&&!productrelease.isIsPublic()){
 					 String ids=productrelease.getProducts();
@@ -420,7 +420,7 @@ public class GoodsServiceImpl implements GoodsService{
 			//add productReleaseService
 			Integer verId=productReleaseDao.getMaxId("id",model.getStoreId());
 			TproductRelease productrelease;
-			if (verId!=0) {
+			if (verId!=null&&verId!=0) {
 				 productrelease=productReleaseDao.get(verId);
 				 if(productrelease!=null&&!productrelease.isIsPublic()){
 					 String ids=productrelease.getProducts();

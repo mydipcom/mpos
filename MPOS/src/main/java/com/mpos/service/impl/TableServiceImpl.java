@@ -120,7 +120,9 @@ public class TableServiceImpl implements TableService {
 		String[] table = tableName.split(",");
 		Integer id = Integer.valueOf(table[1]);
 		//Ttable tt = tableDao.findUnique("tableName", table[0]);
-		Ttable tt = tableDao.findUnique(new String[]{"tableName","storeId"}, new String[]{tableName,storeId+""});;
+		Criteria criteria = tableDao.createCriteria();
+		criteria.add(Restrictions.eq("tableName", table[0])).add(Restrictions.eq("storeId", storeId));
+		Ttable tt = (Ttable) criteria.uniqueResult();//tableDao.findUnique(new String[]{"tableName","storeId"}, new String[]{tableName,storeId+""});;
 		if(tt==null||tt.getId()==id){
 			return true;
 		}

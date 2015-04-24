@@ -124,19 +124,20 @@ var GoodsTable = function () {
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 	            var id = data.id;
-	          //  window.location.href=rootURI+"goods/editgoods/"+id;
-	            location.href=rootURI+"editgoods/"+id;
-	          
-	            
-	            /*
-	            var email =data.email;
-	            var createby=data.createdBy;
-	            var creatime=data.createdTimeStr;
-	            $("#editUsersForm input[name='adminId']").val(adminId);
-	            $("#editUsersForm input[name='email']").val(email);
-	            $("#editUsersForm input[name='createdBy']").val(createby);
-	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);*/
+	            var storeId = $("#storeId").val();
+	            if(storeId==null||storeId==''||storeId<0){
+	            	storeId = -1;
+	            }
+	            location.href=rootURI+"editgoods/"+id+"?storeId="+storeId;
 			}
+		});
+		
+		$("#openAddGoodModal").on("click",function(event){
+	            var storeId = $("#storeId").val();
+	            if(storeId==null||storeId==''||storeId<0){
+	            	storeId = -1;
+	            }
+	            location.href=rootURI+"goods/addgoods?storeId="+storeId;
 		});
 				           
 		//全选

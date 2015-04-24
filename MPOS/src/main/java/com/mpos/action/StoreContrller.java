@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.mpos.commons.ConvertTools;
+import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
@@ -32,6 +33,7 @@ import com.mpos.dto.Tlanguage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.TserviceOrder;
 import com.mpos.dto.Tstore;
+import com.mpos.service.AdminUserService;
 import com.mpos.service.LanguageService;
 import com.mpos.service.ServiceOrderService;
 import com.mpos.service.ServiceService;
@@ -53,6 +55,8 @@ public class StoreContrller extends BaseController {
 	private ServiceOrderService serviceOrderService;
 	@Autowired
 	private LanguageService languageService;
+	@Autowired
+	private AdminUserService adminUserService;
 	/**
 	 * 返回页面状态
 	 */
@@ -61,6 +65,14 @@ public class StoreContrller extends BaseController {
 	 * 返回消息
 	 */
 	private String info ="";
+	/**
+	 * 操作内容
+	 */
+	private String handleContent = "";
+	/**
+	 * 日志级别
+	 */
+	private short level = LogManageTools.NOR_LEVEL;
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView getStoreSetting(HttpServletRequest request){
 		Integer storeId = getSessionStoreId(request);
@@ -75,7 +87,7 @@ public class StoreContrller extends BaseController {
 	}
 
 	private void putInfo(HttpServletRequest request, Integer storeId,
-			ModelAndView mav) {
+			ModelAndView mav) throws IOException {
 		List<Tlanguage> languages = languageService.loadAllTlanguage();
 		String hql = "select new Tstore(storeId,storeName) from Tstore";
 		List<Tstore> stores = storeService.select(hql, null);
@@ -107,10 +119,10 @@ public class StoreContrller extends BaseController {
 		return mav;
 	}
 
-	private Tstore getInfo(HttpServletRequest request, Integer storeId) {
+	private Tstore getInfo(HttpServletRequest request, Integer storeId) throws IOException {
 		Tstore store = storeService.get(storeId);
 		String logoPath = getImagePath(store.getStoreLogo(), storeId, request, "logo");
-		String backgroundPath = getImagePath(store.getStoreLogo(), storeId, request, "background");
+		String backgroundPath = getImagePath(store.getStoreBackground(), storeId, request, "background");
 		store.setStoreLogo(null);
 		store.setStoreBackground(null);
 		store.setLogoPath(logoPath);
@@ -125,20 +137,24 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="/uploadLogo",method=RequestMethod.POST)
 	@ResponseBody
-	public String uploadLogo(HttpServletRequest request,@RequestParam(value="images",required=true)MultipartFile file){
+	public String uploadLogo(HttpServletRequest request,@RequestParam(value="images",required=true)MultipartFile file,Integer storeId){
 		//更新参数
 		//Map<String, Object> params = getHashMap();
 		//返回结果
 		Map<String, Object> res = getHashMap();
 		//获取店铺ID
-		Integer storeId = getSessionUser(request).getStoreId();
+		if(storeId==null||storeId==-1){
+			storeId = getSessionUser(request).getStoreId();
+		}
+		//Integer storeId = getSessionUser(request).getStoreId();
 		//修改HQL
 		//String updateLogoHql = "update Tstore set storeLogo=:storeLogo where storeId=:storeId";
 		//上传文件后缀名
 		String logoSuffix = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+		logoSuffix = ".jpg";
 		//上传pathName
 		String realPath = request.getSession().getServletContext().getRealPath("/");
-		String logoPath = SystemConstants.STORE_SET_PATH+"logo_"+storeId+logoSuffix;
+		String logoPath = SystemConstants.STORE_SET_PATH+"logo"+"_"+storeId+logoSuffix;
 		File  logoFile=null;
 		try {
 			ImageModel model = new ImageModel();
@@ -153,14 +169,19 @@ public class StoreContrller extends BaseController {
 			if(logoFile.exists()){
 				logoFile.delete();
 			}
+			logoFile.createNewFile();
 			FileUtils.copyInputStreamToFile(file.getInputStream(), logoFile);
 			res.put("path", logoPath);
+			handleContent = "上传logo成功;";
 			info = getMessage(request,"operate.success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			status = false;
 			info = e.getMessage();
-		}
+			handleContent = "上传logo失败;";
+			level = LogManageTools.FAIL_LEVEL;
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", status);
 		res.put("info", info);
 		return JSON.toJSONString(res);
@@ -172,24 +193,22 @@ public class StoreContrller extends BaseController {
 	 * @param storeId
 	 * @param request
 	 * @return
+	 * @throws IOException 
 	 */
-	private String getImagePath(byte[] image,Integer storeId,HttpServletRequest request,String name){
+	private String getImagePath(byte[] image,Integer storeId,HttpServletRequest request,String name) throws IOException{
 		InputStream is = null;
 		String logoPath = SystemConstants.STORE_SET_PATH+name+"_"+storeId+"."+"jpg";
 		String realPath = request.getSession().getServletContext().getRealPath("/");
 		if(image!=null){
 			File	logo = new File(realPath+logoPath);
 			if(!logo.exists()){
+				logo.createNewFile();
 				is = new ByteArrayInputStream(image);
-				try {
-					FileUtils.copyInputStreamToFile(is, logo);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				FileUtils.copyInputStreamToFile(is, logo);
 			}
 			logoPath = SystemConstants.STORE_UP_PATH+name+"_"+storeId+"."+"jpg";
 		}else{
-			logoPath = SystemConstants.STORE_UP_PATH+name+"_"+0+"."+"jpg";
+			logoPath = SystemConstants.STORE_UP_PATH+"store"+"_"+name+"."+"jpg";
 		}
 		return logoPath.substring(logoPath.indexOf("/")+1);
 	}
@@ -202,25 +221,30 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="/uploadBackground",method=RequestMethod.POST)
 	@ResponseBody
-	public String uploadBackground(HttpServletRequest request,@RequestParam(value="images",required=true)MultipartFile file){
+	public String uploadBackground(HttpServletRequest request,@RequestParam(value="images",required=true)MultipartFile file,Integer storeId){
 		//更新参数
 		//Map<String, Object> params = getHashMap();
 		//返回结果
 		Map<String, Object> res = getHashMap();
+		System.out.println("------------------------------------->"+storeId);
+		System.out.println(storeId);
 		//获取店铺ID
-		Integer storeId = getSessionUser(request).getStoreId();
+		if(storeId==null||storeId==-1){
+			storeId = getSessionUser(request).getStoreId();
+		}
 		//修改HQL
 		//String updateBackHql = "update Tstore set storeBackground=:storeBackground where storeId=:storeId";
 		//上传文件后缀名
 		String logoSuffix = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+		logoSuffix = ".jpg";
 		//上传pathName
 		String realPath = request.getSession().getServletContext().getRealPath("/");
-		String backPath = SystemConstants.STORE_SET_PATH+"background_"+storeId+logoSuffix;
+		String backPath = SystemConstants.STORE_SET_PATH+"background"+"_"+storeId+logoSuffix;
 		//realPath += realPath+SystemConstants.STORE_SET_PATH+"background_"+storeId+"."+logoSuffix;
 		File  logoFile=null;
 		try {
 			ImageModel model = new ImageModel();
-			model.setType(ImageModel.LOGO);
+			model.setType(ImageModel.BACK);
 			model.setStoreId(storeId);
 			model.setImage(file.getBytes());
 			storeService.updateImage(model);
@@ -231,13 +255,18 @@ public class StoreContrller extends BaseController {
 			if(logoFile.exists()){
 				logoFile.delete();
 			}
+			logoFile.createNewFile();
 			FileUtils.copyInputStreamToFile(file.getInputStream(), logoFile);
 			res.put("path", backPath);
+			handleContent = "上传background成功;";
 			info = getMessage(request,"operate.success");
 		} catch (Exception e) {
 			status = false;
 			info = e.getMessage();
-		}
+			handleContent = "上传background失败;";
+			level = LogManageTools.FAIL_LEVEL;
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", status);
 		res.put("info", info);
 		return JSON.toJSONString(res);
@@ -249,28 +278,46 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="/changeKey",method=RequestMethod.POST)
 	@ResponseBody
-	public String changePublicKey(HttpServletRequest request,String value){
+	public String changePublicKey(HttpServletRequest request,String value,@RequestParam(value="name") Integer storeId){
 		//更新参数
 		Map<String, Object> params = getHashMap();
 		//返回结果
 		Map<String, Object> res = getHashMap();
-		TadminUser user = getSessionUser(request);
+		TadminUser user = null;
+		if(storeId==null||storeId==-1){
+			user = getSessionUser(request);
+		}else{
+			user = adminUserService.getUserByStoreId(storeId);
+		}
 		//修改HQL
 		String updatePublicKeyHql = "update Tstore set publicKey=:publicKey where storeId=:storeId";
-		String query = "select publicKey from Tstore where storeId=:storeId";
 		try {
-			params.put("storeId", user.getStoreId());
-			String oldKey = (String) storeService.getObject(query, params);
-			String key = SecurityTools.MD5(user.getEmail()+oldKey);
-			params.put("storeBackground", value);
+			 params.put("storeId", user.getStoreId());
+			params.put("publicKey", value);
 			storeService.update(updatePublicKeyHql, params);
-			SystemConfig.STORE_TAKEN_MAP.remove(key);
+			String k = "";
+			for(String key:SystemConfig.STORE_TAKEN_MAP.keySet()){
+				Integer val = SystemConfig.STORE_TAKEN_MAP.get(key);
+				if(val==storeId){
+					k = key;
+					break;
+				}
+			}
+			if(!k.isEmpty()){
+				SystemConfig.STORE_TAKEN_MAP.remove(k);
+			}
 			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(user.getEmail()+value), user.getStoreId());
+			handleContent = "修改公钥成功;";
 			info = getMessage(request,"operate.success");
-		} catch (MposException be) {
-			info = getMessage(request, be.getErrorID(), be.getMessage());
+			res.put("msg", value);
+		} catch (Exception be) {
+			be.printStackTrace();
+			//info = getMessage(request, be.getErrorID(), be.getMessage());
 			status = false;
-		}
+			handleContent = "修改公钥失败;"+be.getMessage();
+			level = LogManageTools.FAIL_LEVEL;
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", status);
 		res.put("info", info);
 		return JSON.toJSONString(res);
@@ -281,11 +328,14 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="/changeLangSet/{storeLangIds}",method=RequestMethod.GET)
 	@ResponseBody
-	public String changeLangSet(HttpServletRequest request,@PathVariable String storeLangIds){
+	public String changeLangSet(HttpServletRequest request,@PathVariable String storeLangIds,Integer storeId){
 		Map<String, Object> res = getHashMap();
 		//更新参数
 		Map<String, Object> params = getHashMap();
-		params.put("storeId", getSessionStoreId(request));
+		if(storeId==null||storeId==-1){
+			storeId = getSessionStoreId(request);
+		}
+		params.put("storeId", storeId);
 		if(storeLangIds.equals(",")){
 			storeLangIds="";
 		}else{
@@ -295,11 +345,15 @@ public class StoreContrller extends BaseController {
 		String updateLangHql = "update Tstore set storeLangId=:storeLangId where storeId=:storeId";
 		try {
 			storeService.update(updateLangHql, params);
+			handleContent = "客户端语言配置成功;";
 			info = getMessage(request,"operate.success");
 		} catch (MposException be) {
 			info = getMessage(request, be.getErrorID(), be.getMessage());
 			status = false;
-		}
+			handleContent = "客户端语言配置失败;"+be.getMessage();
+			level = LogManageTools.FAIL_LEVEL;
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", status);
 		res.put("info", info);
 		return JSON.toJSONString(res);
@@ -311,21 +365,28 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="changeStoreName",method=RequestMethod.POST)
 	@ResponseBody
-	public String changeStoreName(HttpServletRequest request,String value){
+	public String changeStoreName(HttpServletRequest request,String value,@RequestParam(value="name") Integer storeId){
 		Map<String, Object> res = getHashMap();
 		//更新参数
 		Map<String, Object> params = getHashMap();
-		params.put("storeId", getSessionStoreId(request));
+		if(storeId==null||storeId==-1){
+			storeId = getSessionStoreId(request);
+		}
+		params.put("storeId", storeId);
 		params.put("storeName", value);
 		String updateLangHql = "update Tstore set storeName=:storeName where storeId=:storeId";
 		try {
 			storeService.update(updateLangHql, params);
 			info = getMessage(request,"operate.success");
 			res.put("msg", value);
+			handleContent = "修改店铺名称成功;";
 		} catch (MposException be) {
 			info = getMessage(request, be.getErrorID(), be.getMessage());
 			status = false;
-		}
+			handleContent = "修改店铺名称失败;"+be.getMessage();
+			level = LogManageTools.FAIL_LEVEL;
+		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		res.put("status", status);
 		res.put("info", info);
 		return JSON.toJSONString(res);
@@ -337,20 +398,30 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="/changeStoreCurrency",method=RequestMethod.POST)
 	@ResponseBody
-	public String changeStoreCurrency(HttpServletRequest request,String value){
+	public String changeStoreCurrency(HttpServletRequest request,String value,@RequestParam(value="name") Integer storeId){
 		Map<String, Object> res = getHashMap();
 		//更新参数storeCurrency
 		Map<String, Object> params = getHashMap();
-		params.put("storeId", getSessionStoreId(request));
+		if(storeId==null||storeId==-1){
+			storeId = getSessionStoreId(request);
+		}
+		params.put("storeId", storeId);
 		params.put("storeCurrency", value);
 		String updateLangHql = "update Tstore set storeCurrency=:storeCurrency where storeId=:storeId";
 		try {
 			storeService.update(updateLangHql, params);
 			info = getMessage(request,"operate.success");
+			res.put("msg",value);
+			handleContent = "修改店铺货币符号成功;";
 		} catch (MposException be) {
 			info = getMessage(request, be.getErrorID(), be.getMessage());
 			status = false;
-		}
+			handleContent = "修改店铺货币符号失败;"+be.getMessage();
+			level = LogManageTools.FAIL_LEVEL;
+		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
+		res.put("status",status);
+		res.put("info",info);
 		return JSON.toJSONString(res);
 	}
 	
@@ -372,7 +443,10 @@ public class StoreContrller extends BaseController {
 		String updateServiceHql = "update Tstore set serviceId=:serviceId,serviceDate=:serviceDate where storeId=:storeId";
 		try {
 			Tstore store = storeService.selectOne(queryStoreHql, params);
-			long serviceDate = store.getServiceDate();
+			Long serviceDate = store.getServiceDate();
+			if(serviceDate==null){
+				serviceDate= System.currentTimeMillis();
+			}
 			Tservice service = serviceService.get(serviceId);
 			Integer validDays = service.getValidDays();
 			
@@ -393,4 +467,5 @@ public class StoreContrller extends BaseController {
 		}
 		return JSON.toJSONString(res);
 	}
+	
 }

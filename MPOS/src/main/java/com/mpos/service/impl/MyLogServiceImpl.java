@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,8 @@ public class MyLogServiceImpl implements MyLogService{
 			TadminUser adminuser) {
 		String searchJsonStr=rdtp.getsSearch();
 		List<Criterion> criterionsList=new ArrayList<Criterion>();
+		Criteria criteria = myLogDao.createCriteria();
+		criteria.addOrder(Order.desc("id"));
 		SimpleDateFormat simpleDateFormat =new SimpleDateFormat("dd-MM-yyyy");
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
 			JSONObject jsonObj= (JSONObject)JSON.parse(searchJsonStr);
@@ -59,13 +63,10 @@ public class MyLogServiceImpl implements MyLogService{
 		if(adminuser!=null){
 		criterionsList.add(Restrictions.eq("adminId", adminuser.getAdminId()));
 		}
-		Criterion[] criterions=new Criterion[criterionsList.size()];
-		int i=0;
 		for (Criterion criterion : criterionsList) {
-			criterions[i]=criterion;	
-			i++;
+			criteria.add(criterion);
 		}
-		return myLogDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
+		return myLogDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
 		
 	}
 

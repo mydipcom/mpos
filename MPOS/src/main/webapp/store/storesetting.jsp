@@ -181,7 +181,7 @@
 										<tr>
 											<td><s:message code="restaurant.logo"/></td>
 											<td>
-
+												<input type="hidden" value="${store.storeId}" id="store_id">
 												<div class="col-sm-9">
 													<form action="" role="form"
 														enctype="multipart/form-data" method="post" id="logo_change">
@@ -247,7 +247,7 @@
 																	<span class="btn default btn-file"> <span
 																		class="fileinput-new"> Select image </span> <span
 																		class="fileinput-exists"> Change </span> <input
-																		type="file" name="images" accept="image/*" id="backgroundimages">
+																		type="file" name="images" accept="image/*" id="back_image">
 																	</span> <a href="#" class="btn default fileinput-exists"
 																		data-dismiss="fileinput"> Remove </a>
 																	<div class="clearfix margin-top-10">

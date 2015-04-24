@@ -31,6 +31,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
+import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
 import com.mpos.dto.Tcategory;
 import com.mpos.dto.Tlanguage;
@@ -86,12 +87,21 @@ private ProductReleaseService productReleaseService;
 @Autowired
 private LocalizedFieldService localizedFieldService;
 
+/**
+ * 操作内容
+ */
+private String handleContent = "";
+/**
+ * 日志级别
+ */
+private short level = LogManageTools.NOR_LEVEL;
+
 private LinkedHashMap<Integer,FileMeta> filesMap = new LinkedHashMap<Integer,FileMeta>();
 private int imgIndex=0;	
 
 	@SuppressWarnings("unused")
 	@RequestMapping(value="/editgoods/{ids}",method=RequestMethod.GET)
-	public ModelAndView eidtgoods(@PathVariable String ids,HttpServletRequest request){
+	public ModelAndView eidtgoods(@PathVariable String ids,HttpServletRequest request,Integer storeId){
 		imgIndex=0;
 		filesMap.clear();
 		Integer id=Integer.parseInt(ids);
@@ -105,7 +115,9 @@ private int imgIndex=0;
 			 List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
 			 List<TlocalizedField> fullDescr_locale=new ArrayList<TlocalizedField>();
 			 List<TlocalizedField> unitName_locale=new ArrayList<TlocalizedField>();
-			 Integer storeId = getSessionUser(request).getStoreId();
+			 if(storeId==null||storeId==-1){
+				 storeId = getSessionUser(request).getStoreId();
+			 }
 			 List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language,storeId);
 				List<Tcategory> speccategoryList=categoryService.getallCategory(0,language,storeId);
 				Map<Integer, String> ordercategoryMap = new HashMap<Integer, String>();  
@@ -315,19 +327,23 @@ private int imgIndex=0;
 	@RequestMapping(value="/editgoods/editgoods",method=RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
+		ModelAndView mav=new ModelAndView();
 		try{
 			goodsService.updateproduct(model, filesMap, request);
+			handleContent = "修改商品:"+model.getProductName()+"成功;";
 			request.getSession().setAttribute("addsussess","operate.success");
-			return new ModelAndView("redirect:/goods");
+			mav.setViewName("redirect:/goods");
+			//return new ModelAndView("redirect:/goods");
 		} catch (MposException  e) {
 			e.printStackTrace();
-			ModelAndView mav=new ModelAndView();
 		/*	mav.addObject("errorMsg", e.getMessage());*/
+			handleContent = "修改商品:"+model.getProductName()+"失败;";
+			level = LogManageTools.FAIL_LEVEL;
 			request.getSession().setAttribute("editerrorMsg", getMessage(request,e.getErrorID(),e.getMessage()));
 			mav.setViewName("redirect:/editgoods/"+model.getProductId());
-			return mav;
-		}					
-
+		}		
+		LogManageTools.writeAdminLog(handleContent,level, request);
+		return mav;
 		}
 	@RequestMapping(value="/editgoods/getImages/{ids}",method=RequestMethod.POST)
 	@ResponseBody

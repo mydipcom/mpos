@@ -99,7 +99,7 @@ public class AdminuserLogServiceImpl implements AdminuserLogService {
     
     public PagingData loadAdminLogList(String id, DataTableParamter rdtp) {
 		// TODO Auto-generated method stub
-		String hql="from TadminLog where adminId= ?";
+		String hql="from TadminLog where adminId= ? order by id desc";
 	
 		 return adminLogDao.findPage(hql, rdtp.iDisplayStart, rdtp.iDisplayLength,id);
 	}

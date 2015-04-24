@@ -240,7 +240,7 @@
 				</div>				
 				<!-- END EDIT MODAL FORM-->
 				
-				<!-- BEGIN Edit Role Rights MODAL FORM-->				<div class="modal" id="edit_roleRights" tabindex="-1" data-width="760">					<div class="modal-header">
+				<!-- BEGIN Edit Role Rights MODAL FORM-->				<div class="modal" id="edit_roleRights" tabindex="-1" data-width="760"  style="overflow-y:scroll;height:800px">					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title"><s:message code="system.management.assign.title"/></h4>
 					</div>

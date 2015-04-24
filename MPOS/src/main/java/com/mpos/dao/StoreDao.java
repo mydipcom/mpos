@@ -15,7 +15,7 @@ public class StoreDao extends BaseDao<Tstore>{
 		String hql = "";
 		if(ImageModel.BACK==type){
 			hql = "update Tstore set storeBackground=:image where storeId=:storeId";
-		}else{
+		}else if(ImageModel.LOGO==type){
 			hql = "update Tstore set storeLogo=:image where storeId=:storeId";
 		}
 		Query query = currentSession().createQuery(hql);

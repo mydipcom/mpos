@@ -31,6 +31,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
+import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.TattributeValue;
@@ -100,6 +101,15 @@ public class GoodsController extends BaseController{
 	@Autowired
 	private StoreService storeService;
 	
+	/**
+	 * 操作内容
+	 */
+	private String handleContent = "";
+	/**
+	 * 日志级别
+	 */
+	private short level = LogManageTools.NOR_LEVEL;
+	
 	private LinkedHashMap<Integer,FileMeta> filesMap = new LinkedHashMap<Integer,FileMeta>();
 	private int imgIndex=0;	
 	
@@ -158,13 +168,15 @@ public class GoodsController extends BaseController{
 	}
 	@RequestMapping(value="addgoods",method=RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView addGoodsPage(HttpServletRequest request){
+	public ModelAndView addGoodsPage(HttpServletRequest request,Integer storeId){
 		imgIndex=0;
 		filesMap.clear();
 		ModelAndView mav=new ModelAndView();
 		String local=getLocale(request);
 		Tlanguage language=languageService.getLanguageBylocal(local);
-		Integer storeId = getSessionUser(request).getStoreId();
+		if(storeId == null || storeId ==-1){
+			 storeId = getSessionUser(request).getStoreId();
+		}
 		Object errorstring=request.getSession().getAttribute("adderrorMsg");
 		List<Tcategory> ordercategoryList=categoryService.getallCategory(1,language,storeId);
 		List<Tcategory> speccategoryList=categoryService.getallCategory(0,language,storeId);
@@ -201,13 +213,17 @@ public class GoodsController extends BaseController{
 		try{
 			goodsService.deletegoodsByids(idArr);
 			//goodsService.deleteLanguageByIds(idArr);
+			handleContent = "删除商品成功;操作ID为:"+idArr.toString();
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
 		catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			handleContent = "删除商品失败;操作ID为:"+idArr.toString();
+			level = LogManageTools.FAIL_LEVEL;
 		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
 		return JSON.toJSONString(respJson);	
 	}
 	@RequestMapping(value="/activegoods/{ids}",method=RequestMethod.POST)
@@ -317,102 +333,23 @@ public class GoodsController extends BaseController{
 	@RequestMapping(value="/setgoods",method=RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView addGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
+		ModelAndView mav=new ModelAndView();
 		try{
 			goodsService.createproduct(model, filesMap, request);
-			
-/*		Tproduct product=new Tproduct();
-		product.setProductName(model.getProductName());
-		product.setShortDescr(model.getShortDescr());
-		product.setFullDescr(model.getFullDescr());
-		product.setPrice(model.getPrice());
-		product.setOldPrice(model.getOldPrice());		
-		product.setUnitName(model.getUnitName());
-		product.setRecommend(model.isRecommend());
-		product.setSku(model.getSku());
-		product.setSort(model.getSort());
-		product.setStatus(true);		
-		product.setTmenu(model.getMenu());
-		if(model.getAttributeGroup().getCategoryId()!=0){
-			product.setTcategory(model.getAttributeGroup());
-		}
-		try {
-			//Save product basic information			
-			goodsService.createGoods(product);
-			
-			//Save the product attribute
-			List<TgoodsAttribute> productAttributesList=model.getAttributes();
-			for (TgoodsAttribute goodsAttribute : productAttributesList) {
-				goodsAttribute.setProductId(product.getId());
-				goodsAttributeService.createProductAttribute(goodsAttribute);
-			}
-			
-			//Set the product fields language model
-			List<TlocalizedField> productNameLocaleList=model.getProductName_locale();
-			List<TlocalizedField> shortDescrLocaleList=model.getShortDescr_locale();
-			List<TlocalizedField> fullDescrLocaleList=model.getFullDescr_locale();
-			List<TlocalizedField> unitNameLocaleList=model.getUnitName_locale();
-			//Save product language information
-			for (TlocalizedField localizedField : productNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
-					localizedField.setEntityId(product.getId());
-					localizedField.setTableName("Tproduct");
-					localizedField.setTableField("productName");
-					localizedFieldService.createLocalizedField(localizedField);
-				}				
-			}
-			for (TlocalizedField localizedField : shortDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
-					localizedField.setEntityId(product.getId());
-					localizedField.setTableName("Tproduct");
-					localizedField.setTableField("shortDescr");
-					localizedFieldService.createLocalizedField(localizedField);
-				}
-			}
-			for (TlocalizedField localizedField : fullDescrLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
-					localizedField.setEntityId(product.getId());
-					localizedField.setTableName("Tproduct");
-					localizedField.setTableField("fullDescr");
-					localizedFieldService.createLocalizedField(localizedField);
-				}
-			}
-			for (TlocalizedField localizedField : unitNameLocaleList) {
-				if(localizedField.getLocaleValue()!=null&&!localizedField.getLocaleValue().isEmpty()){
-					localizedField.setEntityId(product.getId());
-					localizedField.setTableName("Tproduct");
-					localizedField.setTableField("unitName");
-					localizedFieldService.createLocalizedField(localizedField);
-				}
-			}						
-			
-			//Save product images
-			Set<Integer> keys=filesMap.keySet();
-			int i=0;
-			for (Integer key : keys) {
-				FileMeta fileMeta=filesMap.get(key);
-				TproductImage productImage=new TproductImage();
-				productImage.setProduct(product);
-				productImage.setImage(fileMeta.getBytes());
-				productImage.setImageSuffix(fileMeta.getSuffix());
-				String filename=product.getId()+"_"+i+"."+fileMeta.getSuffix();
-				String filePath=request.getSession().getServletContext().getRealPath("/")+File.separator+"upload"+File.separator+"product"+File.separator+filename;
-                //String fileUrl=request.getContextPath()+"/goods/getCachedImg/"+imgIndex;
-            	String fileUrl=request.getContextPath()+"/upload/product/"+filename;
-                FileCopyUtils.copy(fileMeta.getBytes(), new FileOutputStream(filePath));
-				productImage.setImageUrl(fileUrl);
-				i++;
-				goodsImageService.CreateImages(productImage);
-			}
-			filesMap.clear();*/	
+			handleContent = "添加商品:"+model.getProductName()+"成功";
 			request.getSession().setAttribute("addsussess","operate.success");
-			return new ModelAndView("redirect:/goods");
+			mav.setViewName("redirect:/goods");
 		} catch (MposException  e) {
-			ModelAndView mav=new ModelAndView();
+		
 			/*mav.addObject("errorMsg", e.getMessage());*/
+			handleContent = "添加商品:"+model.getProductName()+"失败";
+			level = LogManageTools.FAIL_LEVEL;
+			
 			request.getSession().setAttribute("adderrorMsg", getMessage(request,e.getErrorID(),e.getMessage()));
 			mav.setViewName("redirect:/goods/addgoods");
-			return mav;
-		}							
+		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
+		return mav;
 	}
 	@RequestMapping(value="/addattributes",method=RequestMethod.POST)
 	@ResponseBody

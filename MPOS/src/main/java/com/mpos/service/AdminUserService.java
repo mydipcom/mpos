@@ -29,5 +29,7 @@ public interface AdminUserService {
 	public int getAdminUserAmount();
 	
 	public TadminUser getTadminUsersByEmail(String email);
+	
+	TadminUser getUserByStoreId(Integer storeId);
 		
 }

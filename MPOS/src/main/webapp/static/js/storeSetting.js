@@ -21,6 +21,7 @@
 	};
 })(jQuery);
 var rootURI = "/";
+var storeId = -1;
 var StoreSetting = function() {
 
 	var initEditables = function() {
@@ -42,6 +43,7 @@ var StoreSetting = function() {
 		$('#restaurant_name').editable({
 			url : rootURI + "storeSetting/changeStoreName?rand=" + Math.random(),
 			disabled:true,
+			name:storeId,
 			success : function(obj) {
 				if(obj.status){
 					handleAlerts(obj.info,"success","");
@@ -55,6 +57,7 @@ var StoreSetting = function() {
 		$('#password').editable({
 			url : rootURI + "storeSetting/changeKey?rand=" + Math.random(),
 			disabled:true,
+			name:storeId,
 			success : function(res) {
 				if(res.status){
 					handleAlerts(res.info,"success","");
@@ -92,11 +95,9 @@ var StoreSetting = function() {
 		$('#currency').editable({
 			url : rootURI + "storeSetting/changeStoreCurrency?rand=" + Math.random(),
 			disabled:true,
+			name:storeId,
 			inputclass : 'form-control input-medium',
 			source : currency,
-			validate: function(value) {
-				  alert(value);
-				},
 			success : function(res) {
 				if(res.status){
 					handleAlerts(res.info,"success","");
@@ -118,21 +119,25 @@ var StoreSetting = function() {
 		
 		//修改商店背景
 		$("#background_change").on("submit", function(event) {
+			alert(storeId);
 			 $.ajaxFileUpload( {
 	             "type": "POST", 
 	             "url": rootURI+"storeSetting/uploadBackground?rand="+Math.random(), 
 	             "secureuri": false,
-	             "fileElementId":"backgroundimages", 
+	             "fileElementId":"back_image", 
 	             "dataType": "json",
+	             "data":{"storeId":storeId},
 //	             "processData":false,
 //	             "contentType":"application/json",
 	             "success": function(resp,status){
 	            	 if(status == "success"){  
 	            		 if(resp.status){
+	            			 var path = rootURI+resp.path;
+	            			 alert(path);
 	            			 handleAlerts(resp.info,"success","");
 							 $('#background_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
 								 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+
-	                                     "<img src=\""+$('#background_change').find('img').attr("src")+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
+	                                     "<img src=\""+path+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
 										 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
 	                                     "<div><span class=\"btn default btn-file\"> <span class=\"fileinput-new\"> Select image </span>"+ 
 	                                     "<span class=\"fileinput-exists\"> Change </span> <input type=\"file\" name=\"images\" accept=\"image/*\" id=\"backgroundimages\">"+
@@ -163,15 +168,17 @@ var StoreSetting = function() {
 	             "secureuri": false,
 	             "fileElementId":"logo_image", 
 	             "dataType": "json",
+	             "data":{"storeId":storeId},
 //	             "processData":false,
 //	             "contentType":"application/json",
 	             "success": function(resp,status){
 	            	 if(status == "success"){  
 	            		 if(resp.status){
+	            			 var path = rootURI+resp.path;
 	            			 handleAlerts(resp.info,"success","");
 							 $('#logo_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
 							 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+
-                                     "<img src=\""+$('#logo_change').find('img').attr("src")+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
+                                     "<img src=\""+path+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
 									 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
                                      "<div><span class=\"btn default btn-file\"> <span class=\"fileinput-new\"> Select image </span>"+ 
                                      "<span class=\"fileinput-exists\"> Change </span> <input type=\"file\" name=\"images\" accept=\"image/*\" id=\"logo_image\">"+
@@ -235,6 +242,7 @@ var StoreSetting = function() {
 	        "type":'GET',
 	        "async":false,
 	        "url": rootURI+"storeSetting/changeLangSet/"+chestr+"?rand="+Math.random(), 
+	        "data":{"storeId":storeId},
 	        "success": function(resp,status){
 	       	 if(status == "success"){  
 	       		 if(resp.status){
@@ -260,6 +268,7 @@ var StoreSetting = function() {
 		// main function to initiate the module
 		init : function(rootPath) {
 			rootURI = rootPath;
+			storeId = $("#store_id").val();
          // alert(rootPath);
 			// init editable elements
 			initEditables();
