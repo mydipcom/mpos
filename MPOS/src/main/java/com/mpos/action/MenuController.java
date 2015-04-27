@@ -101,7 +101,7 @@ public class MenuController extends BaseController {
 	public String addMenu(HttpServletRequest request, PageModel page) {
 		JSONObject respJson = new JSONObject();
 		try {
-			addStore(page.getMenu(),request);
+			addStore(page.getMenu(),request,page.getMenu().getStoreId());
 			menuService.saveMenu(page.getMenu());
 			localizedFieldService.createLocalizedFieldList(page.setOneTlocalizedFieldValue(page.getMenu()));
 			handleContent = "添加客户端菜单:"+page.getMenu().getTitle()+"成功;新增ID为:"+page.getMenu().getMenuId();
@@ -181,10 +181,13 @@ public class MenuController extends BaseController {
 
 	@RequestMapping(value = "/loadMenu", method = RequestMethod.GET)
 	@ResponseBody
-	public String loadMenu(HttpServletRequest request) {
+	public String loadMenu(HttpServletRequest request,Integer storeId) {
 		JSONObject respJson = new JSONObject();
+		if(storeId==null||storeId==-1){
+			storeId = getSessionUser(request).getStoreId();
+		}
 		try {
-			List<Tmenu> menus = menuService.getAllMenu(getSessionUser(request).getStoreId());
+			List<Tmenu> menus = menuService.getAllMenu(storeId);
 			Tlanguage language = languageService.get(getLocale(request));
 			List<MenuModel> models = new ArrayList<MenuModel>();
 			if (menus != null && menus.size() > 0) {

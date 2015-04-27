@@ -1,5 +1,7 @@
 package com.mpos.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
+import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
+import com.mpos.service.StoreService;
 import com.mpos.service.TableService;
 
 @Controller
 @RequestMapping("/table")
 public class TableController extends BaseController {
 	@Autowired
-	TableService tableService;
+	private TableService tableService;
+	@Autowired
+	private StoreService storeService;
 	
 	private Boolean ok = true;
 	/**
@@ -37,8 +43,12 @@ public class TableController extends BaseController {
 	private short level = LogManageTools.NOR_LEVEL;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView table(){
+	public ModelAndView table(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
+		String hql = "select new Tstore(storeId,storeName) from Tstore";
+		List<Tstore> stores = storeService.select(hql, null);
+		mav.addObject("stores",stores);
+		mav.addObject("role", getSessionUser(request).getAdminRole().getRoleId());
 		mav.setViewName("table/table");
 		return mav;
 	}
@@ -61,7 +71,7 @@ public class TableController extends BaseController {
 	public String addTable(HttpServletRequest request,Ttable table){
 		JSONObject res = new JSONObject();
 		try {
-			addStore(table,request);
+			addStore(table,request,table.getStoreId());
 			table.setCreateTime(System.currentTimeMillis());
 			tableService.create(table);
 			handleContent = "添加桌号:"+table.getTableName()+"成功;新增ID为:"+table.getId();
@@ -77,7 +87,7 @@ public class TableController extends BaseController {
 		return JSON.toJSONString(res);
 	}
 	
-	@RequestMapping(value="/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/{ids}",method=RequestMethod.GET)
 	@ResponseBody
 	public String deleteTable(HttpServletRequest request,@PathVariable String ids){
 		JSONObject res = new JSONObject();
@@ -104,7 +114,6 @@ public class TableController extends BaseController {
 	public String editTable(HttpServletRequest request,Ttable table){
 		JSONObject res = new JSONObject();
 		try {
-			addStore(table,request);
 			tableService.update(table);
 			handleContent = "修改桌号:"+table.getTableName()+"成功";
 			res.put("info", getMessage(request,"operate.success"));

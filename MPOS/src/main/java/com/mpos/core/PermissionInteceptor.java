@@ -28,9 +28,6 @@ public class PermissionInteceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) throws Exception {
-		String reqMethod=request.getMethod().toUpperCase();
-		String uri=request.getRequestURI();
-		uri=uri.split("/")[2];
 		request.getSession().removeAttribute("locale");
 		Object res = request.getSession().getAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
 		if(res==null){
@@ -53,6 +50,9 @@ public class PermissionInteceptor implements HandlerInterceptor {
 				return true;
 			}
 			else{
+				String reqMethod=request.getMethod().toUpperCase();
+				String uri=request.getRequestURI();
+				uri=uri.split("/")[2];
 				String reqPath=reqMethod+"@"+"/"+uri;
 				Long rightsBit=SystemConfig.Admin_Nodes_Url_Map.get(reqPath);
 				if(rightsBit==null){

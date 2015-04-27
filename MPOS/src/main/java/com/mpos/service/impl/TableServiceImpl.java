@@ -29,7 +29,10 @@ public class TableServiceImpl implements TableService {
 	
 	public void create(Ttable table) {
 		//tableDao.create(table);
-		Ttable tt = tableDao.findUnique("tableName", table.getTableName());
+		//Ttable tt = tableDao.findUnique("tableName", table.getTableName());
+		Criteria criteria = tableDao.createCriteria();
+		criteria.add(Restrictions.eq("tableName",table.getTableName())).add(Restrictions.eq("storeId", table.getStoreId()));
+		Ttable tt = (Ttable) criteria.uniqueResult();
 		if(tt == null){
 			tableDao.create(table);
 		}else{                       
@@ -49,7 +52,10 @@ public class TableServiceImpl implements TableService {
 
 	
 	public void update(Ttable table) {
-		Ttable tt = tableDao.findUnique("tableName", table.getTableName());
+		//Ttable tt = tableDao.findUnique("tableName", table.getTableName());
+		Criteria criteria = tableDao.createCriteria();
+		criteria.add(Restrictions.eq("tableName",table.getTableName())).add(Restrictions.eq("storeId", table.getStoreId()));
+		Ttable tt = (Ttable) criteria.uniqueResult();
 		if(tt==null||tt.getId()==table.getId()){
 			try {
 				BeanUtils.copyProperties(table, tt);
@@ -87,6 +93,8 @@ public class TableServiceImpl implements TableService {
 				if (value != null && !value.isEmpty()) {
 					if(key=="tableName"){
 						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
+					}else if(key=="storeId"){
+						criterionList.add(Restrictions.eq(key, json.getInteger(key)));
 					}else{
 						criterionList.add(Restrictions.eq(key, json.get(key)));
 					}					
@@ -102,7 +110,9 @@ public class TableServiceImpl implements TableService {
 
 	
 	public Boolean tableNameIsExist(String tableName,Integer storeId) {
-		Ttable tt = tableDao.findUnique(new String[]{"tableName","storeId"}, new String[]{tableName,storeId+""});;
+		Criteria criteria = tableDao.createCriteria();
+		criteria.add(Restrictions.eq("tableName",tableName)).add(Restrictions.eq("storeId", storeId));
+		Ttable tt = (Ttable) criteria.uniqueResult();//tableDao.findUnique(new String[]{"tableName","storeId"}, new String[]{tableName,storeId+""});;
 		if(tt==null){
 			return false;
 		}
@@ -121,7 +131,7 @@ public class TableServiceImpl implements TableService {
 		Integer id = Integer.valueOf(table[1]);
 		//Ttable tt = tableDao.findUnique("tableName", table[0]);
 		Criteria criteria = tableDao.createCriteria();
-		criteria.add(Restrictions.eq("tableName", table[0])).add(Restrictions.eq("storeId", storeId));
+		criteria.add(Restrictions.eq("tableName", table[0])).add(Restrictions.eq("storeId", Integer.valueOf(table[2])));
 		Ttable tt = (Ttable) criteria.uniqueResult();//tableDao.findUnique(new String[]{"tableName","storeId"}, new String[]{tableName,storeId+""});;
 		if(tt==null||tt.getId()==id){
 			return true;

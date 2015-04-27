@@ -3,12 +3,14 @@
  * @returns {String}
  */
 function loadAllMenu(){
+	var storeId = $("#storeId").val();
 	var res = "";
 	$.ajax({
         "dataType": 'json', 
         "type":'GET',
         "async":false,
         "url": rootURI+"menu/loadMenu?rand="+Math.random(), 
+        "data":{"storeId":storeId},
         "success": function(resp,status){
        	 if(status == "success"){  
        		 if(resp.status){
@@ -183,7 +185,8 @@ var MenuTable = function () {
 		$("#searchForm").on("submit", function(event) {
 			event.preventDefault();
 			var jsonData=$(this).serializeJson();
-			var jsonDataStr=JSON.stringify(jsonData);			
+			var jsonDataStr=JSON.stringify(jsonData);	
+			 $("#addMenuForm input[name='menu.storeId']").val($("#storeId").val());
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});

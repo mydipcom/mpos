@@ -101,7 +101,7 @@
 							<c:if test="${role==1}">
 							<label class="col-md-3 control-label">Store Name</label>
 								<div class="col-md-9">
-									<select name="storeId"  class="form-control">
+									<select name="storeId"  class="form-control" id="storeId">
 										<c:if test="${not empty stores}">
 										<c:forEach var="store" items="${stores }">
 										<option value="${store.storeId}">${store.storeName}</option>
@@ -246,6 +246,7 @@
 															<label class="control-label col-md-3"><s:message code="category.content" /></label>
 															<div class="col-md-9">																	
 																<input type="text" name="content" class="form-control"/>
+																<input type="hidden" name="storeId" value="-1"/>
 															</div>
 														</div>														
 													</div>

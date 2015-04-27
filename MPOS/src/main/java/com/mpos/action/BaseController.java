@@ -240,8 +240,10 @@ public class BaseController {
 	 * @param bean
 	 * @param request
 	 */
-	public void addStore(Object bean,HttpServletRequest request){
-		Integer storeId = getSessionUser(request).getStoreId();
+	public void addStore(Object bean,HttpServletRequest request,Integer storeId){
+		if(storeId==null||storeId==-1){
+			storeId = getSessionUser(request).getStoreId();
+		}
 			if(bean instanceof Tcategory){
 				((Tcategory)bean).setStoreId(storeId);
 			}else if(bean instanceof Tmenu){

@@ -175,6 +175,7 @@ var CategoryTable = function () {
 	            $("#editCategoryForm :radio").removeAttr("checked");
 	            $("#editCategoryForm :radio").parents('span').removeClass("checked");
 	            
+	            $("#editCategoryForm input[name='storeId']").val(data.storeId);
 	            $("#editCategoryForm input[name='categoryId']").val(categoryId);
 	            $("#editCategoryForm input[name='storeId']").val(data.storeId);
 	            
@@ -211,7 +212,8 @@ var CategoryTable = function () {
 		$("#searchForm").on("submit", function(event) {
 			event.preventDefault();
 			var jsonData=$(this).serializeJson();
-			var jsonDataStr=JSON.stringify(jsonData);			
+			var jsonDataStr=JSON.stringify(jsonData);		
+			$("#addCategoryForm input[name='storeId']").val($("#storeId").val());
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});

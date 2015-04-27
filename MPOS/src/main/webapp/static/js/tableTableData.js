@@ -56,18 +56,19 @@ var TableTable = function () {
 		table.on('click', 'tbody tr a',function(){
 	           var data = oTable.api().row($(this).parents('tr')).data();
 	           $("#editTableForm input[name='id']").val(data.id);
+	           $("#editTableForm input[name='storeId']").val(data.storeId);
 	           $("#editTableForm input[name='tableName']").val(data.tableName);
 	           $("#editTableForm input[name='createTime']").val(data.createTime);
 	           $("#editTableForm input[name='seatingNumber']").val(data.seatingNumber);
 	           $("#editTableForm textarea[name='descr']").val(data.descr);
-	           $("#editTableForm textarea[name='status']").val(data.status);
+	           $("#editTableForm input[name='status']").val(data.status);
 	        });
 		
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
-             "type": "DELETE", 
+             "type": "GET", 
              "url": rootURI+"table/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){
@@ -91,7 +92,8 @@ var TableTable = function () {
 		$("#searchForm").on("submit", function(event) {
 			event.preventDefault();
 			var jsonData=$(this).serializeJson();
-			var jsonDataStr=JSON.stringify(jsonData);			
+			var jsonDataStr=JSON.stringify(jsonData);	
+			$("#addTableForm input[name='storeId']").val($("#storeId").val());
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});
@@ -244,9 +246,9 @@ var TableTable = function () {
                     	    data: {                     //要传递的数据
                     	    	tableName: function() {
                     	    		if(type=="edit"){
-                    	    			return $("#"+type+"TableForm input[name='tableName']").val()+","+$("#"+type+"TableForm input[name='id']").val();
+                    	    			return $("#"+type+"TableForm input[name='tableName']").val()+","+$("#"+type+"TableForm input[name='id']").val()+","+$("#"+type+"TableForm input[name='storeId']").val();
                     	    		}else{
-                    	    			return $("#"+type+"TableForm input[name='tableName']").val();
+                    	    			return $("#"+type+"TableForm input[name='tableName']").val()+","+$("#"+type+"TableForm input[name='storeId']").val();
                     	    		}
                     	        }
                     	    }

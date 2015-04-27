@@ -116,7 +116,7 @@ public class CategoryController extends BaseController {
 	public String addCategory(HttpServletRequest request,Tcategory category){			
 		JSONObject respJson = new JSONObject();
 		try{
-			addStore(category,request);
+			addStore(category,request,category.getStoreId());
 			categoryService.createCategory(category);
 			handleContent = "添加分类组:"+category.getName()+"成功;新增ID为:"+category.getCategoryId();
 			respJson.put("status", true);
