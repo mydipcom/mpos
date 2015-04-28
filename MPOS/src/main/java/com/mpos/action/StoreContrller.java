@@ -426,6 +426,39 @@ public class StoreContrller extends BaseController {
 	}
 	
 	/**
+	 * 修改店铺打印类型
+	 * @return
+	 */
+	@RequestMapping(value="/changeStorePrint",method=RequestMethod.POST)
+	@ResponseBody
+	public String changeStorePrint(HttpServletRequest request,@RequestParam(value="value") String printType,@RequestParam(value="name") Integer storeId){
+		Map<String, Object> res = getHashMap();
+		//更新参数storeCurrency
+		Map<String, Object> params = getHashMap();
+		if(storeId==null||storeId==-1){
+			storeId = getSessionStoreId(request);
+		}
+		params.put("storeId", storeId);
+		params.put("printType", printType);
+		String updateLangHql = "update Tstore set printType=:printType where storeId=:storeId";
+		try {
+			storeService.update(updateLangHql, params);
+			info = getMessage(request,"operate.success");
+			res.put("msg",printType);
+			handleContent = "修改店铺打印类型成功;";
+		} catch (MposException be) {
+			info = getMessage(request, be.getErrorID(), be.getMessage());
+			status = false;
+			handleContent = "修改店铺打印类型失败;"+be.getMessage();
+			level = LogManageTools.FAIL_LEVEL;
+		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
+		res.put("status",status);
+		res.put("info",info);
+		return JSON.toJSONString(res);
+	}
+	
+	/**
 	 * 修改订阅服务
 	 * @return
 	 */

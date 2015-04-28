@@ -106,7 +106,7 @@ var DeviceTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "POST", 
-             "url": rootURI+"productrelease/publicrelease", 
+             "url": rootURI+"goods/publicrelease", 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){

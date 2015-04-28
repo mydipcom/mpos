@@ -104,6 +104,10 @@ public class MobileAPI {
 	 * 活动类型 满减
 	 */
 	public static final int PROMOTION_TYPE_FULL_CUT = 3;
+	/**
+	 * 账号或密码错误返回码
+	 */
+	public static final int CODE = 1002;
 
 	public static final int SPEC_TYPE = 0;
 	public static final int ORDER_TYPE = 1;
@@ -153,6 +157,7 @@ public class MobileAPI {
 		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
 		if (storeId==null) {
 			respJson.put("status", false);
+			respJson.put("code", CODE);
 			respJson.put("info", "Error Init API token.");
 			return JSON.toJSONString(respJson);
 		}
@@ -212,7 +217,8 @@ public class MobileAPI {
 			dataJson.put("tables", loadTables(storeId));
 			//多语言设置
 			dataJson.put("languages", languages);
-			
+			//客户端打印类型
+			dataJson.put("printType", store.getPrintType());
 			respJson.put("status", true);
 			respJson.put("info", "OK");
 			respJson.put("data", dataJson);
@@ -239,6 +245,7 @@ public class MobileAPI {
 		JSONObject respJson = new JSONObject();
 		if (storeId == null) {
 			respJson.put("status", false);
+			respJson.put("code", CODE);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
 		}
@@ -300,6 +307,7 @@ public class MobileAPI {
 		JSONObject jsonObj = null;
 		JSONObject respJson = new JSONObject();
 		if (storeId == null) {
+			respJson.put("code", CODE);
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -365,6 +373,7 @@ public class MobileAPI {
 		JSONObject respJson = new JSONObject();
 		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
 		if (storeId == null) {
+			respJson.put("code", CODE);
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -413,6 +422,7 @@ public class MobileAPI {
 		Integer storeId = SystemConfig.STORE_TAKEN_MAP.get(apiKey);
 		JSONObject respJson = new JSONObject();
 		if (storeId == null) {
+			respJson.put("code", CODE);
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -480,6 +490,7 @@ public class MobileAPI {
 		JSONObject respJson = new JSONObject();
 		// 判断apiToken是否一致
 		if (storeId == null) {
+			respJson.put("code", CODE);
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -551,6 +562,7 @@ public class MobileAPI {
 		JSONObject respJson = new JSONObject();
 		// 判断apiToken是否一致
 		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+			respJson.put("code", CODE);
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -694,6 +706,7 @@ public class MobileAPI {
 		JSONObject respJson = new JSONObject();
 		// 判断apiToken是否一致
 		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+			respJson.put("code", CODE);
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -749,6 +762,7 @@ public class MobileAPI {
 		JSONObject respJson = new JSONObject();
 		// 判断apiToken是否一致
 		if (apiKey == null || !apiKey.equalsIgnoreCase(apiToken)) {
+			respJson.put("code", CODE);
 			respJson.put("status", false);
 			respJson.put("info", "Error API token.");
 			return JSON.toJSONString(respJson);
@@ -828,6 +842,7 @@ public class MobileAPI {
 				JSONObject respJson = new JSONObject();
 				// 判断apiToken是否一致
 				if (storeId == null) {
+					respJson.put("code", CODE);
 					respJson.put("status", false);
 					respJson.put("info", "Error API token.");
 					return JSON.toJSONString(respJson);

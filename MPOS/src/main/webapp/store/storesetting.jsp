@@ -179,6 +179,28 @@
 													</span></td>
 										</tr>
 										<tr>
+											<td><s:message code="print"/></td>
+											<td>
+													<input type="hidden" id="printV" value="${store.printType }">
+											<div class="radio-list">
+												<label class="radio-inline">
+												<input type="radio" name="print_type" value="1"/><s:message code="print.one"/>
+												</label>
+												<label class="radio-inline">
+												<input type="radio" name="print_type" value="2"/><s:message code="print.two"/>
+												</label>
+												</div>
+											</td>
+											<td><span class="text-muted" id="printType">  
+											<c:if test="${store.printType eq 1 }">
+												<s:message code="print.one"/>
+											</c:if>
+											<c:if test="${store.printType eq 2 }">
+												<s:message code="print.two"/>
+											</c:if>
+													</span></td>
+										</tr>
+										<tr>
 											<td><s:message code="restaurant.logo"/></td>
 											<td>
 												<input type="hidden" value="${store.storeId}" id="store_id">

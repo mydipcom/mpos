@@ -80,6 +80,7 @@ var StoreSetting = function() {
 				}
 			}
 		});
+		
 		var currency = [];
 		$.each({
 			"HK$" : "HKD",
@@ -272,6 +273,9 @@ var StoreSetting = function() {
          // alert(rootPath);
 			// init editable elements
 			initEditables();
+			//$("input[type=radio]").removeAttr("checked");
+			// $("input[type=radio").parents('span').removeClass("checked");
+			//$("input[type=radio]").attr("checked",$("#printV").val());//
 
 			// init editable toggler
 			$('#enable').click(function() {

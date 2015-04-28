@@ -161,10 +161,16 @@
     		<artifactId>bccs-api</artifactId> 
     		<version>3.0.0</version> 
     		<scope>system</scope> 
-    		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/bccs-api-3.0.0.jar 
-    </systemPath> 
-
+    		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/bccs-api-3.0.0.jar </systemPath> 
 </dependency>
+
+    <dependency> 
+    		<groupId>taobao</groupId> 
+    		<artifactId>tb-api</artifactId> 
+    		<version>4.27</version> 
+    		<scope>system</scope> 
+    		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/tb-api-4.27.jar </systemPath> 
+ </dependency>
        <!--  <dependency>
     	<groupId>bdpush</groupId>
     	<artifactId>bccs-api</artifactId>

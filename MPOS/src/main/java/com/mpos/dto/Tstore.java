@@ -9,6 +9,14 @@ public class Tstore implements Serializable {
 	 */
 	private static final long serialVersionUID = -7112236530171602975L;
 	/**
+	 * 打印一联
+	 */
+	public static final int  ONE = 1;
+	/**
+	 * 打印两联
+	 */
+	public static final int  TWO = 2;
+	/**
 	 * ID
 	 */
 	private Integer storeId;
@@ -63,6 +71,8 @@ public class Tstore implements Serializable {
 	
 	private String logoPath;
 	private String backgroundPath;
+	
+	private Integer printType = 1;
 	
 	
 	public String getLogoPath() {
@@ -167,6 +177,12 @@ public class Tstore implements Serializable {
 	}
 	public void setServiceDate(Long serviceDate) {
 		this.serviceDate = serviceDate;
+	}
+	public Integer getPrintType() {
+		return printType;
+	}
+	public void setPrintType(Integer printType) {
+		this.printType = printType;
 	}
 
 }

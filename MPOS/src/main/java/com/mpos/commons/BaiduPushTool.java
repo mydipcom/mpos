@@ -39,11 +39,11 @@ public class BaiduPushTool {
 	/**
 	 * 安卓设备服务端api_key  "LXkMQ0p54mg4jGOtKkPC5A0F";//
 	 */
-	public final static String ANDROID_API_KEY = "LXkMQ0p54mg4jGOtKkPC5A0F";//SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_API_KEY);
+	public final static String ANDROID_API_KEY = SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_API_KEY);
 	/**
 	 * 安卓设备服务端secret_key "xGRxrDaO51MQK599kGYTttqFaiTZwAwK";// 
 	 */
-	public final static String ANDROID_SECRET_KEY ="xGRxrDaO51MQK599kGYTttqFaiTZwAwK";// SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_SECRET_KEY);
+	public final static String ANDROID_SECRET_KEY = SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_SECRET_KEY);
 	/**
 	 * 苹果设备
 	 */

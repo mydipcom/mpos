@@ -44,5 +44,8 @@
          <property name="serviceDate" type="long">
         <column name="service_date" not-null="true"/>
         </property>
+          <property name="printType" type="java.lang.Integer">
+        <column name="print_type" />
+        </property>
     </class>
 </hibernate-mapping>
