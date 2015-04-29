@@ -2,6 +2,8 @@ package com.mpos.dto;
 
 import java.io.Serializable;
 
+import com.mpos.commons.ConvertTools;
+
 public class Tstore implements Serializable {
 
 	/**
@@ -67,14 +69,29 @@ public class Tstore implements Serializable {
 	/**
 	 * 服务到期时间
 	 */
-	private Long serviceDate;
+	private Long serviceDate = 0L;
+	/**
+	 * 注册时间
+	 */
+	private Long createTime = System.currentTimeMillis();
+	/**
+	 * 打印类型
+	 */
+	private Integer printType = 1;
+	
+	@SuppressWarnings("unused")
+	private String createTimeStr;
 	
 	private String logoPath;
 	private String backgroundPath;
 	
-	private Integer printType = 1;
 	
-	
+	public String getCreateTimeStr() {
+		return ConvertTools.longToDateString(createTime);
+	}
+	public void setCreateTimeStr(String createTimeStr) {
+		this.createTimeStr = createTimeStr;
+	}
 	public String getLogoPath() {
 		return logoPath;
 	}
@@ -184,5 +201,12 @@ public class Tstore implements Serializable {
 	public void setPrintType(Integer printType) {
 		this.printType = printType;
 	}
+	public Long getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+	
 
 }

@@ -271,13 +271,12 @@ var StoreSetting = function() {
 			rootURI = rootPath;
 			storeId = $("#store_id").val();
          // alert(rootPath);
+			
 			// init editable elements
 			initEditables();
-			//$("input[type=radio]").removeAttr("checked");
-			// $("input[type=radio").parents('span').removeClass("checked");
-			//$("input[type=radio]").attr("checked",$("#printV").val());//
-
-			// init editable toggler
+			var inp = $("#printV").val();
+			$("input[name='print_type']").filter("[value='"+inp+"']").attr("checked",true);
+			$("input[name='print_type']").filter("[value='"+inp+"']").parents('span').addClass("checked");
 			$('#enable').click(function() {
 				$('#store_setting .editable').editable('toggleDisabled');
 			});

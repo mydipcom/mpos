@@ -260,31 +260,35 @@ public class MobileAPI {
 			Integer deviceType = jsonObj.getInteger("deviceType");
 			String tableName = jsonObj.getString("tableName");
 			String channelId = jsonObj.getString("channelId");
+			if (channelId.isEmpty()||deviceType==null) {
+				respJson.put("status", false);
+				respJson.put("info", "The request parameter is required.");
+				return JSON.toJSONString(respJson);
+			}
 			device.setChannelId(channelId);
 			device.setDeviceType(deviceType);
 			device.setStoreId(storeId);
 			device.setTableName(tableName);
 			device.setCreateTime(System.currentTimeMillis());
+			device.setLastReportTime(System.currentTimeMillis());
+			device.setLastSyncTime(System.currentTimeMillis());
 			device.setStatus(true);
 			Integer count = deviceService.getCountByStoreIdAndDeviceType(storeId, deviceType);
-			Integer ok = deviceService.getCount(deviceType, channelId);
+			String delete  = "delete from Tdevice where deviceType=:deviceType and channelId=:channelId";
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("deviceType", deviceType);
+			params.put("channelId", channelId);
+			deviceService.delete(delete,params);
 			if(count==0){
 				BaiduPushTool.createTag(deviceType, storeId+"");
 			}
-			if(ok==0){
-				Boolean success = BaiduPushTool.addDevicesToTag(new String[]{channelId}, storeId+"", deviceType);
+			Boolean success = BaiduPushTool.addDevicesToTag(new String[]{channelId}, storeId+"", deviceType);
 				if(success){
 					respJson.put("status", true);
 					respJson.put("info", "OK");
 					deviceService.create(device);
 					return JSON.toJSONString(respJson);
 				}
-			}else{
-				respJson.put("status", false);
-				respJson.put("info", "channelId exsit");
-				return JSON.toJSONString(respJson);
-			}
-			
 		} catch (MposException e) {
 		}
 		respJson.put("status", false);
@@ -455,18 +459,11 @@ public class MobileAPI {
 				}
 			}
 			JSONObject dataJson = new JSONObject();
-			if(productsJsonArr==null||productsJsonArr.size()==0){
-				respJson.put("status", false);
-				respJson.put("info", "no data");
-			}else{
 				dataJson.put("id", latestVerID);
 				dataJson.put("products", productsJsonArr);
 				respJson.put("status", true);
 				respJson.put("info", "OK");
 				respJson.put("data", dataJson);
-			}
-			
-
 			return JSON.toJSONString(respJson);
 		} catch (MposException e) {
 			respJson.put("status", false);

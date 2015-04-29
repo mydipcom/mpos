@@ -32,7 +32,7 @@ public class ProductReleaseController extends BaseController{
 			productReleaseService.publicreleasebyid(productrelease.getId());
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
-			Notification notification = new Notification("new data version",productrelease.getId()+"");
+			Notification notification = new Notification(10001);
 			BaiduPushTool.pushMsgToTag(notification, getSessionUser(request).getStoreId()+"", BaiduPushTool.IOS_TYPE);
 		} catch (MposException be){
 			respJson.put("status", false);

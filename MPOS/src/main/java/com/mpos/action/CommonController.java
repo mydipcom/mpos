@@ -8,7 +8,9 @@
  */
 package com.mpos.action;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -33,9 +35,11 @@ import com.mpos.dto.TadminUser;
 import com.mpos.dto.TemaiMessage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.Tstore;
+import com.mpos.dto.Ttable;
 import com.mpos.service.AdminUserService;
 import com.mpos.service.ServiceService;
 import com.mpos.service.StoreService;
+import com.mpos.service.TableService;
 
 /**
  * @ClassName: UserController
@@ -51,13 +55,15 @@ public class CommonController extends BaseController {
 
 	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(CommonController.class);
-	
+	public List<Ttable> tables = new ArrayList<Ttable>();
 	@Autowired
 	private AdminUserService adminUserService;
 	@Autowired
 	private StoreService storeService;
 	@Autowired
 	private ServiceService serviceService;
+	@Autowired
+	private TableService tableService;
 	
 	@RequestMapping(value="header",method=RequestMethod.GET)
 	public ModelAndView header(HttpServletRequest request){
@@ -116,6 +122,12 @@ public class CommonController extends BaseController {
 			store.setStoreCurrency("￥");
 			store.setStoreLangId("1");
 			storeService.save(store);
+			tables.add(new Ttable("A01", 4, store.getServiceId()));
+			tables.add(new Ttable("A02", 2, store.getServiceId()));
+			tables.add(new Ttable("A03", 6, store.getServiceId()));
+			for (Ttable table : tables) {
+				tableService.create(table);
+			}
 			user.setStoreId(store.getStoreId());
 			user.setCreatedTime(System.currentTimeMillis());
 			user.setCreatedBy("admin");

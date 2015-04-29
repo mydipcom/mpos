@@ -163,4 +163,12 @@ public TadminUser getUserByStoreId(Integer storeId) {
 	return adminUserDao.findUnique("storeId", storeId);
 }
 
+public Boolean emailExist(String email){
+	TadminUser tt = (TadminUser) adminUserDao.findUnique("email", email);
+	if(tt==null){
+		return false;
+	}
+	return true;
+}
+
 }

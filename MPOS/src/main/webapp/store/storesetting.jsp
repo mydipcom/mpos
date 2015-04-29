@@ -102,7 +102,11 @@
 				<div class="row">
 					<div class="col-md-12">
 						
-						<div class="col-md-6"><button id="enable" class="btn blue"><s:message code="enable.disable"/></button></div>
+						<div class="col-md-6">
+						<c:if test="${status==1}">
+						<button id="enable" class="btn blue"><s:message code="enable.disable"/></button>
+						</c:if>
+						</div>
 						<div class="col-md-6">
 						<c:if test="${role==1}">
 						<%-- <form action="search" method="post"> --%>
@@ -164,7 +168,9 @@
 														<!-- </label> -->
 													</c:if>
 													</c:forEach>
+													<c:if test="${status==1}">
 													<input type="button" class="btn green" value="Edit"  id="editLan"/>
+													</c:if>
 												</c:if>
 											</td>
 											<td style="width: 35%"><span class="text-muted" id="lanMsg" >
@@ -181,16 +187,14 @@
 										<tr>
 											<td><s:message code="print"/></td>
 											<td>
-													<input type="hidden" id="printV" value="${store.printType }">
-											<div class="radio-list">
+												<input type="hidden" id="printV" value="${store.printType }">
 												<label class="radio-inline">
 												<input type="radio" name="print_type" value="1"/><s:message code="print.one"/>
 												</label>
 												<label class="radio-inline">
 												<input type="radio" name="print_type" value="2"/><s:message code="print.two"/>
 												</label>
-												</div>
-											</td>
+												</td>
 											<td><span class="text-muted" id="printType">  
 											<c:if test="${store.printType eq 1 }">
 												<s:message code="print.one"/>
@@ -218,6 +222,7 @@
 																	class="fileinput-preview fileinput-exists thumbnail"
 																	style="max-width: 200px; max-height:200px;"></div>
 																<div>
+																<c:if test="${status==1}">
 																	<span class="btn default btn-file"> <span
 																		class="fileinput-new"> Select image </span> <span
 																		class="fileinput-exists"> Change </span>
@@ -235,7 +240,9 @@
 																			class="btn green fileinput-exists"
 																			value="Confirm" class="form-control"/>
 																	</div>
+																	</c:if>
 																</div>
+																
 															</div>
 
 
@@ -266,6 +273,7 @@
 																	class="fileinput-preview fileinput-exists thumbnail"
 																	style="max-width: 200px; max-height: 150px;"></div>
 																<div>
+																<c:if test="${status==1}">
 																	<span class="btn default btn-file"> <span
 																		class="fileinput-new"> Select image </span> <span
 																		class="fileinput-exists"> Change </span> <input
@@ -282,6 +290,7 @@
 																			class="btn green fileinput-exists"
 																			value="Confirm" class="form-control"/>
 																	</div>
+																	</c:if>
 																</div>
 															</div>
 														</div>

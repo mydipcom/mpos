@@ -93,4 +93,9 @@ public class ServiceServiceImpl implements ServiceService {
 		return serviceDao.get(serviceId);
 	}
 
+	public List<Tservice> load() {
+		// TODO Auto-generated method stub
+		return serviceDao.LoadAll();
+	}
+
 }

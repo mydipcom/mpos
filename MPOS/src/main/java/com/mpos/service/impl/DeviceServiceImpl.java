@@ -2,6 +2,7 @@ package com.mpos.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -130,6 +131,12 @@ public class DeviceServiceImpl implements DeviceService {
 		Criteria criteria = deviceDao.createCriteria();
 		criteria.add(Restrictions.eq("channelId", channelId)).add(Restrictions.eq("deviceType", deviceType));
 		return criteria.list().size();
+	}
+
+
+	public void delete(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		deviceDao.delete(hql, params);
 	}
 	
 }

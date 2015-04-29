@@ -157,6 +157,14 @@
     <scope>system</scope> 
     		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/json-lib-2.4.jar </systemPath> 
 </dependency>
+
+   <dependency>
+    <groupId>ezmorph-1.0.6</groupId>
+    <artifactId>ezmorph</artifactId>
+    <version>1.06</version>
+    <scope>system</scope> 
+    		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ezmorph-1.0.6.jar </systemPath> 
+</dependency>
       
     <dependency> 
     		<groupId>bdpush</groupId> 

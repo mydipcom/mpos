@@ -10,6 +10,8 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,53 @@ public class StoreServiceImpl implements StoreService {
 		Criteria criteria = storeDao.createCriteria();
 		criteria.addOrder(Order.desc("storeId"));
 		criteria.add(Restrictions.eq("status", true));
+		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
+			List<Criterion> criterionList = new ArrayList<Criterion>();
+			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);
+			Set<String> keys = json.keySet();
+			for(String key:keys){
+				String value = json.getString(key);
+				if(value!=null&&!value.isEmpty()){
+					if(key.equals("storeName")){
+						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
+					}else if(key.equals("status")){
+						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
+					}else{
+						criterionList.add(Restrictions.eq(key, json.get(key)));
+					}
+				}
+			}
+			for (Criterion criterion : criterionList) {
+				criteria.add(criterion);
+			}
+			return storeDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
+		}
+		return storeDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
+	}
+	
+	public void confine(Criteria criteria){
+		String alias = "store_";
+		ProjectionList pList = Projections.projectionList();  
+		pList.add(Projections.property(alias + "." + "storeId").as("storeId"));  
+		pList.add(Projections.property(alias + "." + "storeName").as("storeName"));  
+		pList.add(Projections.property(alias + "." + "clientPwd").as("clientPwd"));  
+		pList.add(Projections.property(alias + "." + "storeCurrency").as("storeCurrency"));  
+		pList.add(Projections.property(alias + "." + "status").as("status"));  
+		pList.add(Projections.property(alias + "." + "publicKey").as("publicKey"));  
+		pList.add(Projections.property(alias + "." + "storeLangId").as("storeLangId"));  
+		pList.add(Projections.property(alias + "." + "status").as("status"));  
+		pList.add(Projections.property(alias + "." + "serviceId").as("serviceId"));  
+		pList.add(Projections.property(alias + "." + "printType").as("printType"));  
+		pList.add(Projections.property(alias + "." + "serviceDate").as("serviceDate"));  
+		pList.add(Projections.property(alias + "." + "createTime").as("createTime"));  
+		criteria.setProjection(pList);  
+	}
+	
+	public PagingData load(DataTableParamter rdtp){
+		Criteria criteria = storeDao.createCriteria();
+		//confine(criteria);
+		String searchJsonStr = rdtp.getsSearch();
+		criteria.addOrder(Order.desc("storeId"));
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
 			List<Criterion> criterionList = new ArrayList<Criterion>();
 			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);

@@ -8,6 +8,8 @@ public interface AdminUserService {
 	
 	TadminUser getAdminUserById(String userId);
 	
+	public Boolean emailExist(String email);
+	
 	void createAdminUser(TadminUser adminUser);
 	
 	void updateAdminUser(TadminUser adminUser);

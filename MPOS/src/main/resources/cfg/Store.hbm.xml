@@ -47,5 +47,8 @@
           <property name="printType" type="java.lang.Integer">
         <column name="print_type" />
         </property>
+         <property name="createTime" type="long">
+        <column name="create_time" />
+        </property>
     </class>
 </hibernate-mapping>

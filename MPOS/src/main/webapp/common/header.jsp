@@ -26,7 +26,7 @@
 			<ul class="nav navbar-nav pull-right">
 				<!-- END INBOX DROPDOWN -->
 				<!-- BEGIN LANGUAGE BAR -->
-				<li class="dropdown dropdown-language">
+				<%-- <li class="dropdown dropdown-language">
 					<a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" src="${pageContext.request.contextPath}<s:message code="locale.flag.img"/>">
 					<span class="langname"><s:message code="locale.langname"/></span>
@@ -42,7 +42,7 @@
 							<img alt="" src="${pageContext.request.contextPath}/assets/global/img/flags/cn.png"> Chinese </a>
 						</li>						
 					</ul>
-				</li>
+				</li> --%>
 				<!-- END LANGUAGE BAR -->
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown dropdown-user">

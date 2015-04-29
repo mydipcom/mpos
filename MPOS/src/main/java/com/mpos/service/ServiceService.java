@@ -13,6 +13,7 @@ public interface ServiceService {
 	public void delete(Integer serviceId);
 	public Tservice get(Integer serviceId);
 	public void update(Tservice service);
+	public List<Tservice> load();
 	public PagingData loadList(DataTableParamter rdtp);
 	
 	public void delete(String hql,Map<String, Object> params);

@@ -15,6 +15,7 @@ public interface StoreService {
 		public void update(Tstore store);
 		public Tstore get(Integer storeId);
 		public PagingData loadList(DataTableParamter rdtp);
+		public PagingData load(DataTableParamter rdtp);
 		public List<Tstore> loadAll();
 		
 		public void updateImage(String hql, Map<String, Object> params);

@@ -1,6 +1,7 @@
 package com.mpos.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.mpos.dto.Tdevice;
 import com.mpos.model.DataTableParamter;
@@ -14,6 +15,7 @@ public interface DeviceService {
 	void deleteAll(Integer[] ids);
 	void update(Tdevice device);
 	void updateStatus();
+	public void delete(String hql,Map<String, Object> params);
 	Tdevice get(String tableName);
 	Tdevice get(Integer id);
 	List<Tdevice> loadAll();

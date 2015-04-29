@@ -79,6 +79,7 @@ public class StoreContrller extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			putInfo(request, storeId, mav);
+			mav.addObject("status", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,6 +100,26 @@ public class StoreContrller extends BaseController {
 		mav.addObject("langIds", store.getStoreLangId());
 	}
 	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getInfo", method = RequestMethod.GET)
+	public ModelAndView getInfo(HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		Map<String, Object> params = getHashMap();
+		String hql = "select new Tstore(serviceId,serviceDate) from Tstore where storeId=:storeId";
+		params.put("storeId", getSessionStoreId(request));
+		Tstore store = storeService.selectOne(hql, params);
+		Tservice service = serviceService.get(store.getServiceId());
+		mav.addObject("date", ConvertTools.longToDateString(store.getServiceDate()));
+		mav.addObject("service", service);
+		mav.addObject("status", 1);
+		mav.setViewName("service/serviceinfo");
+		return mav;
+	}
+	
 	@RequestMapping(value="search/{storeId}",method=RequestMethod.GET)
 	public ModelAndView getStoreSetting(HttpServletRequest request,@PathVariable Integer storeId){
 		if(storeId == null||storeId==-1){
@@ -106,13 +127,9 @@ public class StoreContrller extends BaseController {
 		}
 		ModelAndView mav = new ModelAndView();
 		try {
-			TadminUser user = getSessionUser(request);
-			if(user.getAdminRole().getRoleId()==1){
 				putInfo(request, storeId, mav);
+				mav.addObject("status", 0);
 				mav.setViewName("store/storesetting");
-			}else{
-				mav.setViewName("login");
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

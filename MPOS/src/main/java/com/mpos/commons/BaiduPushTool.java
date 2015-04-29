@@ -31,19 +31,19 @@ public class BaiduPushTool {
 	/**
 	 * 苹果设备服务端api_key
 	 */
-	public final static String IOS_API_KEY = SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_API_KEY);
+	public final static String IOS_API_KEY = "DCL771qHUBeVu0fGCAzYTuA7 " ;//SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_API_KEY);
 	/**
 	 * 苹果设备服务端secret_key
 	 */
-	public final static String IOS_SECRET_KEY = SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_SECRET_KEY);
+	public final static String IOS_SECRET_KEY = "hH8Sc9vCeTqCgLC2ikZeOUnu3t46WajA";//SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_SECRET_KEY);
 	/**
 	 * 安卓设备服务端api_key  "LXkMQ0p54mg4jGOtKkPC5A0F";//
 	 */
-	public final static String ANDROID_API_KEY = SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_API_KEY);
+	public final static String ANDROID_API_KEY =  "LXkMQ0p54mg4jGOtKkPC5A0F";//SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_API_KEY);
 	/**
 	 * 安卓设备服务端secret_key "xGRxrDaO51MQK599kGYTttqFaiTZwAwK";// 
 	 */
-	public final static String ANDROID_SECRET_KEY = SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_SECRET_KEY);
+	public final static String ANDROID_SECRET_KEY =  "xGRxrDaO51MQK599kGYTttqFaiTZwAwK";// SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_SECRET_KEY);
 	/**
 	 * 苹果设备
 	 */
@@ -63,6 +63,7 @@ public class BaiduPushTool {
 		 * 描述
 		 */
 		private String description;
+		private Integer code;
 		private String notification_builder_id;
 		private String notification_basic_style;
 		private String open_type;
@@ -75,10 +76,23 @@ public class BaiduPushTool {
 		public Notification() {
 		}
 		
+		public Notification(Integer code) {
+			this.code = code;
+		}
+		
 		public Notification(String title, String description) {
 			this.title = title;
 			this.description = description;
 		}
+		
+		public Integer getCode() {
+			return code;
+		}
+
+		public void setCode(Integer code) {
+			this.code = code;
+		}
+
 		public String getTitle() {
 			return title;
 		}
@@ -124,10 +138,11 @@ public class BaiduPushTool {
 	}
 	
 	public static void main(String[] args) {
-		//String channelId = "4346705795496960498";
-		Integer deviceType = 3;
-		Notification notification = new Notification("title", "Hello Android");
-		pushMsgToTag(notification, "0", deviceType);
+		String channelId = "5186399146318530283";
+		//Integer deviceType = 3;
+		//Notification notification = new Notification("title", "Hello ios");
+		//pushMsgToTag(notification, "0", deviceType);
+		pushMsgToSingleDevice(IOS_TYPE,channelId,new Notification(10001));
 		//deleteTag(3,"0");
 		//deleteTag(3,"ios1");
 	}
@@ -253,6 +268,9 @@ public class BaiduPushTool {
 		BaiduPushClient pushClient = new BaiduPushClient(getPushKeyPair(deviceType),BaiduPushConstants.CHANNEL_REST_URL);
 		PushMsgToTagRequest request = new PushMsgToTagRequest();
 		request.addDeviceType(deviceType).addTagName(tagName).addMessageType(1).addMessage(JSON.toJSONString(notification)).addMsgExpires(86400);
+		 if(deviceType==IOS_TYPE){
+	        	request.addDeployStatus(1);
+	        }
 		try {
 			PushMsgToTagResponse response = pushClient. pushMsgToTag(request);
 			if(response.getMsgId()!=null){
@@ -286,7 +304,10 @@ public class BaiduPushTool {
                 addMessageType(1).//1：通知,0:消息.默认为0  注：IOS只有通知.
                 addMessage(JSON.toJSONString(notification)).
                 //addDeployStatus(2). //IOS, DeployStatus => 1: Developer 2: Production.
-                addDeviceType(3);// deviceType => 3:android, 4:ios
+                addDeviceType(deviceType);// deviceType => 3:android, 4:ios
+        if(deviceType==IOS_TYPE){
+        	request.addDeployStatus(1);
+        }
             // 5. http request
 			try {
 				response = pushClient.pushMsgToSingleDevice(request);

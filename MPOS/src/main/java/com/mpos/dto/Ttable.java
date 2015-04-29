@@ -15,8 +15,15 @@ public class Ttable implements java.io.Serializable {
 	private Integer seatingNumber;
 	private String descr;
 	private Boolean status = true;
-	private Long createTime;
+	private Long createTime = System.currentTimeMillis();
 	private Integer storeId;
+
+	
+	public Ttable(String tableName, Integer seatingNumber, Integer storeId) {
+		this.tableName = tableName;
+		this.seatingNumber = seatingNumber;
+		this.storeId = storeId;
+	}
 
 	public Ttable() {
 	}

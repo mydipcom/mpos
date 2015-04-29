@@ -31,7 +31,7 @@ public class PermissionInteceptor implements HandlerInterceptor {
 		request.getSession().removeAttribute("locale");
 		Object res = request.getSession().getAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
 		if(res==null){
-			res = "en_US";
+			res = "zh_CN";
 		}
 		request.getSession().setAttribute("locale", res.toString());
 //		String contextPath=request.getContextPath();
