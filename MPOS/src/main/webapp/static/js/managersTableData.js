@@ -162,8 +162,8 @@ var ManagersTable = function () {
 		$('#activateBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
-             "type": "POST", 
-             "url": rootURI+"manager/activateusers/"+selected.join(), 
+             "type": "GET", 
+             "url": rootURI+"manager/"+selected.join()+"/activateusers", 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -186,8 +186,8 @@ var ManagersTable = function () {
 		$('#deactivateBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
-             "type": "POST", 
-             "url": rootURI+"manager/deactivateusers/"+selected.join(), 
+             "type": "GET", 
+             "url": rootURI+"manager/"+selected.join()+"/deactivateusers", 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -244,7 +244,7 @@ var ManagersTable = function () {
 	            var api=oTable.api();            
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
-	            	var ids=data.adminId;
+	            	var ids=data.email;
 	                var index = $.inArray(ids, selected);
 	                selected.push( ids );
                     $(this).attr("checked", true);
@@ -276,7 +276,7 @@ var ManagersTable = function () {
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.adminId;
+            var id = data.email;
             var index = $.inArray(id, selected);     
             if ( index === -1 ) {
                 selected.push( id );

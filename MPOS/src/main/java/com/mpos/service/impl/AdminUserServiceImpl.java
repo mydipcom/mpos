@@ -96,7 +96,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	}
 
 	public void deleteAdminUserByIds(String[] ids) {
-		adminUserDao.deleteAll(ids);
+		adminUserDao.delete(ids);
 		// TODO Auto-generated method stub
 		
 	}
@@ -143,16 +143,6 @@ public class AdminUserServiceImpl implements AdminUserService {
 	adminUserDao.update(adminUser);
 }
 
-   public void activateUsersByIds(String[] ids) {
-	   adminUserDao.activateusers(ids);
-	
-}
-
-   public void deactivateUsersByIds(String[] ids) {
-	   adminUserDao.deactivateusers(ids);
-	
-}
-
 public TadminUser getTadminUsersByEmail(String email) {
 	// TODO Auto-generated method stub
 	return adminUserDao.findUnique("email", email);
@@ -169,6 +159,11 @@ public Boolean emailExist(String email){
 		return false;
 	}
 	return true;
+}
+
+public void updateUserStatus(String[] ids, boolean status) {
+	// TODO Auto-generated method stub
+	adminUserDao.updateUserStatus(ids, status);
 }
 
 }

@@ -129,7 +129,7 @@ public class LoginController extends BaseController {
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
 			
 		}
-		adminLog.setAdminId(tUser.getEmail());
+		adminLog.setAdminId(user.getAdminId());
 		LogManageTools.writeAdminLog(log_content,adminLog,request);
 		return mav;
 	}

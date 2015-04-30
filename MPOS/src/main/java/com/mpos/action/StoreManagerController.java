@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.mpos.commons.ConvertTools;
@@ -60,10 +61,12 @@ public class StoreManagerController extends BaseController {
 	 */
 	private String info ="";
 	@RequestMapping(method = RequestMethod.GET)
-	public String store(HttpServletRequest request){
+	public ModelAndView store(HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
 		List<Tservice> servicelist = serviceService.load();
-		request.setAttribute("serviceList", servicelist);
-		return "store/store";
+		mav.addObject("serviceList", servicelist);
+		mav.setViewName("store/store");
+		return mav;
 	}
 	
 	

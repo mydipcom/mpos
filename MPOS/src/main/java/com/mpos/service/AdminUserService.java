@@ -22,10 +22,6 @@ public interface AdminUserService {
 	
 	void deleteAdminUserByIds(String[] ids);
 	
-	void activateUsersByIds(String[] ids);
-	
-	void deactivateUsersByIds(String[] ids);
-	
 	public PagingData loadAdminUserList(DataTableParamter rdtp);
 	
 	public int getAdminUserAmount();
@@ -33,5 +29,7 @@ public interface AdminUserService {
 	public TadminUser getTadminUsersByEmail(String email);
 	
 	TadminUser getUserByStoreId(Integer storeId);
+	
+	public void updateUserStatus(String[] ids,boolean status);
 		
 }

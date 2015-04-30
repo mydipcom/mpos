@@ -9,7 +9,7 @@
 			<generator class="assigned"></generator>
 		</id>
 		<property name="email" type="java.lang.String">
-            <column name="email" length="100" not-null="true"/>
+            <column name="email" length="100" not-null="true" unique="true"/>
         </property>		
 		<property name="password" type="java.lang.String">
             <column name="password" length="50" not-null="true"/>

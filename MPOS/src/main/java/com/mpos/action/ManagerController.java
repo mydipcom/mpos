@@ -169,14 +169,14 @@ public class ManagerController extends BaseController {
 		}	
 		return JSON.toJSONString(respJson);	
 	}
-	@RequestMapping(value="activateusers/{ids}",method=RequestMethod.POST)
+	@RequestMapping(value="{ids}/activateusers",method=RequestMethod.GET)
 	@ResponseBody
 	public String activateRules(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
 	
 		JSONObject respJson = new JSONObject();
 		try{
-			adminUserService.activateUsersByIds(idstrArr);
+			adminUserService.updateUserStatus(idstrArr, true);
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
@@ -187,13 +187,13 @@ public class ManagerController extends BaseController {
 		return JSON.toJSONString(respJson);	
 	}
 	
-	@RequestMapping(value="deactivateusers/{ids}",method=RequestMethod.POST)
+	@RequestMapping(value="{ids}/deactivateusers",method=RequestMethod.GET)
 	@ResponseBody
 	public String deactivateRules(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");				
 		JSONObject respJson = new JSONObject();
 		try{
-			adminUserService.deactivateUsersByIds(idstrArr);
+			adminUserService.updateUserStatus(idstrArr, false);
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
