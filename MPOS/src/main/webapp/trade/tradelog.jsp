@@ -159,10 +159,10 @@
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="trade.id"/></label>
-											<label><input type="checkbox" checked data-column="2"><s:message code="trade.service.name"/></label>
-											<label><input type="checkbox" checked data-column="3"><s:message code="trade.eamil"/></label>
-											<label><input type="checkbox" checked data-column="4"><s:message code="trade.money"/></label>
-											<label><input type="checkbox" checked data-column="5"><s:message code="trade.time"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="trade.eamil"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="trade.time"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="trade.service.name"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="trade.money"/></label>
 											<label><input type="checkbox" checked data-column="6"><s:message code="trade.status"/></label>
 										</div>
 									</div>								    																
@@ -176,10 +176,10 @@
 												<input type="checkbox" class="group-checkable" data-set="mylog_table .checkboxes"/>
 											</th>
 											<th><s:message code="trade.id"/></th>
-											<th><s:message code="trade.service.name"/></th>
 											<th><s:message code="trade.eamil"/></th>
-											<th><s:message code="trade.money"/></th>
 											<th><s:message code="trade.time"/></th>
+											<th><s:message code="trade.service.name"/></th>
+											<th><s:message code="trade.money"/></th>
 											<th><s:message code="trade.status"/></th>
 											<%-- <th><s:message code="all.table.title"/></th> --%>
 										</tr>

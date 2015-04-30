@@ -153,7 +153,7 @@
 													${store.publicKey} </span></td>
 										</tr>
 										<tr>
-											<td style="width: 15%">Language Setting</td>
+											<td style="width: 15%"><s:message code="language.setting"/></td>
 											<td style="width: 50%">
 												<c:if test="${not empty langs}">
 													<c:forEach var="lan" items="${langs }">

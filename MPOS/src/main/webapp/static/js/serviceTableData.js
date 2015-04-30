@@ -61,14 +61,22 @@ var ServiceTable = function () {
 	           {data: "serviceName" },
 	           {data: "servicePrice"},
 	           {data: "validDays" },
-	           {data: "roleId",
+	          /* {data: "roleId",
 	        	'render':function(data,type,row){
 	        		var temp = "";
 	        		temp = GetInfo.get(data);
 	                return temp;
 	                }
+	           },*/
+	           { data: "status",
+	        	   'render':function(data,type,row){
+		        		var res ='<font color="green">已发布</font>';
+		        		if(data=="0"){
+		        			res ='<font color="red">未发布</font>';
+		        		}
+		                return res;
+		                }
 	           },
-	           { data: "status" },
 	           {"class":"center"}
 	          ],
 	        "serverSide": true,

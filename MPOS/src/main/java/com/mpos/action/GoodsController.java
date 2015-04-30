@@ -332,9 +332,10 @@ public class GoodsController extends BaseController{
 	}
 	@RequestMapping(value="/setgoods",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView addGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
+	public ModelAndView addGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model,Integer storeId){
 		ModelAndView mav=new ModelAndView();
 		try{
+			addStore(model, request, storeId);
 			goodsService.createproduct(model, filesMap, request);
 			handleContent = "添加商品:"+model.getProductName()+"成功";
 			request.getSession().setAttribute("addsussess","operate.success");

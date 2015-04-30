@@ -56,18 +56,9 @@ var StoreTable = function () {
                {"orderable": false },
 	           { /*title: "ID",*/   data: "storeId","bVisible":false},
 	           { /*title: "Table Name",*/    data: "storeName" },
-	           { /*title: "Seat Numbers",*/    data: "clientPwd"},
-	           { /*title: "Description",*/    data: "printType", 
-	        	   'render':function(data,type,row){
-	        		   var temp = "一联";
-	        		   if(row.printType=="2"){
-	        			   temp = "两联";
-	        		   }
-	        		   return temp;
-           			}
-	           },
-	           { /*title: "Description",*/    data: "publicKey" },
-	           { /*title: "Description",*/    data: "storeCurrency" },
+	           { /*title: "Seat Numbers",*/    data: "email"},
+	           { /*title: "Description",*/    data: "serviceName" },
+	           { /*title: "Description",*/    data: "date" },
 	           { /*title: "Description",*/    data: "createTimeStr" },
 	           { /*title: "Description",*/    data: "status" },
 	           { /*title: "Action" ,*/"class":"center"}

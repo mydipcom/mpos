@@ -47,11 +47,19 @@ var MyLogTable = function () {
             "columns":[
                       	{"orderable": false },
                       	{data: "serviceOrderId", },
-                      	{data: "serviceName" },
                       	{data: "email" },
-                      	{data: "price" },
                       	{data: "createTimeStr" },
-                      	{data: "status" }
+                    	{data: "serviceName" },
+                      	{data: "price" },
+                      	{data: "status",
+                      		 'render':function(data,type,row){
+                      			 var temp = "支付成功";
+                      			 if(data=="0"){
+                      				temp = "支付失败";
+                      			 }
+                             	return temp;
+                             }
+                      	}
                       ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

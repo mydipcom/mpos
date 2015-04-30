@@ -103,11 +103,25 @@
 											<%-- <td style="width: 35%"><span class="text-muted"></span></td> --%>
 										</tr>
 										<tr>
-											<td style="width: 15%">到期时间</td>
-											<td style="width: 85%">${date}</td>
+											<td style="width: 15%">服务费</td>
+											<td style="width: 85%">${service.servicePrice}元</td>
 											<%-- <td style="width: 35%"><span class="text-muted"></span></td> --%>
 										</tr>
-										
+										<tr>
+											<td style="width: 15%">生效时间</td>
+											<td style="width: 85%">${startDate}</td>
+											<%-- <td style="width: 35%"><span class="text-muted"></span></td> --%>
+										</tr>
+										<tr>
+											<td style="width: 15%">到期时间</td>
+											<td style="width: 85%">${endDate}</td>
+											<%-- <td style="width: 35%"><span class="text-muted"></span></td> --%>
+										</tr>
+										<tr>
+											<td style="width: 15%">管理员账号</td>
+											<td style="width: 85%">${admin}</td>
+											<%-- <td style="width: 35%"><span class="text-muted"></span></td> --%>
+										</tr>
 										
 									</tbody>
 								</table>

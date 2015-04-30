@@ -326,9 +326,10 @@ private int imgIndex=0;
 	
 	@RequestMapping(value="/editgoods/editgoods",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model){
+	public ModelAndView editGoods(HttpServletRequest request,@ModelAttribute("product") AddProductModel model,Integer storeId){
 		ModelAndView mav=new ModelAndView();
 		try{
+			addStore(model, request, storeId);
 			goodsService.updateproduct(model, filesMap, request);
 			handleContent = "修改商品:"+model.getProductName()+"成功;";
 			request.getSession().setAttribute("addsussess","operate.success");

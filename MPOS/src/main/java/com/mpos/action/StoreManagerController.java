@@ -125,15 +125,24 @@ public class StoreManagerController extends BaseController {
 			pagingData.setAaData(objs);
 		}else{
 			Object[] objects = pagingData.getAaData();
-			List<Tstore> stores = new ArrayList<Tstore>();
+			List<Map<String, Object>> maps = new ArrayList<Map<String,Object>>();
+		//	List<Tstore> stores = new ArrayList<Tstore>();
 			for (Object object : objects) {
 				Tstore store = (Tstore)object;
-				store.setStoreBackground(null);
-				store.setStoreLogo(null);
-				store.setCreateTimeStr(ConvertTools.longToDateString(store.getCreateTime()));
-				stores.add(store);
+				Tservice service = serviceService.get(store.getServiceId());
+				TadminUser user = adminUserService.getUserByStoreId(store.getStoreId());
+				Map<String, Object> o = getHashMap();
+				o.put("storeId", store.getStoreId());
+				o.put("storeName", store.getStoreName());
+				o.put("createTimeStr", ConvertTools.longToDateString(store.getCreateTime()));
+				o.put("date",ConvertTools.longToDateString(store.getServiceDate()));
+				o.put("status", store.getCreateTimeStr());
+				o.put("serviceName", service.getServiceName());
+				o.put("email", user.getEmail());
+				o.put("status", store.getStatus());
+				maps.add(o);
 			}
-			pagingData.setAaData(stores.toArray());
+			pagingData.setAaData(maps.toArray());
 		}
 		pagingData.setSEcho(dtp.sEcho);
 		String rightsListJson = JSON.toJSONString(pagingData);

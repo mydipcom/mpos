@@ -113,9 +113,10 @@ public class StoreContrller extends BaseController {
 		params.put("storeId", getSessionStoreId(request));
 		Tstore store = storeService.selectOne(hql, params);
 		Tservice service = serviceService.get(store.getServiceId());
-		mav.addObject("date", ConvertTools.longToDateString(store.getServiceDate()));
+		mav.addObject("endDate", ConvertTools.longToDateString(store.getServiceDate()));
 		mav.addObject("service", service);
-		mav.addObject("status", 1);
+		mav.addObject("startDate", ConvertTools.longToDateString(getSessionUser(request).getCreatedTime()));
+		mav.addObject("admin", getSessionUser(request).getEmail());
 		mav.setViewName("service/serviceinfo");
 		return mav;
 	}
