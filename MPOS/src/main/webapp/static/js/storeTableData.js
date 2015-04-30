@@ -1,3 +1,23 @@
+//jquery插件把表单序列化成json格式的数据start 
+(function($){
+    $.fn.serializeJson=function(){
+        var serializeObj={};
+        var array=this.serializeArray();
+        var str=this.serialize();
+        $(array).each(function(){
+            if(serializeObj[this.name]){
+                if($.isArray(serializeObj[this.name])){
+                    serializeObj[this.name].push(this.value);
+                }else{
+                    serializeObj[this.name]=[serializeObj[this.name],this.value];
+                }
+            }else{
+                serializeObj[this.name]=this.value;
+            }
+        });
+        return serializeObj;
+    };  
+})(jQuery);
 var rootURI="/";
 var locale = "en_US";
 var StoreTable = function () {
@@ -40,7 +60,7 @@ var StoreTable = function () {
 	           { /*title: "Description",*/    data: "printType", 
 	        	   'render':function(data,type,row){
 	        		   var temp = "一联";
-	        		   if(data.printType=="2"){
+	        		   if(row.printType=="2"){
 	        			   temp = "两联";
 	        		   }
 	        		   return temp;
@@ -49,6 +69,7 @@ var StoreTable = function () {
 	           { /*title: "Description",*/    data: "publicKey" },
 	           { /*title: "Description",*/    data: "storeCurrency" },
 	           { /*title: "Description",*/    data: "createTimeStr" },
+	           { /*title: "Description",*/    data: "status" },
 	           { /*title: "Action" ,*/"class":"center"}
 	          ],
 	        "serverSide": true,
@@ -216,7 +237,7 @@ var StoreTable = function () {
                     	    dataType: "json",           //接受数据格式   
                     	    data: {                     //要传递的数据
                     	    	email: function() {
-                    	    		return $("#addTableForm input[name='eamil']").val();
+                    	    		return $("#addTableForm input[name='email']").val();
                     	        }
                     	    }
                     	}

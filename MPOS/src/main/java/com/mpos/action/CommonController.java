@@ -122,15 +122,16 @@ public class CommonController extends BaseController {
 			store.setStoreCurrency("￥");
 			store.setStoreLangId("1");
 			storeService.save(store);
-			tables.add(new Ttable("A01", 4, store.getServiceId()));
-			tables.add(new Ttable("A02", 2, store.getServiceId()));
-			tables.add(new Ttable("A03", 6, store.getServiceId()));
+			tables.add(new Ttable("A01", 4, store.getStoreId()));
+			tables.add(new Ttable("A02", 2, store.getStoreId()));
+			tables.add(new Ttable("A03", 6, store.getStoreId()));
 			for (Ttable table : tables) {
 				tableService.create(table);
 			}
 			user.setStoreId(store.getStoreId());
 			user.setCreatedTime(System.currentTimeMillis());
 			user.setCreatedBy("admin");
+			user.setAdminId(user.getEmail());
 			user.setAdminRole(new TadminRole(service.getRoleId()));
 			if(user.getPassword().isEmpty()){
 				String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);

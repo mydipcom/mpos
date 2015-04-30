@@ -22,7 +22,7 @@ public class TadminUser implements Serializable {
 	
 	private String createdBy;
 	
-	private Long createdTime;
+	private Long createdTime = System.currentTimeMillis();
 
 	private String updatedBy;
 	

@@ -25,7 +25,7 @@ public class Tstore implements Serializable {
 	/**
 	 * 店铺名称
 	 */
-	private String storeName;
+	private String storeName="CampRay";
 	/**
 	 * 店铺logo
 	 */
@@ -37,19 +37,19 @@ public class Tstore implements Serializable {
 	/**
 	 * 客户端密码
 	 */
-	private String clientPwd;
+	private String clientPwd="CampRay";
 	/**
 	 * 货币符号
 	 */
-	private String storeCurrency;
+	private String storeCurrency="$";
 	/**
 	 * 是否自动同步数据
 	 */
-	private Boolean autoSyncStatus;
+	private Boolean autoSyncStatus=false;
 	/**
 	 * 状态
 	 */
-	private Boolean status;
+	private Boolean status=true;
 	/**
 	 * 简介
 	 */
@@ -57,11 +57,11 @@ public class Tstore implements Serializable {
 	/**
 	 * 公钥
 	 */
-	private String publicKey;
+	private String publicKey="CampRay";
 	/**
 	 * 店铺多语言ID，多个以“,”分隔
 	 */
-	private String storeLangId;
+	private String storeLangId="1";
 	/**
 	 * 订阅服务套餐ID
 	 */

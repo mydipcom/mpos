@@ -63,8 +63,8 @@ public class LogManageTools {
 		method=ste[1].getMethodName();
 		time=System.currentTimeMillis();
 	    TadminLog adminLog = (TadminLog) obj;
-	    adminId=((TadminUser)request.getSession().getAttribute(SystemConstants.LOGINED)).getAdminId();
-	    adminLog.setAdminId(adminId);
+	    //adminId=((TadminUser)request.getSession().getAttribute(SystemConstants.LOGINED)).getAdminId();
+	  //  adminLog.setAdminId(adminId);
 		adminLog.setCreatedTime(time);
 	    adminLog.setContent(clazz+SystemConstants.LOG_SEPARATOR+method+SystemConstants.LOG_SEPARATOR+content);
 	    adminuserLogService.createAdminLog(adminLog);

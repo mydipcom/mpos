@@ -79,29 +79,32 @@ public class StoreManagerController extends BaseController {
 			store.setStoreLangId("1");
 			store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
 			storeService.save(store);
-			tables.add(new Ttable("A01", 4, store.getServiceId()));
-			tables.add(new Ttable("A02", 2, store.getServiceId()));
-			tables.add(new Ttable("A03", 6, store.getServiceId()));
+			tables.add(new Ttable("A01", 4, store.getStoreId()));
+			tables.add(new Ttable("A02", 2, store.getStoreId()));
+			tables.add(new Ttable("A03", 6, store.getStoreId()));
 			for (Ttable table : tables) {
 				tableService.create(table);
 			}
 			user.setStoreId(store.getStoreId());
 			user.setCreatedTime(System.currentTimeMillis());
+			user.setAdminId(user.getEmail());
 			user.setCreatedBy("admin");
+			user.setStatus(true);
 			user.setAdminRole(new TadminRole(service.getRoleId()));
-			if(user.getPassword().isEmpty()){
+			if(user.getPassword()==null||user.getPassword().isEmpty()){
 				String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
 				TemaiMessage message = new TemaiMessage();
 				message.setTo(user.getEmail());
-				message.setText("your account:  "+user.getAdminId()+"|register time:  "+Calendar.getInstance().getTime()+" |password:  "+random);
-				message.setSubject("MPOS Password");
-				EMailTool.send(message);
+			   message.setText("your account:  "+user.getAdminId()+"|register time:  "+Calendar.getInstance().getTime()+" |password:  "+random);
+			   message.setSubject("MPOS Password");
+			   EMailTool.send(message);
 				user.setPassword(random);
 			}
 			user.setPassword(SecurityTools.MD5(user.getPassword()));
 			adminUserService.createAdminUser(user);
 			info = getMessage(request,"operate.success");
-		} catch (MposException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			status = false;
 			info = e.getMessage();
 		}

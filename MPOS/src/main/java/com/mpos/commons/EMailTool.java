@@ -35,6 +35,14 @@ public class EMailTool {
 		
 	}
 	 
+	 public static void main(String[] args) {
+		 TemaiMessage msg = new TemaiMessage();
+		 msg.setTo("381551030@qq.com");
+		 msg.setSubject("Password");
+		 msg.setText("123456");
+		 EMailTool.send(msg);
+	}
+	 
 	public static JavaMailSenderImpl getJavaMailSenderImpl(){
 	    JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
 	    javaMailSenderImpl.setHost(SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_HOST));
@@ -43,6 +51,11 @@ public class EMailTool {
 	    Properties properties = new Properties();
 	    properties.setProperty("mail.smtp.auth", "true");
 	    properties.setProperty("mail.smtp.timeout", "30000");
+	    properties.setProperty("mail.transport.protocol", "smtp");  
+	    properties.setProperty("mail.smtp.port", "25");  
+	    properties.setProperty("mail.smtp.auth", "true");  
+	    //properties.setProperty("mail.debug","true");  
+
 	    javaMailSenderImpl.setJavaMailProperties(properties);
 	    return javaMailSenderImpl;
      }

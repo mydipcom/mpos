@@ -36,7 +36,15 @@ var TableTable = function () {
 	           { /*title: "ID",*/   data: "id","bVisible":false},
 	           { /*title: "Table Name",*/    data: "tableName" },
 	           { /*title: "Seat Numbers",*/    data: "seatingNumber"},
-	           { /*title: "Description",*/    data: "descr" },
+	           { /*title: "Description",*/    data: "descr",
+	        	   'render':function(data,type,row){
+	        		   var temp = row.descr;
+	        		   if(temp==null||temp==""){
+	        			   temp = "";
+	        		   }
+	                	return temp;
+	                	}
+	           },
 	           { /*title: "Action" ,*/"class":"center"}
 	          ],
 	        "serverSide": true,

@@ -13,7 +13,7 @@ public class Ttable implements java.io.Serializable {
 	private Integer id;
 	private String tableName;
 	private Integer seatingNumber;
-	private String descr;
+	private String descr="无";
 	private Boolean status = true;
 	private Long createTime = System.currentTimeMillis();
 	private Integer storeId;

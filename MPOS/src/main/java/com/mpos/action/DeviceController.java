@@ -59,7 +59,8 @@ public class DeviceController extends BaseController {
 	
 	@RequestMapping(value="/deviceList",method=RequestMethod.GET)
 	@ResponseBody
-	public String deviceList(DataTableParamter dtp){
+	public String deviceList(DataTableParamter dtp,HttpServletRequest request){
+		addStoreCondition(request, dtp);
 		PagingData pagingData = deviceService.loadDeviceList(dtp);
 		if(pagingData.getAaData()==null){
 			Object[] objs=new Object[]{};

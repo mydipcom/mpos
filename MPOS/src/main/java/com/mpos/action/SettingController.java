@@ -92,7 +92,7 @@ public class SettingController extends BaseController {
 		try{
 			Tsetting tsetting = systemSettingService.getSystemSettingByName(name);
 			if(tsetting != null){
-				if(SystemConstants.ACCESS_PASSWORD.equals(name)||SystemConstants.EMAIl_PASSWORD.equals(name) || SystemConstants.TOKEN.equals(name)){
+				if(SystemConstants.ACCESS_PASSWORD.equals(name)|| SystemConstants.TOKEN.equals(name)){
 				    tsetting.setValue(SecurityTools.MD5(value));
 				}else{
 					tsetting.setValue(value);
