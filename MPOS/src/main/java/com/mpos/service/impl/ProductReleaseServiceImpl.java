@@ -1,6 +1,8 @@
 package com.mpos.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -74,12 +76,14 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 	}
 
 	
-	public void publicreleasebyid(Integer ids) {
-		TproductRelease producRelease = productReleaseDao.get(ids);
-		producRelease.setIsPublic(true);
-		producRelease.setPublicTime(System.currentTimeMillis());
-		productReleaseDao.update(producRelease);
-		
+	public void publicreleasebyid(Integer ids,Integer storeId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", ids);
+		params.put("storeId", storeId);
+		params.put("status", true);
+		params.put("time", System.currentTimeMillis());
+		String hqlUpdate = "update TproductRelease set isPublic=:status,publicTime=:time where storeId=:storeId and id<=:id";
+		productReleaseDao.update(hqlUpdate, params);
 	}
 
 	

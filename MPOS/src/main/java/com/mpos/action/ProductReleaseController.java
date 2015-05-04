@@ -29,7 +29,7 @@ public class ProductReleaseController extends BaseController{
 	//	Integer id=Integer.parseInt(ids);
 		try {
 			TproductRelease productrelease=productReleaseService.getUnPublished(getSessionUser(request).getStoreId());
-			productReleaseService.publicreleasebyid(productrelease.getId());
+			productReleaseService.publicreleasebyid(productrelease.getId(),getSessionUser(request).getStoreId());
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 			Notification notification = new Notification(10001);

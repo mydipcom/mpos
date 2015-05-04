@@ -14,6 +14,6 @@ public interface ProductReleaseService {
 	TproductRelease getLatestPublished(Integer storeId);
 	
 	TproductRelease getUnPublished(Integer storeId);
-	void publicreleasebyid(Integer ids);
+	void publicreleasebyid(Integer ids,Integer storeId);
 	
 }

@@ -210,7 +210,15 @@ public class MenuController extends BaseController {
 				public int compare(MenuModel arg0, MenuModel arg1) {
 					return arg0.getTitle().compareTo(arg1.getTitle());
 				}
-			});  
+			});
+			List<MenuModel> remove = new ArrayList<MenuModel>();
+			for (MenuModel menuModel : models) {
+				if(menuModel.getTitle().contains(">>")){
+					remove.add(menuModel);
+				}
+				//System.out.println(menuModel.getTitle().indexOf(">>"));
+			}
+			models.removeAll(remove);
 			respJson.put("status", true);
 			respJson.put("menus", models);
 		} catch (MposException be) {

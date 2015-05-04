@@ -38,4 +38,5 @@ public class ProductReleaseDao extends BaseDao<TproductRelease> {
 		criteria.setProjection(Projections.max(propertyName));
 		return (Integer)criteria.uniqueResult();
 	}
+	
 }
