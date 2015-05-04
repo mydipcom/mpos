@@ -211,7 +211,8 @@ public class GoodsController extends BaseController{
 		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
 		JSONObject respJson = new JSONObject();
 		try{
-			goodsService.deletegoodsByids(idArr);
+			Integer storeId = getSessionStoreId(request);
+			goodsService.deletegoodsByids(idArr,storeId);
 			//goodsService.deleteLanguageByIds(idArr);
 			handleContent = "删除商品成功;操作ID为:"+idArr.toString();
 			respJson.put("status", true);

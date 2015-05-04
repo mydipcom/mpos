@@ -97,7 +97,7 @@ public class GoodsServiceImpl implements GoodsService{
 		
 	}
 
-	public void deletegoodsByids(Integer[] ids) {
+	public void deletegoodsByids(Integer[] ids,Integer storeId) {
 		Integer verId=productReleaseDao.getMaxintergerValue("id");
 		if(ids!=null&&ids.length>0){
 			for (Integer id : ids) {
@@ -124,6 +124,7 @@ public class GoodsServiceImpl implements GoodsService{
 						 TproductRelease newproductrelease=new TproductRelease();
 						 newproductrelease.setProducts(goods.getId().toString());
 						 newproductrelease.setIsPublic(false);
+						 newproductrelease.setStoreId(storeId);
 						 productReleaseDao.create(newproductrelease);
 					}
 				}
@@ -131,6 +132,7 @@ public class GoodsServiceImpl implements GoodsService{
 					TproductRelease productrelease1=new TproductRelease();
 					productrelease1.setProducts(goods.getId().toString());
 					productrelease1.setIsPublic(false);
+					productrelease1.setStoreId(storeId);
 					productReleaseDao.create(productrelease1);
 				}
 				

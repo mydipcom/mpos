@@ -17,7 +17,7 @@ public interface GoodsService {
 	
 	PagingData loadGoodsList(DataTableParamter dtp);
 	
-	public void deletegoodsByids(Integer ids[]);
+	public void deletegoodsByids(Integer ids[],Integer storeId);
 	
 	public void activegoodsByids(Integer ids[]);
 	
