@@ -263,7 +263,7 @@
 				<div class="modal" id="put_goods" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 <s:message code="system.management.user.deletemessage" />
+							 <s:message code="system.management.user.put.msg" />
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -275,7 +275,7 @@
 				<div class="modal" id="out_goods" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 <s:message code="system.management.user.deletemessage" />
+							 <s:message code="system.management.user.out.msg" />
 						</p>
 					</div>
 					<div class="modal-footer">

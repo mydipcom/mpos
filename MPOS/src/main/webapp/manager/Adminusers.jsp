@@ -154,7 +154,7 @@
 									<i class="fa fa-edit"></i><s:message code="system.management.user.tablename"/>
 								</div>
 								<div class="actions">									
-								   <%--  <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a> --%>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_users" id="openActiveadminsModal"><i class="fa fa-key"></i> <s:message code="all.table.activate" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_users" id="openDeactiveadminsModal"><i class="fa fa-lock"></i> <s:message code="all.table.deactivate" /></a>
@@ -192,7 +192,7 @@
 											<th><s:message code="system.management.user.createdTime"/></th>
 											<th><s:message code="system.management.user.updatedBy"/></th>
 											<th><s:message code="system.management.user.updatedTime"/></th>
-											<th><s:message code="all.table.title"/></th>
+											<th>操作</th>
 										</tr>
 									</thead>
 																						
@@ -205,7 +205,7 @@
 				<!-- END PAGE CONTENT -->
 				
 				<!-- BEGIN ADD MODAL FORM-->
-				<div class="modal" id="add_users" tabindex="-1" data-width="760">
+				<%-- <div class="modal" id="add_users" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title"><s:message code="system.management.user.adduser"/></h4>
@@ -248,7 +248,7 @@
 										</select>										
 									</div>
 								</div>
-								<%-- <div class="form-group">
+								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status" /><span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
@@ -258,7 +258,7 @@
 											<input type="radio" name="status" value="0"/>false </label>
 										</div>
 									</div>
-								</div>	 --%>
+								</div>	
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
@@ -271,7 +271,7 @@
 						</form>
 						<!-- END FORM-->
 					</div>					
-				</div>				
+				</div>	 --%>			
 				<!-- END ADD MODAL FORM-->
 				
 				
@@ -318,71 +318,53 @@
 			<div class="modal" id="add_users" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Users</h4>
+						<h4 class="modal-title">添加用户</h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM-->						
-						<form id="editUsersForm" action="editUsers" method="post" name="editUsersForm" class="form-horizontal form-bordered">
+						<form id="addUsersForm" action="addUsers" method="post" name="addUsersForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 								<s:message code="system.management.user.adduser.message" />
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
-									<div class="col-md-9">										
-										<input name="adminId" class="form-control" readonly="true"/>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="login.form.password"/></label>
-									<div class="col-md-9">																				
-										<input name="password" type="password"  class="form-control" maxLength="100"/>
-										<span class="help-block"> input a new password or not input password</span>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="email" class="form-control" maxLength="100"/>
 									</div>
-								</div>									
+								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.rolename"/></label>
-									<div class="col-md-9">
-										<select name="adminRole.roleId" class="form-control">
-											<c:forEach var="role" items="${rolesList}">
-											<option value="${role.roleId}">${role.roleName}</option>			
-											</c:forEach>
-										</select>										
+									<label class="control-label col-md-3"><s:message code="login.form.password"/><span class="required">* </span></label>
+									<div class="col-md-9">																				
+										<input name="password" type="password"  class="form-control" maxLength="100"/>
+										<%-- <span class="help-block"> input a new password or not input password</span> --%>
+									</div>
+								</div>
+																
+							<div class="form-group">
+									<label class="control-label col-md-3">服务名<span class="required">* </span></label>
+									<div class="col-md-9">																				
+										<select name="serviceId"  style="width:40%;height:30px">
+										<c:if test="${not empty serviceList}">
+										<c:forEach var="service" items="${serviceList }">
+										<option value="${service.serviceId}">${service.serviceName}</option>
+										</c:forEach>
+										</c:if>
+									</select>
 									</div>
 								</div>
 									
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.createdBy"/></label>
-									<div class="col-md-9">																				
-										<input name="createdBy" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>			
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.createdTime"/></label>
-									<div class="col-md-9">																				
-										<input name="createdTimeStr" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>						
-								
 								 <div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label class="radio-inline">
-											<input type="radio" name="status" value="1" checked/>Active </label>
+											<input type="radio" name="status" value="1" checked/>激活 </label>
 											<label class="radio-inline">
-											<input type="radio" name="status" value="0"/>Inactive </label>
+											<input type="radio" name="status" value="0"/>不激活 </label>
 										</div>
 									</div>
 								</div>		 												
@@ -390,8 +372,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> 创建</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 									</div>
 								</div>
 							</div>
@@ -404,7 +386,7 @@
 			<div class="modal" id="edit_users" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Users</h4>
+						<h4 class="modal-title">编辑用户</h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -419,7 +401,8 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
 									<div class="col-md-9">										
-										<input name="adminId" class="form-control" readonly="true"/>										
+										<input name="adminId" class="form-control" readonly="true"/>		
+										<input name="storeId"  value="-1" type="hidden"/>										
 									</div>
 								</div>
 								<div class="form-group">
@@ -432,7 +415,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/></label>
 									<div class="col-md-9">																				
-										<input name="email" class="form-control" maxLength="100"/>
+										<input name="email" class="form-control" maxLength="100" readonly="true"/>
 									</div>
 								</div>									
 								<div class="form-group">
@@ -466,9 +449,9 @@
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label class="radio-inline">
-											<input type="radio" name="status" value="1" checked/>Active </label>
+											<input type="radio" name="status" value="1" checked/>激活 </label>
 											<label class="radio-inline">
-											<input type="radio" name="status" value="0"/>Inactive </label>
+											<input type="radio" name="status" value="0"/>不激活 </label>
 										</div>
 									</div>
 								</div>		 												

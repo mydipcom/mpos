@@ -93,9 +93,12 @@ public class ServiceServiceImpl implements ServiceService {
 		return serviceDao.get(serviceId);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Tservice> load() {
 		// TODO Auto-generated method stub
-		return serviceDao.LoadAll();
+		Criteria criteria = serviceDao.createCriteria();
+		criteria.add(Restrictions.eq("status", true));
+		return criteria.list();
 	}
 
 }

@@ -77,7 +77,7 @@ var ManagersTable = function () {
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
                     	//return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
-                		return '<div class="actions"><a  class="btn btn-sm dark" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
+                		return '<div class="actions"><a  class="btn btn-sm dark" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">查看</a></div>';
                     },
                     'class':'center'
                 }
@@ -92,9 +92,9 @@ var ManagersTable = function () {
 	        				var tem = row.status;
 	        				var str = '';
 	        				if(tem==1){
-	        					str = 'Active';
+	        					str = '已激活';
 	        				}else if(tem==0){
-	        					str = 'Inactive';
+	        					str = '未激活';
 	        				}
 	        				return str;
 	        			}
@@ -104,7 +104,7 @@ var ManagersTable = function () {
 	           { 	 data: "createdTimeStr", "bVisible":false},
 	           { 	 data: "updatedBy" ,"bVisible":false},
 	           {     data: "updatedTimeStr" ,"bVisible":false},  
-	           { title: "Action" ,"class":"center"},
+	           { title: "操作" ,"class":"center"},
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
@@ -221,15 +221,17 @@ var ManagersTable = function () {
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+				//$("#editUsersForm option").removeAttr("selected");
+				$("#editUsersForm option").removeAttr("selected");
 	            var adminId = data.adminId;
 	            var email =data.email;
 	            var createby=data.createdBy;
 	            var creatime=data.createdTimeStr;
-	            var roleId=data.adminRole.roleId;
-	            $("#editUsersForm option").removeAttr("selected");
+	            var roleId=data.roleId;
 	            $("#editUsersForm select[name='adminRole.roleId']").children("option[value='"+roleId+"']").attr("selected","true");
 	            $("#editUsersForm input[name='adminId']").val(adminId);
 	            $("#editUsersForm input[name='email']").val(email);
+	            $("#editUsersForm input[name='storeId']").val(data.storeId);
 	            $("#editUsersForm input[name='createdBy']").val(createby);
 	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);
 			}
@@ -349,6 +351,7 @@ var ManagersTable = function () {
     };
     
     var AddUsersValidation = function() {
+    	var URL =  rootURI+"storeManager/checkEmail?rand="+Math.random();
         var form = $('#addUsersForm');
         var errorDiv = $('.alert-danger', form);            
         form.validate({
@@ -357,24 +360,24 @@ var ManagersTable = function () {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input                
             rules: {
-             adminId: {
-            	required: true,
-            	minlength:4,
-                		},
              password: {
-        		
         		required: true,
         		minlength:6,
         		maxlength:12,
-        	
     				},
-        	 email: {
-        		
-        		required: true,
-        		email:true,
-        		
-    				}
-
+        	 email:  {
+             	required: true,
+            	remote: {
+            	    url:URL,     //后台处理程序
+            	    type: "post",               //数据发送方式
+            	    dataType: "json",           //接受数据格式   
+            	    data: {                     //要传递的数据
+            	    	email: function() {
+            	    		return $("#addUsersForm input[name='email']").val();
+            	        }
+            	    }
+            	}
+            }
             },
            invalidHandler: function (event, validator) { //display error alert on form submit              
                 errorDiv.show();                    

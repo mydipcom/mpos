@@ -62,9 +62,9 @@ var StoreTable = function () {
 	           { /*title: "Description",*/    data: "createTimeStr" },
 	           { /*title: "Description",*/    data: "status",
 	        	   'render':function(data,type,row){
-	        		   var temp="启用";
+	        		   var temp="已启用";
 	        		   if(data=="0"){
-	        			   temp = "禁用";
+	        			   temp = "已禁用";
 	        		   }
 	        		   	return temp;
 	        	   	} 

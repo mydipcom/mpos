@@ -15,6 +15,8 @@ public class TadminUser implements Serializable {
 	private String adminId;	
 
 	private String email;	
+	
+	private Integer roleId;
 
 	private String password;	
 
@@ -93,6 +95,14 @@ public class TadminUser implements Serializable {
 		else
 			return this.updatedTimeStr;
 	
+	}
+	
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public void setUpdatedTimeStr(String updatedTimeStr) {

@@ -10,7 +10,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<div style="font-size: 24px;font-family: cursive;">
-				<a href="<c:url value="/"/>index">
+				<a href="<c:url value="/"/>home/storeHome">
 				云菜单管理系统
 				</a>
 			</div>

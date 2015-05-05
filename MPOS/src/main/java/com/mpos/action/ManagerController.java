@@ -1,12 +1,16 @@
 package com.mpos.action;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,20 +20,32 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
+import com.mpos.dto.TadminInfo;
+import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
+import com.mpos.dto.Tservice;
+import com.mpos.dto.Tstore;
+import com.mpos.dto.Ttable;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
+import com.mpos.service.AdminInfoService;
 import com.mpos.service.AdminNodesService;
 import com.mpos.service.AdminRoleService;
 import com.mpos.service.AdminUserService;
+import com.mpos.service.ServiceService;
+import com.mpos.service.StoreService;
+import com.mpos.service.TableService;
 
 @Controller
 @RequestMapping(value="manager")
 public class ManagerController extends BaseController {
 	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(ManagerController.class);	
+	
+	public List<Ttable> tables = new ArrayList<Ttable>();
 	
 	@Resource
 	private AdminUserService adminUserService;
@@ -39,12 +55,21 @@ public class ManagerController extends BaseController {
 	
 	@Resource
 	private AdminRoleService adminRoleService;
+	@Autowired
+	private StoreService storeService;
+	@Autowired
+	private ServiceService serviceService;
+	@Autowired
+	private TableService tableService;
+	@Autowired
+	private AdminInfoService adminInfoService;
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView adminusers(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();		
 		mav.addObject("rolesList", adminRoleService.getAllAdminRoles());
+		mav.addObject("serviceList", serviceService.load());
 		mav.setViewName("manager/Adminusers");		
 		return mav;
 	}
@@ -63,6 +88,7 @@ public class ManagerController extends BaseController {
 			Object[] aaData=pagingData.getAaData();
 			for(int i=0;i<aaData.length;i++){
 				TadminUser adminuser=(TadminUser)aaData[i];
+				adminuser.setRoleId(adminuser.getAdminRole().getRoleId());
 				if(adminuser.getCreatedBy()==null){
 					adminuser.setCreatedBy("");
 					adminuser.setCreatedTimeStr("");
@@ -91,25 +117,51 @@ public class ManagerController extends BaseController {
 	 */
 	@RequestMapping(value="addUsers",method=RequestMethod.POST)
 	@ResponseBody
-	public String addAdmins(HttpServletRequest request,TadminUser adminuser){
-		TadminUser ad=getSessionUser(request);
-		JSONObject respJson = new JSONObject();
-		try{
-			adminuser.setCreatedBy(ad.getAdminId());
-			adminuser.setStatus(true);
-			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
-			adminuser.setCreatedTime(System.currentTimeMillis());
-			String email = adminuser.getEmail();
-			adminuser.setEmail(email.toLowerCase());
-			adminUserService.createAdminUser(adminuser);
-			respJson.put("status", true);
-			respJson.put("info", getMessage(request,"operate.success"));
+	public String addAdmins(HttpServletRequest request,TadminUser user,Integer serviceId){
+		Map<String, Object> res = getHashMap();
+		Tstore store = new Tstore();
+		try {
+			if(serviceId==null){
+				serviceId=0;
+			}
+			Tservice service=serviceService.get(serviceId);
+			store.setServiceId(serviceId);
+			store.setPublicKey("CampRay");
+			store.setStoreName("CampRay");
+			store.setStatus(true);
+			store.setAutoSyncStatus(false);
+			store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
+			store.setStoreCurrency("$");
+			store.setStoreLangId("1");
+			storeService.save(store);
+			tables.add(new Ttable("A01", 4, store.getStoreId()));
+			tables.add(new Ttable("A02", 2, store.getStoreId()));
+			tables.add(new Ttable("A03", 6, store.getStoreId()));
+			for (Ttable table : tables) {
+				tableService.create(table);
+			}
+			user.setStoreId(store.getStoreId());
+			user.setCreatedTime(System.currentTimeMillis());
+			user.setCreatedBy("admin");
+			user.setAdminId(user.getEmail());
+			user.setAdminRole(new TadminRole(service.getRoleId()));
+			user.setPassword(SecurityTools.MD5(user.getPassword()));
+			adminUserService.createAdminUser(user);
+			TadminInfo info = new TadminInfo();
+			info.setAdminId(user.getAdminId());
+			//info.setMobile(mobile);
+			adminInfoService.createAdminInfo(info);
+			res.put("status", true);
+			res.put("info", getMessage(request,"operate.success"));
+		} catch (MposException be) {
+			if(store.getStoreId()!=null){
+				storeService.deleteByStoreId(store.getStoreId(),user.getAdminId());
+			}
+			be.printStackTrace();
+			res.put("status", false);
+			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}
-		catch(MposException be){
-			respJson.put("status", false);
-			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
-		}		
-		return JSON.toJSONString(respJson);
+		return JSON.toJSONString(res);
 	}
 	
 	@RequestMapping(value="editUsers",method=RequestMethod.POST)
