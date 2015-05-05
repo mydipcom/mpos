@@ -57,7 +57,26 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();		
+		ModelAndView mav=new ModelAndView();	
+		String sql = "select count(*),role.role_name from mpos_cloud.mpos_admin as admin left join mpos_cloud.mpos_admin_role as role on admin.role_id=role.role_id group by role.role_name";
+		List<Object[]> qres = orderService.getList(sql, null);
+		mav.addObject("userRole", qres);
+		
+		String storeSql= "select count(*),store.status from mpos_cloud.mpos_store as store group by store.status";
+		List<Object[]> store =  orderService.getListBySql(storeSql,null);
+		mav.addObject("store", store);
+		
+		String serviceSql = "select count(*),service.status from mpos_cloud.mpos_service as service group by service.status";
+		List<Object[]> service = orderService.getListBySql(serviceSql,null);
+		mav.addObject("service", service);
+		
+		Map<String, Object> params = getHashMap();
+		params.put("startTime", ConvertTools.getFirstDay());
+		params.put("endTime", ConvertTools.getLastDay());
+		String orderSql="SELECT count(*),sum(serviceOrder.price) FROM mpos_cloud.mpos_service_order as serviceOrder where serviceOrder.create_time between :startTime and :endTime";
+		Object[] order = (Object[]) orderService.getBySql(orderSql,params);
+		mav.addObject("order", order);
+		
 		mav.setViewName("home/home");
 		return mav;
 	}
@@ -86,7 +105,7 @@ public class HomeController extends BaseController {
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping(value="/getAmount",method=RequestMethod.GET)
 	@ResponseBody
 	public String systemUserAmount(HttpServletRequest request,@RequestParam(value="id",required=true) int id){

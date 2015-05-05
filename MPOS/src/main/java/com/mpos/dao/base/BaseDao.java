@@ -229,12 +229,39 @@ public class BaseDao<T> extends HibernateDaoSupport
     	}
     	return query.uniqueResult();
     }
+    
+    public Object getBySql(String sql,Map<String, Object> params){
+    	Query query = currentSession().createSQLQuery(sql);
+    	if(params==null||params.size()<1){
+    	}else{
+    		for (String key : params.keySet()) {
+        		Object o = params.get(key);
+        		query.setParameter(key, o);
+        	}
+    	}
+    	return query.uniqueResult();
+    }
+    
+    public List<Object[]> getListBySql(String sql,Map<String, Object> params){
+    	Query query = currentSession().createSQLQuery(sql);
+    	if(params==null||params.size()<1){
+    	}else{
+    		for (String key : params.keySet()) {
+        		Object o = params.get(key);
+        		query.setParameter(key, o);
+        	}
+    	}
+    	return query.list();
+    }
     @SuppressWarnings("unchecked")
-	public List<Object[]> getList(String hql,Map<String, Object> params){
-    	Query query = currentSession().createSQLQuery(hql);
-    	for (String key : params.keySet()) {
-    		Object o = params.get(key);
-    		query.setParameter(key, o);
+	public List<Object[]> getList(String sql,Map<String, Object> params){
+    	Query query = currentSession().createSQLQuery(sql);
+    	if(params==null||params.size()<1){
+    	}else{
+    		for (String key : params.keySet()) {
+        		Object o = params.get(key);
+        		query.setParameter(key, o);
+        	}
     	}
     	return query.list();
     }

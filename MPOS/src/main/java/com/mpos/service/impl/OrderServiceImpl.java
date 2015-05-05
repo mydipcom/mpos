@@ -94,8 +94,18 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.getObject(hql, params);
 	}
 
-	public List<Object[]> getList(String hql, Map<String, Object> params) {
+	public List<Object[]> getList(String sql, Map<String, Object> params) {
 		// TODO Auto-generated method stub
-		return orderDao.getList(hql, params);
+		return orderDao.getList(sql, params);
+	}
+
+	public Object getBySql(String sql,Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return orderDao.getBySql(sql, params);
+	}
+	
+	public List<Object[]> getListBySql(String sql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return orderDao.getListBySql(sql, params);
 	}
 }

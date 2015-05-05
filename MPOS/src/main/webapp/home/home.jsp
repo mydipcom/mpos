@@ -115,14 +115,23 @@
 							<i class="fa fa-bar-chart-o"></i>
 						</div>
 						<div class="details">
-							<div class="number" id="system_user">
-								 
-							</div>
 							<div class="desc">
-								<s:message code="home.systemuseramount" />
+								店铺统计
 							</div>
+							<c:if test="${not empty store}">
+							<c:forEach var="sto" items="${store }">
+							<div class="desc">
+							<c:if test="${sto[1] eq true }">
+							启用：${sto[0]}
+							</c:if>
+							<c:if test="${sto[1] eq false }">
+							禁用：${sto[0]}
+							</c:if>
+							</div>
+							</c:forEach>
+						</c:if>
 						</div>
-						<a class="more" href="<c:url value="/"/>manager">
+						<a class="more" href="<c:url value="/"/>storeManager/">
 						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
@@ -133,14 +142,23 @@
 							<i class="fa fa-comments"></i>
 						</div>
 						<div class="details">
-							<div class="number" id="point_user">
-								 
-							</div>
 							<div class="desc">
-							<s:message code="home.pointuseramount"/>
+							服务统计
 							</div>
+							<c:if test="${not empty service}">
+							<c:forEach var="ser" items="${service }">
+							<div class="desc">
+							<c:if test="${ser[1] eq true }">
+							已发布：${ser[0]}
+							</c:if>
+							<c:if test="${ser[1]  eq false }">
+							未发布：${ser[0]}
+							</c:if>
+							</div>
+							</c:forEach>
+						</c:if>
 						</div>
-						<a class="more" href="<c:url value="/"/>point">
+						<a class="more" href="<c:url value="/"/>service/">
 						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
@@ -151,14 +169,19 @@
 							<i class="fa fa-th-list"></i>
 						</div>
 						<div class="details">
-							<div class="number" id="point_rule">
-								 
+							<div class="desc">
+							当月订购统计
+							</div>
+							<c:if test="${not empty order}">
+								<div class="desc">
+								 订购笔数：${order[0]}
 							</div>
 							<div class="desc">
-							<s:message code="home.pointruleamount"/>
+								 交易金额：${order[1]}
 							</div>
+						</c:if>
 						</div>
-						<a class="more" href="<c:url value="/"/>rules">
+						<a class="more" href="<c:url value="/"/>trade/">
 						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
@@ -167,13 +190,13 @@
 			<!-- END DASHBOARD STATS -->
 			<div class="clearfix">
 			</div>
-			<div class="row">
+			<%-- <div class="row">
 				<div class="col-md-6 col-sm-6">
 					<!-- BEGIN PORTLET-->
 					<div class="portlet box blue">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i><s:message code="home.systemcpustate"/>
+								<i class="fa fa-gift"></i>用户统计
 							</div>
 							
 						</div>
@@ -207,44 +230,38 @@
 				</div>
 			</div>
 			<div class="clearfix">
-			</div>
+			</div> --%>
 			<div class="row">
 				 <div class="col-md-12">
 					<!-- BEGIN PORTLET-->
 					<div class="portlet box yellow">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i><s:message code="home.interfacevisitstatistics"/>
-							</div>
-							
-						</div>
-						<div class="portlet-body">
-							<div id="interface_chart" class="chart">
-							
+								<i class="fa fa-gift"></i>用户统计
 							</div>
 						</div>
+						<c:if test="${not empty userRole}">
+										<div class="portlet-body">																
+								<table id="user_role_info" class="table table-bordered table-striped">
+									<tbody>
+										<tr>
+											<td style="width: 30%">所属角色</td>
+											<td style="width: 30%">用户数量</td>
+										</tr>
+										<c:forEach var="product" items="${userRole }">
+										<tr>
+											<td style="width: 30%">${product[1]}</td>
+											<td style="width: 30%">${product[0]}</td>
+										</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							</c:if>
 					</div>
 					<!-- END PORTLET-->
 				</div>
 				
-<!--
-				<div class="col-md-6 col-sm-6">
-					
-					<div class="portlet box red">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class="fa fa-gift"></i><s:message code="home.systemstatestatistics" />
-							</div>
-							
-						</div>
-						<div class="portlet-body">
-							<div id="" class="chart">
-							</div>
-						</div>
-					</div>
-					
-				</div>
--->
 			</div>
 			
 		    
@@ -327,8 +344,8 @@
 //         Metronic.init(); // init metronic core componets
 		   Layout.init(); // init layout
 		   QuickSidebar.init(); // init quick sidebar
-           Demo.init(); // init demo features 
-           Dashbord.init("<c:url value="/"/>");
+         //  Demo.init(); // init demo features 
+           //Dashbord.init("<c:url value="/"/>");
 
 		});
 	</script>

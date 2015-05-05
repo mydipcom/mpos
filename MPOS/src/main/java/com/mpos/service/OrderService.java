@@ -14,7 +14,7 @@ public interface OrderService {
 	
 	Torder getTorderById(int id);
 	
-	List<Object[]> getList(String hql,Map<String, Object> params);
+	List<Object[]> getList(String sql,Map<String, Object> params);
 	
 	void update(Torder torder);
 	
@@ -23,6 +23,10 @@ public interface OrderService {
 	void deleteOrder(Torder torder);
 	
 	Object get(String hql,Map<String, Object> params);
+	
+	Object getBySql(String sql,Map<String, Object> params);
+	
+	public List<Object[]> getListBySql(String sql, Map<String, Object> params);
 	
 	List<Torder> select(String hql,Map<String, Object> params);
 }
