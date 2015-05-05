@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>Product List</title>
+<title>商品列表</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -105,15 +105,15 @@
 					<div class="row">					
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label"><s:message code="product.recommend"/></label>
+								<label class="col-md-3 control-label"><s:message code="product.isput"/></label>
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
-										<input type="radio" name="recommend" value="" checked/>All </label>
+										<input type="radio" name="isPut" value="" checked/>所有 </label>
 										<label class="radio-inline">
-										<input type="radio" name="recommend" value="true"/>True</label>
+										<input type="radio" name="isPut" value="true"/>是</label>
 										<label class="radio-inline">
-										<input type="radio" name="recommend" value="false"/>False</label>
+										<input type="radio" name="isPut" value="false"/>否</label>
 									</div>									
 								</div>
 							</div>
@@ -201,11 +201,13 @@
 						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="product.list.table.title"/>
+									<i class="fa fa-edit"></i><s:message code="product.list.table.title"/><label style="font-size: 12px;color:red;margin-left: 20px">请注意：对商品进行编辑和上架之后请到发布管理进行发布</label>
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#add_good" id="openAddGoodModal"><i class="fa fa-plus" ></i> <s:message code="product.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditgoodsModal"><i class="fa fa-pencil"></i> <s:message code="product.edit" /></a>
+								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#put_goods" id="openPutgoodsModal"><i class="fa fa-plus" ></i>上架</a>
+								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#out_goods" id="openOutgoodsModal"><i class="fa fa-plus" ></i>下架</a>
 								    <%-- <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActivegoodsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a> --%>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeletegoodsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>
 								    <div class="btn-group">
@@ -219,7 +221,7 @@
 											<label><input type="checkbox" checked data-column="3"><s:message code="product.product.name"/></label>
 											<label><input type="checkbox" checked data-column="4"><s:message code="product.price"/></label>
 											<label><input type="checkbox" checked data-column="5"><s:message code="product.oldprice"/></label>
-											<label><input type="checkbox" checked data-column="6"><s:message code="product.recommend"></s:message></label>
+											<label><input type="checkbox" checked data-column="6"><s:message code="product.isput"></s:message></label>
 											<label><input type="checkbox" checked data-column="7"><s:message code="product.sort"/></label>
 											
 										</div>
@@ -238,7 +240,7 @@
 											<th><s:message code="product.product.name"/></th>
 											<th><s:message code="product.price"/></th>
 											<th><s:message code="product.oldprice"/></th>
-											<th><s:message code="product.recommend"/></th>
+											<th><s:message code="product.isput"/></th>
 											<th><s:message code="product.sort"/></th>
 										<!--  	<th>Status</th>-->
 										</tr>
@@ -257,6 +259,30 @@
 						</div>
 					
 				<!-- END PAGE CONTENT -->
+				
+				<div class="modal" id="put_goods" tabindex="-1" data-backdrop="static" data-keyboard="false">
+					<div class="modal-body">
+						<p>
+							 <s:message code="system.management.user.deletemessage" />
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button id="putBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+					</div>					
+				</div>
+				
+				<div class="modal" id="out_goods" tabindex="-1" data-backdrop="static" data-keyboard="false">
+					<div class="modal-body">
+						<p>
+							 <s:message code="system.management.user.deletemessage" />
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button id="outBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+					</div>					
+				</div>
 				
 			<!-- BEGIN DELETE MODAL FORM-->
 				<div class="modal" id="delete_goods" tabindex="-1" data-backdrop="static" data-keyboard="false">

@@ -29,6 +29,7 @@ public class AddProductModel implements java.io.Serializable{
 	private Tcategory attributeGroup;
 	private Integer specid;
 	private Integer storeId;
+	private Boolean isPut=false;
 	
 	private List<TlocalizedField> productName_locale=new ArrayList<TlocalizedField>();
 	private List<TlocalizedField> shortDescr_locale=new ArrayList<TlocalizedField>();
@@ -36,7 +37,14 @@ public class AddProductModel implements java.io.Serializable{
 	private List<TlocalizedField> unitName_locale=new ArrayList<TlocalizedField>();
 		
 	private List<TgoodsAttribute> attributes=new ArrayList<TgoodsAttribute>();
-			
+	public Boolean getIsPut() {
+		return isPut;
+	}
+
+	public void setIsPut(Boolean isPut) {
+		this.isPut = isPut;
+	}
+
 	public int getProductId() {
 		return productId;
 	}

@@ -13,7 +13,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>ECP | Login Form</title>
+<title>用户登录</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -51,9 +51,7 @@
 <body class="login">
 <!-- BEGIN LOGO -->
 <div class="logo" style="font-size: 36px;font-family: cursive;">
-	<a href="<c:url value="/"/>index">
 	云菜单管理系统
-	</a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->

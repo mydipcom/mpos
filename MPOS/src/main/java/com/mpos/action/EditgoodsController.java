@@ -155,6 +155,7 @@ private int imgIndex=0;
 			Productmodel.setProductId(product.getId());
 			Productmodel.setSpecid(product.getSpecid());
 			Productmodel.setStoreId(product.getStoreId());
+			Productmodel.setIsPut(product.getIsPut());
 			productName_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "productName");
 			shortDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "shortDescr");
 			fullDescr_locale=localizedFieldService.getLocalizedField(product.getId(),Tproduct.class.getSimpleName() , "fullDescr");

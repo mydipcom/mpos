@@ -204,7 +204,35 @@ public class GoodsController extends BaseController{
 		return mav;
 		
 	}
-	@RequestMapping(value="/deletegoods/{ids}",method=RequestMethod.DELETE)
+	
+	@RequestMapping(value="/putgoods/{ids}",method=RequestMethod.GET)
+	@ResponseBody
+	public String putGoods(@PathVariable String ids,HttpServletRequest request,Integer type){
+		String[] idstrArr=ids.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
+		JSONObject respJson = new JSONObject();
+		try{
+			Integer storeId = getSessionStoreId(request);
+			if(type==0){
+				goodsService.outGoods(ids, storeId);
+			}else{
+				goodsService.putGoods(ids, storeId);
+			}
+			handleContent = "操作商品成功;操作ID为:"+idArr.toString();
+			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
+		}
+		catch(MposException be){
+			respJson.put("status", false);
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
+			handleContent = "操作商品失败;操作ID为:"+idArr.toString();
+			level = LogManageTools.FAIL_LEVEL;
+		}	
+		LogManageTools.writeAdminLog(handleContent,level, request);
+		return JSON.toJSONString(respJson);	
+	}
+	
+	@RequestMapping(value="/deletegoods/{ids}",method=RequestMethod.GET)
 	@ResponseBody
 	public String deleteGoods(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		

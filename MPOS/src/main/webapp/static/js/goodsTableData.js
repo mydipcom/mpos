@@ -60,7 +60,15 @@ var GoodsTable = function () {
 	           {   data: "productName"},
 	           {   data: "price"},
 	           {   data: "oldPrice" },
-	           {   data: "recommend" },
+	           {   data: "isPut",
+	        	   'render':function(data,type,row){
+	        		   var temp ="否";
+	        		   if(data=="1"){
+	        			   temp ="是";
+	        		   }
+               	return temp;
+               }
+	           },
 	           {   data: "sort"},  
 	           //  { title: "Status",    data: "status"},  
 	        ],
@@ -76,37 +84,98 @@ var GoodsTable = function () {
 							return false;
 						}				
 				});
+			//删除操作
+			$('#deleteBtn').on('click', function (e) {
+				$.ajax( {
+	             "dataType": 'json', 
+	             "type": "GET", 
+	             "url": rootURI+"goods/deletegoods/"+selected.join(), 
+	             "success": function(data,status){
+	            	 if(status == "success"){
+	            		 var infoType = "danger";
+						 if(data.status){
+							 selected=[];						 
+			            	 oTable.api().draw();
+			            	 oTable.$('th span').removeClass();
+			            	 infoType = "success";
+						 }
+						 handleAlerts(data.info,infoType,"");
+					}             	 
+	             },
+	             "error":function(XMLHttpRequest, textStatus, errorThrown){
+	            	 alert(errorThrown);
+	             }
+	           });
+	        }); 
 			/*$("#openActivegoodsModal").on("click",function(event){
 				if(selected.length==0){
 					handleAlerts("Please select the rows which you want to Active.","warning","");				
 					return false;
 				}
 			});*/
+			$("#openPutgoodsModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+					return false;
+				}				
+		});
 			
-		//删除操作
-		$('#deleteBtn').on('click', function (e) {
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "DELETE", 
-             "url": rootURI+"goods/deletegoods/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){
-            		 var infoType = "danger";
-					 if(data.status){
-						 selected=[];						 
-		            	 oTable.api().draw();
-		            	 oTable.$('th span').removeClass();
-		            	 infoType = "success";
-					 }
-					 handleAlerts(data.info,infoType,"");
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        });  
-		
+			//上架操作
+			$('#putBtn').on('click', function (e) {
+				$.ajax( {
+	             "dataType": 'json', 
+	             "type": "GET", 
+	             "url": rootURI+"goods/putgoods/"+selected.join(), 
+	             "data":{"type":1},
+	             "success": function(data,status){
+	            	 if(status == "success"){
+	            		 var infoType = "danger";
+						 if(data.status){
+							 selected=[];						 
+			            	 oTable.api().draw();
+			            	 oTable.$('th span').removeClass();
+			            	 infoType = "success";
+						 }
+						 handleAlerts(data.info,infoType,"");
+					}             	 
+	             },
+	             "error":function(XMLHttpRequest, textStatus, errorThrown){
+	            	 alert(errorThrown);
+	             }
+	           });
+	        }); 
+			$("#openOutgoodsModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+					return false;
+				}				
+		});
+			
+			//下架操作
+			$('#outBtn').on('click', function (e) {
+				$.ajax( {
+	             "dataType": 'json', 
+	             "type": "GET", 
+	             "url": rootURI+"goods/putgoods/"+selected.join(), 
+	             "data":{"type":0},
+	             "success": function(data,status){
+	            	 if(status == "success"){
+	            		 var infoType = "danger";
+						 if(data.status){
+							 selected=[];						 
+			            	 oTable.api().draw();
+			            	 oTable.$('th span').removeClass();
+			            	 infoType = "success";
+						 }
+						 handleAlerts(data.info,infoType,"");
+					}             	 
+	             },
+	             "error":function(XMLHttpRequest, textStatus, errorThrown){
+	            	 alert(errorThrown);
+	             }
+	           });
+	        }); 
+			
 	
 		//搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {

@@ -19,6 +19,10 @@ public interface GoodsService {
 	
 	public void deletegoodsByids(Integer ids[],Integer storeId);
 	
+	public void putGoods(String productIds,Integer storeId);
+	
+	public void outGoods(String productIds,Integer storeId);
+	
 	public void activegoodsByids(Integer ids[]);
 	
 	Tproduct findbyProductName(String productName);

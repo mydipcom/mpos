@@ -51,17 +51,17 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" class="img-circle hide1" src="${pageContext.request.contextPath}/userprofile/getAvatar"/>
 					<span class="username username-hide-on-mobile">
-					${user.adminId} </span>
+					${user.email} </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">
 						<li>
 							<a href="<c:url value="/"/>userprofile">
-							<i class="icon-user"></i> My Profile </a>
+							<i class="icon-user"></i> <s:message code="user.info" /> </a>
 						</li>
 						<li>
 							<a href="<c:url value="/"/>logout">
-							<i class="icon-key"></i> Log Out </a>
+							<i class="icon-key"></i><s:message code="login.out" /></a>
 						</li>
 					</ul>
 				</li>

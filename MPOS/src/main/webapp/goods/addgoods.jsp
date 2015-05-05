@@ -10,7 +10,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>Add Product</title>
+<title>添加商品</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -132,7 +132,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="row">
+													<%-- <div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.fulldescr"/></label>
@@ -143,7 +143,7 @@
 																</div>
 															</div>
 														</div>
-													</div>
+													</div> --%>
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
@@ -178,7 +178,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="row">
+													<%-- <div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.fulldescr"/></label>
@@ -188,7 +188,7 @@
 																</div>
 															</div>
 														</div>
-													</div>
+													</div> --%>
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
@@ -264,7 +264,7 @@
 										</div>
 									</div>	
 									</div>
-									<div class="row">
+									<%-- <div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label col-md-3"><s:message code="product.recommend"/></label>
@@ -281,7 +281,7 @@
 										</div>
 																									
 								</div>
-								</div>
+								</div> --%>
 
 								
 								 <div class="portlet light bg-inverse form-fit">
@@ -371,8 +371,26 @@
 									
 									</div>
 								</div>
-								<!--End images upload form-->								
+								<!--End images upload form-->
+								
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label col-md-3">上架</label>
+											<div class="col-md-9">
+											<label class="radio-inline"><form:checkbox path="isPut" value="true" cssClass="form-control"/></label>
+											</div>
+										</div>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-6">
+								<label style="font-size: 12px;color:red">请注意：最终上架需在发布管理进行操作</label>
+								</div>
+								</div>								
 							</div>
+							
+							
 							<div class="form-actions">
 								<div class="row">
 									<div class="col-md-offset-3 col-md-9">
