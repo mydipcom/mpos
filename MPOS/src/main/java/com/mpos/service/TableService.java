@@ -14,6 +14,7 @@ public interface TableService {
 	void delete(Integer id);
 	void deleteAll(Integer[] ids);
 	void update(Ttable table);
+	void deleteByStoreId(Integer storeId);
 	Ttable get(String tableName);
 	Ttable get(Integer id);
 	List<Ttable> loadAll(Integer storeId);

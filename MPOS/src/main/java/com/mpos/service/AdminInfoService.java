@@ -7,5 +7,5 @@ public interface AdminInfoService{
 	void updateAdminInfo(TadminInfo adminInfo);
 	void updateAdminInfoAvatar(TadminInfo adminInfo);
 	void createAdminInfo(TadminInfo adminInfo);
-	
+	void delete(String adminId);
 }

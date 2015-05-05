@@ -31,7 +31,7 @@ public class Tservice implements Serializable {
 	/**
 	 * 状态
 	 */
-	private Boolean status;
+	private Boolean status = false;
 	/**
 	 * 角色ID
 	 */

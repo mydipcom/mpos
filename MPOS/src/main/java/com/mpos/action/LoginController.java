@@ -120,10 +120,10 @@ public class LoginController extends BaseController {
 			request.getSession().removeAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_STATUS);
-			if(StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()==1){
+			if(StringUtils.isEmpty(toUrl)&&(tUser.getAdminRole().getRoleId()==1||tUser.getAdminRole().getRoleId()==4)){
 				toUrl="/home";
 			}else if (StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()!=1) {
-				toUrl="/home";	
+				toUrl="home/storeHome";	
 			}			
 			mav.setViewName("redirect:"+toUrl);
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";

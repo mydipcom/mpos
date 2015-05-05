@@ -10,6 +10,8 @@ package com.mpos.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,8 +30,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.service.AdminUserService;
+import com.mpos.service.OrderService;
 //import com.bps.service.InterfaceService;
 
 /**
@@ -42,6 +46,8 @@ import com.mpos.service.AdminUserService;
 @Controller
 @RequestMapping("/home")
 public class HomeController extends BaseController {
+	@Autowired
+	private OrderService orderService;
 
 	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(HomeController.class);
@@ -53,6 +59,31 @@ public class HomeController extends BaseController {
 	public ModelAndView home(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();		
 		mav.setViewName("home/home");
+		return mav;
+	}
+	@RequestMapping(value="storeHome",method=RequestMethod.GET)
+	public ModelAndView storeHome(HttpServletRequest request){
+		ModelAndView mav=new ModelAndView();	
+		
+		if(getSessionUser(request).getAdminRole().getRoleId()==4||getSessionUser(request).getAdminRole().getRoleId()==1){
+			mav.setViewName("home/home");
+		}else{
+			Map<String, Object> params = getHashMap();
+			params.put("startTime", ConvertTools.getFirstDay());
+			params.put("endTime", ConvertTools.getLastDay());
+			params.put("storeId", getSessionStoreId(request));
+			String query_order = "select count(orderId),sum(orderTotal) from Torder where storeId=:storeId and createTime between :startTime and :endTime";
+			Object o = orderService.get(query_order, params);
+			Object[] res = (Object[])o;
+			mav.addObject("orderCount", res[0]);
+			mav.addObject("orderMount", res[1]);
+			params.clear();
+			params.put("storeId", getSessionStoreId(request));
+			String query_product="select count(product.product_id),menu.title from mpos_product as product right join mpos_menu as menu on menu.menu_id = product.menu_id where product.store_id = :storeId group by menu.title";
+			List<Object[]> qres = orderService.getList(query_product, params);
+			mav.addObject("productList", qres);
+			mav.setViewName("home/store_home");
+		}
 		return mav;
 	}
 	

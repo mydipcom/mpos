@@ -34,6 +34,11 @@ public class AdminInfoServiceImpl implements AdminInfoService{
 		// TODO Auto-generated method stub
 		adminInfoDao.create(adminInfo);
 	}
+
+	public void delete(String adminId) {
+		// TODO Auto-generated method stub
+		
+	}
     
 	
 	

@@ -1,6 +1,7 @@
 package com.mpos.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -149,6 +150,15 @@ public class TableServiceImpl implements TableService {
 	public List<Ttable> select(String hql, Map<String, Object> params) {
 		// TODO Auto-generated method stub
 		return tableDao.select(hql, params);
+	}
+
+
+	public void deleteByStoreId(Integer storeId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("storeId", storeId);
+		String hql = "delete from Ttable where storeId=:storeId";
+		tableDao.delete(hql, params);
 	}
 
 }

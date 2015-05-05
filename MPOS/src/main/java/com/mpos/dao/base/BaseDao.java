@@ -229,6 +229,15 @@ public class BaseDao<T> extends HibernateDaoSupport
     	}
     	return query.uniqueResult();
     }
+    @SuppressWarnings("unchecked")
+	public List<Object[]> getList(String hql,Map<String, Object> params){
+    	Query query = currentSession().createSQLQuery(hql);
+    	for (String key : params.keySet()) {
+    		Object o = params.get(key);
+    		query.setParameter(key, o);
+    	}
+    	return query.list();
+    }
     
     public void update(String hql,Map<String, Object> params){
     	Query update = currentSession().createQuery(hql);

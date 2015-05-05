@@ -14,11 +14,15 @@ public interface OrderService {
 	
 	Torder getTorderById(int id);
 	
+	List<Object[]> getList(String hql,Map<String, Object> params);
+	
 	void update(Torder torder);
 	
 	void createOrder(Torder torder);
 	
 	void deleteOrder(Torder torder);
+	
+	Object get(String hql,Map<String, Object> params);
 	
 	List<Torder> select(String hql,Map<String, Object> params);
 }

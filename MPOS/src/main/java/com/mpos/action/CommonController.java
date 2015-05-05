@@ -9,10 +9,8 @@
 package com.mpos.action;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,16 +24,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.mpos.commons.ConvertTools;
-import com.mpos.commons.EMailTool;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
+import com.mpos.dto.TadminInfo;
 import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
-import com.mpos.dto.TemaiMessage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
+import com.mpos.service.AdminInfoService;
 import com.mpos.service.AdminUserService;
 import com.mpos.service.ServiceService;
 import com.mpos.service.StoreService;
@@ -64,6 +62,8 @@ public class CommonController extends BaseController {
 	private ServiceService serviceService;
 	@Autowired
 	private TableService tableService;
+	@Autowired
+	private AdminInfoService adminInfoService;
 	
 	@RequestMapping(value="header",method=RequestMethod.GET)
 	public ModelAndView header(HttpServletRequest request){
@@ -103,12 +103,36 @@ public class CommonController extends BaseController {
 		mav.setViewName("common/notice");
 		return mav;
 	}
-	@RequestMapping(value="register",method=RequestMethod.POST)
+	@RequestMapping(value="getServices",method=RequestMethod.POST)
 	@ResponseBody
-	public String register(HttpServletRequest request,TadminUser user,Integer serviceId){
+	public String getService(HttpServletRequest request){
 		Map<String, Object> res = getHashMap();
 		try {
-			Tstore store = new Tstore();
+			List<Tservice> info = new ArrayList<Tservice>();
+			List<Tservice> services = serviceService.load();
+			for (Tservice tservice : services) {
+				tservice.setContent(tservice.getServiceName()+"-"+tservice.getServicePrice()+"-"+tservice.getValidDays()+"-"+tservice.getContent());
+				tservice.setRoleId(null);
+				tservice.setServiceName(null);
+				tservice.setServicePrice(null);
+				tservice.setValidDays(null);
+				info.add(tservice);
+			}
+			res.put("status", true);
+			res.put("info", info);
+		} catch (Exception e) {
+			// TODO: handle exception
+			res.put("status", false);
+			res.put("info", e.getMessage());
+		}
+		return JSON.toJSONString(res);
+	}
+	@RequestMapping(value="register",method=RequestMethod.POST)
+	@ResponseBody
+	public String register(HttpServletRequest request,TadminUser user,Integer serviceId,String mobile){
+		Map<String, Object> res = getHashMap();
+		Tstore store = new Tstore();
+		try {
 			if(serviceId==null){
 				serviceId=0;
 			}
@@ -119,7 +143,7 @@ public class CommonController extends BaseController {
 			store.setStatus(true);
 			store.setAutoSyncStatus(false);
 			store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
-			store.setStoreCurrency("￥");
+			store.setStoreCurrency("$");
 			store.setStoreLangId("1");
 			storeService.save(store);
 			tables.add(new Ttable("A01", 4, store.getStoreId()));
@@ -133,7 +157,7 @@ public class CommonController extends BaseController {
 			user.setCreatedBy("admin");
 			user.setAdminId(user.getEmail());
 			user.setAdminRole(new TadminRole(service.getRoleId()));
-			if(user.getPassword().isEmpty()){
+			/*if(user.getPassword().isEmpty()){
 				String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
 				TemaiMessage message = new TemaiMessage();
 				message.setTo(user.getEmail());
@@ -141,12 +165,19 @@ public class CommonController extends BaseController {
 				message.setSubject("MPOS Password");
 				EMailTool.send(message);
 				user.setPassword(random);
-			}
+			}*/
 			user.setPassword(SecurityTools.MD5(user.getPassword()));
 			adminUserService.createAdminUser(user);
+			TadminInfo info = new TadminInfo();
+			info.setAdminId(user.getAdminId());
+			info.setMobile(mobile);
+			adminInfoService.createAdminInfo(info);
 			res.put("status", true);
 			res.put("info", "Register Success");
 		} catch (MposException e) {
+			if(store.getStoreId()!=null){
+				storeService.deleteByStoreId(store.getStoreId(),user.getAdminId());
+			}
 			e.printStackTrace();
 			res.put("status", false);
 			res.put("info", "Register Failure");

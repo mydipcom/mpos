@@ -48,7 +48,7 @@ public class ServiceServiceImpl implements ServiceService {
 		String searchJsonStr = rdtp.getsSearch();
 		Criteria criteria = serviceDao.createCriteria();
 		criteria.addOrder(Order.desc("serviceId"));
-		criteria.add(Restrictions.eq("status", true));
+		//criteria.add(Restrictions.eq("status", true));
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
 			List<Criterion> criterionList = new ArrayList<Criterion>();
 			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);

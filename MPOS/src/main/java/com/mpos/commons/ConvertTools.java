@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -30,6 +31,53 @@ import com.alibaba.fastjson.JSONObject;
  * 
  */
 public class ConvertTools {
+	
+	public static  SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	public static SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
+	/**
+     * 当月第一天
+     * @return
+	 * @throws ParseException 
+     */
+    public static long getFirstDay(){
+        Calendar calendar = Calendar.getInstance();
+        Date theDate = calendar.getTime();
+        GregorianCalendar gcLast = (GregorianCalendar) Calendar.getInstance();
+        gcLast.setTime(theDate);
+        gcLast.set(Calendar.DAY_OF_MONTH, 1);
+        String day_first = df.format(gcLast.getTime());
+        StringBuffer str = new StringBuffer().append(day_first).append(" 00:00:00");
+        try {
+			return sdf.parse(str.toString()).getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return 0L;
+    }
+    
+    /**
+     * 当月最后一天
+     * @return
+     */
+    public static long getLastDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);    //加一个月
+        calendar.set(Calendar.DATE, 1);        //设置为该月第一天
+        calendar.add(Calendar.DATE, -1);   
+        Date theDate = calendar.getTime();
+        String s = df.format(theDate);
+        StringBuffer str = new StringBuffer().append(s).append(" 23:59:59");
+        try {
+			return  sdf.parse(str.toString()).getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return 0L;
+    }
+    
 	
 	public static void json2Model(JSONObject jsonObj,Object model){
 		Field[] fields=model.getClass().getDeclaredFields(); 		
@@ -107,12 +155,8 @@ public class ConvertTools {
 	}
 	
 	public static void main(String[] args) {
-		try {
-			System.out.println(dateString2Long("22/04/2015"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			System.out.println(getFirstDay());
+			System.out.println(getLastDay());
 	}
 	
     /**  

@@ -61,6 +61,7 @@ var ServiceTable = function () {
 	           {data: "serviceName" },
 	           {data: "servicePrice"},
 	           {data: "validDays" },
+	           {data: "content" },
 	          /* {data: "roleId",
 	        	'render':function(data,type,row){
 	        		var temp = "";
@@ -95,14 +96,13 @@ var ServiceTable = function () {
 		
 		table.on('click', 'tbody tr a',function(){
 	           var data = oTable.api().row($(this).parents('tr')).data();
-	           $("#editTableForm :radio").removeAttr("checked");
-	            $("#editTableForm :radio").parents('span').removeClass("checked");
 	            $("#editTableForm option").removeAttr("selected");
 	            
 	            $("#editTableForm select[name='roleId']").children("option[value='"+data.roleId+"']").attr("selected","true");
-	            $("#editTableForm :radio[name='status']").filter("[value='"+data.status+"']").attr("checked","true");
-	            $("#editTableForm :radio[name='status']").filter("[value='"+data.status+"']").parents('span').addClass("checked");
-	            
+	            if(data.status){
+	            	$('#status_box').eq(0).attr("checked",'true');
+	            	$("#status_box").eq(0).parents('span').addClass("checked");
+	            }
 	           $("#editTableForm input[name='serviceId']").val(data.serviceId);
 	           $("#editTableForm input[name='serviceName']").val(data.serviceName);
 	           $("#editTableForm input[name='servicePrice']").val(data.servicePrice);

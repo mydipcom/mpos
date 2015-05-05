@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale = "en_US";
 var UserProfile = function () {
 	   //修改个人资料
 	    var ChangeProfile = function(){

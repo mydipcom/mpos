@@ -88,4 +88,14 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return orderDao.select(hql, params);
 	}
+
+	public Object get(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return orderDao.getObject(hql, params);
+	}
+
+	public List<Object[]> getList(String hql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return orderDao.getList(hql, params);
+	}
 }

@@ -198,4 +198,21 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.LoadAll();
 	}
 
+	public void deleteByStoreId(Integer storeId,String adminId) {
+		// TODO Auto-generated method stub
+		storeDao.delete(storeId);
+		if(adminId!=null){
+			String infoHql = "delete from TadminInfo where adminId=:adminId";
+			Map<String, Object> aa = new HashMap<String, Object>();
+			aa.put("adminId", adminId);
+			storeDao.delete(infoHql, aa);
+		}
+		String tableHql = "delete from Ttable where storeId=:storeId";
+		String adminHql = "delete from TadminUser where storeId=:storeId";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("storeId", storeId);
+		storeDao.delete(tableHql, params);
+		storeDao.delete(adminHql, params);
+	}
+
 }

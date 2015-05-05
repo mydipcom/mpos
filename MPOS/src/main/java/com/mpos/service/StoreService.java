@@ -18,6 +18,8 @@ public interface StoreService {
 		public PagingData load(DataTableParamter rdtp);
 		public List<Tstore> loadAll();
 		
+		public void deleteByStoreId(Integer storeId,String adminId);
+		
 		public void updateImage(String hql, Map<String, Object> params);
 		public void updateImage(ImageModel model);
 		public void delete(String hql,Map<String, Object> params);
