@@ -22,6 +22,7 @@
 })(jQuery);
 var rootURI = "/";
 var storeId = -1;
+var button = 0;
 var StoreSetting = function() {
 
 	var initEditables = function() {
@@ -271,14 +272,24 @@ var StoreSetting = function() {
 			rootURI = rootPath;
 			storeId = $("#store_id").val();
          // alert(rootPath);
-			
+			//button = 0;
 			// init editable elements
 			initEditables();
 			var inp = $("#printV").val();
 			$("input[name='print_type']").filter("[value='"+inp+"']").attr("checked",true);
 			$("input[name='print_type']").filter("[value='"+inp+"']").parents('span').addClass("checked");
+			//$('#enable').html("点此解锁");
 			$('#enable').click(function() {
 				$('#store_setting .editable').editable('toggleDisabled');
+				
+				if(button == 1){
+					$('#enable').html("点此解锁");
+					button =0;
+				} else{
+					$('#enable').html("点此锁定");
+					button =1;
+				}
+				
 			});
 
 			// handle editable elements on hidden event fired

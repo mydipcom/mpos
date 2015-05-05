@@ -60,7 +60,7 @@
 							<i class="icon-user"></i> <s:message code="user.info" /> </a>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>logout/">
+							<a href="<c:url value="/"/>logout">
 							<i class="icon-key"></i><s:message code="login.out" /></a>
 						</li>
 					</ul>

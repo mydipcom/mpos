@@ -104,7 +104,7 @@
 						
 						<div class="col-md-6">
 						<c:if test="${status==1}">
-						<button id="enable" class="btn blue"><s:message code="enable.disable"/></button>
+						<button id="enable" class="btn blue">点此解锁</button>
 						</c:if>
 						</div>
 						<div class="col-md-6">
@@ -141,16 +141,16 @@
 											<td style="width: 50%"><a href="#" id="restaurant_name"
 												data-type="text" data-pk="1"
 												data-original-title="Enter Restaurant Name"> ${store.storeName} </a></td>
-											<td style="width: 35%"><span class="text-muted" id="storeName">
-													${store.storeName} </span></td>
+											<%-- <td style="width: 35%"><span class="text-muted" id="storeName">
+													${store.storeName} </span></td> --%>
 										</tr>
 										<tr>
 											<td style="width: 15%"><s:message code="access.password"/></td>
 											<td style="width: 50%"><a href="#" id="password"
 												data-type="text" data-pk="1"
 												data-original-title="Enter Access Password"> ${store.publicKey}</a></td>
-											<td style="width: 35%"><span class="text-muted" id="publicKey">
-													${store.publicKey} </span></td>
+											<%-- <td style="width: 35%"><span class="text-muted" id="publicKey">
+													${store.publicKey} </span></td> --%>
 										</tr>
 										<tr>
 											<td style="width: 15%"><s:message code="language.setting"/></td>
@@ -169,20 +169,20 @@
 													</c:if>
 													</c:forEach>
 													<c:if test="${status==1}">
-													<input type="button" class="btn green" value="Edit"  id="editLan"/>
+													<input type="button" class="btn green" value="保存"  id="editLan"/>
 													</c:if>
 												</c:if>
 											</td>
-											<td style="width: 35%"><span class="text-muted" id="lanMsg" >
-													Language Setting</span></td>
+											<%-- <td style="width: 35%"><span class="text-muted" id="lanMsg" >
+													Language Setting</span></td> --%>
 										</tr>
 										<tr>
 											<td><s:message code="currency"/></td>
 											<td><a href="#" id="currency" data-type="select2"
 												data-value="${store.storeCurrency}" data-pk="1"
 												data-original-title="Select Currency"></a></td>
-											<td><span class="text-muted" id="storeCurrency">  ${store.storeCurrency}
-													</span></td>
+											<%-- <td><span class="text-muted" id="storeCurrency">  ${store.storeCurrency}
+													</span></td> --%>
 										</tr>
 										<tr>
 											<td><s:message code="print"/></td>
@@ -195,14 +195,14 @@
 												<input type="radio" name="print_type" value="2"/><s:message code="print.two"/>
 												</label>
 												</td>
-											<td><span class="text-muted" id="printType">  
+											<%-- <td><span class="text-muted" id="printType">  
 											<c:if test="${store.printType eq 1 }">
 												<s:message code="print.one"/>
 											</c:if>
 											<c:if test="${store.printType eq 2 }">
 												<s:message code="print.two"/>
 											</c:if>
-													</span></td>
+													</span></td> --%>
 										</tr>
 										<tr>
 											<td><s:message code="restaurant.logo"/></td>
@@ -251,8 +251,8 @@
 												</div>
 
 											</td>
-											<td><span class="text-muted">Store Logo Image
-													</span></td>
+											<%-- <td><span class="text-muted">Store Logo Image
+													</span></td> --%>
 										</tr>
 										<tr>
 											<td><s:message code="page.background"/></td>
@@ -297,7 +297,7 @@
 													</form>
 												</div>
 											</td>
-											<td><span class="text-muted"> Store Background Image</span></td>
+											<%-- <td><span class="text-muted"> Store Background Image</span></td> --%>
 										</tr>
 									</tbody>
 								</table>
