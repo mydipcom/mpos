@@ -510,7 +510,7 @@ public class MobileAPI {
 			ProductModel model = new ProductModel();
 			model.setProductId(product.getId());
 
-			if (product.isStatus()) {
+			if (product.isStatus()&&product.getIsPut()) {
 				model.setProductId(product.getId());
 				model.setMenuId(product.getTmenu().getMenuId());
 				BeanUtils.copyProperties(product, model, "attributes", "promotions", "images");

@@ -242,7 +242,8 @@ public class BaseDao<T> extends HibernateDaoSupport
     	return query.uniqueResult();
     }
     
-    public List<Object[]> getListBySql(String sql,Map<String, Object> params){
+    @SuppressWarnings("unchecked")
+	public List<Object[]> getListBySql(String sql,Map<String, Object> params){
     	Query query = currentSession().createSQLQuery(sql);
     	if(params==null||params.size()<1){
     	}else{

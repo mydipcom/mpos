@@ -38,6 +38,14 @@ public class Tcommodity implements Serializable{
 	private Set<Tpromotion> promotions;
 	
 	private Integer storeId;
+	private Boolean isPut=false;;
+	public Boolean getIsPut() {
+		return isPut;
+	}
+
+	public void setIsPut(Boolean isPut) {
+		this.isPut = isPut;
+	}
 
 	public Integer getId() {
 		return id;

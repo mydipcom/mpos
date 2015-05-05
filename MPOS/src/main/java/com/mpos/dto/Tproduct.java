@@ -25,6 +25,7 @@ public class Tproduct implements java.io.Serializable {
 	private Integer sort;
 	private boolean status;
 	private Tmenu tmenu;
+	private Boolean isPut=false;
 	private Tcategory tcategory;
 	private Integer specid;
 	@SuppressWarnings("unused")
@@ -219,53 +220,42 @@ public class Tproduct implements java.io.Serializable {
 		this.recommend = recommend;
 	}
 
-	
-
-
 	public Integer getSort() {
 		return sort;
 	}
-
-
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
 
-
-
 	public Set<TproductImage> getImages() {
 		return images;
 	}
-
-
 
 	public void setImages(Set<TproductImage> images) {
 		this.images = images;
 	}
 
-
-
 	public Set<TgoodsAttribute> getAttributes() {
 		return attributes;
 	}
-
-
 
 	public void setAttributes(Set<TgoodsAttribute> attributes) {
 		this.attributes = attributes;
 	}
 
-
-
 	public Set<Tpromotion> getPromotions() {
 		return promotions;
 	}
 
-
-
 	public void setPromotions(Set<Tpromotion> promotions) {
 		this.promotions = promotions;
+	}
+	public Boolean getIsPut() {
+		return isPut;
+	}
+	public void setIsPut(Boolean isPut) {
+		this.isPut = isPut;
 	}
 
 }

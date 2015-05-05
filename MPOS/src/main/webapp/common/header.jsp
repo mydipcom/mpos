@@ -9,11 +9,13 @@
 	<div class="page-header-inner">		
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<a href="<c:url value="/"/>home">
-			<img src="${pageContext.request.contextPath}/assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
-			</a>
+			<div style="font-size: 24px;font-family: cursive;">
+				<a href="<c:url value="/"/>index">
+				云菜单管理系统
+				</a>
+			</div>
 			<div class="menu-toggler sidebar-toggler hide">
-				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+				DOC: Remove the above "hide" to enable the sidebar toggler button on header
 			</div>
 		</div>
 		<!-- END LOGO -->

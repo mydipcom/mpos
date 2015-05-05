@@ -50,8 +50,8 @@
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <body class="login">
 <!-- BEGIN LOGO -->
-<div class="logo">
-	<a href="/index">
+<div class="logo" style="font-size: 36px;font-family: cursive;">
+	<a href="<c:url value="/"/>index">
 	云菜单管理系统
 	</a>
 </div>

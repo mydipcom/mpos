@@ -43,6 +43,9 @@
         <property name="status" type="boolean">
             <column name="status" not-null="true" />
         </property>
+         <property name="isPut" type="boolean">
+            <column name="is_put" not-null="true" />
+        </property>
         <property name="storeId" type="int">
         <column name="store_id" not-null="true"/>
         </property>
