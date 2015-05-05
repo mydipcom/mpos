@@ -12,9 +12,9 @@ $(document).ready(function () {
         			var str='';
         			for(var i=0;i<data.info.length;i++){
         				if(data.info[i].serviceId==0){	
-        					str+="<div class='from-grounp'><label>"+data.info[i].content+"</label><input type='radio' name='serviceId' checked value='"+data.info[i].serviceId+"'/></div>";		
+        					str+="<div class='from-grounp'><input type='radio' name='serviceId' checked value='"+data.info[i].serviceId+"'/><label>"+data.info[i].content+"</label></div>";		
         				}else{
-        				str+="<div class='from-grounp'><label>"+data.info[i].content+"</label><input type='radio' name='serviceId' value='"+data.info[i].serviceId+"'/></div>";	
+        				str+="<div class='from-grounp'><input type='radio' name='serviceId' value='"+data.info[i].serviceId+"'/><label>"+data.info[i].content+"</label></div>";	
         				}
         				}
         			$('#getSevice').append(str);

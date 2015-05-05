@@ -167,13 +167,17 @@ public class StoreManagerController extends BaseController {
 	 */
 	@RequestMapping(value = "/{storeIds}", method = RequestMethod.GET)
 	@ResponseBody
-	public String deleteStore(HttpServletRequest request,@PathVariable String storeIds){
+	public String deleteStore(HttpServletRequest request,@PathVariable String storeIds,Integer type){
 		Map<String, Object> params = getHashMap();
 		Map<String, Object> res = getHashMap();
 		String hql = "update Tstore set status=:status where storeId in (:storeIds)";
 		String[] idstr = storeIds.split(",");
 		try {
-			params.put("status", false);
+			if(type==1){
+				params.put("status", true);
+			}else{
+				params.put("status", false);
+			}
 			params.put("storeIds", ConvertTools.stringArr2IntArr(idstr));
 			storeService.update(hql, params);
 			info = getMessage(request,"operate.success");

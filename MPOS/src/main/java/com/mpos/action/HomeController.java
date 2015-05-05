@@ -85,7 +85,7 @@ public class HomeController extends BaseController {
 		ModelAndView mav=new ModelAndView();	
 		
 		if(getSessionUser(request).getAdminRole().getRoleId()==4||getSessionUser(request).getAdminRole().getRoleId()==1){
-			mav.setViewName("home/home");
+			mav.setViewName("redirect:/home");
 		}else{
 			Map<String, Object> params = getHashMap();
 			params.put("startTime", ConvertTools.getFirstDay());

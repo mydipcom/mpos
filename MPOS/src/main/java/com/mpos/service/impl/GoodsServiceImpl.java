@@ -65,7 +65,7 @@ public class GoodsServiceImpl implements GoodsService {
 			for (String key : keys) {
 				String val = jsonObj.getString(key);
 				if (val != null && !val.isEmpty()) {
-					if (key == "recommend") {
+					if (key == "isPut") {
 						criterionsList.add(Restrictions.eq(key,
 								jsonObj.getBoolean(key)));
 

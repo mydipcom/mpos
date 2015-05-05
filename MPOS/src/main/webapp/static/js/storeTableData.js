@@ -47,7 +47,7 @@ var StoreTable = function () {
             	'data':null,//定义列名
             	'render':function(data,type,row){
             		var url = rootURI+"storeSetting/search/"+data.storeId;
-                	return '<div class="actions"><a class="btn btn-sm dark"  href="'+url+'">view</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark"  href="'+url+'">查看</a></div>';
                 	},
                 'class':'center'
             	}
@@ -60,7 +60,15 @@ var StoreTable = function () {
 	           { /*title: "Description",*/    data: "serviceName" },
 	           { /*title: "Description",*/    data: "date" },
 	           { /*title: "Description",*/    data: "createTimeStr" },
-	           { /*title: "Description",*/    data: "status" },
+	           { /*title: "Description",*/    data: "status",
+	        	   'render':function(data,type,row){
+	        		   var temp="启用";
+	        		   if(data=="0"){
+	        			   temp = "禁用";
+	        		   }
+	        		   	return temp;
+	        	   	} 
+	           },
 	           { /*title: "Action" ,*/"class":"center"}
 	          ],
 	        "serverSide": true,
@@ -77,12 +85,45 @@ var StoreTable = function () {
 			}
 		});
 		
+		$("#openUpdateTableModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+				return false;
+			}
+		});
+		
+		//删除操作
+		$('#updateBtn').on('click', function (e) {
+			$.ajax( {
+             "dataType": 'json', 
+             "type": "GET", 
+             "url": rootURI+"storeManager/"+selected.join(), 
+             "data":{"type":1},
+             "success": function(data,status){
+            	 if(status == "success"){
+            		 var infoType = "danger";
+					 if(data.status){
+						 selected=[];
+		            	 oTable.api().draw();
+		            	 oTable.$('th span').removeClass();
+		            	 infoType = "success";
+					 }
+					handleAlerts(data.info,infoType,"");
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+        }); 
+		
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "GET", 
              "url": rootURI+"storeManager/"+selected.join(), 
+             "data":{"type":0},
              "success": function(data,status){
             	 if(status == "success"){
             		 var infoType = "danger";

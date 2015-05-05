@@ -226,10 +226,11 @@ var ManagersTable = function () {
 	            var createby=data.createdBy;
 	            var creatime=data.createdTimeStr;
 	            var roleId=data.adminRole.roleId;
+	            $("#editUsersForm option").removeAttr("selected");
+	            $("#editUsersForm select[name='adminRole.roleId']").children("option[value='"+roleId+"']").attr("selected","true");
 	            $("#editUsersForm input[name='adminId']").val(adminId);
 	            $("#editUsersForm input[name='email']").val(email);
 	            $("#editUsersForm input[name='createdBy']").val(createby);
-	            $("#editUsersForm select[name='adminRole.roleId']").val(roleId);
 	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);
 			}
 		});

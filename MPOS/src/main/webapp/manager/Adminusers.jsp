@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>Manager List</title>
+<title><s:message code="admin"/></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -314,6 +314,92 @@
 					</div>
 				</div>
 			</div>
+			<!--  -->
+			<div class="modal" id="add_users" tabindex="-1" data-width="760">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Edit Users</h4>
+					</div>
+					<div id="editFormMsg"></div>
+					<!-- <div class="modal-body"> -->
+					<div class="portlet-body form">
+						<!-- BEGIN FORM-->						
+						<form id="editUsersForm" action="editUsers" method="post" name="editUsersForm" class="form-horizontal form-bordered">
+							<div class="form-body">
+								<div class="alert alert-danger display-hide">
+									<button class="close" data-close="alert"></button>
+								<s:message code="system.management.user.adduser.message" />
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
+									<div class="col-md-9">										
+										<input name="adminId" class="form-control" readonly="true"/>										
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="login.form.password"/></label>
+									<div class="col-md-9">																				
+										<input name="password" type="password"  class="form-control" maxLength="100"/>
+										<span class="help-block"> input a new password or not input password</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/></label>
+									<div class="col-md-9">																				
+										<input name="email" class="form-control" maxLength="100"/>
+									</div>
+								</div>									
+								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.rolename"/></label>
+									<div class="col-md-9">
+										<select name="adminRole.roleId" class="form-control">
+											<c:forEach var="role" items="${rolesList}">
+											<option value="${role.roleId}">${role.roleName}</option>			
+											</c:forEach>
+										</select>										
+									</div>
+								</div>
+									
+								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.createdBy"/></label>
+									<div class="col-md-9">																				
+										<input name="createdBy" class="form-control" readonly="true"/>
+										
+									</div>
+								</div>			
+								<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.createdTime"/></label>
+									<div class="col-md-9">																				
+										<input name="createdTimeStr" class="form-control" readonly="true"/>
+										
+									</div>
+								</div>						
+								
+								 <div class="form-group">
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/></label>
+									<div class="col-md-9">										
+										<div class="radio-list">
+											<label class="radio-inline">
+											<input type="radio" name="status" value="1" checked/>Active </label>
+											<label class="radio-inline">
+											<input type="radio" name="status" value="0"/>Inactive </label>
+										</div>
+									</div>
+								</div>		 												
+							</div>
+							<div class="form-actions" style="border-top:0;">
+								<div class="row">
+									<div class="col-md-offset-6 col-md-6">
+										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>
+			<!--  -->
 				
 			<div class="modal" id="edit_users" tabindex="-1" data-width="760">
 					<div class="modal-header">

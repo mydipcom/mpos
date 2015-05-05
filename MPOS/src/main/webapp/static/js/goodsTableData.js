@@ -115,7 +115,7 @@ var GoodsTable = function () {
 			});*/
 			$("#openPutgoodsModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+					handleAlerts(loadProperties("error.put.select",locale),"warning","");				
 					return false;
 				}				
 		});
@@ -146,7 +146,7 @@ var GoodsTable = function () {
 	        }); 
 			$("#openOutgoodsModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+					handleAlerts(loadProperties("error.out.select",locale),"warning","");				
 					return false;
 				}				
 		});

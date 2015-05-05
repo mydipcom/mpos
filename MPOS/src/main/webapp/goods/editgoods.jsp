@@ -172,7 +172,7 @@
 															</div>
 														</div>
 													</div>
-												<%-- 	<div class="row">
+													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.shortdescr"/><span class="required"> * </span></label>
@@ -181,8 +181,8 @@
 																</div>
 															</div>
 														</div>
-													</div> --%>
-													<div class="row">
+													</div>
+													<%-- <div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
 																<label class="control-label col-md-2"><s:message code="product.fulldescr"/></label>
@@ -192,7 +192,7 @@
 																</div>
 															</div>
 														</div>
-													</div>
+													</div> --%>
 													<div class="row">
 														<div class="col-md-12">															
 															<div class="form-group">
