@@ -64,10 +64,12 @@ public class HomeController extends BaseController {
 		
 		String storeSql= "select count(*),store.status from mpos_cloud.mpos_store as store group by store.status";
 		List<Object[]> store =  orderService.getListBySql(storeSql,null);
+		loadData(store);
 		mav.addObject("store", store);
 		
 		String serviceSql = "select count(*),service.status from mpos_cloud.mpos_service as service group by service.status";
 		List<Object[]> service = orderService.getListBySql(serviceSql,null);
+		loadData(service);
 		mav.addObject("service", service);
 		
 		Map<String, Object> params = getHashMap();
@@ -79,6 +81,31 @@ public class HomeController extends BaseController {
 		
 		mav.setViewName("home/home");
 		return mav;
+	}
+	private void loadData(List<Object[]> data) {
+		if(data.size()==1){
+			Object[] o = data.get(0);
+			boolean status = (Boolean) o[1] ;
+			Object[] n = new Object[2];
+			if(status ){
+				n[0] = 0;
+				n[1] = false;
+			}else{
+				n[0] = 0;
+				n[1] = true;
+			}
+			data.add(n);
+		}
+		if(data.size()==0){
+			Object[] one = new Object[2];
+			one[0] = 0;
+			one[1]=true;
+			Object[] two = new Object[2];
+			two[0] = 0;
+			two[1]=false;
+			data.add(one);
+			data.add(two);
+		}
 	}
 	@RequestMapping(value="storeHome",method=RequestMethod.GET)
 	public ModelAndView storeHome(HttpServletRequest request){
