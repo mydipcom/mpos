@@ -30,11 +30,13 @@ import com.mpos.commons.SystemConfig;
 import com.mpos.dto.TadminInfo;
 import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
+import com.mpos.dto.Tmessage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
 import com.mpos.service.AdminInfoService;
 import com.mpos.service.AdminUserService;
+import com.mpos.service.MessageService;
 import com.mpos.service.ServiceService;
 import com.mpos.service.StoreService;
 import com.mpos.service.TableService;
@@ -64,6 +66,8 @@ public class CommonController extends BaseController {
 	private TableService tableService;
 	@Autowired
 	private AdminInfoService adminInfoService;
+	@Autowired
+	private MessageService messageService;
 	
 	@RequestMapping(value="header",method=RequestMethod.GET)
 	public ModelAndView header(HttpServletRequest request){
@@ -103,6 +107,20 @@ public class CommonController extends BaseController {
 		mav.setViewName("common/notice");
 		return mav;
 	}
+	@RequestMapping(value="addMsg",method=RequestMethod.POST)
+	@ResponseBody
+	public String add(HttpServletRequest request,Tmessage message){
+		Map<String, Object> res = getHashMap();
+		try {
+			messageService.create(message);
+			res.put("status", true);
+			res.put("info", "留言成功");
+		} catch (Exception e) {
+			res.put("status", false);
+			res.put("info", e.getMessage());
+		}
+		return JSON.toJSONString(res);
+	}
 	@RequestMapping(value="getServices",method=RequestMethod.POST)
 	@ResponseBody
 	public String getService(HttpServletRequest request){
@@ -111,7 +129,7 @@ public class CommonController extends BaseController {
 			List<Tservice> info = new ArrayList<Tservice>();
 			List<Tservice> services = serviceService.load();
 			for (Tservice tservice : services) {
-				tservice.setContent(tservice.getServiceName()+"-"+tservice.getServicePrice()+"-"+tservice.getValidDays()+"-"+tservice.getContent());
+				tservice.setContent(tservice.getServiceName()+"-"+tservice.getServicePrice()+"元-"+tservice.getValidDays()+"天-"+tservice.getContent());
 				tservice.setRoleId(null);
 				tservice.setServiceName(null);
 				tservice.setServicePrice(null);
@@ -174,6 +192,7 @@ public class CommonController extends BaseController {
 			adminInfoService.createAdminInfo(info);
 			res.put("status", true);
 			res.put("info", "Register Success");
+			res.put("payUrl", "http://www.baidu.com");
 		} catch (MposException e) {
 			if(store.getStoreId()!=null){
 				storeService.deleteByStoreId(store.getStoreId(),user.getAdminId());

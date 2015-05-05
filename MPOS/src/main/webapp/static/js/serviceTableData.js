@@ -97,7 +97,8 @@ var ServiceTable = function () {
 		table.on('click', 'tbody tr a',function(){
 	           var data = oTable.api().row($(this).parents('tr')).data();
 	            $("#editTableForm option").removeAttr("selected");
-	            
+	            $('#status_box').eq(0).attr("checked",'false');
+            	$("#status_box").eq(0).parents('span').removeClass("checked");
 	            $("#editTableForm select[name='roleId']").children("option[value='"+data.roleId+"']").attr("selected","true");
 	            if(data.status){
 	            	$('#status_box').eq(0).attr("checked",'true');

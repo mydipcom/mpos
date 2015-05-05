@@ -19,7 +19,7 @@ $(document).ready(function () {
         				}
         			$('#getSevice').append(str);
     			}else{
-    				alert(data.info);
+    				alert(data.payUrl);
     			}
     		},
     		error:function(){

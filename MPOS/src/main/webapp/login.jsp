@@ -94,11 +94,11 @@
 			</button>
 		</div>		
 		<div class="forget-password">
-			<h4>Forgot your password ?</h4>
+			<h4>忘记密码？</h4>
 			<p>
-				 no worries, click <a href="javascript:;" id="forget-password">
-				here </a>
-				to reset your password.
+				 点击 <a href="javascript:;" id="forget-password">
+				这里 </a>
+				重置密码
 			</p>
 		</div>
 		<div class="create-account">
@@ -108,9 +108,9 @@
 	<!-- END LOGIN FORM -->
 	<!-- BEGIN FORGOT PASSWORD FORM -->
 	<form class="forget-form" action="ResetPassword" method="post">
-		<h3>Forget Password ?</h3>
+		<h3>忘记密码 ?</h3>
 		<p>
-			 Enter your e-mail address below to reset your password.
+			输入邮箱，重置密码
 		</p>
 		<div class="form-group">
 			<div class="input-icon">
@@ -120,9 +120,9 @@
 		</div>
 		<div class="form-actions">
 			<button type="button" id="back-btn" class="btn">
-			<i class="m-icon-swapleft"></i> Back </button>
+			<i class="m-icon-swapleft"></i> 返回 </button>
 			<button type="submit" class="btn green pull-right">
-			Submit <i class="m-icon-swapright m-icon-white"></i>
+			提交 <i class="m-icon-swapright m-icon-white"></i>
 			</button>
 		</div>
 	</form>
