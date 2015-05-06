@@ -97,5 +97,10 @@ public class ProductReleaseServiceImpl implements ProductReleaseService {
 		return productReleaseDao.getUnPublish(storeId);
 	}
 
+	public void save(TproductRelease release) {
+		// TODO Auto-generated method stub
+		productReleaseDao.create(release);
+	}
+
 
 }

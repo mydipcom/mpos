@@ -10,7 +10,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>编辑商品</title>
+<title><s:message code="product.edit"/></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
@@ -96,7 +96,7 @@
 								<div class="portlet box grey-silver tabbable">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-gift"></i>Multi-language Form Items
+											<i class="fa fa-gift"></i><s:message code="system.lan.form"/>
 										</div>
 									</div>
 									<div class="portlet-body">
@@ -105,7 +105,7 @@
 												<c:forEach var="lan" items="${lanList}" varStatus="status">											
 												<li><a href="#portlet_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
 												</c:forEach>	
-												<li class="active"><a href="#portlet_tab1" data-toggle="tab"> Standard</a></li>
+												<li class="active"><a href="#portlet_tab1" data-toggle="tab"> <s:message code="system.standard"/></a></li>
 											</ul>
 											<div class="tab-content">												
 												<c:forEach var="lan" items="${lanList}" varStatus="status">
@@ -210,7 +210,7 @@
 								</div>
 								<!--End Multi-language Form   -->
 							
-								<h3 class="form-section">Basic Info</h3>
+								<h3 class="form-section"><s:message code="product.basic.info"/></h3>
 								<div class="row">
 									<div class="col-md-6">										
 										<div class="form-group">
@@ -225,7 +225,7 @@
 													</c:if> --%>
 													<form:options items="${menu}"/>
 												</form:select>	
-												<span class="help-block">Select the product menu for mobile machine.</span>
+												<span class="help-block"><s:message code="product.select.menu"/></span>
 											</div>
 										</div>
 									</div>
@@ -295,12 +295,12 @@
 									<div class="portlet-title">
 										<div class="caption">
 											<i class="icon-equalizer font-red-sunglo"></i>
-											<span class="caption-subject font-red-sunglo bold">Spec Attributes</span>											
+											<span class="caption-subject font-red-sunglo bold"><s:message code="product.spec.attribute"/></span>											
 										</div>
 										<div class="actions">
 											<div class="portlet-input input-inline">
 												<form:select path="specid" cssClass="form-control" name="category" id="chooseSpecCategory">												
-													<option value="0">-- Please product spec attribute group --</option>
+													<option value="0">-- <s:message code="product.spec.select"/> --</option>
 													<form:options items="${speccategory}"/> 													
 												</form:select>												
 											</div>											
@@ -317,12 +317,12 @@
 									<div class="portlet-title">
 										<div class="caption">
 											<i class="icon-equalizer font-red-sunglo"></i>
-											<span class="caption-subject font-red-sunglo bold">Order Attributes</span>											
+											<span class="caption-subject font-red-sunglo bold"><s:message code="product.order.attribute"/></span>											
 										</div>
 										<div class="actions">
 											<div class="portlet-input input-inline">
 												<form:select path="attributeGroup.categoryId" cssClass="form-control" name="category" id="chooseorderCategory">												
-													<option value="0">-- Please product order attribute group --</option>
+													<option value="0">-- <s:message code="product.order.select"/> --</option>
 													<form:options items="${ordercategory}"/> 													
 												</form:select>												
 											</div>											
@@ -338,7 +338,7 @@
 								
 								
 								<!--Begin images upload form-->
-								<h3 class="form-section">Upload Images</h3>
+								<h3 class="form-section"><s:message code="image.upload" /></h3>
 								<div class="row">
 									<div class="col-md-12">	
 										
@@ -346,9 +346,9 @@
 										</div>
 										<div id="tab_images_uploader_container" class="text-align-reverse margin-bottom-10">
 											<a id="tab_images_uploader_pickfiles" href="javascript:;" class="btn yellow">
-											<i class="fa fa-plus"></i> Select Files </a>
+											<i class="fa fa-plus"></i> <s:message code="image.select" /> </a>
 											<a id="tab_images_uploader_uploadfiles" href="javascript:;" class="btn green">
-											<i class="fa fa-share"></i> Upload Files </a>
+											<i class="fa fa-share"></i> <s:message code="image.upload" /> </a>
 										</div>
 										<div class="row">
 											<div id="tab_images_uploader_filelist" class="col-md-6 col-sm-12">
@@ -358,16 +358,16 @@
 										<thead>
 										<tr role="row" class="heading">
 											<th width="10%">
-												 Image
+												<s:message code="image" />
 											</th>
 											<th width="25%">
-												 Image Name
+												 <s:message code="image.name" />
 											</th>
 											<th width="25%">
-												 Image Size
+												<s:message code="image.size" />
 											</th>												
 											<th width="30%">
-												 Status
+												<s:message code="image.status" />
 											</th>
 											<th width="10%">
 											</th>
@@ -385,7 +385,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label col-md-3">上架</label>
+											<label class="control-label col-md-3"><s:message code="product.isput"/></label>
 											<div class="col-md-9">
 											<label class="radio-inline"><form:checkbox path="isPut" value="true" cssClass="form-control"/></label>
 											</div>
@@ -394,15 +394,15 @@
 								</div>
 								<div class="row">
 								<div class="col-md-6">
-								<label style="font-size: 12px;color:red">请注意：最终上架需在发布管理进行操作</label>
+								<label style="font-size: 12px;color:red"><s:message code="product.tip"/></label>
 								</div>
 								</div>							
 							</div>
 							<div class="form-actions">
 								<div class="row">
 									<div class="col-md-offset-3 col-md-9">
-										<button type="submit" class="btn green">Submit</button>
-										<button type="button" class="btn default" onclick="location.href='javascript:history.go(-1);'">Cancel</button>
+										<button type="submit" class="btn green"><s:message code="system.submit"/></button>
+										<button type="button" class="btn default" onclick="location.href='javascript:history.go(-1);'"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>

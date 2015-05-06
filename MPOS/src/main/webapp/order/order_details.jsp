@@ -264,12 +264,12 @@
 															<div class="actions">
 																<div class="btn-group">
 																	<a class="btn default" href="#" data-toggle="dropdown">
-																		Columns <i class="fa fa-angle-down"></i>
+																		<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 																	</a>
 																	<div id="column_toggler"
 																		class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 																		<label><input type="checkbox" checked
-																			data-column="0">Checkbox</label>
+																			data-column="0"><s:message code="system.checkbox"/></label>
 																	<label>
 																	<input
 																			type="checkbox" checked data-column="1">

@@ -24,7 +24,7 @@ public class TserviceOrder implements Serializable {
 	public String getCreateTimeStr() {
 		if(createTime!=null){
 			Date date=new Date(createTime);
-			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			return sdf.format(date);		
 			}else
 			return null;

@@ -5,7 +5,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>Roles List</title>
+<title><s:message code="system.management.roles.title"/></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
 <meta content="" name="author"/>
@@ -65,7 +65,7 @@
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
-										<input type="radio" name="status" value="" checked/>All </label>
+										<input type="radio" name="status" value="" checked/>所有 </label>
 										<label class="radio-inline">
 										<input type="radio" name="status" value="true"/><s:message code="all.status.enable" /> </label>
 										<label class="radio-inline">
@@ -79,8 +79,8 @@
 						<div class="col-md-6">	
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="submit" class="btn blue"><s:message code="system.search"/> <i class="fa fa-search"></i></button>
+									<button type="reset" class="btn grey-cascade"><s:message code="system.reset"/> <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -93,15 +93,15 @@
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="system.management.roles.tablename" />
+									<i class="fa fa-edit"></i>角色列表
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_role"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_role" id="openEditRoleModal"><i class="fa fa-pencil"></i><s:message code="all.table.edit" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_roles" id="openDeleteRoleModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_roleRights" id="openRoleRigthsModal"><i class="fa fa-cogs"></i> <s:message code="system.management.roles.assign"/></a>								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
+										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox"/></label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.roles.search.rolename" /></label>											
 											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.roles.parentid" /></label>
@@ -177,8 +177,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit"/></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>
@@ -229,8 +229,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit"/></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>
@@ -271,8 +271,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="assignFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="assignFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit"/></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>
@@ -290,8 +290,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
+						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit"/></button>
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->

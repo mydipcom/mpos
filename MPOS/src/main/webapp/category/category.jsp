@@ -143,10 +143,10 @@
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_category" id="openDeleteCategoryModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
+										<s:message code="system.column" /> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox" /> </label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="category.id" /></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="category.name" /></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="category.content" /></label>
@@ -197,7 +197,7 @@
 								<div class="portlet box grey-silver tabbable">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-gift"></i>Multi-language Form Items
+											<i class="fa fa-gift"></i><s:message code="system.lan.form"/>
 										</div>
 									</div>
 									<div class="portlet-body">
@@ -206,7 +206,7 @@
 												<c:forEach var="lan" items="${lanList}" varStatus="status">											
 												<li><a href="#add_category_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
 												</c:forEach>	
-												<li class="active"><a href="#add_category_tab1" data-toggle="tab"> Standard</a></li>
+												<li class="active"><a href="#add_category_tab1" data-toggle="tab"> <s:message code="system.standard" /> </a></li>
 											</ul>
 											<div class="tab-content">												
 												<c:forEach var="lan" items="${lanList}" varStatus="status">
@@ -312,7 +312,7 @@
 								<div class="portlet box grey-silver tabbable">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-gift"></i>Multi-language Form Items
+											<i class="fa fa-gift"></i><s:message code="system.lan.form"/>
 										</div>
 									</div>
 									<div class="portlet-body">
@@ -321,7 +321,7 @@
 												<c:forEach var="lan" items="${lanList}" varStatus="status">											
 												<li><a href="#edit_category_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
 												</c:forEach>	
-												<li class="active"><a href="#edit_category_tab1" data-toggle="tab"> Standard</a></li>
+												<li class="active"><a href="#edit_category_tab1" data-toggle="tab"> <s:message code="category.standard" /></a></li>
 											</ul>
 											<div class="tab-content">												
 												<c:forEach var="lan" items="${lanList}" varStatus="status">
@@ -494,9 +494,9 @@
 										<div class="col-md-10">										
 											<div class="radio-list">
 												<!-- <label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label> -->
-												<label class="radio-inline"><input type="radio" name="type" value="1"/>Radio Button </label>
-												<label class="radio-inline"><input type="radio" name="type" value="2"checked/>Checkbox</label>
-												<label class="radio-inline"><input type="radio" name="type" value="3"/>Dropdown List </label>
+												<label class="radio-inline"><input type="radio" name="type" value="1"/><s:message code="system.radio" /> </label>
+												<label class="radio-inline"><input type="radio" name="type" value="2"checked/><s:message code="system.checkbox" /> </label>
+												<label class="radio-inline"><input type="radio" name="type" value="3"/><s:message code="system.select" /> </label>
 											</div>
 										</div>
 								</div>
@@ -504,8 +504,8 @@
 									<label class="control-label col-md-2"><s:message code="attribute.required" /> <span class="required">* </span></label>
 									<div class="col-md-10">										
 										<div class="radio-list">
-											<label class="radio-inline"><input type="radio" name="required" value="true"/>True</label>
-											<label class="radio-inline"><input type="radio" name="required" value="false" checked/>False</label>											
+											<label class="radio-inline"><input type="radio" name="required" value="true"/><s:message code="all.status.enable" /></label>
+											<label class="radio-inline"><input type="radio" name="required" value="false" checked/><s:message code="all.status.disable" /></label>											
 										</div>									
 									</div>
 								</div>
@@ -527,7 +527,7 @@
 												<c:forEach var="lan" items="${lanList}" varStatus="status">											
 												<li><a href="#add_attribute_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
 												</c:forEach>	
-												<li class="active"><a href="#add_attribute_tab1" data-toggle="tab"> Standard</a></li>
+												<li class="active"><a href="#add_attribute_tab1" data-toggle="tab"> <s:message code="system.standard" /></a></li>
 											</ul>
 											<div class="tab-content">												
 												<c:forEach var="lan" items="${lanList}" varStatus="status">
@@ -581,7 +581,7 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="addAttributeFormSubmit"><i class="fa fa-check"></i> <s:message code="system.sumbit" /></button>
+										<button type="submit" class="btn green" id="addAttributeFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit" /></button>
 										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close" /></button>
 									</div>
 								</div>
@@ -619,9 +619,9 @@
 										<div class="col-md-10">										
 											<div class="radio-list">
 												<!-- <label class="radio-inline"><input type="radio" name="type" value="0"/>Editbox</label> -->
-												<label class="radio-inline"><input type="radio" name="type" value="1" checked/>Radio Button </label>
-												<label class="radio-inline"><input type="radio" name="type" value="2"/>Checkbox</label>
-												<label class="radio-inline"><input type="radio" name="type" value="3"/>Dropdown List </label>
+												<label class="radio-inline"><input type="radio" name="type" value="1"/><s:message code="system.radio" /> </label>
+												<label class="radio-inline"><input type="radio" name="type" value="2"checked/><s:message code="system.checkbox" /> </label>
+												<label class="radio-inline"><input type="radio" name="type" value="3"/><s:message code="system.select" /> </label>
 											</div>
 										</div>
 								</div>
@@ -629,8 +629,8 @@
 									<label class="control-label col-md-2"><s:message code="attribute.required" /> <span class="required">* </span></label>
 									<div class="col-md-10">										
 										<div class="radio-list">
-											<label class="radio-inline"><input type="radio" name="required" value="true"/>True</label>
-											<label class="radio-inline"><input type="radio" name="required" value="false" checked/>False</label>											
+											<label class="radio-inline"><input type="radio" name="required" value="true"/><s:message code="all.status.enable" /></label>
+											<label class="radio-inline"><input type="radio" name="required" value="false" checked/><s:message code="all.status.disable" /></label>													
 										</div>									
 									</div>
 								</div>
@@ -652,7 +652,7 @@
 												<c:forEach var="lan" items="${lanList}" varStatus="status">											
 												<li><a href="#edit_attribute_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
 												</c:forEach>	
-												<li class="active"><a href="#edit_attribute_tab1" data-toggle="tab"> Standard</a></li>
+												<li class="active"><a href="#edit_attribute_tab1" data-toggle="tab"> <s:message code="system.standard" /></a></li>
 											</ul>
 											<div class="tab-content">												
 												<c:forEach var="lan" items="${lanList}" varStatus="status">

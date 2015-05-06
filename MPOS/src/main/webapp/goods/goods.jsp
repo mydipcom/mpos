@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>商品列表</title>
+<title><s:message code="product.list"/></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -91,7 +91,7 @@
 								<label class="col-md-3 control-label"><s:message code="product.category.name"/></label>
 								<div class="col-md-9">
 								<select name="tmenu.menuId" class="form-control">
-										<option value="">ALL</option>
+										<option value=""><s:message code="all.status.all"/></option>
 										<c:if test="${not empty menu}">
 											<c:forEach items="${menu}" var="menuitem">
 												<option value="${menuitem.id}">${menuitem.title}</option>
@@ -158,8 +158,8 @@
 						<div class="col-md-6">	
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="submit" class="btn blue"><s:message code="system.search"/> <i class="fa fa-search"></i></button>
+									<button type="reset" class="btn grey-cascade"><s:message code="system.reset"/> <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -207,15 +207,15 @@
 								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#add_good" id="openAddGoodModal"><i class="fa fa-plus" ></i> <s:message code="product.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditgoodsModal"><i class="fa fa-pencil"></i> <s:message code="product.edit" /></a>
 								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#put_goods" id="openPutgoodsModal"><i class="fa fa-plus" ></i>上架</a>
-								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#out_goods" id="openOutgoodsModal"><i class="fa fa-plus" ></i>下架</a>
+								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#out_goods" id="openOutgoodsModal"><i class="fa fa-trash-o" ></i>下架</a>
 								    <%-- <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActivegoodsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a> --%>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeletegoodsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
+										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox"/></label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="product.category.name"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="product.product.name"/></label>
@@ -267,8 +267,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="putBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
+						<button id="putBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit"/></button>
 					</div>					
 				</div>
 				
@@ -279,8 +279,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="outBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
+						<button id="outBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit"/></button>
 					</div>					
 				</div>
 				
@@ -292,8 +292,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
+						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit"/></button>
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->
@@ -306,8 +306,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="activeBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
+						<button id="activeBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit"/></button>
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->

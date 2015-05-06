@@ -166,7 +166,7 @@ var StoreSetting = function() {
 		$("#logo_change").on("submit", function(event) {
 			 $.ajaxFileUpload( {
 	             "type": "POST", 
-	             "url": rootURI+"storeSetting/uploadLogo?rand="+Math.random(), 
+	             "url": rootURI+"storeSetting/test?rand="+Math.random(), 
 	             "secureuri": false,
 	             "fileElementId":"logo_image", 
 	             "dataType": "json",

@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>My Log List</title>
+<title><s:message code="loglist.mylogtitle"/></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -115,8 +115,8 @@
 						<div class="col-md-6">	
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="submit" class="btn blue"><s:message code="system.search"/> <i class="fa fa-search"></i></button>
+									<button type="reset" class="btn grey-cascade"><s:message code="system.reset"/> <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -144,10 +144,10 @@
 								   
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
+										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox"/> </label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.logtable.adminame"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.logtable.content"/></label>

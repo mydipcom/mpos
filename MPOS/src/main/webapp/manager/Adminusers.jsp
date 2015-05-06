@@ -104,7 +104,7 @@
 								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.rolename"/></label>
 								<div class="col-md-9">
 									<select name="adminRole.roleId" class="form-control">
-										<option value="">ALL</option>
+										<option value=""><s:message code="all.status.all"/></option>
 										<c:forEach var="role" items="${rolesList}">
 										<option value="${role.roleId}">${role.roleName}</option>			
 										</c:forEach>		
@@ -118,7 +118,7 @@
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
-										<input type="radio" name="status" value="" checked/>All </label>
+										<input type="radio" name="status" value="" checked/><s:message code="all.status.all"/> </label>
 										<label class="radio-inline">
 										<input type="radio" name="status" value="true"/><s:message code="all.status.enable"/></label>
 										<label class="radio-inline">
@@ -132,8 +132,8 @@
 						<div class="col-md-6">	
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="submit" class="btn blue"><s:message code="system.search" /> <i class="fa fa-search"></i></button>
+									<button type="reset" class="btn grey-cascade"><s:message code="system.reset" /> <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -161,10 +161,10 @@
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_users" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
+										<s:message code="system.column" /> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox" /></label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.searchform.email"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.rolename"/></label>

@@ -339,7 +339,7 @@ var Addgoods = function () {
             url : rootURI+"goods/uploadImages",
 
             filters : {
-                max_file_size : '10mb',
+                max_file_size : '2mb',
                 mime_types: [
                     {title : "Image files", extensions : "jpg,jpeg,gif,png"}
                     //{title : "Zip files", extensions : "zip"}

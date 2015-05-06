@@ -127,10 +127,10 @@
 									<div class="col-md-9">
 										<select class="bs-select form-control" id="status_select"
 											name="orderStatus">
-											<option value="0">Pending</option>
-											<option value="1">Paid</option>
-											<option value="2">Cancelled</option>
-											<option value="">All</option>
+											<option value="0"><s:message code="order.pending"/></option>
+											<option value="1"><s:message code="order.paid"/></option>
+											<option value="2"><s:message code="order.cancelled"/></option>
+											<option value=""><s:message code="all.status.all"/></option>
 										</select>
 									</div>
 								</div>
@@ -193,7 +193,7 @@
 
 										</div>
 									</div>
-									<div class="col-md-1">TO</div>
+									<div class="col-md-1">µ½</div>
 									<div class="col-md-4">
 										<div class="input-group date form_datetime">
 											<input type="text" size="16" readonly class="form-control"
@@ -220,10 +220,10 @@
 								<div class="form-group">
 									<div class="col-md-offset-3 col-md-9">
 										<button type="submit" class="btn blue">
-											Search <i class="fa fa-search"></i>
+											<s:message code="system.search"/> <i class="fa fa-search"></i>
 										</button>
 										<button type="reset" class="btn grey-cascade">
-											Reset <i class="fa fa-reply"></i>
+											<s:message code="system.reset"/> <i class="fa fa-reply"></i>
 										</button>
 									</div>
 								</div>
@@ -252,11 +252,11 @@
 											code="order.details" /> </a>
 									<div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-											Columns <i class="fa fa-angle-down"></i>
+											<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler"
 											class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox"/></label>
 											<label><input type="checkbox" checked data-column="1">
 											<s:message code="order.id" /></label> <label><input
 												type="checkbox" checked data-column="2">
@@ -313,9 +313,9 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
 						<button id="paymentBtn" type="button" data-dismiss="modal"
-							class="btn blue">Confirm</button>
+							class="btn blue"><s:message code="system.submit"/></button>
 					</div>
 				</div>
 				<!-- END Activate MODAL FORM-->
@@ -329,9 +329,9 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
 						<button id="cancelBtn" type="button" data-dismiss="modal"
-							class="btn blue">Confirm</button>
+							class="btn blue"><s:message code="system.submit"/></button>
 					</div>
 				</div>
 				<!-- END DELETE MODAL FORM-->

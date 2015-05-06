@@ -12,7 +12,7 @@ public interface ProductReleaseService {
 	void createOrupdateProductRelease(Integer id,Integer storeId);
 
 	TproductRelease getLatestPublished(Integer storeId);
-	
+	void save(TproductRelease release);
 	TproductRelease getUnPublished(Integer storeId);
 	void publicreleasebyid(Integer ids,Integer storeId);
 	

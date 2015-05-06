@@ -16,7 +16,7 @@
 
 <meta charset="utf-8"/>
 
-<title>Language List</title>
+<title><s:message code="language.title"/></title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -124,10 +124,10 @@
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeletelanguageModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.deactivate" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
+										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox"/></label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="language.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="language.name"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="language.local"/></label>
@@ -455,17 +455,17 @@
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
-											<input type="radio" name="status" value="1" checked/>true </label>
+											<input type="radio" name="status" value="1" checked/><s:message code="all.status.enable"/></label>
 											<label>
-											<input type="radio" name="status" value="0"/>false </label>
+											<input type="radio" name="status" value="0"/><s:message code="all.status.disable"/> </label>
 										</div>
 									</div>
 								</div>			 
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit"/> </button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>
@@ -765,17 +765,17 @@
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
-											<input type="radio" name="status" value="1" checked/>true </label>
+											<input type="radio" name="status" value="1" checked/><s:message code="all.status.enable"/> </label>
 											<label>
-											<input type="radio" name="status" value="0"/>false </label>
+											<input type="radio" name="status" value="0"/><s:message code="all.status.disable"/> </label>
 										</div>
 									</div>
 								</div>			 
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit"/></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>
@@ -808,8 +808,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="activeBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close"/></button>
+						<button id="activeBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit"/></button>
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->				   						

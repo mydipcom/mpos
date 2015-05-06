@@ -50,7 +50,7 @@ var ServiceTable = function () {
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
-                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">查看</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">编辑</a></div>';
                 	},
                 'class':'center'
             	}

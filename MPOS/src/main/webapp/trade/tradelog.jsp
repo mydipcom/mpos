@@ -125,8 +125,8 @@
 						<div class="col-md-6">	
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="submit" class="btn blue"><s:message code="system.search"/> <i class="fa fa-search"></i></button>
+									<button type="reset" class="btn grey-cascade"><s:message code="system.reset"/> <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -148,16 +148,16 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="loglist.logtablename"></s:message>
+									<i class="fa fa-edit"></i>交易记录
 								</div>
 								<div class="actions">									
 								   
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
-										Columns <i class="fa fa-angle-down"></i>
+										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox"/></label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="trade.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="trade.eamil"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="trade.time"/></label>
@@ -197,7 +197,7 @@
 				<div class="modal" id="view_log" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">View My Log</h4>
+						<h4 class="modal-title"></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->

@@ -85,10 +85,10 @@ var CategoryTable = function () {
 	           { data: "content" },
 	           { 'render':function(data,type,row){
 	               	if(row.type==0){
-	            		return "Spec Attribute Group";
+	            		return "规格属性组";
 	            	}
 	            	else{
-	            		return "Order Attribute Group";
+	            		return "订单属性组";
 	            	}	                	
 	               } 
 	           },
