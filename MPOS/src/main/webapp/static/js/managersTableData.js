@@ -71,7 +71,7 @@ var ManagersTable = function () {
                     	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
                     },
                     //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
-                },
+                }/*,
                 {                	
                 	'targets':-1,
                 	'data':null,//定义列名
@@ -80,7 +80,7 @@ var ManagersTable = function () {
                 		return '<div class="actions"><a  class="btn btn-sm dark" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">查看</a></div>';
                     },
                     'class':'center'
-                }
+                }*/
             ],
             "columns": [
                {"orderable": false },
@@ -104,7 +104,7 @@ var ManagersTable = function () {
 	           { 	 data: "createdTimeStr", "bVisible":false},
 	           { 	 data: "updatedBy" ,"bVisible":false},
 	           {     data: "updatedTimeStr" ,"bVisible":false},  
-	           { title: "操作" ,"class":"center"},
+	           /*{ title: "操作" ,"class":"center"},*/
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

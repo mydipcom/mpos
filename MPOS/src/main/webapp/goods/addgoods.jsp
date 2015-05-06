@@ -329,7 +329,7 @@
 								</div>
 								
 								<!--Begin images upload form-->
-								<h3 class="form-section">Upload Images</h3>
+								<h3 class="form-section"><s:message code="image.upload" /></h3>
 								<div class="row">
 									<div class="col-md-12">	
 										
@@ -337,9 +337,9 @@
 										</div>
 										<div id="tab_images_uploader_container" class="text-align-reverse margin-bottom-10">
 											<a id="tab_images_uploader_pickfiles" href="javascript:;" class="btn yellow">
-											<i class="fa fa-plus"></i> Select Files </a>
+											<i class="fa fa-plus"></i> <s:message code="image.select" /> </a>
 											<a id="tab_images_uploader_uploadfiles" href="javascript:;" class="btn green">
-											<i class="fa fa-share"></i> Upload Files </a>
+											<i class="fa fa-share"></i> <s:message code="image.upload" /> </a>
 										</div>
 										<div class="row">
 											<div id="tab_images_uploader_filelist" class="col-md-6 col-sm-12">
@@ -349,16 +349,16 @@
 										<thead>
 										<tr role="row" class="heading">
 											<th width="10%">
-												 Image
+												<s:message code="image" />
 											</th>
 											<th width="25%">
-												 Image Name
+												 <s:message code="image.name" />
 											</th>
 											<th width="25%">
-												 Image Size
+												 <s:message code="image.size" />
 											</th>												
 											<th width="30%">
-												 Status
+												 <s:message code="image.status" />
 											</th>
 											<th width="10%">
 											</th>

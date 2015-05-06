@@ -116,8 +116,8 @@
 						<div class="col-md-4">	
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="submit" class="btn blue"><s:message code="system.search"/><i class="fa fa-search"></i></button>
+									<button type="reset" class="btn grey-cascade"><s:message code="system.reset"/> <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -165,7 +165,7 @@
 											<th><s:message code="category.name" /></th>
 											<th><s:message code="category.content" /></th>
 											<th><s:message code="category.type" /></th>
-											<th>Action</th>
+											<th><s:message code="system.action" /></th>
 										</tr>
 									</thead>
 																						
@@ -280,8 +280,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit" /></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close" /></button>
 									</div>
 								</div>
 							</div>
@@ -395,8 +395,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit" /></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close" /></button>
 									</div>
 								</div>
 							</div>
@@ -412,8 +412,8 @@
 						<p><s:message code="system.management.user.deletemessage" /></p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close" /></button>
+						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit" /></button>
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->
@@ -581,8 +581,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="addAttributeFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="addAttributeFormSubmit"><i class="fa fa-check"></i> <s:message code="system.sumbit" /></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close" /></button>
 									</div>
 								</div>
 							</div>
@@ -705,8 +705,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div style="text-align: center;">
-										<button type="submit" class="btn green" id="editAttributeFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="editAttributeFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit" /></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close" /></button>
 									</div>
 								</div>
 							</div>
@@ -724,8 +724,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deleteAttBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"><s:message code="system.close" /></button>
+						<button id="deleteAttBtn" type="button" data-dismiss="modal" class="btn blue"><s:message code="system.submit" /></button>
 					</div>					
 				</div>				
 				<!-- END DELETE ATTRIBUTE FORM-->

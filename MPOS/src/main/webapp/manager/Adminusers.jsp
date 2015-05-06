@@ -192,7 +192,7 @@
 											<th><s:message code="system.management.user.createdTime"/></th>
 											<th><s:message code="system.management.user.updatedBy"/></th>
 											<th><s:message code="system.management.user.updatedTime"/></th>
-											<th>操作</th>
+											<!-- <th>操作</th> -->
 										</tr>
 									</thead>
 																						
