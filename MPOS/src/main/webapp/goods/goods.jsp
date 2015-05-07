@@ -206,8 +206,8 @@
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#add_good" id="openAddGoodModal"><i class="fa fa-plus" ></i> <s:message code="product.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditgoodsModal"><i class="fa fa-pencil"></i> <s:message code="product.edit" /></a>
-								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#put_goods" id="openPutgoodsModal"><i class="fa fa-plus" ></i>上架</a>
-								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#out_goods" id="openOutgoodsModal"><i class="fa fa-trash-o" ></i>下架</a>
+								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#put_goods" id="openPutgoodsModal"><i class="fa fa-arrow-up" ></i>上架</a>
+								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#out_goods" id="openOutgoodsModal"><i class="fa fa-arrow-down" ></i>下架</a>
 								    <%-- <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActivegoodsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a> --%>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeletegoodsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>
 								    <%-- <div class="btn-group">

@@ -161,7 +161,7 @@
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_adminslog" id="openDeleteAdminLogModal" ><i class="fa fa-trash-o"></i> <s:message code="all.table.delete"/></a>
-								    <div class="btn-group">
+								    <%-- <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
@@ -173,7 +173,7 @@
 											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.logtable.level"/></label>
 											<label><input type="checkbox" checked data-column="5"><s:message code="system.management.user.createdTime"/></label>
 										</div>
-									</div>								    																
+									</div>	 --%>							    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
