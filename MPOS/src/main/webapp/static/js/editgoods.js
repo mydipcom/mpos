@@ -463,7 +463,11 @@ var Editgoods = function () {
             				var required=list[k].required;
             				var attributevalue=list[k].attributeValue;
             				var productattribute=list[k].productAttribute;
-            				var productattributecontents=productattribute.content;
+            				var pattrArr="";
+            				if(productattribute){
+            					var productattributecontents=productattribute.content;
+            					pattrArr=productattributecontents.split(",");
+            				}
             				
             				var row=$('<div class="form-group">'+
 	         							'<label class="control-label col-md-2"></label>'+
@@ -477,28 +481,28 @@ var Editgoods = function () {
 		            			 switch (type) {
 									case 1:
 										var radioGroup=$('<div class="radio-list"></div>');
-										var pattrArr=productattributecontents.split(",");
+										
 										for(var n=0;n<attributevalue.length;n++){
 										    var attr=attributevalue[n].value;
 										    for(var i=0;i<pattrArr.length;i++){
-										    if(pattrArr[i]==attributevalue[n].valueId){
-										    var radioObj='<label class="radio-inline"><input type="radio" checked="checked" name="attr_'+attributeId+'" value="'+attributevalue[n].valueId+'"/>'+attr+'</label>';
-										    radioGroup.append(radioObj);
-										    break;
-										    } 
+											    if(pattrArr[i]==attributevalue[n].valueId){
+												    var radioObj='<label class="radio-inline"><input type="radio" checked="checked" name="attr_'+attributeId+'" value="'+attributevalue[n].valueId+'"/>'+attr+'</label>';
+												    radioGroup.append(radioObj);
+												    break;
+											    } 
 										    }
 										    if(i==pattrArr.length&&pattrArr[pattrArr.length-1]!=attributevalue[n].valueId){
-									    	 var radioObj='<label class="radio-inline"><input type="radio" name="attr_'+attributeId+'" value="'+attributevalue[n].valueId+'"/>'+attr+'</label>';
- 											radioGroup.append(radioObj);
-									    }
+										    	var radioObj='<label class="radio-inline"><input type="radio" name="attr_'+attributeId+'" value="'+attributevalue[n].valueId+'"/>'+attr+'</label>';
+ 												radioGroup.append(radioObj);
 										    }
+										}
 										row.find('.col-md-10').append(radioGroup);
 										row.append('<input type="hidden" name="attributeId" value="'+attributeId+'"/>');
 										break;
 									case 2:
 										var checkboxGroup=$('<div class="checkbox-list"></div>');
 										var checkboxes=$();												
-										var pattrArr=productattributecontents.split(",");
+										
 										for(var n=0;n<attributevalue.length;n++){
 										    var attr=attributevalue[n].value;
 										    for(var i=0;i<pattrArr.length;i++){
@@ -519,7 +523,7 @@ var Editgoods = function () {
 										break;
 									case 3:											
 										var selectGroup=$('<select class="form-control input-xlarge" name="attr_'+attributeId+'"></select>');
-										var pattrArr=productattributecontents.split(",");
+										
 										for(var n=0;n<attributevalue.length;n++){
 										    var attr=attributevalue[n].value;
 										    for(var i=0;i<pattrArr.length;i++){
