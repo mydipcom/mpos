@@ -80,7 +80,7 @@ var CategoryTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { data: "categoryId"},
+	           //{ data: "categoryId"},
 	           { data: "name" },
 	           { data: "content" },
 	           { 'render':function(data,type,row){
@@ -431,9 +431,9 @@ var CategoryTable = function () {
 					$("#editAttrType").show();
 				}
 				
-				var data = attTable.api().row($("tr input:checked").parents('tr')).data();
-				$("tr input:checked").parents('span').removeClass("checked");
-				$("tr input:checked").removeAttr("checked");
+				var checkedObj=$("tr input:checked");
+				var data = attTable.api().row(checkedObj.parents('tr')).data();
+				
 				var attributeId = data.attributeId;
 				var required = data.required;
 				var sort = data.sort;
@@ -478,7 +478,13 @@ var CategoryTable = function () {
 	            		$(obj).select2("close");
 	            	});
 	            	
-	    		});	  
+	    		});	
+	            
+	            //移除复选框择中状态
+	            checkedObj.parents('span').removeClass("checked");
+	            checkedObj.parents('tr').removeClass("active");
+	            checkedObj.removeAttr("checked");
+	            selected=[];
 	            attSelected=[];
 			}
 		});

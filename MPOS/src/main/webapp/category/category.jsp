@@ -141,7 +141,7 @@
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_category"><i class="fa fa-plus"></i> <s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_category" id="openEditCategoryModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_category" id="openDeleteCategoryModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
-								    <div class="btn-group">
+								    <%-- <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										<s:message code="system.column" /> <i class="fa fa-angle-down"></i>
 										</a>
@@ -151,7 +151,7 @@
 											<label><input type="checkbox" checked data-column="2"><s:message code="category.name" /></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="category.content" /></label>
 										</div>
-									</div>								    																
+									</div> --%>								    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
@@ -161,7 +161,7 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#category_table .checkboxes"/>
 											</th>
-											<th><s:message code="category.id" /></th>
+											<%-- <th><s:message code="category.id" /></th> --%>
 											<th><s:message code="category.name" /></th>
 											<th><s:message code="category.content" /></th>
 											<th><s:message code="category.type" /></th>

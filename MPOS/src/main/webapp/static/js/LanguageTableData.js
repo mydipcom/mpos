@@ -47,7 +47,7 @@ var LanguagesTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           {    data: "id"  },
+	           //{    data: "id"  },
 	           {  	data: "name" },
 	           {    data: "local" },
 	           {  	data: "flagImage"},

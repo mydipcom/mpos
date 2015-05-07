@@ -65,7 +65,7 @@
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
-										<input type="radio" name="status" value="" checked/>ËùÓÐ </label>
+										<input type="radio" name="status" value="" checked/>ï¿½ï¿½ï¿½ï¿½ </label>
 										<label class="radio-inline">
 										<input type="radio" name="status" value="true"/><s:message code="all.status.enable" /> </label>
 										<label class="radio-inline">
@@ -93,10 +93,10 @@
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>½ÇÉ«ÁÐ±í
+									<i class="fa fa-edit"></i>ï¿½ï¿½É«ï¿½Ð±ï¿½
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_role"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_role" id="openEditRoleModal"><i class="fa fa-pencil"></i><s:message code="all.table.edit" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_roles" id="openDeleteRoleModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_roleRights" id="openRoleRigthsModal"><i class="fa fa-cogs"></i> <s:message code="system.management.roles.assign"/></a>								    <div class="btn-group">
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_role"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_role" id="openEditRoleModal"><i class="fa fa-pencil"></i><s:message code="all.table.edit" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_roles" id="openDeleteRoleModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_roleRights" id="openRoleRigthsModal"><i class="fa fa-cogs"></i> <s:message code="system.management.roles.assign"/></a>								    <%-- <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
@@ -108,7 +108,7 @@
 											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.searchform.status"/></label>
 											<label><input type="checkbox" checked data-column="5"><s:message code="system.management.roles.roleright" /></label>
 										</div>
-									</div>								    																
+									</div>	 --%>							    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
@@ -118,11 +118,11 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#roles_table .checkboxes"/>
 											</th>
-											<th><s:message code="system.management.user.searchform.id"/></th>											
+											<%-- <th><s:message code="system.management.user.searchform.id"/></th>	 --%>										
 											<th><s:message code="system.management.roles.search.rolename" /></th>											
 											<th><s:message code="system.management.roles.parentid" /></th>											
 											<th><s:message code="system.management.user.searchform.status"/></th>	
-											<th><s:message code="system.management.roles.roleright" /></th>										
+											<%-- <th><s:message code="system.management.roles.roleright" /></th> --%>										
 										</tr>
 									</thead>
 																						

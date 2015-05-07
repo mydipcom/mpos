@@ -64,7 +64,7 @@ var MyLogTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { /*title: "ID", */  data: "id" },
+	           //{ /*title: "ID", */  data: "id" },
 	           { /*title: "Admin Name",*/   data: "adminId" },
 	           { /*title: "Content",*/  data: "content"},
 	           { /*title: "Level",*/ data: "level"},

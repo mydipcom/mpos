@@ -122,7 +122,7 @@
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_language" id="openEditlanguageModal" ><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_language" id="openActivelanguageModal"><i class="fa fa-key"></i> <s:message code="all.table.activate"/></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_language" id="openDeletelanguageModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.deactivate" /></a>
-								    <div class="btn-group">
+								    <%-- <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
@@ -135,7 +135,7 @@
 											<label><input type="checkbox" checked data-column="5"><s:message code="language.status"/></label>
 											<label><input type="checkbox" checked data-column="6"><s:message code="language.sort"/></label>
 										</div>
-									</div>								    																
+									</div> --%>								    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
@@ -145,7 +145,7 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#languages_table .checkboxes"/>
 											</th>
-											<th><s:message code="language.id"/></th>
+											<%-- <th><s:message code="language.id"/></th> --%>
 											<th><s:message code="language.name"/></th>
 											<th><s:message code="language.local"/></th>
 											<th><s:message code="language.flagimage"/></th>

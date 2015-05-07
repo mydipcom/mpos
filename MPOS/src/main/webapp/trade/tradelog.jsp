@@ -150,7 +150,7 @@
 								<div class="caption">
 									<i class="fa fa-edit"></i>交易记录
 								</div>
-								<div class="actions">									
+								<%-- <div class="actions">									
 								   
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
@@ -166,7 +166,7 @@
 											<label><input type="checkbox" checked data-column="6"><s:message code="trade.status"/></label>
 										</div>
 									</div>								    																
-								</div>
+								</div> --%>
 							</div>							
 							<div class="portlet-body">																
 								<table class="table table-striped table-hover table-bordered" id="mylog_table">
@@ -175,7 +175,7 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="mylog_table .checkboxes"/>
 											</th>
-											<th><s:message code="trade.id"/></th>
+											<%-- <th><s:message code="trade.id"/></th> --%>
 											<th><s:message code="trade.eamil"/></th>
 											<th><s:message code="trade.time"/></th>
 											<th><s:message code="trade.service.name"/></th>

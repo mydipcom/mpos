@@ -140,7 +140,7 @@
 								<div class="caption">
 									<i class="fa fa-edit"></i><s:message code="loglist.logtablename"></s:message>
 								</div>
-								<div class="actions">									
+								<%-- <div class="actions">									
 								   
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
@@ -155,7 +155,7 @@
 											<label><input type="checkbox" checked data-column="5"><s:message code="system.management.user.createdTime"/></label>
 										</div>
 									</div>								    																
-								</div>
+								</div> --%>
 							</div>							
 							<div class="portlet-body">																
 								<table class="table table-striped table-hover table-bordered" id="mylog_table">
@@ -164,7 +164,7 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="mylog_table .checkboxes"/>
 											</th>
-											<th><s:message code="system.management.user.searchform.id"/></th>
+											<%-- <th><s:message code="system.management.user.searchform.id"/></th> --%>
 											<th><s:message code="system.management.user.logtable.adminame"/></th>
 											<th><s:message code="system.management.user.logtable.content"/></th>
 											<th><s:message code="system.management.user.logtable.level"/></th>
