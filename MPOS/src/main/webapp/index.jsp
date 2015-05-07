@@ -48,7 +48,7 @@
 	  	    		</li>
 	            	<li id="slide-1" class="flex-active-slide" style="width: 940px; float: left; display: block;">
 	  	    	    	<h2>云端菜单</h2>
-	  	    	    	<p>云端管理</p>
+	  	    	    	<p>云端管理 云端推送</p>
 	  	    	    	<h3>完美交互 极致细节</h3>
 	  	    	    	<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
 	  	    		</li>
@@ -240,13 +240,13 @@
 		    </div>
 		</div>
 		
-	<div id="setup" class="setup">
+	<div id="setup" class="about">
 		<div class="container">
 			<h3 class="titles titles-white-c">硬件安装指南</h3>
-			<div class="setup-desc">
+			<div class="service-desc">
 				<h3>亲可以参考以下方案在您的店铺里面安装iPad或者Android平板</h3>
 				<h3>桌面较大：推荐这种平板固定器，支持iPad和Android平板</h3>
-				<li class="right-side">
+				<li>
 					<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
 				</li>
 			</div>
