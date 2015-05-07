@@ -28,8 +28,8 @@
 				<ul class="slides" style="width: 800%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(-940px, 0px, 0px);">
 					<li id="slide-3" class="clone" style="width: 940px; float: left; display: block;">
 	  	    			<div class="app-content">
-	  	    	    		<h3>支付宝担保交易订购</h3>
-	  	    	    		<p>凯瑞时代云菜单支持支付宝担保交易订购，确保您的权益，并支持扫描支付。</p>
+	  	    	    		<h2>支付宝担保交易</h2>
+	  	    	    		<p>凯瑞时代云菜单支持支付宝担保交易订购，确保您的权益，并支持扫码支付。您可以根据实际需要灵活选择不同的服务。</p>
 	  	    	    		<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
 	  	    			</div>
 	  	    			<div class="image-wrapper">
@@ -47,7 +47,7 @@
 	  	    			</div>
 	  	    		</li>
 	            	<li id="slide-1" class="flex-active-slide" style="width: 940px; float: left; display: block;">
-	  	    	    	<h2>云端菜单</h2>
+	  	    	    	<h2>云端菜单 免费使用</h2>
 	  	    	    	<p>云端管理 云端推送</p>
 	  	    	    	<h3>完美交互 极致细节</h3>
 	  	    	    	<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
@@ -239,13 +239,13 @@
 				</div>
 		    </div>
 		</div>
-		
+	</div>	
 	<div id="setup" class="about">
 		<div class="container">
-			<h3 class="titles titles-white-c">硬件安装指南</h3>
-			<div class="service-desc">
-				<h3>亲可以参考以下方案在您的店铺里面安装iPad或者Android平板</h3>
-				<h3>桌面较大：推荐这种平板固定器，支持iPad和Android平板</h3>
+			<h3 class="titles titles-white-c">安装指南</h3>
+			<div class="about-desc">
+				<h4>亲可以参考以下方案，在您的店铺里面平板</h4>
+				<h4>桌面较大：推荐这种平板固定器，支持iPad和Android平板</h4>
 				<li>
 					<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
 				</li>
