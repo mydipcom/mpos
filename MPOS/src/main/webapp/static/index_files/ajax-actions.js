@@ -11,12 +11,13 @@ $(document).ready(function () {
     			if(data.status){
         			var str='';
         			for(var i=0;i<data.info.length;i++){
-        				if(data.info[i].serviceId==0){	
-        					str+="<div class='from-grounp'><input type='radio' name='serviceId' checked value='"+data.info[i].serviceId+"'/><label>"+data.info[i].content+"</label></div>";		
-        				}else{
-        				str+="<div class='from-grounp'><input type='radio' name='serviceId' value='"+data.info[i].serviceId+"'/><label>"+data.info[i].content+"</label></div>";	
+        				var checkedStr="";
+        				if(i==0){
+        					checkedStr="checked";        						
         				}
-        				}
+        				str+="<div class='from-grounp'><input type='radio' name='serviceId' "+checkedStr+" value='"+data.info[i].serviceId+"'/><label>"
+        				+data.info[i].serviceName+": "+data.info[i].servicePrice+"元   --- "+data.info[i].content+"</label></div>";	
+        			}
         			$('#getSevice').append(str);
     			}else{
     				alert(data.payUrl);

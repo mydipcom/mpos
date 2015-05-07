@@ -33,7 +33,7 @@
 	  	    	    		<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
 	  	    			</div>
 	  	    			<div class="image-wrapper">
-		  	    			<img src="static/index_files/alipay.jpg" alt="alipay">
+		  	    			<img src="static/index_files/alipay.png" alt="alipay">
 	  	    			</div>
 	  	    		</li>				
 					<li id="slide-2" class="clone" style="width: 940px; float: left; display: block;">
@@ -95,32 +95,32 @@
 					<p>无纸化展示，通过各角度展示菜品</p>
 				</li>
 				<li class="right-side">
-					<div class="service-img"><img src="static/index_files/60px-03.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/a4.png" alt="icon"></div>
 					<h3>自动下单</h3>
 					<p>自动记录订单</p>
 				</li>
 				<li>
-					<div class="service-img"><img src="static/index_files/60px-18.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/a3.png" alt="icon"></div>
 					<h3>无线打印</a></h3>
 					<p>采用蓝牙技术自动打印</p>
 				</li>
 				<li class="right-side">
-					<div class="service-img"><img src="static/index_files/60px-31.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/a1.png" alt="icon"></div>
 					<h3>口味选择</a></h3>
 					<p>点菜时提供细致体验</p>
 				</li>
 				<li>
-					<div class="service-img"><img src="static/index_files/60px-01.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/a6.png" alt="icon"></div>
 					<h3>多语言支持</a></h3>
 					<p>无纸化展示，通过各角度展示菜品</p>
 				</li>
 				<li class="right-side">
-					<div class="service-img"><img src="static/index_files/60px-03.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/a2.png" alt="icon"></div>
 					<h3>离线模式</h3>
 					<p>没有网络照样可以点菜</p>
 				</li>
 				<li>
-					<div class="service-img"><img src="static/index_files/60px-18.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/60px-03.png" alt="icon"></div>
 					<h3>自定义风格</a></h3>
 					<p>提供多种餐厅风格选择</p>
 				</li>
@@ -130,12 +130,12 @@
 					<p>针对不同种类的菜品，设置不同的布局</p>
 				</li>
 				<li>
-					<div class="service-img"><img src="static/index_files/60px-01.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/a5.png" alt="icon"></div>
 					<h3>数据安全</a></h3>
 					<p>云端数据，数据中心安全认证</p>
 				</li>
 				<li class="right-side">
-					<div class="service-img"><img src="static/index_files/60px-03.png" alt="icon"></div>
+					<div class="service-img"><img src="static/index_files/60px-18.png" alt="icon"></div>
 					<h3>随时随地管理</h3>
 					<p>只要能上网，就能管理菜单</p>
 				</li>
@@ -265,7 +265,8 @@
 	<script type="text/javascript" src="static/index_files/bootstrap.min.js"></script>
 	<script type="text/javascript" src="static/index_files/tinynav.min.js"></script>
 	<script type="text/javascript" src="static/index_files/jquery.sticky.js"></script>
-	<script type="text/javascript" src="static/index_files/jquery.flexslider-min.js"></script><script language="javascript" src="static/index_files/jquery.flexslider-min(1).js"></script>
+	<!-- <script type="text/javascript" src="static/index_files/jquery.flexslider-min.js"></script> -->
+	<script type="text/javascript" src="static/index_files/jquery.flexslider-min(1).js"></script>
 	<script type="text/javascript" src="static/index_files/jquery.animate.js"></script>
 	<script type="text/javascript" src="static/index_files/jquery.anchorScroll.js"></script>
 	<script type="text/javascript" src="static/index_files/jquery.easing.1.3.js"></script>
@@ -274,4 +275,22 @@
 	<script type="text/javascript" src="static/index_files/ajax-actions.js" charset="utf-8"></script>
 	<script type="text/javascript" src="static/index_files/custom.js"></script>
 
-<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div></body></html>
+<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div>
+<div id="fancybox-overlay"></div>
+<div id="fancybox-wrap">
+<div id="fancybox-outer">
+<div class="fancybox-bg" id="fancybox-bg-n">
+</div>
+<div class="fancybox-bg" id="fancybox-bg-ne">
+</div>
+<div class="fancybox-bg" id="fancybox-bg-e"></div>
+<div class="fancybox-bg" id="fancybox-bg-se"></div>
+<div class="fancybox-bg" id="fancybox-bg-s"></div>
+<div class="fancybox-bg" id="fancybox-bg-sw"></div>
+<div class="fancybox-bg" id="fancybox-bg-w"></div>
+<div class="fancybox-bg" id="fancybox-bg-nw"></div>
+<div id="fancybox-content"></div><a id="fancybox-close"></a>
+<div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a>
+</div></div>
+</body>
+</html>

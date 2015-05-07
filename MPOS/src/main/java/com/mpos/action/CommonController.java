@@ -121,18 +121,18 @@ public class CommonController extends BaseController {
 	public String getService(HttpServletRequest request){
 		Map<String, Object> res = getHashMap();
 		try {
-			List<Tservice> info = new ArrayList<Tservice>();
+//			List<Tservice> info = new ArrayList<Tservice>();
 			List<Tservice> services = serviceService.load();
-			for (Tservice tservice : services) {
-				tservice.setContent(tservice.getServiceName()+""+tservice.getServicePrice()+"元"+tservice.getValidDays()+"天"+tservice.getContent());
-				tservice.setRoleId(null);
-				tservice.setServiceName(null);
-				tservice.setServicePrice(null);
-				tservice.setValidDays(null);
-				info.add(tservice);
-			}
+//			for (Tservice tservice : services) {
+//				tservice.setContent(tservice.getServiceName()+": "+tservice.getServicePrice()+"元-"+tservice.getValidDays()+"天-"+tservice.getContent());
+//				tservice.setRoleId(null);
+//				tservice.setServiceName(tservice.getServiceName());
+//				tservice.setServicePrice(tservice.getServicePrice());
+//				tservice.setValidDays(tservice.getValidDays());
+//				info.add(tservice);
+//			}
 			res.put("status", true);
-			res.put("info", info);
+			res.put("info", services);
 		} catch (Exception e) {
 			// TODO: handle exception
 			res.put("status", false);
