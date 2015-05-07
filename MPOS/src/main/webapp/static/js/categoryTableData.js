@@ -101,26 +101,32 @@ var CategoryTable = function () {
 		});
 		
 		$("#CloneSelectedCategory").on("click",function(){
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "GET", 
-             "url": rootURI+"category/clone/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){
-            		 var infoType = "danger";
-					 if(data.status){
-						 selected=[];
-		            	 oTable.api().draw();
-		            	 oTable.$('th span').removeClass();
-		            	 infoType = "success";
-					 }
-					handleAlerts(data.info,infoType,"");
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
+			if(selected.length!=1){
+				handleAlerts(loadProperties("error.clone.select",locale),"warning","");			
+				return false;				
+			}
+			else{
+				$.ajax( {
+	             "dataType": 'json', 
+	             "type": "GET", 
+	             "url": rootURI+"category/clone/"+selected.join(), 
+	             "success": function(data,status){
+	            	 if(status == "success"){
+	            		 var infoType = "danger";
+						 if(data.status){
+							 selected=[];
+			            	 oTable.api().draw();
+			            	 oTable.$('th span').removeClass();
+			            	 infoType = "success";
+						 }
+						handleAlerts(data.info,infoType,"");
+					}             	 
+	             },
+	             "error":function(XMLHttpRequest, textStatus, errorThrown){
+	            	 alert(errorThrown);
+	             }
+	           });
+			}
 		});
 
 		//打开删除对话框前判断是否已选择要删除的行
