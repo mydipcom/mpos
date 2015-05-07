@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="static/index_files/flexslider.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="static/index_files/style.css" type="text/css">
 	<!--Fav and touch icons-->
-	<link rel="apple-touch-icon" href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/img/favicons/apple-touch-icon.png">
+	<!--<link rel="apple-touch-icon" href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/img/favicons/apple-touch-icon.png">-->
 </head>
 <body id="home"><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"></div>
 
@@ -26,6 +26,16 @@
 				<div class="flexslider">       
 		    <div class="flex-viewport" style="overflow: hidden; position: relative;">
 				<ul class="slides" style="width: 800%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(-940px, 0px, 0px);">
+					<li id="slide-3" class="clone" style="width: 940px; float: left; display: block;">
+	  	    			<div class="app-content">
+	  	    	    		<h3>支付宝担保交易订购</h3>
+	  	    	    		<p>凯瑞时代云菜单支持支付宝担保交易订购，确保您的权益，并支持扫描支付。</p>
+	  	    	    		<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
+	  	    			</div>
+	  	    			<div class="image-wrapper">
+		  	    			<img src="static/index_files/alipay.jpg" alt="alipay">
+	  	    			</div>
+	  	    		</li>				
 					<li id="slide-2" class="clone" style="width: 940px; float: left; display: block;">
 	  	    			<div class="app-content">
 	  	    	    		<h3>云菜单正式入驻苹果商店</h3>
@@ -44,7 +54,7 @@
 	  	    		</li>
 				</ul>
 			</div>
-			<ul class="flex-direction-nav"><li><a class="flex-prev" href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">Previous</a></li><li><a class="flex-next" href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">Next</a></li></ul></div>
+			<ul class="flex-direction-nav"><li>Previous</li><li>Next</li></ul></div>
 		  </div>
 		</div>
 	</div>
@@ -59,7 +69,8 @@
 					<li><a id="works-link" href="#works">服务订购</a></li>
 					<li><a id="news-link" href="#news">新闻</a></li>
 					<li class="right-side"><a id="contact-link" href="#contact">联系我们</a></li>
-					<li><a href="${pageContext.request.contextPath}/login">登陆</a></li>
+					<li class="right-side"><a id="setup-link" href="#setup">硬件安装指南</a></li>
+					<li><a href="${pageContext.request.contextPath}/login">登陆后台</a></li>
 				</ul>
 					<ul id="tinynav" class="l_tinynav1">
 						<li><a href="#home">主页</a></li>
@@ -67,7 +78,8 @@
 						<li><a href="#works">服务订购</a></li>
 						<li><a href="#news">新闻</a></li>
 						<li><a href="#contact">联系我们</a></li>
-						<li><a href="${pageContext.request.contextPath}/login">登陆</a></li>
+						<li><a href="#setup">硬件安装指南</a></li>
+						<li><a href="${pageContext.request.contextPath}/login">登陆后台</a></li>
 					</ul>
 			</div>
 			<div class="clearfix"></div>
@@ -78,52 +90,52 @@
 			<ul class="services">
 				<li>
 					<div class="service-img"><img src="static/index_files/60px-01.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">电子化菜单</a></h3>
+					<h3>电子化菜单</a></h3>
 					<p>无纸化展示，通过各角度展示菜品</p>
 				</li>
 				<li class="right-side">
 					<div class="service-img"><img src="static/index_files/60px-03.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">自动下单</h3>
+					<h3>自动下单</h3>
 					<p>自动记录订单</p>
 				</li>
 				<li>
 					<div class="service-img"><img src="static/index_files/60px-18.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">无线打印</a></h3>
+					<h3>无线打印</a></h3>
 					<p>采用蓝牙技术自动打印</p>
 				</li>
 				<li class="right-side">
 					<div class="service-img"><img src="static/index_files/60px-31.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">口味选择</a></h3>
+					<h3>口味选择</a></h3>
 					<p>点菜时提供细致体验</p>
 				</li>
 				<li>
 					<div class="service-img"><img src="static/index_files/60px-01.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">多语言支持</a></h3>
+					<h3>多语言支持</a></h3>
 					<p>无纸化展示，通过各角度展示菜品</p>
 				</li>
 				<li class="right-side">
 					<div class="service-img"><img src="static/index_files/60px-03.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">离线模式</h3>
+					<h3>离线模式</h3>
 					<p>没有网络照样可以点菜</p>
 				</li>
 				<li>
 					<div class="service-img"><img src="static/index_files/60px-18.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">自定义风格</a></h3>
+					<h3>自定义风格</a></h3>
 					<p>提供多种餐厅风格选择</p>
 				</li>
 				<li class="right-side">
 					<div class="service-img"><img src="static/index_files/60px-31.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">多种菜单布局</a></h3>
+					<h3>多种菜单布局</a></h3>
 					<p>针对不同种类的菜品，设置不同的布局</p>
 				</li>
 				<li>
 					<div class="service-img"><img src="static/index_files/60px-01.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">数据安全</a></h3>
+					<h3>数据安全</a></h3>
 					<p>云端数据，数据中心安全认证</p>
 				</li>
 				<li class="right-side">
 					<div class="service-img"><img src="static/index_files/60px-03.png" alt="icon"></div>
-					<h3><a href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/index.html#">随时随地管理</h3>
+					<h3>随时随地管理</h3>
 					<p>只要能上网，就能管理菜单</p>
 				</li>
 				<div class='clear'></div>
@@ -132,7 +144,7 @@
 		</div>
 	</div>
 	<!-- /Services-section -->
-    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" title="网站模板">网站模板</a></div>
+    <!--<div class="copyrights">Collect from <a href="http://www.cssmoban.com/" title="网站模板">网站模板</a></div>  -->
 	<!-- News-section -->
 	<div id="news" class="news">
 		<div class="container">
@@ -198,10 +210,12 @@
 					<p>2、分布式应用</p>
 					<p>3、移动应用开发</p>
 					<p>4、互联网电子商务</p>
+				<h5>深圳总部地址：</h5>
+				<p>中国深圳南山区科苑路科兴科学园B4栋14楼B21-B25</p>					
 				<h5>成都研发中心地址：</h5>
 				<p>中国成都高新区天府大道中段天府三街福年广场1-1104</p>
-				<p><a href="mailto:support@website.com">客服电话：028-83361785</a></p>
-				<p><a href="mailto:support@website.com">邮箱：support@campray.com</a></p>
+				<p>客服电话：028-83361785</a></p>
+				<p>邮箱：support@campray.com</a></p>
 			</div>
 			<div class="contact-form-holder">
 				<form id="contact-form" name="contact-form">
@@ -220,16 +234,29 @@
 						  <input type="button" id="send-btn" name="send-btn" value="提交">
 				</form>
 				<div class="success">
-					 We'll answer you as soon as possible.
+					 谢谢留言，我们会尽快处理您的意见。
 				</div>
 		    </div>
 		</div>
+		
+	<div id="setup" class="setup">
+		<div class="container">
+			<h3 class="titles titles-white-c">硬件安装指南</h3>
+			<div class="setup-desc">
+				<h4>亲可以参考以下方案在您的店铺里面安装iPad或者Android平板</h4>
+				<h4>桌面较大：推荐这种</h4>
+				<li class="right-side">
+					<div class="service-img"><img src="static/index_files/ipad_frame" alt="icon"></div>
+					<p>平板固定器，支持iPad和Android平板</p>
+				</li>
+			</div>
+		</div>		
 	</div>
 	<!-- /Contact-section -->
 	<!-- Footer-section -->
 	<div class="footer">
 		<div class="container">
-			<p id="cp-text">Copyright 2015. <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">MPOS</a></p>
+			<p id="cp-text">Copyright 2015. 凯瑞时代信息技术</a></p>
 		</div>
 	</div>
 	<!-- /Footer-section -->

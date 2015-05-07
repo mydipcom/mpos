@@ -162,9 +162,9 @@ var CategoryTable = function () {
 				return false;				
 			}
 			else{
-				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-				$("tr input:checked").parents('span').removeClass("checked");
-				$("tr input:checked").removeAttr("checked");
+				var checkedObj=$("tr input:checked");
+				var data = oTable.api().row(checkedObj.parents('tr')).data();
+								
 				var categoryId = data.categoryId;
 	            var name  = data.name;
 	            var content  = data.content;
@@ -203,6 +203,11 @@ var CategoryTable = function () {
 	            $("#editCategoryForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
 	            $("#editCategoryForm :radio[name='type']").filter("[value='"+type+"']").attr("checked","true");
 	            $("#editCategoryForm :radio[name='type']").filter("[value='"+type+"']").parents('span').addClass("checked");
+	            
+	            //移除复选框择中状态
+	            checkedObj.parents('span').removeClass("checked");
+	            checkedObj.parents('tr').removeClass("active");
+	            checkedObj.removeAttr("checked");
 	            selected=[];
 			}
 		});

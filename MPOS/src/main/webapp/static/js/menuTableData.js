@@ -151,9 +151,9 @@ var MenuTable = function () {
 				return false;				
 			}
 			else{
-				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-				$("tr input:checked").parents('span').removeClass("checked");
-				$("tr input:checked").removeAttr("checked");
+				var checkedObj=$("tr input:checked");
+				var data = oTable.api().row(checkedObj.parents('tr')).data();
+				
 				var menuId = data.id;
 	            var sort  = data.sort;
 	            var pid  = data.pid;
@@ -176,6 +176,11 @@ var MenuTable = function () {
 	            $("#editMenuForm input[name='menu.title']").val(title);
 	            $("#editMenuForm input[name='menu.sort']").val(sort);
 	            
+	            //移除复选框择中状态
+	            checkedObj.parents('span').removeClass("checked");
+	            checkedObj.parents('tr').removeClass("active");
+	            checkedObj.removeAttr("checked");
+	            selected=[];
 	            selected = [];
 	            loadLocal(menuId);
 			}
