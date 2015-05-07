@@ -279,9 +279,8 @@ ul{
 	margin-bottom: 40px;
 }
 /**** About Section ****/
-.about{
-	background:rgba(60,62,71,0.5);
-	padding-bottom: 60px;
+.about {
+	padding-bottom: 60px; background-color: rgb(70, 40, 68);
 }
 #about-desc{
 	color: #f4f4f4;
