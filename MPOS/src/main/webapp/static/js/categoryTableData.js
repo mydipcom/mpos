@@ -80,7 +80,7 @@ var CategoryTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_attribute" id="openrluesviewmodal">Attribute List</a></div>';
+                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_attribute" id="openrluesviewmodal">'+loadProperties("cate.page.attr",locale)+'</a></div>';
                     },
                     'class':'center'
                 }
