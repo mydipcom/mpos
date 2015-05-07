@@ -193,7 +193,7 @@
 
 										</div>
 									</div>
-									<div class="col-md-1">µ½</div>
+									<div class="col-md-1">ï¿½ï¿½</div>
 									<div class="col-md-4">
 										<div class="input-group date form_datetime">
 											<input type="text" size="16" readonly class="form-control"
@@ -250,7 +250,7 @@
 										data-toggle="modal"><s:message code="cancel.order" /></a> <a
 										class="btn btn-default btn-sm" id="order_detail_btn"><s:message
 											code="order.details" /> </a>
-									<div class="btn-group">
+									<%-- <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 											<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
@@ -273,7 +273,7 @@
 											<s:message code="order.people.num" /></label>
 
 										</div>
-									</div>
+									</div> --%>
 								</div>
 							</div>
 							<div class="portlet-body">

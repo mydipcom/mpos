@@ -210,7 +210,7 @@
 								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#out_goods" id="openOutgoodsModal"><i class="fa fa-trash-o" ></i>下架</a>
 								    <%-- <a class="btn btn-default btn-sm" data-toggle="modal" href="#active_goods" id="openActivegoodsModal"><i class="fa fa-key"></i> <s:message code="product.activate" /></a> --%>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_goods" id="openDeletegoodsModal"><i class="fa fa-trash-o"></i> <s:message code="product.delete" /></a>
-								    <div class="btn-group">
+								    <%-- <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
 										</a>
@@ -225,7 +225,7 @@
 											<label><input type="checkbox" checked data-column="7"><s:message code="product.sort"/></label>
 											
 										</div>
-									</div>								    																
+									</div>	 --%>							    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
