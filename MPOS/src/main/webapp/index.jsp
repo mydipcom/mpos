@@ -244,11 +244,10 @@
 		<div class="container">
 			<h3 class="titles titles-white-c">硬件安装指南</h3>
 			<div class="setup-desc">
-				<h4>亲可以参考以下方案在您的店铺里面安装iPad或者Android平板</h4>
-				<h4>桌面较大：推荐这种</h4>
+				<h3>亲可以参考以下方案在您的店铺里面安装iPad或者Android平板</h3>
+				<h3>桌面较大：推荐这种平板固定器，支持iPad和Android平板</h3>
 				<li class="right-side">
-					<div class="service-img"><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
-					<p>平板固定器，支持iPad和Android平板</p>
+					<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
 				</li>
 			</div>
 		</div>		
