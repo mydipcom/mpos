@@ -48,13 +48,14 @@
 	  	    		</li>
 	            	<li id="slide-1" class="flex-active-slide" style="width: 940px; float: left; display: block;">
 	  	    	    	<h2>云端菜单</h2>
-	  	    	    	<p>云端管理</p>
+	  	    	    	<p>云端管理 云端推送</p>
 	  	    	    	<h3>完美交互 极致细节</h3>
 	  	    	    	<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
 	  	    		</li>
 				</ul>
 			</div>
-			<ul class="flex-direction-nav"><li>Previous</li><li>Next</li></ul></div>
+			<!-- <ul class="flex-direction-nav"><li>Previous</li><li>Next</li></ul>-->
+			</div> 
 		  </div>
 		</div>
 	</div>
@@ -69,7 +70,7 @@
 					<li><a id="works-link" href="#works">服务订购</a></li>
 					<li><a id="news-link" href="#news">新闻</a></li>
 					<li class="right-side"><a id="contact-link" href="#contact">联系我们</a></li>
-					<li class="right-side"><a id="setup-link" href="#setup">硬件安装指南</a></li>
+					<li class="right-side"><a id="setup-link" href="#setup">安装指南</a></li>
 					<li><a href="${pageContext.request.contextPath}/login">登陆后台</a></li>
 				</ul>
 					<ul id="tinynav" class="l_tinynav1">
@@ -78,7 +79,7 @@
 						<li><a href="#works">服务订购</a></li>
 						<li><a href="#news">新闻</a></li>
 						<li><a href="#contact">联系我们</a></li>
-						<li><a href="#setup">硬件安装指南</a></li>
+						<li><a href="#setup">安装指南</a></li>
 						<li><a href="${pageContext.request.contextPath}/login">登陆后台</a></li>
 					</ul>
 			</div>
@@ -239,15 +240,14 @@
 		    </div>
 		</div>
 		
-	<div id="setup" class="setup">
+	<div id="setup" class="about">
 		<div class="container">
 			<h3 class="titles titles-white-c">硬件安装指南</h3>
-			<div class="setup-desc">
-				<h4>亲可以参考以下方案在您的店铺里面安装iPad或者Android平板</h4>
-				<h4>桌面较大：推荐这种</h4>
-				<li class="right-side">
-					<div class="service-img"><img src="static/index_files/ipad_frame" alt="icon"></div>
-					<p>平板固定器，支持iPad和Android平板</p>
+			<div class="service-desc">
+				<h3>亲可以参考以下方案在您的店铺里面安装iPad或者Android平板</h3>
+				<h3>桌面较大：推荐这种平板固定器，支持iPad和Android平板</h3>
+				<li>
+					<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
 				</li>
 			</div>
 		</div>		
@@ -256,7 +256,7 @@
 	<!-- Footer-section -->
 	<div class="footer">
 		<div class="container">
-			<p id="cp-text">Copyright 2015. 凯瑞时代信息技术</a></p>
+			<p id="cp-text">Copyright 2015. 凯瑞时代信息技术有限公司版权所有</a></p>
 		</div>
 	</div>
 	<!-- /Footer-section -->
