@@ -25,7 +25,7 @@ public class Tstore implements Serializable {
 	/**
 	 * 店铺名称
 	 */
-	private String storeName="CampRay";
+	private String storeName;
 	/**
 	 * 店铺logo
 	 */
@@ -37,7 +37,7 @@ public class Tstore implements Serializable {
 	/**
 	 * 客户端密码
 	 */
-	private String clientPwd="CampRay";
+	private String clientPwd="888888";
 	/**
 	 * 货币符号
 	 */
@@ -107,6 +107,16 @@ public class Tstore implements Serializable {
 	public Tstore(Integer serviceId, Long serviceDate) {
 		this.serviceId = serviceId;
 		this.serviceDate = serviceDate;
+	}
+	public Tstore(Integer storeId, Long serviceDate,Boolean status) {
+		this.serviceId = storeId;
+		this.serviceDate = serviceDate;
+		this.status= status;
+	}
+	public Tstore(Integer storeId, String storeName,Integer serviceId) {
+		this.storeId = storeId;
+		this.storeName = storeName;
+		this.serviceId=serviceId;
 	}
 	public Tstore(Integer storeId, String storeName) {
 		this.storeId = storeId;

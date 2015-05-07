@@ -17,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mpos.commons.BaiduPushTool;
+import com.mpos.commons.BaiduPushTool.Notification;
+import com.mpos.commons.ConvertTools;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dao.AdminUserDao;
 import com.mpos.dao.StoreDao;
 import com.mpos.dto.ImageModel;
-import com.mpos.dto.TadminUser;
 import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -97,12 +99,12 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	public PagingData load(DataTableParamter rdtp){
+		List<Criterion> criterionList = new ArrayList<Criterion>();
 		Criteria criteria = storeDao.createCriteria();
-		//confine(criteria);
 		String searchJsonStr = rdtp.getsSearch();
+		criteria.add(Restrictions.ne("storeId", 0));
 		criteria.addOrder(Order.desc("storeId"));
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
-			List<Criterion> criterionList = new ArrayList<Criterion>();
 			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);
 			Set<String> keys = json.keySet();
 			for(String key:keys){
@@ -142,7 +144,19 @@ public class StoreServiceImpl implements StoreService {
 
 	public void cacheStoreTaken() {
 		Map<String, Object> params = new HashMap<String, Object>();
-		String userHql = "select new TadminUser(email,storeId) from TadminUser where status =:status";
+		params.put("status", true);
+		String storeHql = "select new Tstore(storeId,publicKey,serviceId) from Tstore where status=:status";
+		List<Tstore> stores = storeDao.select(storeHql, params);
+		if(stores!=null&&stores.size()>0){
+			for (Tstore store : stores) {
+				String key = store.getPublicKey();
+				if(key!=null&&!key.isEmpty()){
+					String store_code= ConvertTools.bw(store.getStoreId(), 8, "S");
+					SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(store_code+key), store.getStoreId());
+				}
+			}
+		}
+		/*String userHql = "select new TadminUser(email,storeId) from TadminUser where status =:status";
 		params.put("status", true);
 		List<TadminUser> users = adminUserDao.select(userHql, params);
 		if(users!=null&&users.size()>0){
@@ -160,7 +174,7 @@ public class StoreServiceImpl implements StoreService {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	public void delete(Integer storeId) {
@@ -214,5 +228,30 @@ public class StoreServiceImpl implements StoreService {
 		storeDao.delete(tableHql, params);
 		storeDao.delete(adminHql, params);
 	}
+
+	public List<Tstore> loadStoreNameAndId() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("status", true);
+		params.put("storeId", 0);
+		String hql = "select new Tstore(storeId,storeName) from Tstore where status=:status and storeId !=:storeId";
+		return storeDao.select(hql, params);
+	}
+	
+	public void validStoreDate(){
+		long now = System.currentTimeMillis();
+		List<Tstore> stores = storeDao.select("select new Tstore(storeId,serviceDate,status) from Tstore where status=true", null);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if(stores!=null&&stores.size()>0){
+			for (Tstore store : stores) {
+				if(store.getServiceDate()>now){
+					params.clear();
+					params.put("status", false);
+					params.put("storeId", store.getStoreId());
+					storeDao.update("update Tstore set status=:status where storeId=:storeId", params);
+					BaiduPushTool.pushMsgToTag(new Notification(10002), store.getStoreId()+"", BaiduPushTool.IOS_TYPE);
+				}
+				}
+			}
+		}
 
 }

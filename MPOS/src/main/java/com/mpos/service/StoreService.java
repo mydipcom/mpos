@@ -17,6 +17,7 @@ public interface StoreService {
 		public PagingData loadList(DataTableParamter rdtp);
 		public PagingData load(DataTableParamter rdtp);
 		public List<Tstore> loadAll();
+		public List<Tstore> loadStoreNameAndId();
 		
 		public void deleteByStoreId(Integer storeId,String adminId);
 		

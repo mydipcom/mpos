@@ -162,7 +162,9 @@ $(document).ready(function () {
 					success:function(data,status){
 						if(data.status){
 							alert(data.info);
-							location.href="http://www.baidu.com";
+							if(data.isPay){
+								location.href=payUrl;
+							}
 						}else{
 							alert(data.info);
 						};

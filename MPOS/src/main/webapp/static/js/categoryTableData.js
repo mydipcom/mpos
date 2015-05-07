@@ -62,7 +62,14 @@ var CategoryTable = function () {
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process",locale),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+                "sInfo": loadProperties("dataTable.page.info",locale),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
@@ -85,10 +92,10 @@ var CategoryTable = function () {
 	           { data: "content" },
 	           { 'render':function(data,type,row){
 	               	if(row.type==0){
-	            		return "规格属性组";
+	            		return loadProperties("cate.page.spec.group",locale);
 	            	}
 	            	else{
-	            		return "订单属性组";
+	            		return  loadProperties("cate.page.order.group",locale);
 	            	}	                	
 	               } 
 	           },
@@ -318,7 +325,14 @@ var CategoryTable = function () {
 	           	"scrollXInner":"100%",
 		        // set the initial value
 		        "displayLength": 5,
-		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+		        "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+	            "oLanguage": {
+	                "sProcessing": loadProperties("dataTable.page.process",locale),                
+	                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+	                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+	                "sInfo": loadProperties("dataTable.page.info",locale),
+	                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+	            },
 		        "columnDefs": [
 		          {                    
                     'targets': 0,   

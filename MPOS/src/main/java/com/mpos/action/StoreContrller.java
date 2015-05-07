@@ -28,12 +28,12 @@ import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.ImageModel;
-import com.mpos.dto.TadminUser;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.TserviceOrder;
 import com.mpos.dto.Tstore;
 import com.mpos.service.AdminUserService;
+import com.mpos.service.GoodsService;
 import com.mpos.service.LanguageService;
 import com.mpos.service.ServiceOrderService;
 import com.mpos.service.ServiceService;
@@ -57,6 +57,8 @@ public class StoreContrller extends BaseController {
 	private LanguageService languageService;
 	@Autowired
 	private AdminUserService adminUserService;
+	@Autowired
+	private GoodsService goodsService;
 	/**
 	 * 返回页面状态
 	 */
@@ -97,6 +99,7 @@ public class StoreContrller extends BaseController {
 		mav.addObject("langs", languages);
 		mav.addObject("role", getSessionUser(request).getAdminRole().getRoleId());
 		mav.addObject("stores",stores);
+		mav.addObject("store_code",ConvertTools.bw(storeId, 8, "S"));
 		mav.addObject("langIds", store.getStoreLangId());
 	}
 	
@@ -204,6 +207,34 @@ public class StoreContrller extends BaseController {
 		res.put("info", info);
 		return JSON.toJSONString(res);
 	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @param file
+	 * @return
+	 */
+	@RequestMapping(value="/test",method=RequestMethod.POST)
+	@ResponseBody
+	public String test(HttpServletRequest request,@RequestParam(value="images",required=true)MultipartFile file){
+		Map<String, Object> res = getHashMap();
+		Integer storeId = getSessionStoreId(request);//2.6.8.9.10.11
+		try {
+			goodsService.saveTest(storeId, 2, file,"特色菜");
+			goodsService.saveTest(storeId, 6, file,"凉菜");
+			goodsService.saveTest(storeId, 8, file,"川菜");
+			goodsService.saveTest(storeId, 9, file,"粤菜");
+			goodsService.saveTest(storeId, 10, file,"东北菜");
+			goodsService.saveTest(storeId, 11, file,"湘菜");
+			goodsService.saveTest(storeId, 12, file,"台湾菜");
+		} catch (Exception e) {
+			status = false;
+			info= e.getMessage();
+		}
+		res.put("status", status);
+		res.put("info", info);
+		return JSON.toJSONString(res);
+	}
 	/**
 	 * 
 	 * @param image
@@ -301,16 +332,13 @@ public class StoreContrller extends BaseController {
 		Map<String, Object> params = getHashMap();
 		//返回结果
 		Map<String, Object> res = getHashMap();
-		TadminUser user = null;
 		if(storeId==null||storeId==-1){
-			user = getSessionUser(request);
-		}else{
-			user = adminUserService.getUserByStoreId(storeId);
+			storeId = getSessionUser(request).getStoreId();
 		}
 		//修改HQL
 		String updatePublicKeyHql = "update Tstore set publicKey=:publicKey where storeId=:storeId";
 		try {
-			 params.put("storeId", user.getStoreId());
+			 params.put("storeId", storeId);
 			params.put("publicKey", value);
 			storeService.update(updatePublicKeyHql, params);
 			String k = "";
@@ -324,7 +352,7 @@ public class StoreContrller extends BaseController {
 			if(!k.isEmpty()){
 				SystemConfig.STORE_TAKEN_MAP.remove(k);
 			}
-			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(user.getEmail()+value), user.getStoreId());
+			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(ConvertTools.bw(storeId, 8, "S")+value), storeId);
 			handleContent = "修改公钥成功;";
 			info = getMessage(request,"operate.success");
 			res.put("msg", value);

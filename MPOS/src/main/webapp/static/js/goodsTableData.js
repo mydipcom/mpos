@@ -37,24 +37,23 @@ var GoodsTable = function () {
         	"scrollX":"100%",
            	"scrollXInner":"100%",
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process",locale),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+                "sInfo": loadProperties("dataTable.page.info",locale),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
                     	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
                     },
-                    //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
                 }
             ],
             "columns": [
                {"orderable": false },
-	           /*{ title: "ID",   data: "id"  },
-	           { title: "Category Name",   data: "menuname" },
-	           { title: "Product Name",  data: "productName"},
-	           { title: "Price", data: "price"},
-	           { title: "Old Price", data: "oldPrice" },
-	           { title: "Recommend",  data: "recommend" },
-	           { title: "Sort",    data: "sort"},  */
                {   data: "id"  },
 	           {   data: "menuname" },
 	           {   data: "productName"},
@@ -62,15 +61,14 @@ var GoodsTable = function () {
 	           {   data: "oldPrice" },
 	           {   data: "isPut",
 	        	   'render':function(data,type,row){
-	        		   var temp ="否";
+	        		   var temp =loadProperties("goods.page.info.not",locale);
 	        		   if(data=="1"){
-	        			   temp ="是";
+	        			   temp =loadProperties("goods.page.info.is",locale);
 	        		   }
                	return temp;
                }
 	           },
 	           {   data: "sort"},  
-	           //  { title: "Status",    data: "status"},  
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
@@ -107,12 +105,6 @@ var GoodsTable = function () {
 	             }
 	           });
 	        }); 
-			/*$("#openActivegoodsModal").on("click",function(event){
-				if(selected.length==0){
-					handleAlerts("Please select the rows which you want to Active.","warning","");				
-					return false;
-				}
-			});*/
 			$("#openPutgoodsModal").on("click",function(event){
 				if(selected.length==0){
 					handleAlerts(loadProperties("error.put.select",locale),"warning","");				

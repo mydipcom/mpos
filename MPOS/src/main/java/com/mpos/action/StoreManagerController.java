@@ -1,10 +1,8 @@
 package com.mpos.action;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,12 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.mpos.commons.ConvertTools;
-import com.mpos.commons.EMailTool;
 import com.mpos.commons.MposException;
-import com.mpos.commons.SecurityTools;
-import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
-import com.mpos.dto.TemaiMessage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
@@ -72,39 +66,13 @@ public class StoreManagerController extends BaseController {
 	
 	@RequestMapping(value="addStore",method = RequestMethod.POST)
 	@ResponseBody
-	public String addStore(HttpServletRequest request,Tstore store,TadminUser user){
+	public String addStore(HttpServletRequest request,Tstore store){
 		Map<String, Object> res = getHashMap();
 		try {
-			if(store.getStoreId()==null){
+			if(store.getServiceId()==null){
 				store.setServiceId(0);
 			}
-			Tservice service=serviceService.get(store.getServiceId());
-			store.setStoreLangId("1");
-			store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
 			storeService.save(store);
-			tables.add(new Ttable("A01", 4, store.getStoreId()));
-			tables.add(new Ttable("A02", 2, store.getStoreId()));
-			tables.add(new Ttable("A03", 6, store.getStoreId()));
-			for (Ttable table : tables) {
-				tableService.create(table);
-			}
-			user.setStoreId(store.getStoreId());
-			user.setCreatedTime(System.currentTimeMillis());
-			user.setAdminId(user.getEmail());
-			user.setCreatedBy("admin");
-			user.setStatus(true);
-			user.setAdminRole(new TadminRole(service.getRoleId()));
-			if(user.getPassword()==null||user.getPassword().isEmpty()){
-				String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
-				TemaiMessage message = new TemaiMessage();
-				message.setTo(user.getEmail());
-			   message.setText("your account:  "+user.getAdminId()+"|register time:  "+Calendar.getInstance().getTime()+" |password:  "+random);
-			   message.setSubject("MPOS Password");
-			   EMailTool.send(message);
-				user.setPassword(random);
-			}
-			user.setPassword(SecurityTools.MD5(user.getPassword()));
-			adminUserService.createAdminUser(user);
 			info = getMessage(request,"operate.success");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,7 +98,7 @@ public class StoreManagerController extends BaseController {
 			for (Object object : objects) {
 				Tstore store = (Tstore)object;
 				Tservice service = serviceService.get(store.getServiceId());
-				TadminUser user = adminUserService.getUserByStoreId(store.getStoreId());
+				List<TadminUser> users = adminUserService.getUserByStoreId(store.getStoreId());
 				Map<String, Object> o = getHashMap();
 				o.put("storeId", store.getStoreId());
 				o.put("storeName", store.getStoreName());
@@ -138,7 +106,15 @@ public class StoreManagerController extends BaseController {
 				o.put("date",ConvertTools.longToDateString(store.getServiceDate()));
 				o.put("status", store.getCreateTimeStr());
 				o.put("serviceName", service.getServiceName());
-				o.put("email", user.getEmail());
+				String storeAdmin = "";
+				if(users!=null&&users.size()>0){
+					for (TadminUser user : users) {
+						if(user!=null&&user.getEmail()!=null&&!user.getEmail().isEmpty()){
+							storeAdmin +=user.getEmail()+",";
+						}
+					}
+				}
+				o.put("email", storeAdmin);
 				o.put("status", store.getStatus());
 				maps.add(o);
 			}

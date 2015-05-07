@@ -65,7 +65,7 @@
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
-										<input type="radio" name="status" value="" checked/>���� </label>
+										<input type="radio" name="status" value="" checked/><s:message code="all.status.all" /> </label>
 										<label class="radio-inline">
 										<input type="radio" name="status" value="true"/><s:message code="all.status.enable" /> </label>
 										<label class="radio-inline">
@@ -93,7 +93,7 @@
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>��ɫ�б�
+									<i class="fa fa-edit"></i><s:message code="system.management.addrole.title"/>
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_role"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_role" id="openEditRoleModal"><i class="fa fa-pencil"></i><s:message code="all.table.edit" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_roles" id="openDeleteRoleModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_roleRights" id="openRoleRigthsModal"><i class="fa fa-cogs"></i> <s:message code="system.management.roles.assign"/></a>								    <%-- <div class="btn-group">

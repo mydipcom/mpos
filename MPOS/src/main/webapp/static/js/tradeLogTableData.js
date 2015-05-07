@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale = "zh_CN";
 var MyLogTable = function () {
 	var oTable;
 	var selected = [];
@@ -36,7 +37,14 @@ var MyLogTable = function () {
            	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process","zh_CN"),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero","zh_CN"),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty","zh_CN"),
+                "sInfo": loadProperties("dataTable.page.info","zh_CN"),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty","zh_CN"),
+            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
@@ -53,9 +61,9 @@ var MyLogTable = function () {
                       	{data: "price" },
                       	{data: "status",
                       		 'render':function(data,type,row){
-                      			 var temp = "支付成功";
+                      			 var temp = loadProperties("service.page.pay.true","zh_CN");
                       			 if(data=="0"){
-                      				temp = "支付失败";
+                      				temp = loadProperties("service.page.pay.false","zh_CN");
                       			 }
                              	return temp;
                              }

@@ -81,14 +81,7 @@
 				<div class="portlet-body">
 					<form id="searchForm" name="searchForm" action="adminuserlist1" class="form-horizontal" method="post">
 					<div class="row">
-						<div class="col-md-6">					
-							<div class="form-group">
-								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.id"/></label>
-								<div class="col-md-9">
-									<input name="adminId" type="text" class="form-control" maxLength="20">							
-								</div>
-							</div>
-						</div>
+						
 						<div class="col-md-6">	
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.email"/></label>
@@ -97,21 +90,23 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">
+						
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.rolename"/></label>
+								<label class="col-md-3 control-label"><s:message code="store.name"/></label>
 								<div class="col-md-9">
-									<select name="adminRole.roleId" class="form-control">
+									<select name="storeId" class="form-control">
 										<option value=""><s:message code="all.status.all"/></option>
-										<c:forEach var="role" items="${rolesList}">
-										<option value="${role.roleId}">${role.roleName}</option>			
+										<c:forEach var="store" items="${storeList}">
+										<option value="${store.storeId}">${store.storeName}</option>			
 										</c:forEach>		
 									</select>
 								</div>
 							</div>
-						</div>					
+						</div>	
+					</div>
+					<div class="row">
+										
 						<div class="col-md-6">	
 							<div class="form-group">
 								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.status"/></label>
@@ -127,8 +122,6 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">	
 						<div class="col-md-6">	
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
@@ -137,7 +130,7 @@
 								</div>
 							</div>					
 						</div>
-					</div>	
+					</div>
 					</form>
 				</div>
 				<!-- END SEARCH FORM -->
@@ -165,14 +158,14 @@
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox" /></label>
-											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
-											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.searchform.email"/></label>
-											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.rolename"/></label>
-											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.searchform.status"/></label>
-											<label><input type="checkbox"  data-column="5"><s:message code="system.management.user.createdBy"/></label>
-											<label><input type="checkbox"  data-column="6"><s:message code="system.management.user.createdTime"/></label>
-											<label><input type="checkbox"  data-column="7"><s:message code="system.management.user.updatedBy"/></label>
-											<label><input type="checkbox"  data-column="8"><s:message code="system.management.user.updatedTime"/></label>
+											<%-- <label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label> --%>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.email"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="store.name"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.status"/></label>
+											<label><input type="checkbox"  checked data-column="4"><s:message code="system.management.user.createdBy"/></label>
+											<label><input type="checkbox"  checked data-column="5"><s:message code="system.management.user.createdTime"/></label>
+											<%-- <label><input type="checkbox"  data-column="7"><s:message code="system.management.user.updatedBy"/></label>
+											<label><input type="checkbox"  data-column="8"><s:message code="system.management.user.updatedTime"/></label> --%>
 										</div>
 									</div>								    																
 								</div>
@@ -184,14 +177,11 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#adminusers_table .checkboxes"/>
 											</th>
-											<th><s:message code="system.management.user.searchform.id"/></th>
 											<th><s:message code="system.management.user.searchform.email"/></th>
-											<th><s:message code="system.management.user.searchform.rolename"/></th>
+											<th><s:message code="store.name"/></th>
 											<th><s:message code="system.management.user.searchform.status"/></th>
 											<th><s:message code="system.management.user.createdBy"/></th>
 											<th><s:message code="system.management.user.createdTime"/></th>
-											<th><s:message code="system.management.user.updatedBy"/></th>
-											<th><s:message code="system.management.user.updatedTime"/></th>
 											<!-- <th>操作</th> -->
 										</tr>
 									</thead>
@@ -205,73 +195,7 @@
 				<!-- END PAGE CONTENT -->
 				
 				<!-- BEGIN ADD MODAL FORM-->
-				<%-- <div class="modal" id="add_users" tabindex="-1" data-width="760">
-					<div class="modal-header">
-						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title"><s:message code="system.management.user.adduser"/></h4>
-					</div>
-					<div id="addFormMsg"></div>
-					<!-- <div class="modal-body"> -->
-					<div class="portlet-body form">
-						<!-- BEGIN FORM	-->					
-						<form id="addUsersForm" action="" method="post" name="addUsersForm" class="form-horizontal form-bordered">
-							<div class="form-body">
-								<div class="alert alert-danger display-hide">
-									<button class="close" data-close="alert"></button>
-									<s:message code="system.management.user.adduser.message"/>
-								</div>								
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/><span class="required"> * </span></label>
-									<div class="col-md-9">										
-										<input name="adminId" class="form-control" maxLength="20"/>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="login.form.password"/><span class="required"> * </span></label>
-									<div class="col-md-9">										
-										<input name="password" type="password" class="form-control" maxLength="100"/>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/><span class="required">* </span></label>
-									<div class="col-md-9">																				
-										<input name="email" class="form-control" maxLength="100"/>
-									</div>
-								</div>									
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.rolename"/><span class="required">* </span></label>
-									<div class="col-md-9">
-										<select name="adminRole.roleId" class="form-control">
-											<c:forEach var="role" items="${rolesList}">
-											<option value="${role.roleId}">${role.roleName}</option>			
-											</c:forEach>
-										</select>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status" /><span class="required">* </span></label>
-									<div class="col-md-9">										
-										<div class="radio-list">
-											<label>
-											<input type="radio" name="status" value="1" checked/>true </label>
-											<label>
-											<input type="radio" name="status" value="0"/>false </label>
-										</div>
-									</div>
-								</div>	
-							</div>
-							<div class="form-actions" style="border-top:0;">
-								<div class="row">
-									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									</div>
-								</div>
-							</div>
-						</form>
-						<!-- END FORM-->
-					</div>					
-				</div>	 --%>			
+				
 				<!-- END ADD MODAL FORM-->
 				
 				
@@ -318,7 +242,7 @@
 			<div class="modal" id="add_users" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">添加用户</h4>
+						<h4 class="modal-title"><s:message code="system.management.user.adduser" /></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -347,12 +271,12 @@
 								</div>
 																
 							<div class="form-group">
-									<label class="control-label col-md-3">服务名<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="store.name"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
-										<select name="serviceId"  style="width:40%;height:30px">
-										<c:if test="${not empty serviceList}">
-										<c:forEach var="service" items="${serviceList }">
-										<option value="${service.serviceId}">${service.serviceName}</option>
+										<select name="storeId"  style="width:40%;height:30px">
+										<c:if test="${not empty storeList}">
+										<c:forEach var="store" items="${storeList }">
+										<option value="${store.storeId}">${store.storeName}</option>
 										</c:forEach>
 										</c:if>
 									</select>
@@ -364,9 +288,9 @@
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label class="radio-inline">
-											<input type="radio" name="status" value="1" checked/>激活 </label>
+											<input type="radio" name="status" value="1" checked/><s:message code="all.table.jh"></s:message></label>
 											<label class="radio-inline">
-											<input type="radio" name="status" value="0"/>不激活 </label>
+											<input type="radio" name="status" value="0"/><s:message code="all.table.bjh"/> </label>
 										</div>
 									</div>
 								</div>		 												
@@ -374,8 +298,8 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> 创建</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit"/></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>
@@ -385,10 +309,11 @@
 				</div>
 			<!--  -->
 				
-			<div class="modal" id="edit_users" tabindex="-1" data-width="760">
+				
+				<div class="modal" id="edit_users" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">编辑用户</h4>
+						<h4 class="modal-title"><s:message code="system.management.user.edituser" /></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -401,59 +326,43 @@
 								<s:message code="system.management.user.adduser.message" />
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
-									<div class="col-md-9">										
-										<input name="adminId" class="form-control" readonly="true"/>		
-										<input name="storeId"  value="-1" type="hidden"/>										
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/><span class="required">* </span></label>
+									<div class="col-md-9">	
+										<input style="display:none">																			
+										<input name="email" class="form-control" maxLength="100" autocomplete="off"/>
+										<input name="adminId" type="hidden">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="login.form.password"/></label>
-									<div class="col-md-9">																				
-										<input name="password" type="password"  class="form-control" maxLength="100"/>
-										<span class="help-block"> input a new password or not input password</span>
+									<label class="control-label col-md-3"><s:message code="login.form.password"/><span class="required">* </span></label>
+									<div class="col-md-9">	
+										<input style="display:none">																			
+										<input name="password" type="password" class="form-control" maxLength="100" autocomplete="off"/>
+										<%-- <span class="help-block"> input a new password or not input password</span> --%>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/></label>
+																
+							<div class="form-group">
+									<label class="control-label col-md-3"><s:message code="store.name"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
-										<input name="email" class="form-control" maxLength="100" readonly="true"/>
-									</div>
-								</div>									
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.rolename"/></label>
-									<div class="col-md-9">
-										<select name="adminRole.roleId" class="form-control">
-											<c:forEach var="role" items="${rolesList}">
-											<option value="${role.roleId}">${role.roleName}</option>			
-											</c:forEach>
-										</select>										
+										<select name="storeId"  style="width:40%;height:30px">
+										<c:if test="${not empty storeList}">
+										<c:forEach var="store" items="${storeList }">
+										<option value="${store.storeId}">${store.storeName}</option>
+										</c:forEach>
+										</c:if>
+									</select>
 									</div>
 								</div>
 									
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.createdBy"/></label>
-									<div class="col-md-9">																				
-										<input name="createdBy" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>			
-								<div class="form-group">
-									<label class="control-label col-md-3"><s:message code="system.management.user.createdTime"/></label>
-									<div class="col-md-9">																				
-										<input name="createdTimeStr" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>						
-								
 								 <div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label class="radio-inline">
-											<input type="radio" name="status" value="1" checked/>激活 </label>
+											<input type="radio" name="status" value="1" checked/><s:message code="all.table.jh"></s:message></label>
 											<label class="radio-inline">
-											<input type="radio" name="status" value="0"/>不激活 </label>
+											<input type="radio" name="status" value="0"/><s:message code="all.table.bjh"/> </label>
 										</div>
 									</div>
 								</div>		 												
@@ -461,12 +370,16 @@
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> <s:message code="system.submit"/></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><s:message code="system.close"/></button>
 									</div>
 								</div>
 							</div>
 						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>
+		
 						<!-- END FORM-->
 					</div>					
 				</div>				
@@ -479,8 +392,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+						<button type="button" data-dismiss="modal" class="btn btn-default"> <s:message code="system.close"/></button>
+						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue"> <s:message code="system.submit"/></button>
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->

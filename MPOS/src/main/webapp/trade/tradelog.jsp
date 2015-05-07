@@ -148,7 +148,7 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>交易记录
+									<i class="fa fa-edit"></i><s:message code="trade"></s:message>
 								</div>
 								<%-- <div class="actions">									
 								   
@@ -279,17 +279,19 @@
     <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
+	<script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
+	<script src="../static/js/common.js"></script>
 	<script src="../static/js/tradeLogTableData.js"></script>
 	<script>
 	jQuery(document).ready(function() {       
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   MyLogTable.init("<c:url value="/"/>");	   
+	   MyLogTable.init("<c:url value="/"/>","${sessionScope.locale}");	   
 	});
 	</script>
 	<c:import url="/common/notice"/>

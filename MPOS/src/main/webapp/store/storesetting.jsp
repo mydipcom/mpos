@@ -145,10 +145,24 @@
 													${store.storeName} </span></td> --%>
 										</tr>
 										<tr>
+											<td style="width: 15%">门店编号</td>
+											<td style="width: 50%">
+											 ${store_code}
+											</td>
+											<%-- <td style="width: 35%"><span class="text-muted" id="publicKey">
+													${store.publicKey} </span></td> --%>
+										</tr>
+										<tr>
 											<td style="width: 15%"><s:message code="access.password"/></td>
 											<td style="width: 50%"><a href="#" id="password"
 												data-type="text" data-pk="1"
-												data-original-title="Enter Access Password"> ${store.publicKey}</a></td>
+												data-original-title="Enter Access Password"> ${store.publicKey}</a>
+												 <div class="clearfix margin-top-10">
+																		<span class="label label-danger"> NOTE! </span> <span>
+																			用于客户端的访问密码
+																		</span>
+											 </div>
+												</td>
 											<%-- <td style="width: 35%"><span class="text-muted" id="publicKey">
 													${store.publicKey} </span></td> --%>
 										</tr>

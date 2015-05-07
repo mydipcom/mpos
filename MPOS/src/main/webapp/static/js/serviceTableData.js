@@ -26,6 +26,7 @@ var GetInfo = function(){
 	        }
 	    };
 }();
+var locale = "zh_CN";
 var ServiceTable = function () {
 	var oTable;
 	var handleTable = function () {
@@ -40,7 +41,14 @@ var ServiceTable = function () {
         	"scrollXInner":"100%",         	
         	"processing":true,                
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process","zh_CN"),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero","zh_CN"),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty","zh_CN"),
+                "sInfo": loadProperties("dataTable.page.info","zh_CN"),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty","zh_CN"),
+            },
             "columnDefs": [{                    
                 'targets': 0,   
                 'render':function(data,type,row){
@@ -50,7 +58,7 @@ var ServiceTable = function () {
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
-                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">编辑</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">'+loadProperties("page.view",locale)+'</a></div>';
                 	},
                 'class':'center'
             	}
@@ -71,9 +79,9 @@ var ServiceTable = function () {
 	           },*/
 	           { data: "status",
 	        	   'render':function(data,type,row){
-		        		var res ='<font color="green">已发布</font>';
+		        		var res ='<font color="green">'+loadProperties("service.page.publish",locale)+'</font>';
 		        		if(data=="0"){
-		        			res ='<font color="red">未发布</font>';
+		        			res ='<font color="red">'+loadProperties("service.page.unpublish",locale)+'</font>';
 		        		}
 		                return res;
 		                }
@@ -327,9 +335,10 @@ var ServiceTable = function () {
     };
     
     return {
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
         	handleTable(); 
+        	locale=locale_value;
         	FormValidation($('#addTableForm'),"add");
         	FormValidation($('#editTableForm'),"edit");
         }

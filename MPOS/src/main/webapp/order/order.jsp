@@ -193,7 +193,7 @@
 
 										</div>
 									</div>
-									<div class="col-md-1">��</div>
+									<div class="col-md-1">至</div>
 									<div class="col-md-4">
 										<div class="input-group date form_datetime">
 											<input type="text" size="16" readonly class="form-control"

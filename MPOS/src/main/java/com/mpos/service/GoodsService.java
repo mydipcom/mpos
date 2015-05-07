@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.mpos.dto.Tproduct;
 import com.mpos.model.AddProductModel;
 import com.mpos.model.DataTableParamter;
@@ -32,6 +34,8 @@ public interface GoodsService {
 	void updateGoods(Tproduct product);
 	
 	List<Tproduct> loadAll();
+	
+	void saveTest(Integer storeId,Integer menuId,MultipartFile file,String name);
 	
 	 public void createproduct(AddProductModel model,LinkedHashMap<Integer,FileMeta> filesMap,HttpServletRequest request);
 	 

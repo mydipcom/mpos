@@ -14,8 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mpos.commons.ConvertTools;
+import com.mpos.commons.SecurityTools;
+import com.mpos.dao.AdminInfoDao;
+import com.mpos.dao.AdminUserDao;
 import com.mpos.dao.ServiceDao;
+import com.mpos.dao.StoreDao;
+import com.mpos.dao.TableDao;
+import com.mpos.dto.TadminInfo;
+import com.mpos.dto.TadminRole;
+import com.mpos.dto.TadminUser;
 import com.mpos.dto.Tservice;
+import com.mpos.dto.Tstore;
+import com.mpos.dto.Ttable;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.ServiceService;
@@ -24,6 +35,14 @@ public class ServiceServiceImpl implements ServiceService {
 
 	@Autowired
 	private ServiceDao serviceDao;
+	@Autowired
+	private StoreDao storeDao;
+	@Autowired
+	private AdminUserDao adminUserDao;
+	@Autowired
+	private AdminInfoDao adminInfoDao;
+	@Autowired
+	private TableDao tableDao;
 	public void save(Tservice service) {
 		// TODO Auto-generated method stub
 		serviceDao.save(service);
@@ -89,16 +108,45 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 
 	public Tservice get(Integer serviceId) {
-		// TODO Auto-generated method stub
 		return serviceDao.get(serviceId);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Tservice> load() {
-		// TODO Auto-generated method stub
 		Criteria criteria = serviceDao.createCriteria();
 		criteria.add(Restrictions.eq("status", true));
 		return criteria.list();
+	}
+
+	public void register(TadminUser user, Integer serviceId, String mobile,Boolean status) {
+		Tstore store = new Tstore();
+		if(serviceId==null){
+			serviceId=0;
+		}
+		Tservice service= serviceDao.get(serviceId);
+		store.setServiceId(serviceId);
+		store.setPublicKey("888888");
+		store.setStoreName("CampRay");
+		store.setStatus(true);
+		store.setAutoSyncStatus(false);
+		store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
+		store.setStoreCurrency("$");
+		store.setStoreLangId("2");
+		store.setPrintType(1);
+		storeDao.save(store);
+		//tableDao.create(new Ttable("A01", 4, store.getStoreId()));
+		user.setStoreId(store.getStoreId());
+		user.setCreatedTime(System.currentTimeMillis());
+		user.setCreatedBy("admin");
+		user.setAdminId(user.getEmail());
+		user.setAdminRole(new TadminRole(3));
+		user.setStatus(status);
+		user.setPassword(SecurityTools.MD5(user.getPassword()));
+		adminUserDao.create(user);
+		TadminInfo info = new TadminInfo();
+		info.setAdminId(user.getAdminId());
+		info.setMobile(mobile);
+		adminInfoDao.create(info);
 	}
 
 }

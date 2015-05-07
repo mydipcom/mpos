@@ -20,6 +20,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -31,6 +32,7 @@ import com.mpos.dao.LocalizedFieldDao;
 import com.mpos.dao.ProductReleaseDao;
 import com.mpos.dto.TgoodsAttribute;
 import com.mpos.dto.TlocalizedField;
+import com.mpos.dto.Tmenu;
 import com.mpos.dto.Tproduct;
 import com.mpos.dto.TproductImage;
 import com.mpos.dto.TproductRelease;
@@ -585,6 +587,55 @@ public class GoodsServiceImpl implements GoodsService {
 			ids.remove(string);
 		}
 		System.out.println(ids.toString().substring(1, ids.toString().length()-1));
+	}
+
+	public void saveTest(Integer storeId, Integer menuId,MultipartFile file,String name) {
+		List<Tproduct> products = new ArrayList<Tproduct>();
+		String ids = "";
+			for (int i = 0; i < 40; i++) {
+				Tproduct pro = new Tproduct();
+				pro.setIsPut(true);
+				pro.setOldPrice((float)(15+i));
+				pro.setPrice(13+i);
+				pro.setProductName(name+i);
+				pro.setShortDescr(name+"µÄÃèÊö"+i);
+				pro.setSku(10);
+				pro.setSort(i);
+				pro.setUnitName("·Ý");
+				pro.setTmenu(new Tmenu(menuId));
+				pro.setStatus(true);
+				pro.setStoreId(storeId);
+				pro.setRecommend(false);
+				products.add(pro);
+			}
+			
+			for (Tproduct product : products) {
+				goodsDao.create(product);
+			}
+			List<TproductImage> images = new ArrayList<TproductImage>();
+			for (Tproduct product : products) {
+				ids +=product.getId()+",";
+				TproductImage image = new TproductImage();
+				String fileName = storeId + "_" + product.getId()+ "_" + 0 + ".jpg";
+				image.setProduct(product);
+				try {
+					image.setImage(file.getBytes());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				image.setImageSuffix("jpg");
+				image.setImageUrl("/upload/product/"+fileName);
+				images.add(image);
+			}
+			for (TproductImage image : images) {
+				goodsImageDao.create(image);
+			}
+			TproductRelease productrelease1 = new TproductRelease();
+			productrelease1.setProducts(ids);
+			productrelease1.setIsPublic(false);
+			productrelease1.setStoreId(storeId);
+			productReleaseDao.create(productrelease1);
 	}
 
 }

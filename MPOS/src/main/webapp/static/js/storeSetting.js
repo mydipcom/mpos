@@ -121,7 +121,6 @@ var StoreSetting = function() {
 		
 		//修改商店背景
 		$("#background_change").on("submit", function(event) {
-			alert(storeId);
 			 $.ajaxFileUpload( {
 	             "type": "POST", 
 	             "url": rootURI+"storeSetting/uploadBackground?rand="+Math.random(), 
@@ -135,7 +134,7 @@ var StoreSetting = function() {
 	            	 if(status == "success"){  
 	            		 if(resp.status){
 	            			 var path = rootURI+resp.path;
-	            			 alert(path);
+	            			 //alert(path);
 	            			 handleAlerts(resp.info,"success","");
 							 $('#background_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
 								 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+

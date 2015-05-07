@@ -1,5 +1,7 @@
 package com.mpos.service;
 
+import java.util.List;
+
 import com.mpos.dto.TadminUser;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -11,6 +13,8 @@ public interface AdminUserService {
 	public Boolean emailExist(String email);
 	
 	void createAdminUser(TadminUser adminUser);
+	
+	void saveStoreUser(TadminUser adminUser);
 	
 	void updateAdminUser(TadminUser adminUser);
 	
@@ -28,7 +32,9 @@ public interface AdminUserService {
 	
 	public TadminUser getTadminUsersByEmail(String email);
 	
-	TadminUser getUserByStoreId(Integer storeId);
+	List<TadminUser> getUserByStoreId(Integer storeId);
+	
+	public Long getRightByEmail(String email);
 	
 	public void updateUserStatus(String[] ids,boolean status);
 		

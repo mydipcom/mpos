@@ -1,5 +1,5 @@
 var rootURI="/";
-var locale = "en_US";
+var locale = "zh_CN";
 var TableTable = function () {
 	var oTable;
 	var handleTable = function () {
@@ -15,7 +15,14 @@ var TableTable = function () {
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process",locale),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+                "sInfo": loadProperties("dataTable.page.info",locale),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+            },
             "columnDefs": [{                    
                 'targets': 0,   
                 'render':function(data,type,row){
@@ -26,7 +33,7 @@ var TableTable = function () {
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
-                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">edit</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">'+loadProperties("page.edit",locale)+'</a></div>';
                 	},
                 'class':'center'
             	}

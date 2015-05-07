@@ -115,14 +115,17 @@ public class LoginController extends BaseController {
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":password error.";
 		}else{
-			setSessionUser(request, tUser);
+			
 			String toUrl=(String)request.getSession().getAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_STATUS);
-			if(StringUtils.isEmpty(toUrl)&&(tUser.getAdminRole().getRoleId()==1||tUser.getAdminRole().getRoleId()==4)){
+			if(StringUtils.isEmpty(toUrl)&&(tUser.getAdminRole().getRoleId()==1)){
+				setSessionUser(request, tUser);
 				toUrl="/home";
 			}else if (StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()!=1) {
+				Long right = adminUserService.getRightByEmail(tUser.getEmail());
+				setSessionUser(request, tUser,right);
 				toUrl="home/storeHome";	
 			}			
 			mav.setViewName("redirect:"+toUrl);

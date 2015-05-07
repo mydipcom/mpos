@@ -36,16 +36,14 @@ var RightsTable = function () {
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
-//            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
-//            "oLanguage": {
-//                "sLengthMenu": "_MENU_ records per page",
-//                "oPaginate": {
-//                    "sPrevious": "Prev",
-//                    "sNext": "Next",
-//                	"zeroRecords": "No records to display"
-//                }
-//            },
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+			  "oLanguage": {
+	                "sProcessing": loadProperties("dataTable.page.process",locale),                
+	                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+	                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+	                "sInfo": loadProperties("dataTable.page.info",locale),
+	                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+	            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){

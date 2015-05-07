@@ -20,12 +20,13 @@
 })(jQuery);
 
 var rootURI="/";
-var locale = "en_US";
+var locale = "zh_CN";
 var LanguagesTable = function () {
 	var oTable;
 	var oLogTable;
 	var selected = [];
-	var handleTable = function () {							
+	locale =  "zh_CN";
+	var handleTable = function () {		
 		var table=$('#languages_table');
 		 oTable = table.dataTable({
 			"lengthChange":false,
@@ -36,7 +37,14 @@ var LanguagesTable = function () {
         	"scrollX":"100%",
            	"scrollXInner":"100%",
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process","zh_CN"),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+                "sInfo": loadProperties("dataTable.page.info","zh_CN"),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){

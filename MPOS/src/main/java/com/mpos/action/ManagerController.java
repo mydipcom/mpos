@@ -1,8 +1,5 @@
 package com.mpos.action;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,14 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
-import com.mpos.dto.TadminInfo;
 import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
-import com.mpos.dto.Tservice;
-import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -69,7 +62,8 @@ public class ManagerController extends BaseController {
 	public ModelAndView adminusers(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();		
 		mav.addObject("rolesList", adminRoleService.getAllAdminRoles());
-		mav.addObject("serviceList", serviceService.load());
+		mav.addObject("storeList", storeService.loadStoreNameAndId());
+		//mav.addObject("serviceList", serviceService.load());
 		mav.setViewName("manager/Adminusers");		
 		return mav;
 	}
@@ -105,6 +99,20 @@ public class ManagerController extends BaseController {
 	
 		
 	}
+	@RequestMapping(value="getStoreName/{storeId}",method=RequestMethod.GET)
+	@ResponseBody
+	public String getStoreName(@PathVariable Integer storeId){
+		Map<String, Object> res = getHashMap();
+		String storeName = "";
+		res.put("status", true);
+		try {
+			storeName = storeService.get(storeId).getStoreName();
+		} catch (Exception e) {
+			res.put("status", false);
+		}
+		res.put("info", storeName);
+		return JSON.toJSONString(res);
+	}
 		
 	
 	/**
@@ -117,46 +125,16 @@ public class ManagerController extends BaseController {
 	 */
 	@RequestMapping(value="addUsers",method=RequestMethod.POST)
 	@ResponseBody
-	public String addAdmins(HttpServletRequest request,TadminUser user,Integer serviceId){
+	public String addAdmins(HttpServletRequest request,TadminUser user){
 		Map<String, Object> res = getHashMap();
-		Tstore store = new Tstore();
 		try {
-			if(serviceId==null){
-				serviceId=0;
-			}
-			Tservice service=serviceService.get(serviceId);
-			store.setServiceId(serviceId);
-			store.setPublicKey("CampRay");
-			store.setStoreName("CampRay");
-			store.setStatus(true);
-			store.setAutoSyncStatus(false);
-			store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
-			store.setStoreCurrency("$");
-			store.setStoreLangId("1");
-			storeService.save(store);
-			tables.add(new Ttable("A01", 4, store.getStoreId()));
-			tables.add(new Ttable("A02", 2, store.getStoreId()));
-			tables.add(new Ttable("A03", 6, store.getStoreId()));
-			for (Ttable table : tables) {
-				tableService.create(table);
-			}
-			user.setStoreId(store.getStoreId());
-			user.setCreatedTime(System.currentTimeMillis());
-			user.setCreatedBy("admin");
 			user.setAdminId(user.getEmail());
-			user.setAdminRole(new TadminRole(service.getRoleId()));
-			user.setPassword(SecurityTools.MD5(user.getPassword()));
-			adminUserService.createAdminUser(user);
-			TadminInfo info = new TadminInfo();
-			info.setAdminId(user.getAdminId());
-			//info.setMobile(mobile);
-			adminInfoService.createAdminInfo(info);
+			user.setCreatedBy(getSessionUser(request).getAdminId());
+			user.setAdminRole(new TadminRole(3));
+			adminUserService.saveStoreUser(user);
 			res.put("status", true);
 			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {
-			if(store.getStoreId()!=null){
-				storeService.deleteByStoreId(store.getStoreId(),user.getAdminId());
-			}
 			be.printStackTrace();
 			res.put("status", false);
 			res.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
@@ -167,31 +145,16 @@ public class ManagerController extends BaseController {
 	@RequestMapping(value="editUsers",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateAdmin(HttpServletRequest request,TadminUser adminuser){		
-
-		SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		TadminUser ad=getSessionUser(request);
 		JSONObject respJson = new JSONObject();
-		Date sdate = null;
 		try{
-			
-			if(adminuser.getPassword()!=null && !adminuser.getPassword().isEmpty()){
-				adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
-				}else {
-				adminuser = adminUserService.getAdminUserById(adminuser.getAdminId());
-				}
-			try {
-				String ss=adminuser.getCreatedTimeStr();
-				sdate = simpleDateFormat.parse(ss);
-			} catch (ParseException e) {
-				e.printStackTrace();
+			TadminUser user = adminUserService.getAdminUserById(adminuser.getAdminId());
+			if(adminuser.getPassword()!=null&&!adminuser.getPassword().isEmpty()){
+				user.setPassword(SecurityTools.MD5(adminuser.getPassword()));
 			}
-			adminuser.setCreatedTime(sdate.getTime());
-			adminuser.setUpdatedBy(ad.getAdminId());
-			adminuser.setUpdatedTime(System.currentTimeMillis());
-			String email = adminuser.getEmail();
-			adminuser.setEmail(email.toLowerCase());
-			
-			adminUserService.updateAdminUser(adminuser);
+			user.setStoreId(adminuser.getStoreId());
+			user.setStatus(adminuser.getStatus());
+			user.setUpdatedTime(System.currentTimeMillis());
+			adminUserService.updateAdminUser(user);
 			respJson.put("status", true);
 			respJson.put("info", getMessage(request,"operate.success"));
 		}
@@ -204,7 +167,7 @@ public class ManagerController extends BaseController {
 		return str;
 	}
 
-	@RequestMapping(value="managers/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="{ids}/managers",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteAdmins(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		

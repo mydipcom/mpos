@@ -9,8 +9,11 @@
  */ 
 package com.mpos.service.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -21,7 +24,9 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mpos.dao.AdminInfoDao;
 import com.mpos.dao.AdminUserDao;
+import com.mpos.dto.TadminInfo;
 import com.mpos.dto.TadminUser;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -38,6 +43,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	
 	@Autowired
 	private AdminUserDao adminUserDao;
+	@Autowired
+	private AdminInfoDao adminInfoDao;
 				
 
 	/**
@@ -98,13 +105,14 @@ public class AdminUserServiceImpl implements AdminUserService {
 	public void deleteAdminUserByIds(String[] ids) {
 		adminUserDao.delete(ids);
 		// TODO Auto-generated method stub
-		
 	}
 
 	public PagingData loadAdminUserList(DataTableParamter rdtp) {
 		String searchJsonStr=rdtp.getsSearch();
+		List<Criterion> criterionsList=new ArrayList<Criterion>();
+		Criteria criteria = adminUserDao.createCriteria();
+		criteria.add(Restrictions.ne("adminRole.roleId", 1));
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
-			List<Criterion> criterionsList=new ArrayList<Criterion>();
 			JSONObject jsonObj= (JSONObject)JSON.parse(searchJsonStr);
 			Set<String> keys=jsonObj.keySet();						
 			for (String key : keys) {
@@ -113,7 +121,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 					if(key=="status"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
 					}
-					else if(key=="adminRole.roleId"){
+					else if(key=="storeId"){
 						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
 					}
 					else{
@@ -121,15 +129,12 @@ public class AdminUserServiceImpl implements AdminUserService {
 					}
 				}
 			}
-			Criterion[] criterions=new Criterion[criterionsList.size()];
-			int i=0;
 			for (Criterion criterion : criterionsList) {
-				criterions[i]=criterion;	
-				i++;
+				criteria.add(criterion);
 			}
-			return adminUserDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
+			return adminUserDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
 		}
-		return adminUserDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+		return adminUserDao.findPage(criteria,rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 	
    public int getAdminUserAmount() {
@@ -148,9 +153,10 @@ public TadminUser getTadminUsersByEmail(String email) {
 	return adminUserDao.findUnique("email", email);
 }
 
-public TadminUser getUserByStoreId(Integer storeId) {
+@SuppressWarnings("unchecked")
+public List<TadminUser> getUserByStoreId(Integer storeId) {
 	// TODO Auto-generated method stub
-	return adminUserDao.findUnique("storeId", storeId);
+	return adminUserDao.createCriteria().add(Restrictions.eq("storeId", storeId)).list();
 }
 
 public Boolean emailExist(String email){
@@ -164,6 +170,22 @@ public Boolean emailExist(String email){
 public void updateUserStatus(String[] ids, boolean status) {
 	// TODO Auto-generated method stub
 	adminUserDao.updateUserStatus(ids, status);
+}
+
+public Long getRightByEmail(String email) {
+	// TODO Auto-generated method stub
+	Map<String, Object> params = new HashMap<String, Object>();
+	params.put("email", email);
+	String sql = "select r_right.role_rights from mpos_cloud.mpos_admin as admin left join mpos_cloud.mpos_store as store on admin.store_id=store.store_id left join mpos_cloud.mpos_service as service on service.service_id=store.service_id left join mpos_cloud.mpos_admin_role_rights as r_right on r_right.role_id=service.role_id where admin.email=:email and store.status=true";
+	Object object = adminUserDao.getBySql(sql, params);
+	System.out.println(object.toString());
+	BigInteger value = (BigInteger)object;
+	return value.longValue();
+}
+
+public void saveStoreUser(TadminUser adminUser) {
+	adminUserDao.create(adminUser);
+	adminInfoDao.create(new TadminInfo(adminUser.getAdminId()));
 }
 
 }

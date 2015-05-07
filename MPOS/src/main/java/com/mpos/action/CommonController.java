@@ -23,16 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
-import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
-import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
-import com.mpos.dto.TadminInfo;
-import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
 import com.mpos.dto.Tmessage;
 import com.mpos.dto.Tservice;
-import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
 import com.mpos.service.AdminInfoService;
 import com.mpos.service.AdminUserService;
@@ -129,7 +124,7 @@ public class CommonController extends BaseController {
 			List<Tservice> info = new ArrayList<Tservice>();
 			List<Tservice> services = serviceService.load();
 			for (Tservice tservice : services) {
-				tservice.setContent(tservice.getServiceName()+"-"+tservice.getServicePrice()+"元-"+tservice.getValidDays()+"天-"+tservice.getContent());
+				tservice.setContent(tservice.getServiceName()+""+tservice.getServicePrice()+"元"+tservice.getValidDays()+"天"+tservice.getContent());
 				tservice.setRoleId(null);
 				tservice.setServiceName(null);
 				tservice.setServicePrice(null);
@@ -149,57 +144,31 @@ public class CommonController extends BaseController {
 	@ResponseBody
 	public String register(HttpServletRequest request,TadminUser user,Integer serviceId,String mobile){
 		Map<String, Object> res = getHashMap();
-		Tstore store = new Tstore();
 		try {
-			if(serviceId==null){
-				serviceId=0;
+			boolean status = false;
+			if(serviceId==null||serviceId==0){
+				status = true;
 			}
-			Tservice service=serviceService.get(serviceId);
-			store.setServiceId(serviceId);
-			store.setPublicKey("CampRay");
-			store.setStoreName("CampRay");
-			store.setStatus(true);
-			store.setAutoSyncStatus(false);
-			store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
-			store.setStoreCurrency("$");
-			store.setStoreLangId("1");
-			storeService.save(store);
-			tables.add(new Ttable("A01", 4, store.getStoreId()));
-			tables.add(new Ttable("A02", 2, store.getStoreId()));
-			tables.add(new Ttable("A03", 6, store.getStoreId()));
-			for (Ttable table : tables) {
-				tableService.create(table);
-			}
-			user.setStoreId(store.getStoreId());
-			user.setCreatedTime(System.currentTimeMillis());
-			user.setCreatedBy("admin");
-			user.setAdminId(user.getEmail());
-			user.setAdminRole(new TadminRole(service.getRoleId()));
+			serviceService.register(user, serviceId, mobile,status);
 			/*if(user.getPassword().isEmpty()){
-				String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
-				TemaiMessage message = new TemaiMessage();
-				message.setTo(user.getEmail());
-				message.setText("your account:  "+user.getAdminId()+"|register time:  "+Calendar.getInstance().getTime()+" |password:  "+random);
-				message.setSubject("MPOS Password");
-				EMailTool.send(message);
-				user.setPassword(random);
-			}*/
-			user.setPassword(SecurityTools.MD5(user.getPassword()));
-			adminUserService.createAdminUser(user);
-			TadminInfo info = new TadminInfo();
-			info.setAdminId(user.getAdminId());
-			info.setMobile(mobile);
-			adminInfoService.createAdminInfo(info);
-			res.put("status", true);
-			res.put("info", "Register Success");
-			res.put("payUrl", "http://www.baidu.com");
-		} catch (MposException e) {
-			if(store.getStoreId()!=null){
-				storeService.deleteByStoreId(store.getStoreId(),user.getAdminId());
+			String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
+			TemaiMessage message = new TemaiMessage();
+			message.setTo(user.getEmail());
+			message.setText("your account:  "+user.getAdminId()+"|register time:  "+Calendar.getInstance().getTime()+" |password:  "+random);
+			message.setSubject("MPOS Password");
+			EMailTool.send(message);
+			user.setPassword(random);
+		}*/
+			if(!status){
+				res.put("payUrl","http://www.baidu.com");
 			}
+			res.put("isPay",!status);
+			res.put("status", true);
+			res.put("info", "注册成功");
+		} catch (MposException e) {
 			e.printStackTrace();
 			res.put("status", false);
-			res.put("info", "Register Failure");
+			res.put("info", "失败");
 		}
 		return JSON.toJSONString(res);
 	}

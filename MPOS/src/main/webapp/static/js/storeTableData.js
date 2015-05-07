@@ -19,7 +19,7 @@
     };  
 })(jQuery);
 var rootURI="/";
-var locale = "en_US";
+var locale = "zh_CN";
 var StoreTable = function () {
 	var oTable;
 	var handleTable = function () {
@@ -35,36 +35,42 @@ var StoreTable = function () {
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process",locale),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+                "sInfo": loadProperties("dataTable.page.info",locale),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+            },
             "columnDefs": [{                    
                 'targets': 0,   
                 'render':function(data,type,row){
                 	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
                 	},
-                //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
             	},{                	
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
             		var url = rootURI+"storeSetting/search/"+data.storeId;
-                	return '<div class="actions"><a class="btn btn-sm dark"  href="'+url+'">查看</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark"  href="'+url+'">'+loadProperties("page.view",locale)+'</a></div>';
                 	},
                 'class':'center'
             	}
             ],
             "columns": [
                {"orderable": false },
-	           { /*title: "ID",*/   data: "storeId","bVisible":false},
-	           { /*title: "Table Name",*/    data: "storeName" },
-	           { /*title: "Seat Numbers",*/    data: "email"},
-	           { /*title: "Description",*/    data: "serviceName" },
-	           { /*title: "Description",*/    data: "date" },
-	           { /*title: "Description",*/    data: "createTimeStr" },
-	           { /*title: "Description",*/    data: "status",
+	           { data: "storeId","bVisible":false},
+	           { data: "storeName" },
+	           {   data: "email"},
+	           {   data: "serviceName" },
+	           { data: "date" },
+	           {   data: "createTimeStr" },
+	           {     data: "status",
 	        	   'render':function(data,type,row){
-	        		   var temp="已启用";
+	        		   var temp=loadProperties("store.page.qy",locale);
 	        		   if(data=="0"){
-	        			   temp = "已禁用";
+	        			   temp = loadProperties("store.page.jy",locale);
 	        		   }
 	        		   	return temp;
 	        	   	} 

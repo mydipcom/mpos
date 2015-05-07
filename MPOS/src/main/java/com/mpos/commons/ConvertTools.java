@@ -154,11 +154,6 @@ public class ConvertTools {
 		return calendar.getTimeInMillis();
 	}
 	
-	public static void main(String[] args) {
-			System.out.println(getFirstDay());
-			System.out.println(getLastDay());
-	}
-	
     /**  
      * 对象转数组  
      * @param obj  
@@ -200,5 +195,29 @@ public class ConvertTools {
         }      
         return obj;    
     }
+    /**
+     * 
+     * @param id待补位数字
+     * @param ws 一共多少位
+     * @param qz 前缀
+     * @return
+     */
+    public static String bw(Integer id,int ws,String qz){
+    	String ids = id+"";
+    	int length = ids.length();
+    	int cw = ws-qz.length();
+    	if(length<cw){
+    		int xx = cw-length;
+    		for (int i = 0; i < xx; i++) {
+    			qz+="0";
+			}
+    		qz+=ids;
+    	}
+    	return qz;
+    }
+    
+    public static void main(String[] args) {
+		System.out.println(bw(12,8,"S"));
+	}
     
 }

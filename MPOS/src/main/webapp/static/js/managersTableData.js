@@ -18,9 +18,25 @@
         return serializeObj;
     };
 })(jQuery);
-
 var rootURI="/";
-var locale = "en_US";
+function getStore(storeId){
+	var res = "";
+	$.ajax( {
+        "dataType": 'json', 
+        "async":false,
+        "type": "GET", 
+        "url": rootURI+"manager/getStoreName/"+storeId+"?rand="+Math.random(), 
+        "success": function(data,status){
+       	 if(status == "success"){					
+				 if(data.status){
+					 res = data.info;
+				 }
+			}             	 
+        }
+      });
+	return res;
+}
+var locale = "zh_CN";
 var ManagersTable = function () {
 	var oTable;
 	var oLogTable;
@@ -39,8 +55,15 @@ var ManagersTable = function () {
 		    	"scrollX":"100%",
 	           	"scrollXInner":"100%",
 		        // set the initial value
-		        "displayLength": 3,
-		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+		        "displayLength": 5,
+		        "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+	            "oLanguage": {
+	                "sProcessing": loadProperties("dataTable.page.process",locale),                
+	                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+	                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+	                "sInfo": loadProperties("dataTable.page.info",locale),
+	                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+	            },
 		        "columns": [
 		 	           { data: "id" },
 		 	           { data: "adminId" },
@@ -64,7 +87,14 @@ var ManagersTable = function () {
         	"scrollX":"100%",
            	"scrollXInner":"100%",
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process",locale),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+                "sInfo": loadProperties("dataTable.page.info",locale),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
@@ -84,26 +114,29 @@ var ManagersTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           {     data: "adminId"  },
+	         /*  {     data: "adminId"  },*/
 	           {     data: "email" },
-	           {     data: "roleName" },
+	           {     data: "storeId",
+	        	   'render':function(data,status,row){
+       				return getStore(data);
+       			}},
 	           {   
 	 	        'render':function(data,status,row){
 	        				var tem = row.status;
 	        				var str = '';
 	        				if(tem==1){
-	        					str = '已激活';
+	        					str = loadProperties("user.page.jh",locale);
 	        				}else if(tem==0){
-	        					str = '未激活';
+	        					str = loadProperties("user.page.wjh",locale);
 	        				}
 	        				return str;
 	        			}
 	           },
 
-	           {	 data: "createdBy" ,"bVisible":false},
-	           { 	 data: "createdTimeStr", "bVisible":false},
-	           { 	 data: "updatedBy" ,"bVisible":false},
-	           {     data: "updatedTimeStr" ,"bVisible":false},  
+	           {	 data: "createdBy" },
+	           { 	 data: "createdTimeStr",},
+	          /* { 	 data: "updatedBy" ,"bVisible":false},
+	           {     data: "updatedTimeStr" ,"bVisible":false},  */
 	           /*{ title: "操作" ,"class":"center"},*/
 	        ],
 	        "serverSide": true,
@@ -115,34 +148,30 @@ var ManagersTable = function () {
 		});		
 		 
 		//打开删除对话框前判断是否已选择要删除的行
-		 
-//		$("#openAddUserModal").on("click",function(event){
-//			$("#addUsersForm input").val("");
-//		});
-		$("#openDeleteadminsModal").on("click",function(event){
+			$("#openDeleteadminsModal").on("click",function(event){
+					if(selected.length==0){
+						handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
+						return false;
+					}
+				});
+			$("#openActiveadminsModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
+					handleAlerts(loadProperties("error.active.select",locale),"warning","");				
 					return false;
 				}
 			});
-		$("#openActiveadminsModal").on("click",function(event){
-			if(selected.length==0){
-				handleAlerts(loadProperties("error.active.select",locale),"warning","");				
-				return false;
-			}
-		});
-		$("#openDeactiveadminsModal").on("click",function(event){
-			if(selected.length==0){
-				handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
-				return false;
-			}
-		});
+			$("#openDeactiveadminsModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
+					return false;
+				}
+			});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"manager/managers/"+selected.join(), 
+             "url": rootURI+"manager/"+selected.join()+"/managers", 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -229,15 +258,11 @@ var ManagersTable = function () {
 				$("#editUsersForm option").removeAttr("selected");
 	            var adminId = data.adminId;
 	            var email =data.email;
-	            var createby=data.createdBy;
-	            var creatime=data.createdTimeStr;
-	            var roleId=data.roleId;
-	            $("#editUsersForm select[name='adminRole.roleId']").children("option[value='"+roleId+"']").attr("selected","true");
+	            $("#editUsersForm select[name='storeId']").children("option[value='"+data.storeId+"']").attr("selected","true");
 	            $("#editUsersForm input[name='adminId']").val(adminId);
+	            $("#editUsersForm input[name='createdTime']").val(data.createTime);
+	            $("#editUsersForm input[name='adminRole.roleId']").val(data.adminRole.roleId);
 	            $("#editUsersForm input[name='email']").val(email);
-	            $("#editUsersForm input[name='storeId']").val(data.storeId);
-	            $("#editUsersForm input[name='createdBy']").val(createby);
-	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);
 			}
 		});
 				           
@@ -330,14 +355,13 @@ var ManagersTable = function () {
     };
   //添加操作
 	var AddUsers = function(){
-		
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
          "url": rootURI+"manager/addUsers", 
          "data": $('#addUsersForm').serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){         		 
+        	 if(status == "success"){  
         		 if(resp.status){						 
 	            	 oTable.api().draw();
 	            	 handleAlerts(resp.info,"success","");
@@ -355,6 +379,33 @@ var ManagersTable = function () {
 		$('#add_users').modal('hide');
     };
     
+	//编辑表单提交操作
+	var EditUsers= function() {
+	  $.ajax( {
+         "dataType": 'json', 
+         "type": "POST", 
+         "url": rootURI+"manager/editUsers", 
+         "data" :$('#editUsersForm').serialize(),
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){
+					 selected=[];
+	            	 oTable.api().draw();
+	            	 handleAlerts(resp.info,"success","");
+	            	 $('#edit_users').modal('hide');
+				 }
+				 else{
+					 handleAlerts(resp.info,"danger","");
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+	  
+	};
+    
     var AddUsersValidation = function() {
     	var URL =  rootURI+"storeManager/checkEmail?rand="+Math.random();
         var form = $('#addUsersForm');
@@ -371,6 +422,7 @@ var ManagersTable = function () {
         		maxlength:12,
     				},
         	 email:  {
+        		 email:true,
              	required: true,
             	remote: {
             	    url:URL,     //后台处理程序
@@ -412,34 +464,8 @@ var ManagersTable = function () {
         });
     };
     
-	//编辑表单提交操作
-	var EditUsers= function() {
-	  $.ajax( {
-         "dataType": 'json', 
-         "type": "POST", 
-         "url": rootURI+"manager/editUsers", 
-         "data" :$('#editUsersForm').serializeJson(),
-         "success": function(resp,status){
-        	 if(status == "success"){          		 
-        		 if(resp.status){
-					 selected=[];
-	            	 oTable.api().draw();
-	            	 handleAlerts(resp.info,"success","");	            	 
-				 }
-				 else{
-					 handleAlerts(resp.info,"danger","");
-				 }
-			}             	 
-         },
-         "error":function(XMLHttpRequest, textStatus, errorThrown){
-        	 alert(errorThrown);
-         }
-       });
-	  $('#edit_users').modal('hide');
-	};
-		
-            
 	var EditUsersValidation = function() {
+		//var URL =  rootURI+"storeManager/checkEmail?rand="+Math.random();
 		var form = $('#editUsersForm');
 		var errorDiv = $('.alert-danger', form);            
 		form.validate({
@@ -448,18 +474,20 @@ var ManagersTable = function () {
 			focusInvalid: false, // do not focus the last invalid input
 			ignore: "",  // validate all fields including form hidden input                
 			rules: {
-				adminId: {
-					required: true,
-					minlength:4,
-            			},
-            	password: {
-            		minlength:6,
-            		maxlength:12,
-					},
-				email: {
-					required: true,
-					email:true,
-				}
+				email:  {
+	             	required: true,
+	             	email:true,
+	            	/*remote: {
+	            	    url:URL,     //后台处理程序
+	            	    type: "post",               //数据发送方式
+	            	    dataType: "json",           //接受数据格式   
+	            	    data: {                     //要传递的数据
+	            	    	email: function() {
+	            	    		return $("#editUsersForm input[name='email']").val()+","+$("#editUsersForm input[name='adminId']").val();
+	            	        }
+	            	    }
+	            	}*/
+	            }
 
         },
        invalidHandler: function (event, validator) { //display error alert on form submit              

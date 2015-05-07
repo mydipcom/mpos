@@ -83,6 +83,13 @@ public class BaseController {
 		}
 	}
 	
+	protected void setSessionUser(HttpServletRequest request,TadminUser user,Long right){
+		request.getSession().setAttribute(SystemConstants.LOGINED, user);
+		if(user.getAdminRole().getRoleId()!=1){
+		setSessionRights(request,right);
+		}
+	}
+	
 	/**
 	 * <p>Description:Get the user rights from session</p>
 	 * @Title: getSessionRights 

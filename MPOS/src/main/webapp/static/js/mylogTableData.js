@@ -20,6 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
+var locale="zh_CN";
 var MyLogTable = function () {
 	var oTable;
 	var selected = [];
@@ -36,16 +37,14 @@ var MyLogTable = function () {
            	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
-            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
-//            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
-//            "oLanguage": {
-//                "sLengthMenu": "_MENU_ records per page",
-//                "oPaginate": {
-//                    "sPrevious": "Prev",
-//                    "sNext": "Next",
-//                	"zeroRecords": "No records to display"
-//                }
-//            },
+            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oLanguage": {
+                "sProcessing": loadProperties("dataTable.page.process",locale),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
+                "sInfo": loadProperties("dataTable.page.info",locale),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
@@ -57,7 +56,7 @@ var MyLogTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-sm dark"" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
+                    	return '<div class="actions"><a class="btn btn-sm dark"" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">'+loadProperties("page.view",locale)+'</a></div>';
                     },
                     'class':'center'
                 }
@@ -195,7 +194,8 @@ var MyLogTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
+        	locale=locale_value;
         	rootURI=rootPath;
         	handleTable();  
         	datePicker();
