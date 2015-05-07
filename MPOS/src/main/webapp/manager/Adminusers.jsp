@@ -154,7 +154,7 @@
 									<i class="fa fa-edit"></i><s:message code="system.management.user.tablename"/>
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users" id="openAddUserModal"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_users" id="openActiveadminsModal"><i class="fa fa-key"></i> <s:message code="all.table.activate" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_users" id="openDeactiveadminsModal"><i class="fa fa-lock"></i> <s:message code="all.table.deactivate" /></a>
@@ -332,14 +332,16 @@
 								</div>								
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/><span class="required">* </span></label>
-									<div class="col-md-9">																				
-										<input name="email" class="form-control" maxLength="100"/>
+									<div class="col-md-9">	
+										<input style="display:none">																			
+										<input name="email" class="form-control" maxLength="100" autocomplete="off"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="login.form.password"/><span class="required">* </span></label>
-									<div class="col-md-9">																				
-										<input name="password" type="password"  class="form-control" maxLength="100"/>
+									<div class="col-md-9">	
+										<input style="display:none">																			
+										<input name="password" type="password" class="form-control" maxLength="100" autocomplete="off"/>
 										<%-- <span class="help-block"> input a new password or not input password</span> --%>
 									</div>
 								</div>

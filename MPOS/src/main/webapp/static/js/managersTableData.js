@@ -115,24 +115,28 @@ var ManagersTable = function () {
 		});		
 		 
 		//打开删除对话框前判断是否已选择要删除的行
-			$("#openDeleteadminsModal").on("click",function(event){
-					if(selected.length==0){
-						handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
-						return false;
-					}
-				});
-			$("#openActiveadminsModal").on("click",function(event){
+		 
+//		$("#openAddUserModal").on("click",function(event){
+//			$("#addUsersForm input").val("");
+//		});
+		$("#openDeleteadminsModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts(loadProperties("error.active.select",locale),"warning","");				
+					handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
 					return false;
 				}
 			});
-			$("#openDeactiveadminsModal").on("click",function(event){
-				if(selected.length==0){
-					handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
-					return false;
-				}
-			});
+		$("#openActiveadminsModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts(loadProperties("error.active.select",locale),"warning","");				
+				return false;
+			}
+		});
+		$("#openDeactiveadminsModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
+				return false;
+			}
+		});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
@@ -333,10 +337,11 @@ var ManagersTable = function () {
          "url": rootURI+"manager/addUsers", 
          "data": $('#addUsersForm').serialize(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){         		 
         		 if(resp.status){						 
 	            	 oTable.api().draw();
-	            	 handleAlerts(resp.info,"success","");		            	 
+	            	 handleAlerts(resp.info,"success","");
+	            	 $("#addUsersForm")[0].reset();
 				 }
 				 else{
 					 handleAlerts(resp.info,"danger","");						 
@@ -415,11 +420,11 @@ var ManagersTable = function () {
          "url": rootURI+"manager/editUsers", 
          "data" :$('#editUsersForm').serializeJson(),
          "success": function(resp,status){
-        	 if(status == "success"){  
+        	 if(status == "success"){          		 
         		 if(resp.status){
 					 selected=[];
 	            	 oTable.api().draw();
-	            	 handleAlerts(resp.info,"success","");
+	            	 handleAlerts(resp.info,"success","");	            	 
 				 }
 				 else{
 					 handleAlerts(resp.info,"danger","");
