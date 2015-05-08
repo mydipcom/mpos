@@ -58,7 +58,7 @@ var ServiceTable = function () {
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
-                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">'+loadProperties("page.view",locale)+'</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">'+loadProperties("page.edit",locale)+'</a></div>';
                 	},
                 'class':'center'
             	}
