@@ -167,9 +167,11 @@
 					</form>
 				</div>
 				<!-- END SEARCH FORM -->
-				
-				
-				
+				<div class="row">
+				  	<div class="col-md-12">
+						<label style="font-size: 12px;color:red;margin-left: 20px">请注意：对商品进行编辑和上架之后请到发布管理进行发布</label>
+					</div>
+				</div>
 				<!-- BEGIN PAGE CONTENT-->
 				<!-- 
 				<div class="row profile">
@@ -201,7 +203,7 @@
 						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="product.list.table.title"/><label style="font-size: 12px;color:red;margin-left: 20px">请注意：对商品进行编辑和上架之后请到发布管理进行发布</label>
+									<i class="fa fa-edit"></i><s:message code="product.list.table.title"/>
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm"  data-toggle="modal" href="#add_good" id="openAddGoodModal"><i class="fa fa-plus" ></i> <s:message code="product.add" /></a>
