@@ -10,7 +10,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<div style="font-size: 24px;font-weight: 800;font-family: 黑体;margin-top:10px;">
-				<a style="color:white;" href="<c:url value="/"/>home/storeHome">云菜单管理系统</a>
+				<a style="color:white;text-decoration:none;" href="<c:url value="/"/>home/storeHome">云菜单管理系统</a>
 			</div>
 			<div class="menu-toggler sidebar-toggler hide">
 				DOC: Remove the above "hide" to enable the sidebar toggler button on header
