@@ -70,7 +70,7 @@
 					<li><a id="works-link" href="#works">服务订购</a></li>
 					<li><a id="news-link" href="#news">新闻</a></li>
 					<li class="right-side"><a id="contact-link" href="#contact">联系我们</a></li>
-					<li class="right-side"><a id="setup-link" href="#setup">安装指南</a></li>
+					<li class="right-side"><a id="setup-link" href="#setup">下载安装</a></li>
 					<li><a href="${pageContext.request.contextPath}/login">登陆后台</a></li>
 				</ul>
 					<ul id="tinynav" class="l_tinynav1">
@@ -79,7 +79,7 @@
 						<li><a href="#works">服务订购</a></li>
 						<li><a href="#news">新闻</a></li>
 						<li><a href="#contact">联系我们</a></li>
-						<li><a href="#setup">安装指南</a></li>
+						<li><a href="#setup">下载安装</a></li>
 						<li><a href="${pageContext.request.contextPath}/login">登陆后台</a></li>
 					</ul>
 			</div>
@@ -242,10 +242,10 @@
 	</div>	
 	<div id="setup" class="about">
 		<div class="container">
-			<h3 class="titles titles-white-c">安装指南</h3>
+			<h3 class="titles titles-white-c">下载安装</h3>
 			<div class="about-desc">
-				<h4>亲可以参考以下方案，在您的店铺里面平板</h4>
-				<h4>桌面较大：推荐这种平板固定器，支持iPad和Android平板</h4>
+				<h4>亲可以参考以下方案，在您的店铺里面固定平板</h4>
+				<h4>桌面较大推荐这种平板固定器，支持iPad和Android平板</h4>
 				<li>
 					<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
 				</li>
