@@ -43,7 +43,7 @@
 	  	    	    		<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
 	  	    			</div>
 	  	    			<div class="image-wrapper">
-		  	    			<img src="static/index_files/iphone.png" alt="iphone">
+		  	    			<img src="static/index_files/apple_logo.jpg" alt="apple">
 	  	    			</div>
 	  	    		</li>
 	            	<li id="slide-1" class="flex-active-slide" style="width: 940px; float: left; display: block;">
@@ -244,11 +244,16 @@
 		<div class="container">
 			<h3 class="titles titles-white-c">下载安装</h3>
 			<div class="about-desc">
+				<h4>客户端下载</h4>
+				<div> 
+				<a href="http://yun.campray.com/download/" target="_blank" <img src="static/index_files/apple-icon.jpg" alt="icon"> iPad版下载</a>
+				<a href="http://yun.campray.com/download/" target="_blank" <img src="static/index_files/android-icon.jpg" alt="icon"> Android版下载</a>
+				</div> 
+			</div>			
+			<div class="about-desc">
 				<h4>亲可以参考以下方案，在您的店铺里面固定平板</h4>
 				<h4>桌面较大推荐这种平板固定器，支持iPad和Android平板</h4>
-				<li>
-					<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
-				</li>
+				<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
 			</div>
 		</div>		
 	</div>
