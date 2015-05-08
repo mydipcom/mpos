@@ -501,13 +501,17 @@ public class MobileAPI {
 		try {
 			// 查询商品
 			Tcommodity product = commodityService.getTproductByid(productId);
+			ProductModel model = new ProductModel();
 			if (product == null) {
 				respJson.put("status", false);
+				model.setStatus(false);
+				model.setProductId(productId);
+				respJson.put("data", model);
 				respJson.put("info", "product is not exist");
 				return JSON.toJSONString(respJson);
 			}
 			// 新建返回数据model
-			ProductModel model = new ProductModel();
+			
 			model.setProductId(product.getId());
 
 			if (product.isStatus()&&product.getIsPut()) {

@@ -108,14 +108,13 @@ public class LoginController extends BaseController {
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}
-		else if(!SecurityTools.SHA1(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
+		else if(!SecurityTools.MD5(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
 			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused). ");
 			mav.addObject("user", tUser);
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":password error.";
 		}else{
-			
 			String toUrl=(String)request.getSession().getAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
@@ -130,7 +129,6 @@ public class LoginController extends BaseController {
 			}			
 			mav.setViewName("redirect:"+toUrl);
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
-			
 		}
 		adminLog.setAdminId(user.getAdminId());
 		LogManageTools.writeAdminLog(log_content,adminLog,request);
