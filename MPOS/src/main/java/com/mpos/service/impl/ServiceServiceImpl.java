@@ -125,7 +125,8 @@ public class ServiceServiceImpl implements ServiceService {
 		Tservice service= serviceDao.get(serviceId);
 		store.setServiceId(serviceId);
 		store.setPublicKey("888888");
-		store.setStoreName("CampRay");
+		store.setClientPwd("888888");
+		store.setStoreName(" ");
 		store.setStatus(true);
 		store.setAutoSyncStatus(false);
 		store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));

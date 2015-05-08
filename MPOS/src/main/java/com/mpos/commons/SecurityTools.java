@@ -75,6 +75,10 @@ public class SecurityTools {
         }
         return "";
     }
+    
+    public static void main(String[] args) {
+		System.out.println(MD5("S0000001666666"));
+	}
  
     public static String MD5(String input) {
         try {

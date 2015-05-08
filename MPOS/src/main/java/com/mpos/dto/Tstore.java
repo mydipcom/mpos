@@ -37,11 +37,11 @@ public class Tstore implements Serializable {
 	/**
 	 * 客户端密码
 	 */
-	private String clientPwd="888888";
+	private String clientPwd;
 	/**
 	 * 货币符号
 	 */
-	private String storeCurrency="$";
+	private String storeCurrency;
 	/**
 	 * 是否自动同步数据
 	 */
@@ -57,7 +57,7 @@ public class Tstore implements Serializable {
 	/**
 	 * 公钥
 	 */
-	private String publicKey="CampRay";
+	private String publicKey;
 	/**
 	 * 店铺多语言ID，多个以“,”分隔
 	 */
@@ -117,6 +117,12 @@ public class Tstore implements Serializable {
 		this.storeId = storeId;
 		this.storeName = storeName;
 		this.serviceId=serviceId;
+	}
+	public Tstore(Integer storeId, String publicKey,Integer serviceId,Boolean status) {
+		this.storeId = storeId;
+		this.publicKey = publicKey;
+		this.serviceId=serviceId;
+		this.status=status;
 	}
 	public Tstore(Integer storeId, String storeName) {
 		this.storeId = storeId;

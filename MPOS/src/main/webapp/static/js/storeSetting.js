@@ -84,7 +84,7 @@ var StoreSetting = function() {
 		
 		var currency = [];
 		$.each({
-			"HK$" : "港元",
+			"HK$" : "港币",
 			"$" : "美元",
 			"¥" : "人民币"
 		}, function(k, v) {

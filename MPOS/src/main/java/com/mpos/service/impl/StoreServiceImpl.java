@@ -145,7 +145,7 @@ public class StoreServiceImpl implements StoreService {
 	public void cacheStoreTaken() {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("status", true);
-		String storeHql = "select new Tstore(storeId,publicKey,serviceId) from Tstore where status=:status";
+		String storeHql = "select new Tstore(storeId,publicKey,serviceId,status) from Tstore where status=:status";
 		List<Tstore> stores = storeDao.select(storeHql, params);
 		if(stores!=null&&stores.size()>0){
 			for (Tstore store : stores) {
