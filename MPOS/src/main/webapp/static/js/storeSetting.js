@@ -26,7 +26,10 @@ var button = 0;
 var StoreSetting = function() {
 
 	var initEditables = function() {
-
+		$('#store_setting :checkbox, #store_setting :radio').prop("disabled", true);
+		$('#editLan').hide();
+		$('#editPrint').hide();
+		$('.btn-file').hide();
 		// set editable mode based on URL parameter
 		if (Metronic.getURLParameter('mode') == 'inline') {
 			$.fn.editable.defaults.mode = 'inline';
@@ -264,6 +267,25 @@ var StoreSetting = function() {
 	      });
 	});
 	
+	$('#editPrint').click(function() {
+		var printType=$("input:checked[name='print_type']").val();			
+		$.ajax({
+	        "dataType": 'json', 
+	        "type":'POST',
+	        "async":false,
+	        "url": rootURI+"storeSetting/changeStorePrint", 
+	        "data":{"storeId":storeId,"printType":printType},
+	        "success": function(resp,status){
+	       	 if(status == "success"){  
+	       		 if(resp.status){	       			
+	       				handleAlerts(resp.info,"success","");
+					}else{
+						handleAlerts(obj.info,"danger","");
+					}
+				}             	 
+	        }
+	      });
+	});
 	
 	return {
 		// main function to initiate the module
@@ -282,10 +304,18 @@ var StoreSetting = function() {
 				$('#store_setting .editable').editable('toggleDisabled');
 				
 				if(button == 1){
-					$('#enable').html("点此解锁");
+					$('#enable').html("编辑配置");
+					$('#store_setting :checkbox, #store_setting :radio').prop("disabled", true);				
+					$('#editLan').hide();
+					$('#editPrint').hide();
+					$('.btn-file').hide();
 					button =0;
 				} else{
-					$('#enable').html("点此锁定");
+					$('#enable').html("锁定配置");
+					$('#store_setting :checkbox, #store_setting :radio').prop("disabled", false);
+					$('#editLan').show();
+					$('#editPrint').show();
+					$('.btn-file').show();
 					button =1;
 				}
 				

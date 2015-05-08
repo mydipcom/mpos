@@ -477,7 +477,7 @@ public class StoreContrller extends BaseController {
 	 */
 	@RequestMapping(value="/changeStorePrint",method=RequestMethod.POST)
 	@ResponseBody
-	public String changeStorePrint(HttpServletRequest request,@RequestParam(value="value") String printType,@RequestParam(value="name") Integer storeId){
+	public String changeStorePrint(HttpServletRequest request,Integer printType,Integer storeId){
 		Map<String, Object> res = getHashMap();
 		//更新参数storeCurrency
 		Map<String, Object> params = getHashMap();
