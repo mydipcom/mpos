@@ -503,7 +503,7 @@ public class MobileAPI {
 			Tcommodity product = commodityService.getTproductByid(productId);
 			ProductModel model = new ProductModel();
 			if (product == null) {
-				respJson.put("status", false);
+				respJson.put("status", true);
 				model.setStatus(false);
 				model.setProductId(productId);
 				respJson.put("data", model);
