@@ -1,8 +1,8 @@
 package com.mpos.dto;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import com.mpos.commons.ConvertTools;
 
 
 /**
@@ -30,8 +30,10 @@ public class TadminUser implements Serializable {
 	
 	private Long updatedTime;
 	
+	@SuppressWarnings("unused")
 	private String createdTimeStr;	
 	
+	@SuppressWarnings("unused")
 	private String updatedTimeStr;
 	
 	@SuppressWarnings("unused")
@@ -73,12 +75,7 @@ public class TadminUser implements Serializable {
 	}
 
 	public String getCreatedTimeStr() {
-		if(createdTime!=null){
-		Date date=new Date(createdTime);
-		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return sdf.format(date);		
-		}else
-		return this.createdTimeStr;
+		return ConvertTools.longToDateString(createdTime);
 	
 	}
 
@@ -87,14 +84,7 @@ public class TadminUser implements Serializable {
 	}
 
 	public String getUpdatedTimeStr() {
-		if(updatedTime!=null){
-		Date date=new Date(updatedTime);
-		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return sdf.format(date);	
-		}
-		else
-			return this.updatedTimeStr;
-	
+		return ConvertTools.longToDateString(updatedTime);
 	}
 	
 	public Integer getRoleId() {

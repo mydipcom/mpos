@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
 		ModelAndView mav=new ModelAndView();
 		Long time = (Long) request.getSession().getAttribute(SystemConstants.LOGIN_STATUS);
 		if(time != null && System.currentTimeMillis()-time<60000*Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.LOGIN_ERROR_LOCK))){
-			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for "+Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.LOGIN_ERROR_LOCK))+" minutes.");
+			    mav.addObject(ERROR_MSG_KEY,getMessage(request,"login.failed.locked",Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.LOGIN_ERROR_LOCK))));
 				if(tUser != null){
 				  mav.addObject("user", tUser);
 				}else{
@@ -90,26 +90,26 @@ public class LoginController extends BaseController {
 				adminLog.setLevel((short)1);
 				log_content=SystemConstants.LOG_FAILURE+":userid locked.";
 		}else if(tUser==null){
-			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused) .");
+			mav.addObject(ERROR_MSG_KEY, getMessage(request,"login.failed.pwd.user"));
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}else if(!tUser.getStatus() && !"admin".equals(tUser.getAdminId())){
-			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused) .");
+			mav.addObject(ERROR_MSG_KEY, getMessage(request,"login.failed.pwd.user"));
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}else if(!tUser.getAdminRole().getStatus() && !"admin".equals(tUser.getAdminId())){
-			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused) .");
+			mav.addObject(ERROR_MSG_KEY, getMessage(request,"login.failed.pwd.user"));
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}
 		else if(!SecurityTools.MD5(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
-			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused). ");
+			mav.addObject(ERROR_MSG_KEY, getMessage(request,"login.failed.pwd.user"));
 			mav.addObject("user", tUser);
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);

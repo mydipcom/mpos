@@ -132,8 +132,11 @@ public class ConvertTools {
 		return idArr;
 	}
 	
-	public static String longToDateString(long dateLong){
-		SimpleDateFormat sdf =new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	public static String longToDateString(Long dateLong){
+		if(dateLong==null){
+			return "";
+		}
+		SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		return sdf.format(new Date(dateLong));
 	}
 	

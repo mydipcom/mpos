@@ -1,8 +1,8 @@
 package com.mpos.dto;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import com.mpos.commons.ConvertTools;
 
 public class TserviceOrder implements Serializable {
 
@@ -22,12 +22,7 @@ public class TserviceOrder implements Serializable {
 	private String serviceName;
 	
 	public String getCreateTimeStr() {
-		if(createTime!=null){
-			Date date=new Date(createTime);
-			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-			return sdf.format(date);		
-			}else
-			return null;
+		return ConvertTools.longToDateString(createTime);
 	}
 
 	public void setCreateTimeStr(String createTimeStr) {

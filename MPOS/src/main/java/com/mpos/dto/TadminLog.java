@@ -1,7 +1,6 @@
 package com.mpos.dto;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.mpos.commons.ConvertTools;
 
 // Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1
 
@@ -40,12 +39,7 @@ public class TadminLog implements java.io.Serializable {
 	
 	
 	public String getCreatedTimeStr() {
-		if(createdTime!=null){
-			Date date=new Date(createdTime);
-			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-			return sdf.format(date);		
-			}else
-			return null;
+			return ConvertTools.longToDateString(createdTime);
 	
 	}
 
