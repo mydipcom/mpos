@@ -152,22 +152,22 @@
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_users" id="openActiveadminsModal"><i class="fa fa-key"></i> <s:message code="all.table.activate" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_users" id="openDeactiveadminsModal"><i class="fa fa-lock"></i> <s:message code="all.table.deactivate" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_users" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
-								    <div class="btn-group">
+								    <%-- <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										<s:message code="system.column" /> <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0"><s:message code="system.checkbox" /></label>
-											<%-- <label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label> --%>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
 											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.email"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="store.name"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.status"/></label>
 											<label><input type="checkbox"  checked data-column="4"><s:message code="system.management.user.createdBy"/></label>
 											<label><input type="checkbox"  checked data-column="5"><s:message code="system.management.user.createdTime"/></label>
-											<%-- <label><input type="checkbox"  data-column="7"><s:message code="system.management.user.updatedBy"/></label>
-											<label><input type="checkbox"  data-column="8"><s:message code="system.management.user.updatedTime"/></label> --%>
+											<label><input type="checkbox"  data-column="7"><s:message code="system.management.user.updatedBy"/></label>
+											<label><input type="checkbox"  data-column="8"><s:message code="system.management.user.updatedTime"/></label>
 										</div>
-									</div>								    																
+									</div> --%>								    																
 								</div>
 							</div>							
 							<div class="portlet-body">																

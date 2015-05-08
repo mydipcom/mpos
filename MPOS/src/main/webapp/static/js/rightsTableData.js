@@ -55,7 +55,7 @@ var RightsTable = function () {
             "columns": [
                {"orderable": false },
 	           { 	//title: "ID",  
-            	   data: "nodeId" ,"bVisible":false},
+            	   data: "nodeId" },
 	           {   //title: "Bit Flag",
             		   data: "bitFlag" ,"bVisible":false},
 	           { 	//title: "Rights Name", 
