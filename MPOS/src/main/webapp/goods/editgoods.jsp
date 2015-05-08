@@ -456,7 +456,7 @@
 	<script src="../assets/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/plupload/js/plupload.full.min.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS-->	
-
+<script src="../assets/global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>

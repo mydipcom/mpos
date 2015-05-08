@@ -869,7 +869,7 @@
 	<!-- END PAGE LEVEL PLUGINS -->
 	<script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-
+<script src="../assets/global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/pages/scripts/form-wizard.js"></script>

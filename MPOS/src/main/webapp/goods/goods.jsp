@@ -351,7 +351,7 @@
     <script src="../assets/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
-   
+   <script src="../assets/global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
    	<script type="text/javascript" src="../assets/global/plugins/jquery-mixitup/jquery.mixitup.min.js"></script>
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->

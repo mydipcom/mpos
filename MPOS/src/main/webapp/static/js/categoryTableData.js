@@ -1,4 +1,5 @@
 //jquery插件把表单序列化成json格式的数据start 
+var locale = "zh_CN";
 (function($){
     $.fn.serializeJson=function(){
         var serializeObj={};
@@ -37,10 +38,10 @@
         	}
         });                       
         return this.optional(element) || isSame;
-    }, "Please enter the attribute value with the same options size in Multi-language Form Items.");
+    }, loadProperties("cate.page.attr",locale));
     
 })(jQuery);
-var locale = "en_US";
+
 var rootURI="/";
 var CategoryTable = function () {
 	var oTable;

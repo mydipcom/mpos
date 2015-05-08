@@ -20,10 +20,10 @@ var Login = function () {
 
 	            messages: {
 	            	adminId: {
-	                    required: "Username is required."
+	                    required: "账号必填"
 	                },
 	                password: {
-	                    required: "Password is required."
+	                    required: "密码必填"
 	                }
 	            },
 
@@ -75,7 +75,7 @@ var Login = function () {
 
 	            messages: {
 	                email: {
-	                    required: "Email is required."
+	                    required: "邮箱必填"
 	                }
 	            },
 
