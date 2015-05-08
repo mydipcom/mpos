@@ -99,7 +99,7 @@
 							<div class="col-md-4">					
 							<div class="form-group">
 							<c:if test="${role==1}">
-							<label class="col-md-3 control-label">Store Name</label>
+							<label class="col-md-3 control-label"><s:message code="store.name"/></label>
 								<div class="col-md-9">
 									<select name="storeId"  class="form-control" id="storeId">
 										<c:if test="${not empty stores}">

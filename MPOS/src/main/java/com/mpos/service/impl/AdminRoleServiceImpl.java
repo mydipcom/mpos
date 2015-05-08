@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.dao.AdminRoleDao;
 import com.mpos.dto.TadminRole;
@@ -125,32 +126,33 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @return 
 	 * @see com.bps.service.AdminRoleService#loadAdminRolesList(com.bps.model.DataTableParamter)
 	 */
-	public PagingData loadAdminRolesList(DataTableParamter rdtp){
-		String searchJsonStr=rdtp.getsSearch();
-		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
-			List<Criterion> criterionsList=new ArrayList<Criterion>();
-			JSONObject jsonObj= (JSONObject)JSON.parse(searchJsonStr);
-			Set<String> keys=jsonObj.keySet();						
+	public PagingData loadAdminRolesList(DataTableParamter dtp) {
+		String searchJsonStr = dtp.getsSearch();
+		Criteria criteria = adminRoleDao.createCriteria();
+		criteria.add(Restrictions.ne("roleId", 1));
+		//criteria.add(Restrictions.ne("roleId", 4));
+		if (searchJsonStr != null && !searchJsonStr.isEmpty()) {
+			List<Criterion> criterionList = new ArrayList<Criterion>();
+			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);
+			Set<String> keys = json.keySet();
 			for (String key : keys) {
-				String val=jsonObj.getString(key);
-				if(val!=null&&!val.isEmpty()){
-					if(key=="status"){
-						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
+				String value = json.getString(key);
+				if (value != null && !value.isEmpty()) {
+					if(key=="roleName"){
+						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
+					}else if(key=="status"){
+						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
+					}else{
+						criterionList.add(Restrictions.eq(key, json.get(key)));
 					}					
-					else{
-						criterionsList.add(Restrictions.eq(key, jsonObj.get(key)));
-					}
 				}
 			}
-			Criterion[] criterions=new Criterion[criterionsList.size()];
-			int i=0;
-			for (Criterion criterion : criterionsList) {
-				criterions[i]=criterion;	
-				i++;
+			for (Criterion criterion : criterionList) {
+				criteria.add(criterion);
 			}
-			return adminRoleDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
+			return adminRoleDao.findPage(criteria, dtp.iDisplayStart,dtp.iDisplayLength);
 		}
-		return adminRoleDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+		return adminRoleDao.findPage(criteria,dtp.iDisplayStart, dtp.iDisplayLength);
 	}
 
 }

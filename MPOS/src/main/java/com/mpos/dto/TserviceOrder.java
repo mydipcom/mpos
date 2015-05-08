@@ -11,6 +11,7 @@ public class TserviceOrder implements Serializable {
 	 */
 	private static final long serialVersionUID = -4698996227062389909L;
 	private Integer serviceOrderId;
+	private String orderNum;
 	private Tservice serviceId;
 	private Float price;
 	private String email;
@@ -74,6 +75,11 @@ public class TserviceOrder implements Serializable {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	
+	public String getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
+	}
 
 }
