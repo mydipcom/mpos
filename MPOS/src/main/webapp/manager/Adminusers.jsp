@@ -283,7 +283,7 @@
 									</div>
 								</div>
 									
-								 <div class="form-group">
+								 <div class="form-group hide">
 									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/></label>
 									<div class="col-md-9">										
 										<div class="radio-list">

@@ -70,13 +70,13 @@ var ServiceTable = function () {
 	           {data: "servicePrice"},
 	           {data: "validDays" },
 	           {data: "content" },
-	          /* {data: "roleId",
+	           {data: "roleId",
 	        	'render':function(data,type,row){
 	        		var temp = "";
 	        		temp = GetInfo.get(data);
 	                return temp;
 	                }
-	           },*/
+	           },
 	           { data: "status",
 	        	   'render':function(data,type,row){
 		        		var res ='<font color="green">'+loadProperties("service.page.publish",locale)+'</font>';
