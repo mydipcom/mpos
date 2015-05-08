@@ -112,7 +112,7 @@
 											<td style="width: 15%"><s:message code="restaurant.name" /></td>
 											<td style="width: 50%"><a href="#" id="restaurant_name"
 												data-type="text" data-pk="1"
-												data-original-title="Enter Restaurant Name">
+												data-original-title="<s:message code="store.set.sr.name"/>">
 													${store.storeName} </a></td>
 											<%-- <td style="width: 35%"><span class="text-muted" id="storeName">
 													${store.storeName} </span></td> --%>
@@ -127,10 +127,10 @@
 											<td style="width: 15%"><s:message code="access.password" /></td>
 											<td style="width: 50%"><a href="#" id="password"
 												data-type="text" data-pk="1"
-												data-original-title="Enter Access Password">
+												data-original-title="<s:message code="store.set.sr.pwd"/>">
 													${store.publicKey}</a>
 												<div class="clearfix margin-top-10">
-													<span class="label label-danger"> NOTE! </span> <span>
+													<span class="label label-danger"><s:message code="store.set.note"/> </span> <span>
 														用于客户端的访问密码 </span>
 												</div></td>
 											<%-- <td style="width: 35%"><span class="text-muted" id="publicKey">
@@ -167,7 +167,7 @@
 											<td><s:message code="currency" /></td>
 											<td><a href="#" id="currency" data-type="select2"
 												data-value="${store.storeCurrency}" data-pk="1"
-												data-original-title="Select Currency"></a></td>
+												data-original-title="<s:message code="store.set.sr.cr"/>"></a></td>
 											<%-- <td><span class="text-muted" id="storeCurrency">  ${store.storeCurrency}
 													</span></td> --%>
 										</tr>
@@ -212,21 +212,21 @@
 																<div>
 																	<c:if test="${status==1}">
 																		<span class="btn default btn-file"> 
-																		<span class="fileinput-new"> Select image </span> 
-																		<span class="fileinput-exists"> Change </span> 
+																		<span class="fileinput-new"> <s:message code="store.set.image.select"/> </span> 
+																		<span class="fileinput-exists"> <s:message code="store.set.image.change"/> </span> 
 																		<input type="file" name="images" accept="image/*" id="logo_image">
 																		</span>
 																		<a href="#" class="btn default fileinput-exists"
-																			data-dismiss="fileinput"> Remove </a>
+																			data-dismiss="fileinput"> <s:message code="store.set.image.remove"/> </a>
 																		<div class="clearfix margin-top-10">
-																			<span class="label label-danger"> NOTE! </span> <span>
+																			<span class="label label-danger"> <s:message code="store.set.note"/></span> <span>
 																				<s:message code="userprofile.changeavate.note" />
 																			</span>
 																		</div>
 
 																		<div class="margin-top-10">
 																			<input type="submit"
-																				class="btn green fileinput-exists" value="Confirm"
+																				class="btn green fileinput-exists" value="<s:message code="system.submit"/>"
 																				class="form-control" />
 																		</div>
 																	</c:if>
@@ -261,20 +261,20 @@
 																<div>
 																	<c:if test="${status==1}">
 																		<span class="btn default btn-file"> 
-																		<span class="fileinput-new"> Select image </span> 
-																		<span class="fileinput-exists"> Change </span> 
+																		<span class="fileinput-new"> <s:message code="store.set.image.select"/> </span> 
+																		<span class="fileinput-exists"> <s:message code="store.set.image.change"/> </span> 
 																		<input type="file" name="images" accept="image/*" id="back_image">
 																		</span>
 																		<a href="#" class="btn default fileinput-exists"
-																			data-dismiss="fileinput"> Remove </a>
+																			data-dismiss="fileinput"> <s:message code="store.set.image.remove"/> </a>
 																		<div class="clearfix margin-top-10">
-																			<span class="label label-danger"> NOTE! </span> <span>
+																			<span class="label label-danger"> <s:message code="store.set.note"/></span> <span>
 																				<s:message code="userprofile.changeavate.note" />
 																			</span>
 																		</div>
 																		<div class="margin-top-10">
 																			<input type="submit"
-																				class="btn green fileinput-exists" value="Confirm"
+																				class="btn green fileinput-exists" value="<s:message code="store.set.image.submit"/>"
 																				class="form-control" />
 																		</div>
 																	</c:if>

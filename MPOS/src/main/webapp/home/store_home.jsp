@@ -83,7 +83,8 @@
 										</tr>
 										<tr>
 											<td style="width: 20%">交易金额</td>
-											<td style="width: 50%">${orderMount}元</td>
+											<td style="width: 50%">${orderMount}元
+											</td>
 											<td style="width: 35%"><span class="text-muted"> </span></td>
 										</tr>
 										<tr>

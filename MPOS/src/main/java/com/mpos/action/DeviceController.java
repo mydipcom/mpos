@@ -48,7 +48,7 @@ public class DeviceController extends BaseController {
 			res[2]=unre.getId()+"";
 			Flag="1";
 		}else{
-			res[2]="No Version Unpublish";
+			res[2]="没有版本可以发布";
 			Flag="2";
 		}
 		mav.addObject("res", res);

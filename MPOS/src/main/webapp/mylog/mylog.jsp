@@ -267,9 +267,14 @@
     <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
+		<script
+		src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js"
+		type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
+	<script src="../static/js/common.js"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
 	<script src="../static/js/mylogTableData.js"></script>
 	<script>
@@ -277,7 +282,7 @@
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   MyLogTable.init("<c:url value="/"/>");	   
+	   MyLogTable.init("<c:url value="/"/>","${sessionScope.locale}");	   
 	});
 	</script>
 	<c:import url="/common/notice"/>

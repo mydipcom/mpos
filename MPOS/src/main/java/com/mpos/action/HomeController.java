@@ -122,6 +122,9 @@ public class HomeController extends BaseController {
 			Object o = orderService.get(query_order, params);
 			Object[] res = (Object[])o;
 			mav.addObject("orderCount", res[0]);
+			if(res[1]==null||res[1]==""){
+				res[1]=0;
+			}
 			mav.addObject("orderMount", res[1]);
 			params.clear();
 			params.put("storeId", getSessionStoreId(request));

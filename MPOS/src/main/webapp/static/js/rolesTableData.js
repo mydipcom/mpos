@@ -73,9 +73,9 @@ var RolesTable = function () {
                                 var tem = row.status;
 		        				var str = '';
 		        				if(tem==1){
-		        					str = 'Active';
+		        					str = '启用';
 		        				}else if(tem==0){
-		        					str = 'Inactive';
+		        					str = '禁用';
 		        				}
 		        				return str;
 		        			}
