@@ -177,13 +177,13 @@
 																<div class="col-md-7 value">${order_details['create_time']}</div>
 															</div>
 
-															<div class="row static-info">
+															<%-- <div class="row static-info">
 																<div class="col-md-5 name">
 																	<s:message code="discount.total" />
 																	:
 																</div>
 																<div class="col-md-7 value">${order_details['discount_total']}</div>
-															</div>
+															</div> --%>
 															<div class="row static-info">
 																<div class="col-md-5 name">
 																	<s:message code="payment.total" />
@@ -261,7 +261,7 @@
 																<i class="fa fa-edit"></i>
 																<s:message code="order.product" />
 															</div>
-															<div class="actions">
+															<%-- <div class="actions">
 																<div class="btn-group">
 																	<a class="btn default" href="#" data-toggle="dropdown">
 																		<s:message code="system.column"/> <i class="fa fa-angle-down"></i>
@@ -310,7 +310,7 @@
 																		</label>
 																	</div>
 																</div>
-															</div>
+															</div> --%>
 														</div>
 														<div class="portlet-body">
 															<table
@@ -327,14 +327,15 @@
 																		<th><s:message
 																				code="order.details.product.unit.price" /></th>
 																		<th><s:message
-																				code="order.details.product.quantity" /></th>
-																		<th><s:message
-																				code="order.details.product.discount" /></th>
-																		<th><s:message
 																				code="order.details.product.curr.price" /></th>
 																		<th><s:message
+																				code="order.details.product.quantity" /></th>
+																		<%-- <th><s:message
+																				code="order.details.product.discount" /></th>
+																		
+																		<th><s:message
 																				code="order.details.product.attributes" /></th>
-																		<th><s:message code="order.details.product.gift" /></th>
+																		<th><s:message code="order.details.product.gift" /></th> --%>
 																	</tr>
 																</thead>
 																<tbody>

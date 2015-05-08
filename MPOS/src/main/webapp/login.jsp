@@ -50,8 +50,8 @@
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <body class="login">
 <!-- BEGIN LOGO -->
-<div class="logo" style="font-size: 36px;font-family: cursive;">
-	云菜单管理系统
+<div class="logo">
+	<span class="label" style="font-size:32px;font-weight: 800;font-family: 黑体;">云菜单管理系统</span>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->

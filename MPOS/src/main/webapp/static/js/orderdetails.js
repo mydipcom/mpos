@@ -94,16 +94,18 @@ var OrderDetails = function () {
 				},{
 					//title : "Unit Price",
 					data : "unitPrice"
+				} ,{
+					//title : "Curr Price",
+					data : "currPrice",						
 				}, {
 					//title : "Quantity",
 					data : "quantity"
-				} , {
+				} 
+				/*, {
 					//title : "Discount",
-					data : "discount"
-				} ,{
-					//title : "Curr Price",
-					data : "currPrice",
-				}, {
+					data : "discount"				
+				}
+				,{
 					//title : "Attributes",
 					data : "attributes",
 					'render' : function(data, type, row) {
@@ -117,7 +119,8 @@ var OrderDetails = function () {
 				},{
 					//title : "Is Gift",
 					data : "isGift"
-				} ],
+				} */
+				],
 				"serverSide" : true,
 				"serverMethod" : "GET",
 				"ajaxSource" : rootURI + "order/order_product?rand="+ Math.random(),
