@@ -57,7 +57,16 @@ var OrderList = function () {
 					data : "orderId"
 				}, {
 					/*title : "Order Status",*/
-					data : "orderStatus"
+					data : "orderStatus",
+					'render' : function(data, type, row) {
+						var temp = "已取消";
+						if(data=='Paid'){
+							temp="已支付";
+						}else if(data=='Pending'){
+							temp="未支付";
+						}
+						return temp;
+					},
 				},{
 					/*title : "Order Total",*/
 					data : "orderTotal"

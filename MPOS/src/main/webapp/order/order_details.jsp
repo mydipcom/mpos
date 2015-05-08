@@ -214,7 +214,16 @@
 																</div>
 																<div class="col-md-7 value">
 																	<span class="label label-success">
-																		${order_details['order_status']} </span> <input type="hidden"
+																	<c:if test="${order_details['order_status'] eq 'Paid'}">
+																	<s:message code="order.paid"/>
+																	</c:if>
+																		<c:if test="${order_details['order_status'] eq 'Pending'}">
+																	<s:message code="order.pending"/>
+																	</c:if>
+																		<c:if test="${order_details['order_status'] eq 'Cancelled'}">
+																	<s:message code="order.cancelled"/>
+																	</c:if>
+																		</span> <input type="hidden"
 																		value="${order_details['order_status_id']}"
 																		name="order_status" />
 																</div>
@@ -423,6 +432,8 @@
 	<!-- END PAGE LEVEL PLUGINS -->
 	<script type="text/javascript"
 		src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js" type="text/javascript"></script>
+		<script src="../assets/global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js"
@@ -431,12 +442,13 @@
 		type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js"
 		type="text/javascript"></script>
+		<script src="../static/js/common.js"></script>
 	<script src="../static/js/orderdetails.js" type="text/javascript"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Metronic.init(); // init metronic core components
 			Layout.init(); // init current layout	
-			OrderDetails.init("<c:url value="/"/>");
+			OrderDetails.init("<c:url value="/"/>","${sessionScope.locale}");
 		});
 	</script>
 	<c:import url="/common/notice" />

@@ -321,7 +321,7 @@
 												<c:forEach var="lan" items="${lanList}" varStatus="status">											
 												<li><a href="#edit_category_tab${status.index+2}" data-toggle="tab"><img src="${lan.flagImage}"> ${lan.name}</a></li>												
 												</c:forEach>	
-												<li class="active"><a href="#edit_category_tab1" data-toggle="tab"> <s:message code="category.standard" /></a></li>
+												<li class="active"><a href="#edit_category_tab1" data-toggle="tab"> <s:message code="system.standard" /></a></li>
 											</ul>
 											<div class="tab-content">												
 												<c:forEach var="lan" items="${lanList}" varStatus="status">

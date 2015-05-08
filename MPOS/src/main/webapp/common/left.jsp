@@ -78,7 +78,7 @@
 			if(session.getAttribute("rights")!=null){
 				userRights=(Long)session.getAttribute("rights");
 			}			
-			if(isAdmin||(userRights&menuBean.getBitFlag())>0){				
+			if((isAdmin&&userRights==0)||(userRights&menuBean.getBitFlag())>0){				
 			%>	
 			<li class="${classStr}">
 				<c:choose>
@@ -140,7 +140,7 @@
 					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">						
 						<jsp:useBean id="subMenuBean" class="com.mpos.dto.TadminNodes"></jsp:useBean>	
 						<jsp:setProperty name="subMenuBean" property="bitFlag" value="${subMenu.bitFlag}"></jsp:setProperty>
-						<%if(isAdmin||(userRights&subMenuBean.getBitFlag())>0){%>
+						<%if((isAdmin&&userRights==0)||(userRights&subMenuBean.getBitFlag())>0){%>
 					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
 							<a href="${contextPath}${subMenu.uri}">
 							${subMenu.name}

@@ -376,7 +376,7 @@ var Addgoods = function () {
          
                 FilesAdded: function(up, files) {
                     plupload.each(files, function(file) {
-                        $('#tab_images_uploader_filelist').append('<div class="alert alert-warning added-files" id="uploaded_file_' + file.id + '">' + file.name + '(' + plupload.formatSize(file.size) + ') <span class="status label label-info"></span>&nbsp;<a href="javascript:;" style="margin-top:-5px" class="remove pull-right btn btn-sm red"><i class="fa fa-times"></i> remove</a></div>');
+                        $('#tab_images_uploader_filelist').append('<div class="alert alert-warning added-files" id="uploaded_file_' + file.id + '">' + file.name + '(' + plupload.formatSize(file.size) + ') <span class="status label label-info"></span>&nbsp;<a href="javascript:;" style="margin-top:-5px" class="remove pull-right btn btn-sm red"><i class="fa fa-times"></i> 移除</a></div>');
 //                        previewImage(file,function(imgsrc){
 //                        	$('#uploaded_file_' + file.id).append('<img width="80px" height="60px" src="'+imgsrc+'" />' );
 //                        });
@@ -399,8 +399,8 @@ var Addgoods = function () {
                                 '<img class="img-responsive" src="'+file.url+'" alt=""></a></td>'+                            	
                                 '<td><p class="name"></p></td>' + 
                                 '<td><p class="size"></p></td>' +                                
-                                '<td>Uploaded Success</td>' +                                 
-                                '<td><a href="javascript:;" class="btn default btn-sm"><i class="fa fa-times"></i> Remove </a></td>' +                                
+                                '<td>上传成功</td>' +                                 
+                                '<td><a href="javascript:;" class="btn default btn-sm"><i class="fa fa-times"></i> 移除 </a></td>' +                                
                                 '</tr>');                            
                             row.find('.name').text(file.fileName);
                             row.find('.size').text(file.fileSize);

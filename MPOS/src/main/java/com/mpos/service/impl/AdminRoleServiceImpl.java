@@ -129,7 +129,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	public PagingData loadAdminRolesList(DataTableParamter dtp) {
 		String searchJsonStr = dtp.getsSearch();
 		Criteria criteria = adminRoleDao.createCriteria();
-		criteria.add(Restrictions.ne("roleId", 1));
+		//criteria.add(Restrictions.ne("roleId", 1));
 		//criteria.add(Restrictions.ne("roleId", 4));
 		if (searchJsonStr != null && !searchJsonStr.isEmpty()) {
 			List<Criterion> criterionList = new ArrayList<Criterion>();

@@ -83,7 +83,7 @@
 						<form:form id="addGoodsForm"  action="setgoods" commandName="product" cssClass="form-horizontal" name="addGoodsForm" method="POST">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
-								<lable>There are some errors below</lable>
+								<lable>存在一些错误</lable>
 									<button class="close" data-close="alert"></button>									
 								</div>
 								<c:if test="${not empty Msg}">
