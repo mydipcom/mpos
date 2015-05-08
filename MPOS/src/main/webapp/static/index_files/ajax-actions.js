@@ -16,7 +16,7 @@ $(document).ready(function () {
         					checkedStr="checked";        						
         				}
         				str+="<div class='from-grounp'><input type='radio' name='serviceId' "+checkedStr+" value='"+data.info[i].serviceId+"'/><label>"
-        				+data.info[i].serviceName+": "+data.info[i].servicePrice+"元   --- "+data.info[i].content+"</label></div>";	
+        				+data.info[i].serviceName+": "+data.info[i].servicePrice+"元   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.info[i].content+"</label></div>";	
         			}
         			$('#getSevice').append(str);
     			}else{

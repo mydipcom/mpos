@@ -19,7 +19,7 @@
 <body id="home"><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"></div>
 
 <script src="static/index_files/f.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u837382_0"></div>
-</div><!-- head-section -->
+<!-- head-section -->
 	<div id="head-section">
 		<div class="container">
 			<div class="slider">
@@ -246,8 +246,8 @@
 			<div class="about-desc">
 				<h4>客户端下载</h4>
 				<div> 
-				<a href="http://yun.campray.com/download/" target="_blank" <img src="static/index_files/apple-icon.jpg" alt="icon"> iPad版下载</a>
-				<a href="http://yun.campray.com/download/" target="_blank" <img src="static/index_files/android-icon.jpg" alt="icon"> Android版下载</a>
+				<a href="http://yun.campray.com/download/" target="_blank"><img src="static/index_files/apple-icon.jpg" alt="icon"> iPad版下载</a>
+				<a href="http://yun.campray.com/download/" target="_blank"><img src="static/index_files/android-icon.jpg" alt="icon"> Android版下载</a>
 				</div> 
 			</div>			
 			<div class="about-desc">

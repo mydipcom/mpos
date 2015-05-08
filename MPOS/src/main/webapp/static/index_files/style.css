@@ -478,7 +478,7 @@ textarea:-ms-input-placeholder {
 .service_info .chose_detail .from-grounp{padding-top:15px}
 .service_info .chose_detail .from-grounp:first-child{padding-top:0}
 .service_info #getSevice label{width:auto}
-.service_info #getSevice input[type='radio']{width:20px;height:20px;margin:0 10px;}
+.service_info #getSevice input[type='radio']{width:20px;height:20px;margin:0 10px 4px;}
 .service_form  label{display:inline-block;width:150px;padding-right:30px;font-size:18px;font-weight:bold;text-align:right}
 .service_form  #sevice_btn{background:#ED0C4C}
 .service_info  input[type='text'],.service_info  input[type='password']{width:45%;height:32px;background:#eee}
