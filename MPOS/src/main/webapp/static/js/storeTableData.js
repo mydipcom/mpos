@@ -34,7 +34,7 @@ var StoreTable = function () {
         	"scrollXInner":"100%",         	
         	"processing":true,                
             // set the initial value
-            "displayLength": 10,
+            "displayLength": 5,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
                 "sProcessing": loadProperties("dataTable.page.process",locale),                
