@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
-import com.mpos.dto.TadminUser;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.Tstore;
 import com.mpos.dto.Ttable;
@@ -87,6 +86,7 @@ public class StoreManagerController extends BaseController {
 	@RequestMapping(value = "/storeList", method = RequestMethod.GET)
 	@ResponseBody
 	public String storeList(HttpServletRequest request, DataTableParamter dtp) {
+		System.out.println(System.currentTimeMillis());
 		PagingData pagingData = storeService.load(dtp);
 		if (pagingData.getAaData() == null) {
 			Object[] objs = new Object[] {};
@@ -97,24 +97,32 @@ public class StoreManagerController extends BaseController {
 		//	List<Tstore> stores = new ArrayList<Tstore>();
 			for (Object object : objects) {
 				Tstore store = (Tstore)object;
-				Tservice service = serviceService.get(store.getServiceId());
-				List<TadminUser> users = adminUserService.getUserByStoreId(store.getStoreId());
+				Map<String, Object> params = getHashMap();
+				String sql = "select service.service_name,admin.email from mpos_cloud.mpos_admin as admin,mpos_cloud.mpos_service as service where admin.store_id =:storeId and service.service_id=:serviceId";
+				//Tservice service = serviceService.get(store.getServiceId());
+				//List<TadminUser> users = adminUserService.getUserByStoreId(store.getStoreId());
+				params.put("storeId", store.getStoreId());
+				params.put("serviceId", store.getServiceId());
+				List<Object[]> res = storeService.getBySql(sql, params);
 				Map<String, Object> o = getHashMap();
 				o.put("storeId", store.getStoreId());
 				o.put("storeName", store.getStoreName());
 				o.put("createTimeStr", ConvertTools.longToDateString(store.getCreateTime()));
 				o.put("date",ConvertTools.longToDateString(store.getServiceDate()));
 				o.put("status", store.getCreateTimeStr());
-				o.put("serviceName", service.getServiceName());
-				String storeAdmin = "";
-				if(users!=null&&users.size()>0){
-					for (TadminUser user : users) {
-						if(user!=null&&user.getEmail()!=null&&!user.getEmail().isEmpty()){
-							storeAdmin +=user.getEmail()+",";
+				StringBuffer storeAdmin = new StringBuffer();
+				storeAdmin.append("");
+				if(res!=null&&res.size()>0){
+					o.put("serviceName", res.get(0)[0]);
+					for (Object[] user : res) {
+						if(user.length==2){
+							storeAdmin.append(user[1]+",");
 						}
-					}
+						}
+					}else{
+					o.put("serviceName", "");
 				}
-				o.put("email", storeAdmin);
+				o.put("email", storeAdmin.toString());
 				o.put("status", store.getStatus());
 				maps.add(o);
 			}
@@ -122,6 +130,7 @@ public class StoreManagerController extends BaseController {
 		}
 		pagingData.setSEcho(dtp.sEcho);
 		String rightsListJson = JSON.toJSONString(pagingData);
+		System.out.println(System.currentTimeMillis());
 		return rightsListJson;
 	}
 	

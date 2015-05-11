@@ -20,7 +20,7 @@
 })(jQuery);
 
 var rootURI="/";
-var locale = "en_US";
+var locale = "zh_CN";
 var UserProfile = function () {
 	   //修改个人资料
 	    var ChangeProfile = function(){
@@ -33,9 +33,7 @@ var UserProfile = function () {
 //		             "processData":false,
 //		             "contentType":"application/json",
 		             "success": function(resp,status){
-		            	 
 		            	 if(status == "success"){ 
-		            		
 		            		 if(resp.status){
 								 handleAlerts(resp.info,"success","#editFormMsg");
 							 }
@@ -84,8 +82,8 @@ var UserProfile = function () {
 		            			 if(resp.olderror){
 		            				 handleAlerts(resp.info,"danger","#changePasswordMsg");
 		            			 }else{
-		            				 
-		            				   alert("Change the Password successfully.");
+		            				 handleAlerts(resp.info,"success","#changePasswordMsg");
+		            				  // alert("Change the Password successfully.");
 		            				   window.location.href=rootURI+"login"
 		            			 }
 								 
@@ -237,7 +235,8 @@ var UserProfile = function () {
     
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
+        	locale = locale_value;
         	rootURI=rootPath;
         	changePasswordValidation();
         	changeProfileValidation();

@@ -518,7 +518,7 @@
 								<div class="portlet box grey-silver tabbable">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-gift"></i>Multi-language Form Items
+											<i class="fa fa-gift"></i><s:message code="system.lan.form"/>
 										</div>
 									</div>
 									<div class="portlet-body">
@@ -643,7 +643,7 @@
 								<div class="portlet box grey-silver tabbable">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-gift"></i>Multi-language Form Items
+											<i class="fa fa-gift"></i><s:message code="system.lan.form"/>
 										</div>
 									</div>
 									<div class="portlet-body">

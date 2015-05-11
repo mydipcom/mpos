@@ -1,4 +1,3 @@
-//jquery插件把表单序列化成json格式的数据start 
 (function($) {
 	$.fn.serializeJson = function() {
 		var serializeObj = {};
@@ -131,15 +130,13 @@ var StoreSetting = function() {
 	             "fileElementId":"back_image", 
 	             "dataType": "json",
 	             "data":{"storeId":storeId},
-//	             "processData":false,
-//	             "contentType":"application/json",
 	             "success": function(resp,status){
 	            	 if(status == "success"){  
 	            		 if(resp.status){
 	            			 var path = rootURI+resp.path;
-	            			 //alert(path);
 	            			 handleAlerts(resp.info,"success","");
-							 $('#background_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
+	            			 $("#back_id").src=path+"?rand="+Math.random();
+							/* $('#background_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
 								 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+
 	                                     "<img src=\""+path+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
 										 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
@@ -148,7 +145,7 @@ var StoreSetting = function() {
 										 "</span> <a href=\"#\" class=\"btn default fileinput-exists\" data-dismiss=\"fileinput\"> Remove </a>"+
 	                                     "<div class=\"clearfix margin-top-10\"> <span class=\"label label-danger\"> NOTE! </span> <span>"+$('#background_change').find('.clearfix').find('span:eq(1)').text()+
 	                                     "</span></div><div class=\"margin-top-10\"><input type=\"submit\" class=\"btn green fileinput-exists\" value=\"Confirm\" class=\"form-control\"/></div></div></div></div>"
-						                 );
+						                 );*/
 			              }
 						 else{
 							 handleAlerts(resp.info,"danger","");
@@ -168,13 +165,12 @@ var StoreSetting = function() {
 		$("#logo_change").on("submit", function(event) {
 			 $.ajaxFileUpload( {
 	             "type": "POST", 
-	             "url": rootURI+"storeSetting/test?rand="+Math.random(), 
+	             "url": rootURI+"storeSetting/uploadLogo?rand="+Math.random(), 
 	             "secureuri": false,
 	             "fileElementId":"logo_image", 
 	             "dataType": "json",
 	             "data":{"storeId":storeId},
-//	             "processData":false,
-//	             "contentType":"application/json",
+	           //  "contentType":"application/json",
 	             "success": function(resp,status){
 	            	 if(status == "success"){  
 	            		 if(resp.status){

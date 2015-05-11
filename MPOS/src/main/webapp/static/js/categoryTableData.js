@@ -350,19 +350,26 @@ var CategoryTable = function () {
 		 	        				var tem = row.type;
 		 	        				var str = '';
 		 	        				if(tem==0){
-		 	        					str = 'Editbox';
+		 	        					str = '输入框';
 		 	        				}else if(tem==1){
-		 	        					str = 'Radio Button';
+		 	        					str = '单选';
 		 	        				}else if(tem==2){
-		 	        					str = 'Checkbox';
+		 	        					str = '复选框';
 		 	        				}else{
-		 	        					str = 'Dropdown List';
+		 	        					str = '下拉列表';
 		 	        				}
 		 	        				return str;
 		 	        			}
 		 	           },
 		 	           {/* title: "Sort",*/ data: "sort" },		 	           
-		 	           { /*title: "Required",*/ data: "required" },
+		 	           { /*title: "Required",*/ data: "required",
+		 	        	  'render':function(data,type,row){
+	 	        				var tem = "是";
+	 	        				if(data=="0"){
+	 	        					tem = "否";
+	 	        				}
+	 	        				return tem;
+	 	        			}},
 		 	           { /*title: "Values",*/data: "values"}
 		 	        ],
      	        "serverSide": true,

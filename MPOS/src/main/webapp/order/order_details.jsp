@@ -163,7 +163,7 @@
 														<div class="portlet-body">
 															<div class="row static-info">
 																<div class="col-md-5 name">
-																	<s:message code="order.id" />
+																	<s:message code="order.code" />
 																	:
 																</div>
 																<div class="col-md-7 value">

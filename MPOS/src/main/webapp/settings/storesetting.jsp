@@ -304,13 +304,13 @@
 		src="../assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js"></script>
 	<script type="text/javascript"
 		src="../assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js"></script>
+		
 	<script
 		src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
 		type="text/javascript"></script>
-	<script src="../media/js/ajaxfileupload.js"
-		type="text/javascript"></script>
+	
 	<!-- END PAGE LEVEL PLUGINS -->
-
+	<script src="../assets/global/plugins/jquery.ajaxfileupload.js" type="text/javascript"></script>
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js"

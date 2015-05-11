@@ -239,7 +239,7 @@ public class StoreServiceImpl implements StoreService {
 	
 	public void validStoreDate(){
 		long now = System.currentTimeMillis();
-		List<Tstore> stores = storeDao.select("select new Tstore(storeId,serviceDate,status) from Tstore where status=true", null);
+		List<Tstore> stores = storeDao.select("select new Tstore(storeId,serviceDate,status) from Tstore where status=true and storeId !=0", null);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(stores!=null&&stores.size()>0){
 			for (Tstore store : stores) {
@@ -253,5 +253,10 @@ public class StoreServiceImpl implements StoreService {
 				}
 			}
 		}
+
+	public List<Object[]> getBySql(String sql, Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return storeDao.getListBySql(sql, params);
+	}
 
 }

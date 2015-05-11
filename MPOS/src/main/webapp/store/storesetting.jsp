@@ -252,7 +252,7 @@
 																data-provides="fileinput">
 																<div class="fileinput-new thumbnail"
 																	style="width: 200px; height: 200px;">
-																	<img src="<c:url value="/"/>${store.backgroundPath}"
+																	<img id="back_id" src="<c:url value="/"/>${store.backgroundPath}"
 																		alt="" />
 																</div>
 																<div
@@ -274,7 +274,7 @@
 																		</div>
 																		<div class="margin-top-10">
 																			<input type="submit"
-																				class="btn green fileinput-exists" value="<s:message code="store.set.image.submit"/>"
+																				class="btn green fileinput-exists" value="<s:message code="system.submit"/>"
 																				class="form-control" />
 																		</div>
 																	</c:if>
@@ -336,7 +336,7 @@
 	<script
 		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
 		type="text/javascript"></script>
-	<script src="../media/js/ajaxfileupload.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/jquery.ajaxfileupload.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 
 

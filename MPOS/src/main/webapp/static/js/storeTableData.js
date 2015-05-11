@@ -35,7 +35,7 @@ var StoreTable = function () {
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
                 "sProcessing": loadProperties("dataTable.page.process",locale),                
                 "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),

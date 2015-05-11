@@ -283,7 +283,7 @@
 											<th class="table-checkbox"><input type="checkbox"
 												class="group-checkable"
 												data-set="#order_list_table .checkboxes" /></th>
-											<th><s:message code="order.id" /></th>
+											<th><s:message code="order.code" /></th>
 											<th><s:message code="order.status" /></th>
 											<th><s:message code="payment.total" /></th>
 											<th><s:message code="discount.total" /></th>

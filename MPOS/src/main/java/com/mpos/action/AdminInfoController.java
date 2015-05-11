@@ -116,7 +116,7 @@ public class AdminInfoController extends BaseController {
 			adminInfo.setAdminId(adminId);
 			adminInfoService.updateAdminInfo(adminInfo);
 			log_content="success:edit profile.";
-			respJson.put("info", getMessage(request, "edit success."));
+			respJson.put("info", getMessage(request, "operate.success"));
 			respJson.put("status", true);
 		}catch(MposException be){
 			respJson.put("status", false);
@@ -134,7 +134,7 @@ public class AdminInfoController extends BaseController {
 		try{
 			TadminUser adminUser = (TadminUser) request.getSession().getAttribute(SystemConstants.LOGINED);
 			adminLog.setAdminId(adminUser.getAdminId());
-			if(!SecurityTools.SHA1(cpMod.getOldpassword()).equals(adminUser.getPassword())){
+			if(!SecurityTools.MD5(cpMod.getOldpassword()).equals(adminUser.getPassword())){
 				log_content="error:old password is error.";
 				adminLog.setLevel((short) 1);
                 respJson.put("status", true);
@@ -142,7 +142,7 @@ public class AdminInfoController extends BaseController {
 			}
 			else{
 				request.getSession().removeAttribute(SystemConstants.LOGINED);
-				adminUser.setPassword(SecurityTools.SHA1(cpMod.getNewpassword()));
+				adminUser.setPassword(SecurityTools.MD5(cpMod.getNewpassword()));
 				adminUserService.updateAdminUserPassword(adminUser);
 				log_content = "success:change pasword.";
 				respJson.put("status", true);
