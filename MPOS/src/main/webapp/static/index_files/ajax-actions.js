@@ -35,7 +35,7 @@ $(document).ready(function () {
             var name = $("#name").val();
             var phoneNum = $("#number").val();
             var message = $("#message").val();
-            var regmobile=/^[1][358][0-9]{9}$/;
+            var regmobile=/^[1][3-8][0-9]{9}$/;
             if($("#message").val().length == 0) {
                     $('#message').css({
                         "background-color": "rgba(238,12,76,0.2)"
