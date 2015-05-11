@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.mpos.commons.IpUtils;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.TadminUser;
@@ -183,5 +184,21 @@ public class CommonController extends BaseController {
 			res.put("info", "失败");
 		}
 		return JSON.toJSONString(res);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/pay")
+	@ResponseBody
+	public String test(HttpServletRequest request){
+		String ip = IpUtils.getIpAddr(request);
+		System.out.println(ip);
+		Map< String, Object> re = request.getParameterMap();
+		for (String key : re.keySet()) {
+			System.out.println(key+":"+re.get(key));
+		}
+		Map<String, Object> res = getHashMap();
+		res.put("is_success", "T");
+		res.put("out_trade_no", System.currentTimeMillis());
+		return JSON.toJSONString("success");
 	}
 }
