@@ -19,22 +19,22 @@
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-<link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-<link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link href="assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
-<link href="assets/admin/pages/css/login.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//admin/pages/css/login.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME STYLES -->
-<link href="assets/global/css/components.css" rel="stylesheet" type="text/css"/>
-<link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-<link href="assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-<link id="style_color" href="assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
-<link href="assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/css/components.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+<link id="style_color" href="${pageContext.request.contextPath}/assets//admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/assets//admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="media/image/favicon.ico"/>
 </head>
@@ -72,7 +72,7 @@
 		<c:if test="${not empty msg}">
 		<div class="alert alert-success">
 			<button class="close" data-close="alert"></button>
-			<span>${msg}</span>
+			<span style="font-size:10px">${msg}</span>
 		</div>
 		</c:if>
 		<div class="form-group">
@@ -111,7 +111,7 @@
 	</form:form>
 	<!-- END LOGIN FORM -->
 	<!-- BEGIN FORGOT PASSWORD FORM -->
-	<form class="forget-form" action="ResetPassword" method="post">
+	<form class="forget-form" action="${pageContext.request.contextPath}/common/ResetPassword" method="post">
 		<h3>忘记密码 ?</h3>
 		<p>
 			输入邮箱，重置密码
@@ -142,30 +142,30 @@
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
 <!--[if lt IE 9]>
-<script src="assets/global/plugins/respond.min.js"></script>
-<script src="assets/global/plugins/excanvas.min.js"></script> 
+<script src="${pageContext.request.contextPath}/assets//global/plugins/respond.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/excanvas.min.js"></script> 
 <![endif]-->
-<script src="assets/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-<script src="assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="assets/global/plugins/select2/select2.min.js"></script>
-<script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets//global/plugins/select2/select2.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets//global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
-<script src="assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
-<script src="assets/admin/pages/scripts/login.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//global/scripts/metronic.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//admin/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets//admin/pages/scripts/login.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() { 

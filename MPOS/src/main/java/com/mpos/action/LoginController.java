@@ -135,7 +135,7 @@ public class LoginController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/ResetPassword",method=RequestMethod.POST)
+	@RequestMapping(value="/common/ResetPassword",method=RequestMethod.POST)
 	public ModelAndView resetPassword(HttpServletRequest request ,String email){
 		ModelAndView mav = new ModelAndView();
 		TadminLog adminLog = new TadminLog();
