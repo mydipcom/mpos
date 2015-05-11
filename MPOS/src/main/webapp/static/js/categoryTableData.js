@@ -1,5 +1,4 @@
 //jquery插件把表单序列化成json格式的数据start 
-var locale = "zh_CN";
 (function($){
     $.fn.serializeJson=function(){
         var serializeObj={};
@@ -42,7 +41,9 @@ var locale = "zh_CN";
     
 })(jQuery);
 
+var locale = "zh_CN";
 var rootURI="/";
+
 var CategoryTable = function () {
 	var oTable;
 	var selected = [];
@@ -169,6 +170,11 @@ var CategoryTable = function () {
            });
         });  
 		
+		//打开添加分类创窗口
+		$("#openAddCategoryModal").on("click",function(event){
+			categoryFormValidation(0);
+		});
+		
 		//打开编辑分类创窗口
 		$("#openEditCategoryModal").on("click",function(event){
 			if(selected.length!=1){
@@ -176,6 +182,7 @@ var CategoryTable = function () {
 				return false;				
 			}
 			else{
+				categoryFormValidation(1);
 				var checkedObj=$("tr input:checked");
 				var data = oTable.api().row(checkedObj.parents('tr')).data();
 								
@@ -423,6 +430,7 @@ var CategoryTable = function () {
 		
 		//打开添加分类属性窗口
 		$("#openAddAttributeModal").on("click",function(event){
+			AttributeFormValidation(0);					
 			$("#addAttributeForm :text[name^='values']").val("");
 			$("#addAttributeForm :text[name^='values']").select2({tags:[],formatNoMatches: function () { return "&nbsp;"; }});
 			var groupType=$("#addAttributeForm input[name='categoryId.type']").val();
@@ -449,6 +457,7 @@ var CategoryTable = function () {
 				return false;				
 			}
 			else{
+				AttributeFormValidation(1);
 				var groupType=$("#editAttributeForm input[name='categoryId.type']").val();
 				if(groupType=="1"){
 					$("#editAttrType").hide();
@@ -683,51 +692,57 @@ var CategoryTable = function () {
     
     //处理分类表单验证方法
     var categoryFormValidation = function(formType) {
-    	    var validationForm; 
-	    	if(formType==0){
-	    		validationForm=$('#addCategoryForm');
-	        }
-	        else{
-	        	validationForm=$('#editCategoryForm');
-	        }            
-            var errorDiv = $('.alert-danger', validationForm);
-            validationForm.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    name: {
-                        minlength: 2,
-                        required: true
-                    }
-                },
-                invalidHandler: function (event, validator) { //display error alert on form submit 
-                	validationForm.find("a[href$='_category_tab1']").trigger("click");
-                    errorDiv.show();                    
-                },
-                highlight: function (element) { // hightlight error inputs
-                    $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-                onfocusout: function (element) { // hightlight error inputs
-                    $(element).valid();
-                },
-                success: function (label) {
-                    label.closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                    if(formType==0){
-                    	ajaxAddCategory();
-                    }
-                    else{
-                    	ajaxEditCategory();
-                    }
+        var validationForm; 
+    	if(formType==0){
+    		validationForm=$('#addCategoryForm');
+        }
+        else{
+        	validationForm=$('#editCategoryForm');
+        }            
+        var errorDiv = $('.alert-danger', validationForm);
+        var validator=validationForm.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+                name: {
+                    minlength: 2,
+                    required: true
                 }
-            });
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit 
+            	validationForm.find("a[href$='_category_tab1']").trigger("click");
+                errorDiv.show();                    
+            },
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            onfocusout: function (element) { // hightlight error inputs
+                $(element).valid();
+            },
+            success: function (label) {
+                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            submitHandler: function (form) {                	
+                errorDiv.hide();
+                if(formType==0){
+                	ajaxAddCategory();
+                }
+                else{
+                	ajaxEditCategory();
+                }
+            }
+        });
+        
+        //重置表单页面
+        validationForm[0].reset();
+        errorDiv.hide(); 
+		$('input',validationForm).closest('.form-group').removeClass('has-error');
+		validator.resetForm();
     };
     
     
@@ -742,8 +757,8 @@ var CategoryTable = function () {
         	validationForm=$('#editAttributeForm');
         }  
         var errorDiv = $('.alert-danger', validationForm);  
-                
-        validationForm.validate({
+                        
+        var validator=validationForm.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
@@ -763,7 +778,7 @@ var CategoryTable = function () {
             },
             invalidHandler: function (event, validator) { //display error alert on form submit 
             	validationForm.find("a[href$='_attribute_tab1']").trigger("click");
-                errorDiv.show();                    
+                errorDiv.show();                
             },
             highlight: function (element) { // hightlight error inputs
                 $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -787,6 +802,11 @@ var CategoryTable = function () {
                                    
             }
         });
+        //重置表单页面
+        validationForm[0].reset();
+        errorDiv.hide(); 
+	$('input',validationForm).closest('.form-group').removeClass('has-error');
+	validator.resetForm();
     };
     
     return {
@@ -795,10 +815,10 @@ var CategoryTable = function () {
         	rootURI=rootPath;
         	locale = locale_value;
         	handleTable();  
-        	categoryFormValidation(0);
-        	categoryFormValidation(1);        	
-        	AttributeFormValidation(0);
-        	AttributeFormValidation(1);
+//        	categoryFormValidation(0);
+//        	categoryFormValidation(1);        	
+//        	AttributeFormValidation(0);
+//        	AttributeFormValidation(1);
         	$(".select2_sample3").select2({tags:[],formatNoMatches: function () { return "&nbsp;"; }});
         }
     };
