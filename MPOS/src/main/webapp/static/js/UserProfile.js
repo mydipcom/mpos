@@ -77,8 +77,7 @@ var UserProfile = function () {
 		             "success": function(resp,status){
 		            	 
 		            	 if(status == "success"){ 
-		            		
-		            		 if(resp.status){
+		            		 if(resp.status=="1"){
 		            			 if(resp.olderror){
 		            				 handleAlerts(resp.info,"danger","#changePasswordMsg");
 		            			 }else{
@@ -87,8 +86,7 @@ var UserProfile = function () {
 		            				   window.location.href=rootURI+"login"
 		            			 }
 								 
-							 }
-							 else{
+							 }else{
 								 handleAlerts(resp.info,"danger","#changePasswordMsg");
 							 }
 						}             	 

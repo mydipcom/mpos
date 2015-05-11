@@ -23,8 +23,10 @@ import com.mpos.commons.ConvertTools;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dao.AdminUserDao;
+import com.mpos.dao.ServiceDao;
 import com.mpos.dao.StoreDao;
 import com.mpos.dto.ImageModel;
+import com.mpos.dto.Tservice;
 import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -35,9 +37,13 @@ public class StoreServiceImpl implements StoreService {
 	@Autowired
 	private StoreDao storeDao;
 	@Autowired
+	private ServiceDao serviceDao;
+	@Autowired
 	private AdminUserDao adminUserDao;
 	public void save(Tstore store) {
 		// TODO Auto-generated method stub
+		Tservice service= serviceDao.get(store.getServiceId());
+		store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
 		storeDao.save(store);
 	}
 
