@@ -20,7 +20,7 @@ public class PaymentController extends BaseController {
 		System.out.println(request.getRemoteAddr());
 		Map< String, Object> re = request.getParameterMap();
 		for (String key : re.keySet()) {
-			System.out.println(re.get(key));
+			System.out.println(key+":"+re.get(key));
 		}
 		Map<String, Object> res = getHashMap();
 		res.put("is_success", "T");
