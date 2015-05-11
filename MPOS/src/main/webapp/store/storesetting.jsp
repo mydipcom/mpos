@@ -204,7 +204,7 @@
 																data-provides="fileinput">
 																<div class="fileinput-new thumbnail"
 																	style="width: 200px; height: 150px;">
-																	<img src="<c:url value="/"/>${store.logoPath}" alt="" />
+																	<img id="logo_id" src="<c:url value="/"/>${store.logoPath}" alt="" />
 																</div>
 																<div
 																	class="fileinput-preview fileinput-exists thumbnail"

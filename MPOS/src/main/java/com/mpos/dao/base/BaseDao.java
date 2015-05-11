@@ -491,6 +491,10 @@ public class BaseDao<T> extends HibernateDaoSupport
         return page;
     }
     
+/*    public PagingData findPage(final String sql, final int startNo, final int pageSize,final Map<String, Object> params){
+				return null;
+    }*/
+    
     @SuppressWarnings("rawtypes")
 	public DaoModel findPageList(Criteria criteria, int startNo, int pageSize)
     {

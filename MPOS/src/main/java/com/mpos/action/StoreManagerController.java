@@ -86,7 +86,6 @@ public class StoreManagerController extends BaseController {
 	@RequestMapping(value = "/storeList", method = RequestMethod.GET)
 	@ResponseBody
 	public String storeList(HttpServletRequest request, DataTableParamter dtp) {
-		System.out.println(System.currentTimeMillis());
 		PagingData pagingData = storeService.load(dtp);
 		if (pagingData.getAaData() == null) {
 			Object[] objs = new Object[] {};
@@ -130,7 +129,6 @@ public class StoreManagerController extends BaseController {
 		}
 		pagingData.setSEcho(dtp.sEcho);
 		String rightsListJson = JSON.toJSONString(pagingData);
-		System.out.println(System.currentTimeMillis());
 		return rightsListJson;
 	}
 	

@@ -136,16 +136,6 @@ var StoreSetting = function() {
 	            			 var path = rootURI+resp.path;
 	            			 handleAlerts(resp.info,"success","");
 	            			 $("#back_id").src=path+"?rand="+Math.random();
-							/* $('#background_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
-								 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+
-	                                     "<img src=\""+path+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
-										 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
-	                                     "<div><span class=\"btn default btn-file\"> <span class=\"fileinput-new\"> Select image </span>"+ 
-	                                     "<span class=\"fileinput-exists\"> Change </span> <input type=\"file\" name=\"images\" accept=\"image/*\" id=\"backgroundimages\">"+
-										 "</span> <a href=\"#\" class=\"btn default fileinput-exists\" data-dismiss=\"fileinput\"> Remove </a>"+
-	                                     "<div class=\"clearfix margin-top-10\"> <span class=\"label label-danger\"> NOTE! </span> <span>"+$('#background_change').find('.clearfix').find('span:eq(1)').text()+
-	                                     "</span></div><div class=\"margin-top-10\"><input type=\"submit\" class=\"btn green fileinput-exists\" value=\"Confirm\" class=\"form-control\"/></div></div></div></div>"
-						                 );*/
 			              }
 						 else{
 							 handleAlerts(resp.info,"danger","");
@@ -176,7 +166,8 @@ var StoreSetting = function() {
 	            		 if(resp.status){
 	            			 var path = rootURI+resp.path;
 	            			 handleAlerts(resp.info,"success","");
-							 $('#logo_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
+	            			 $("#logo_id").src=path+"?rand="+Math.random();
+							/* $('#logo_change').html("<div class=\"form-group\"><div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">" +
 							 		"<div class=\"fileinput-new thumbnail\" style=\"width: 200px; height: 200px;\">"+
                                      "<img src=\""+path+"?rand="+Math.random()+"\" alt=\"\" /></div>"+
 									 "<div class=\"fileinput-preview fileinput-exists thumbnail\" style=\"max-width: 200px; max-height: 150px;\"></div>"+
@@ -185,7 +176,7 @@ var StoreSetting = function() {
 									 "</span> <a href=\"#\" class=\"btn default fileinput-exists\" data-dismiss=\"fileinput\"> Remove </a>"+
                                      "<div class=\"clearfix margin-top-10\"> <span class=\"label label-danger\"> NOTE! </span> <span>"+$('#background_change').find('.clearfix').find('span:eq(1)').text()+
                                      "</span></div><div class=\"margin-top-10\"><input type=\"submit\" class=\"btn green fileinput-exists\" value=\"Confirm\" class=\"form-control\"/></div></div></div></div>"
-					                 );
+					                 );*/
 						}
 						 else{
 							 handleAlerts(resp.info,"danger","");
