@@ -157,13 +157,13 @@ public class LoginController extends BaseController {
 			message.setSubject("MPOS Password Reset");
 			EMailTool.send(message);
 			adminUserService.updateAdminUserPassword(adminUser);
-			mav.addObject(ERROR_MSG_KEY,"password reset success.");
+			//mav.addObject(ERROR_MSG_KEY,"password reset success.");
 			LogManageTools.writeAdminLog(log_content, adminLog,request);
 		}
 		mav.addObject("user",adminUser);
+		mav.addObject("msg", getMessage(request,"reset.pwd.success"));
 		mav.setViewName("login");
 		log_content="success:resert password success.";
-		
 		return mav;
 	}
 	

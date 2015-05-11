@@ -69,6 +69,12 @@
 			<span>${errorMsg}</span>
 		</div>
 		</c:if>
+		<c:if test="${not empty msg}">
+		<div class="alert alert-success">
+			<button class="close" data-close="alert"></button>
+			<span>${msg}</span>
+		</div>
+		</c:if>
 		<div class="form-group">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
 			<label class="control-label visible-ie8 visible-ie9"><s:message code="login.form.username"/></label>

@@ -139,15 +139,17 @@ public class AdminInfoController extends BaseController {
 				adminLog.setLevel((short) 1);
                 respJson.put("status", true);
 				respJson.put("olderror",true);
+				respJson.put("info", "当前密码不正确");
 			}
 			else{
 				request.getSession().removeAttribute(SystemConstants.LOGINED);
 				adminUser.setPassword(SecurityTools.MD5(cpMod.getNewpassword()));
 				adminUserService.updateAdminUserPassword(adminUser);
 				log_content = "success:change pasword.";
+				respJson.put("info", getMessage(request,"operate.success"));
 				respJson.put("status", true);
 			}
-			respJson.put("info", getMessage(request,"operate.success"));
+			
 		}catch(MposException be){
 			respJson.put("status", false);
 			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
