@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,10 @@ public class MessageServiceImpl implements MessageService {
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
 			List<Criterion> criterionList = new ArrayList<Criterion>();
 			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);
+			String name = json.getString("userName");
+			if(name!=null&&!json.isEmpty()){
+				criterionList.add(Restrictions.like("userName",name,MatchMode.ANYWHERE));
+			}
 			String startTime = json.getString("startTime");
 			String endTime = json.getString("endTime");
 			if((startTime!=null&&!startTime.isEmpty())&&(endTime!=null&&!endTime.isEmpty())){

@@ -155,8 +155,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label"><s:message
-											code="order.id" /></label>
+									<label class="col-md-3 control-label"><s:message code="order.code"/></label>
 									<div class="col-md-6">
 										<input name="orderId" type="text" class="form-control" maxLength="20">
 									</div>

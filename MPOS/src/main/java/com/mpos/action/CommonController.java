@@ -102,6 +102,18 @@ public class CommonController extends BaseController {
 		mav.setViewName("common/notice");
 		return mav;
 	}
+	
+	/**
+	 * 添加验证tableName
+	 * @param tableName 桌号
+	 * @return
+	 */
+	@RequestMapping(value="/checkEmail",method=RequestMethod.POST)
+	@ResponseBody
+	public String checkTableName(String email,HttpServletRequest request){
+		return JSON.toJSONString(!adminUserService.emailExist(email));
+	}
+	
 	@RequestMapping(value="addMsg",method=RequestMethod.POST)
 	@ResponseBody
 	public String add(HttpServletRequest request,Tmessage message){

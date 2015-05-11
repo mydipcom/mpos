@@ -55,10 +55,10 @@ $(document).ready(function () {
                $.ajax({
                    	type: "POST",
                    	dataType:'json',
-                    url: "",
+                    url: "common/addMsg",
                     data: $('#contact-form').serialize(),
                     beforeSend:function(){
-						$('#send-btn').val('注册中...').css('background','#333').attr('disabled','disabled');
+						$('#send-btn').val('留言中...').css('background','#333').attr('disabled','disabled');
 					},
                     success: function (data,status) {
                     	if(data.status){
@@ -105,7 +105,7 @@ $(document).ready(function () {
 				$.ajax({
 					async:false,
 					type: "POST",
-					url: "storeManager/checkEmail",
+					url: "common/checkEmail",
 					data: "email="+emailValue,
 					success: function(text){
 						if(text=='false'){

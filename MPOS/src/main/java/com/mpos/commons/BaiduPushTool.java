@@ -21,6 +21,8 @@ import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest;
 import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
 import com.baidu.yun.push.model.PushMsgToTagRequest;
 import com.baidu.yun.push.model.PushMsgToTagResponse;
+import com.baidu.yun.push.model.QueryDeviceNumInTagRequest;
+import com.baidu.yun.push.model.QueryDeviceNumInTagResponse;
 
 /**
  * 百度SDK 推送工具
@@ -138,13 +140,22 @@ public class BaiduPushTool {
 	}
 	
 	public static void main(String[] args) {
-		String channelId = "5186399146318530283";
+		String[] channelId = new String[]{"5186399146318530283"};
 		//Integer deviceType = 3;
 		//Notification notification = new Notification("title", "Hello ios");
 		//pushMsgToTag(notification, "0", deviceType);
-		pushMsgToSingleDevice(IOS_TYPE,channelId,new Notification(10001));
+		//pushMsgToSingleDevice(IOS_TYPE,channelId,new Notification(10001));
 		//deleteTag(3,"0");
 		//deleteTag(3,"ios1");
+		deleteDevicesFromTag(channelId,"1",IOS_TYPE);
+	}
+	
+	private static void  log(BaiduPushClient pushClient){
+	    pushClient.setChannelLogHandler (new YunLogHandler () {
+            public void onHandle (YunLogEvent event) {
+                System.out.println(event.getMessage());
+            }
+        });
 	}
 	
 	private static PushKeyPair getPushKeyPair(Integer deviceType){
@@ -167,6 +178,7 @@ public class BaiduPushTool {
 	 */
 	public static boolean deleteDevicesFromTag(String[] channelIds,String tagName,Integer deviceType){
 		BaiduPushClient pushClient = new BaiduPushClient(getPushKeyPair(deviceType),BaiduPushConstants.CHANNEL_REST_URL);
+		log(pushClient);
 		DeleteDevicesFromTagRequest addreRequest = new DeleteDevicesFromTagRequest();
 		addreRequest.addChannelIds(channelIds).addDeviceType(deviceType).addTagName(tagName);
 		try {
@@ -188,6 +200,7 @@ public class BaiduPushTool {
 	 */
 	public static boolean addDevicesToTag(String[] channelIds,String tagName,Integer deviceType){
 		BaiduPushClient pushClient = new BaiduPushClient(getPushKeyPair(deviceType),BaiduPushConstants.CHANNEL_REST_URL);
+		log(pushClient);
 		AddDevicesToTagRequest addreRequest = new AddDevicesToTagRequest();
 		addreRequest.addChannelIds(channelIds).addDeviceType(deviceType).addTagName(tagName);
 		try {
@@ -209,6 +222,7 @@ public class BaiduPushTool {
 	 */
 	public static boolean createTag (Integer deviceType,String tagName){
 		BaiduPushClient pushClient = new BaiduPushClient(getPushKeyPair(deviceType),BaiduPushConstants.CHANNEL_REST_URL);
+		log(pushClient);
 		CreateTagRequest request = new CreateTagRequest();
 		request.addDeviceType(deviceType).addTagName(tagName);
 		//QueryTagsRequest queryRequest  = new QueryTagsRequest();
@@ -238,6 +252,7 @@ public class BaiduPushTool {
 	 */
 	public static boolean deleteTag (Integer deviceType,String tagName){
 		BaiduPushClient pushClient = new BaiduPushClient(getPushKeyPair(deviceType),BaiduPushConstants.CHANNEL_REST_URL);
+		log(pushClient);
 		DeleteTagRequest request = new DeleteTagRequest();
 		request.addDeviceType(deviceType).addTagName(tagName);
 		//QueryTagsRequest queryRequest  = new QueryTagsRequest();
@@ -266,6 +281,7 @@ public class BaiduPushTool {
 	 */
 	public static boolean pushMsgToTag(Notification notification,String tagName,Integer deviceType){
 		BaiduPushClient pushClient = new BaiduPushClient(getPushKeyPair(deviceType),BaiduPushConstants.CHANNEL_REST_URL);
+		log(pushClient);
 		PushMsgToTagRequest request = new PushMsgToTagRequest();
 		request.addDeviceType(deviceType).addTagName(tagName).addMessageType(1).addMessage(JSON.toJSONString(notification)).addMsgExpires(86400);
 		 if(deviceType==IOS_TYPE){
@@ -322,6 +338,18 @@ public class BaiduPushTool {
 				e.printStackTrace();
 			}
 			return false;
+	}
+	
+	public static void queryDeviceNumInTag(String tagName,Integer deviceType){
+		BaiduPushClient pushClient = new BaiduPushClient(getPushKeyPair(deviceType),BaiduPushConstants.CHANNEL_REST_URL);
+		QueryDeviceNumInTagRequest request = new QueryDeviceNumInTagRequest();
+		request.addDeviceType(deviceType).addTagName(tagName);
+		try {
+			QueryDeviceNumInTagResponse response = pushClient. queryDeviceNumInTag(request);
+			response.getDeviceNum();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 推送消息到一个设备

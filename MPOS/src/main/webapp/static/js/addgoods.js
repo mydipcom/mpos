@@ -136,17 +136,22 @@ var Addgoods = function () {
 									var page=$();
 									var checkboxGroup=$('<div class="checkbox-list"></div>');
 									var tableGroup=$('<div class="col-md-6"><br/><table class="table table-striped table-bordered">'+
-										        '<thead><tr><th width="40%">Options</th><th width="60%">Price adjustment</th></tr></thead>'+
+										        '<thead><tr><th width="40%">属性名</th><th width="60%">附加价格</th></tr></thead>'+
 										        '<tbody></tbody></table><lable>请为客户端默认属性价格输入一个0</lable></div>');
 									var Requiredlabel=$('<div class="checkbox"></div>');
 									var Requiredlabelbox=$();
-									var RequiredObj=$('<label class="control-label col-md-2">Required:</label><label class="control-label class="col-md-10">'+list[i].required+'</label>');
+									var ss = "否";
+									var re = list[i].required;
+									if(re=="1"){
+										ss = "是";
+									}
+									var RequiredObj=$('<label class="control-label col-md-2">是否必选:</label><label class="control-label class="col-md-10">'+ss+'</label>');
 									Requiredlabelbox=Requiredlabelbox.add(RequiredObj);
 									Requiredlabelbox.appendTo(Requiredlabel);
 									page=page.add(Requiredlabel);
 									var checkallboxGroup=$('<div class="checkbox"></div>');
 									var checkallboxes=$();
-									var checkboxObj=$('<label class="control-label col-md-2">Options:</label><label class="checkbox-inline class="col-md-10"">&nbsp&nbsp&nbsp<input type="checkbox" />Select All</label>');
+									var checkboxObj=$('<label class="control-label col-md-2">选项:</label><label class="checkbox-inline class="col-md-10"">&nbsp&nbsp&nbsp<input type="checkbox" />全选</label>');
 									checkallboxes=checkallboxes.add(checkboxObj);
 									checkallboxes.appendTo(checkallboxGroup);
 									var checkboxes=$();

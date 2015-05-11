@@ -15,6 +15,9 @@
 		<property name="basename" value="i18n.messageResource" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
+	
+	<bean id="messageService" class="com.mpos.service.impl.MessageServiceImpl" autowire="byName"/>
+	
 	<bean id="serviceOrderService" class="com.mpos.service.impl.ServiceOrderServiceImpl" autowire="byName"/>
 	
 	<bean id="serviceService" class="com.mpos.service.impl.ServiceServiceImpl" autowire="byName"/>

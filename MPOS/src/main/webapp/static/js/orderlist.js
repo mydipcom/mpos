@@ -280,8 +280,8 @@ var OrderList = function () {
 
     }
 	
-	var searchSubmit = function(){
-			event.preventDefault();
+	var searchSubmit = function(event){
+			//event.preventDefault();
 			var jsonData=$('#searchForm').serializeJson();
 			var jsonDataStr=JSON.stringify(jsonData);
 			oTable.fnFilter(jsonDataStr);

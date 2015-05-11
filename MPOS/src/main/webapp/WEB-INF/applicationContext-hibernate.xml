@@ -62,6 +62,7 @@
           <value>cfg/Store.hbm.xml</value>
           <value>cfg/Service.hbm.xml</value>
           <value>cfg/ServiceOrder.hbm.xml</value>
+           <value>cfg/Message.hbm.xml</value>
 	  </list>
 	</property>
 	 

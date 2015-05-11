@@ -222,15 +222,15 @@
 				<form id="contact-form" name="contact-form">
 					 <div class='form-group'>
 						  <label>请写下你的留言（必填）</label>
-						  <textarea name="message" id="message" cols="30" rows="10" placeholder="你的留言"></textarea>
+						  <textarea name="msg" id="message" cols="30" rows="10" placeholder="你的留言"></textarea>
 					  </div>
 					   <div class='form-group'>
 						  <label>手机号（选填）</label>
-						  <input type="text" name="number" class="fields" id="number" placeholder="手机号">
+						  <input type="text" name="phone" class="fields" id="number" placeholder="手机号">
 						</div>
 						<div class='form-group'>
 						  <label>姓名（选填）</label>
-						  <input type="text" name="Name" class="fields" id="name" placeholder="姓名">
+						  <input type="text" name="userName" class="fields" id="name" placeholder="姓名">
 						 </div>
 						  <input type="button" id="send-btn" name="send-btn" value="提交">
 				</form>
