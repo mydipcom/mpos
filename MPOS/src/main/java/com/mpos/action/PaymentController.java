@@ -18,6 +18,11 @@ public class PaymentController extends BaseController {
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
 	public String test(HttpServletRequest request,String code){
+		System.out.println(request.getRemoteAddr());
+		Map< String, Object> re = request.getParameterMap();
+		for (String key : re.keySet()) {
+			System.out.println(re.get(key));
+		}
 		Map<String, Object> res = getHashMap();
 		res.put("status", true);
 		res.put("code", code);
