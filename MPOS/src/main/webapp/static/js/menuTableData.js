@@ -342,13 +342,9 @@ var MenuTable = function () {
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    "title": {
+                    "menu.title": {
                         minlength: 2,
                         required: true
-                    },
-                    "pid": {
-                        required: true,
-                        maxlength:60                        
                     }
                 },
 

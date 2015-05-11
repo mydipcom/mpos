@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -138,7 +138,7 @@
 								</div>
 								<div class="actions">
 									<a class="btn btn-default btn-sm" href="#" id="CloneSelectedCategory"><i class="fa fa-plus"></i><s:message code="category.copy.add" /></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_category"><i class="fa fa-plus"></i> <s:message code="all.table.add" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_category" id="openAddCategoryModal"><i class="fa fa-plus"></i> <s:message code="all.table.add" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_category" id="openEditCategoryModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_category" id="openDeleteCategoryModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
 								    <%-- <div class="btn-group">
