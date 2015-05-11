@@ -148,7 +148,7 @@ public class LoginController extends BaseController {
 			adminLog.setAdminId(adminUser.getAdminId());
 		   
 			String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
-			adminUser.setPassword(SecurityTools.SHA1(random));
+			adminUser.setPassword(SecurityTools.MD5(random));
 			adminUser.setUpdatedBy(adminUser.getAdminId());
 			adminUser.setUpdatedTime(System.currentTimeMillis());
 			TemaiMessage message = new TemaiMessage();
