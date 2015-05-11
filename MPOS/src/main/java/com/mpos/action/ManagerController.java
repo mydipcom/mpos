@@ -131,6 +131,7 @@ public class ManagerController extends BaseController {
 			user.setAdminId(user.getEmail());
 			user.setCreatedBy(getSessionUser(request).getAdminId());
 			user.setAdminRole(new TadminRole(3));
+			user.setPassword(SecurityTools.MD5(user.getPassword()));
 			adminUserService.saveStoreUser(user);
 			res.put("status", true);
 			res.put("info", getMessage(request,"operate.success"));

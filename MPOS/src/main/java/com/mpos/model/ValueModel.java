@@ -11,6 +11,7 @@ public class ValueModel implements Serializable {
 	private Integer valueId;
 	private Float price;
 	private String value;
+	private Integer sort;
 	private Object valueLocale;
 	public Integer getValueId() {
 		return valueId;
@@ -36,5 +37,12 @@ public class ValueModel implements Serializable {
 	public void setValueLocale(Object valueLocale) {
 		this.valueLocale = valueLocale;
 	}
+	public Integer getSort() {
+		return sort;
+	}
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+	
 	
 }

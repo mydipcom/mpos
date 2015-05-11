@@ -548,7 +548,7 @@ public class MobileAPI {
 			respJson.put("info", "OK");
 			respJson.put("data", model);
 			return JSON.toJSONString(respJson);
-		} catch (MposException e) {
+		} catch (Exception e) {
 			respJson.put("status", false);
 			respJson.put("info", e.getMessage());
 			return JSON.toJSONString(respJson);
@@ -1090,10 +1090,10 @@ public class MobileAPI {
 											vm.setPrice(Float.valueOf(ps[value.getSort()]));
 										}
 									}
-									
 								}
 							}
 							vm.setValue(value.getValue());
+							vm.setSort(value.getSort());
 							List<TlocalizedField> valueList = localizedFieldService.getLocalizedField(value.getValueId(), SystemConstants.TABLE_NAME_ATTRIBUTE_VALUE, SystemConstants.TABLE_FIELD_VALUE);
 							vm.setValueLocale(setLocal(valueList));
 							values.add(vm);
