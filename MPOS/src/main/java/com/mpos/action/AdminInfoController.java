@@ -137,7 +137,7 @@ public class AdminInfoController extends BaseController {
 			if(!SecurityTools.MD5(cpMod.getOldpassword()).equals(adminUser.getPassword())){
 				log_content="error:old password is error.";
 				adminLog.setLevel((short) 1);
-                respJson.put("status", true);
+                respJson.put("status", true);    
 				respJson.put("olderror",true);
 				respJson.put("info", "当前密码不正确");
 			}
