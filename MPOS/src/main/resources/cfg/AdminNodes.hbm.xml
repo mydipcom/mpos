@@ -38,5 +38,8 @@
         <property name="descr" type="string">
             <column name="descr" length="1000" />
         </property>
+        <property name="menuIcon" type="string">
+            <column name="menu_icon" length="100" />
+        </property>
     </class>
 </hibernate-mapping>

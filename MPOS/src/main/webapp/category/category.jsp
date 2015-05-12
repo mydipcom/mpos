@@ -471,7 +471,7 @@
 				<!--END VIEW ATTRIBUTE  -->
 	
 				<!--BEGIN ADD ATTRIBUTE  -->
-				<div class="modal" id="add_attribute" tabindex="-1" data-width="960">
+				<div class="modal" id="add_attribute" tabindex="-1" data-width="960" data-height="450">
 					<div class="modal-header">
 						<button id="closeAddAttributeModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title"><s:message code="category.add.attribute" /></h4>
@@ -481,7 +481,7 @@
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
 						<form id="addAttributeForm" action="addAttribute" method="post" name="addAttributeForm" class="form-horizontal">
-							<div class="form-body">
+							<div class="form-body modal-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									<s:message code="system.management.user.adduser.message"/>
@@ -489,7 +489,7 @@
 								<input type="hidden" value="" name="categoryId.categoryId"/>
 								<input type="hidden" value="" name="categoryId.type"/>
 								<input type="hidden" value="true" name="status">
-								<div class="form-group" id="addAttrType">
+								<div class="form-group" id="addAttrType" style="margin:0 0 15px;">
 									<label class="control-label col-md-2"><s:message code="attribute.type" /> <span class="required">* </span></label>
 										<div class="col-md-10">										
 											<div class="radio-list">
@@ -500,7 +500,7 @@
 											</div>
 										</div>
 								</div>
-								<div class="form-group">
+								<div class="form-group" style="margin:0 0 15px;">
 									<label class="control-label col-md-2"><s:message code="attribute.required" /> <span class="required">* </span></label>
 									<div class="col-md-10">										
 										<div class="radio-list">
@@ -509,7 +509,7 @@
 										</div>									
 									</div>
 								</div>
-								<div class="form-group">
+								<div class="form-group" style="margin:0 0 15px;">
 									<label class="control-label col-md-2"><s:message code="attribute.sort" /> <span class="required">* </span></label>
 									<div class="col-md-10">																				
 										<input name="sort" class="form-control input-small" value=""/>									

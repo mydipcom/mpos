@@ -164,8 +164,7 @@ var RightsTable = function () {
 	            $("#editRightsForm :radio[name='isMenu']").filter("[value='"+isMenu+"']").attr("checked","true");
 	            $("#editRightsForm :radio[name='isMenu']").filter("[value='"+isMenu+"']").parents('span').addClass("checked");
 	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
-	            selected=[];
+	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");	            
 			}
 		});								
 		
@@ -410,6 +409,11 @@ var RightsTable = function () {
                 }
             });
     };
+    
+    function format(state) {
+        if (!state.id) return state.text; // optgroup
+        return '<i class="'+state.id.toLowerCase()+'"/>&nbsp;&nbsp;'+ state.text;        
+    }
 
     return {
         //main function to initiate the module
@@ -418,7 +422,17 @@ var RightsTable = function () {
         	locale=locale_value;
         	handleTable();  
         	addFormValidation();
-		editFormValidation();
+        	editFormValidation();
+        	//菜单图标的下拉菜单初始化
+            $(".select2_menuIcon").select2({
+                placeholder: "Select a Country",
+                allowClear: true,
+                formatResult: format,
+                formatSelection: format,
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
         }
 
     };

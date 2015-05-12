@@ -22,6 +22,7 @@ public class TadminNodes implements java.io.Serializable {
 	private String groupName;
 	private Short groupSort;
 	private String descr;
+	private String menuIcon;
 
 	public TadminNodes() {
 	}
@@ -146,6 +147,14 @@ public class TadminNodes implements java.io.Serializable {
 
 	public void setDescr(String descr) {
 		this.descr = descr;
+	}
+
+	public String getMenuIcon() {
+		return menuIcon;
+	}
+
+	public void setMenuIcon(String menuIcon) {
+		this.menuIcon = menuIcon;
 	}
 
 }

@@ -81,7 +81,7 @@
 			if((isAdmin&&userRights==0)||(userRights&menuBean.getBitFlag())>0){				
 			%>	
 			<li class="${classStr}">
-				<c:choose>
+				<%-- <c:choose>
 					<c:when test="${menu.key.uri eq '/home'}">
 						<c:set var="menuIcon" value="icon-home"/>						
 					</c:when>
@@ -115,13 +115,13 @@
 					<c:otherwise>
 						<c:set var="menuIcon" value="icon-home"/>
 					</c:otherwise>
-				</c:choose>
+				</c:choose> --%>
 				
 			
 				<c:set var="menuUri" value="${pageContext.request.contextPath}${menu.key.uri}"/>
 				<c:set var="hasSubMenu" value="${menu.value!=null&&menu.value.size()>0}"/>
 				<a href="${hasSubMenu?'javascript;':menuUri}">
-				<i class="<c:out value="${menuIcon}"/>"></i> 
+				<i class="<c:out value="${menu.key.menuIcon}"/>"></i> 
 				<span class="title"><c:out value="${menu.key.name}"/></span>
 				<c:if test="${selectedNode!=null&&selectedNode.nodeId==menu.key.nodeId}">				
 					<span class="selected"></span>								
