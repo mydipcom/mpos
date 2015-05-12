@@ -13,7 +13,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>用户登录</title>
+<title>密码重置</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -61,8 +61,7 @@
 <!-- BEGIN LOGIN -->
 <div class="content">
 	<!-- BEGIN LOGIN FORM -->
-	<form:form action="${pageContext.request.contextPath}/login" method="post" commandName="user" cssClass="login-form">	
-		<h3 class="form-title"><s:message code="login.form.title"/></h3>
+	<form:form action="${pageContext.request.contextPath}/common/change" method="post" commandName="user" cssClass="login-form">	
 		<c:if test="${not empty errorMsg}">
 		<div class="alert alert-danger">
 			<button class="close" data-close="alert"></button>
@@ -80,7 +79,7 @@
 			<label class="control-label visible-ie8 visible-ie9"><s:message code="login.form.username"/></label>
 			<div class="input-icon">
 				<i class="fa fa-user"></i>				
-				<form:input path="adminId" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off" maxlength="20"/>
+				<form:input path="email" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off" maxlength="20"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -91,45 +90,13 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<label class="checkbox">
-			<input type="checkbox" name="remember" value="1"/> <s:message code="login.form.rememberme"/> </label>
 			<button type="submit" class="btn green pull-right">
-			<s:message code="login.form.login"/> <i class="m-icon-swapright m-icon-white"></i>
+			<s:message code="system.submit"/> <i class="m-icon-swapright m-icon-white"></i>
 			</button>
 		</div>		
-		<div class="forget-password">
-			<h4>忘记密码？</h4>
-			<p>
-				 点击 <a href="javascript:;" id="forget-password">
-				这里 </a>
-				重置密码
-			</p>
-		</div>
-		<div class="create-account">
-		
-		</div>
 	</form:form>
 	<!-- END LOGIN FORM -->
 	<!-- BEGIN FORGOT PASSWORD FORM -->
-	<form class="forget-form" action="${pageContext.request.contextPath}/common/ResetPassword" method="post">
-		<h3>忘记密码 ?</h3>
-		<p>
-			输入邮箱，重置密码
-		</p>
-		<div class="form-group">
-			<div class="input-icon">
-				<i class="fa fa-envelope"></i>
-				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email"/>
-			</div>
-		</div>
-		<div class="form-actions">
-			<button type="button" id="back-btn" class="btn">
-			<i class="m-icon-swapleft"></i> 返回 </button>
-			<button type="submit" class="btn green pull-right">
-			提交 <i class="m-icon-swapright m-icon-white"></i>
-			</button>
-		</div>
-	</form>
 	<!-- END FORGOT PASSWORD FORM -->
 	
 </div>

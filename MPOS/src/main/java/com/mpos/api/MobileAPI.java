@@ -274,21 +274,19 @@ public class MobileAPI {
 			device.setLastSyncTime(System.currentTimeMillis());
 			device.setStatus(true);
 			Integer count = deviceService.getCountByStoreIdAndDeviceType(storeId, deviceType);
-			Integer cou = deviceService.getCount(deviceType, channelId);
+			//Integer cou = deviceService.getCount(deviceType, channelId);
 			if(count==0){
 				BaiduPushTool.createTag(deviceType, storeId+"");
-			}
-			if(cou==1){
-				BaiduPushTool.deleteDevicesFromTag(new String[]{channelId},  storeId+"", deviceType);
 			}
 			String delete  = "delete from Tdevice where deviceType=:deviceType and channelId=:channelId";
 			Map<String, Object> params = new HashMap<String, Object>();
 			params.put("deviceType", deviceType);
 			params.put("channelId", channelId);
 			deviceService.delete(delete,params);
-		/*	if(){
-				
-			}*/
+			Tdevice de = deviceService.get(deviceType, channelId);
+			if(de!=null){
+				BaiduPushTool.deleteDevicesFromTag(new String[]{channelId},  de.getStoreId()+"", deviceType);
+			}
 			Boolean success = BaiduPushTool.addDevicesToTag(new String[]{channelId}, storeId+"", deviceType);
 				if(success){
 					respJson.put("status", true);

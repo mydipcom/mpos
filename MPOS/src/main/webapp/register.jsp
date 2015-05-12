@@ -55,7 +55,7 @@
 
 	<div class="content">
 		<!-- BEGIN REGISTRATION FORM -->
-		<form:form action="register" method="post" commandName="user" cssClass="register-form" cssStyle="display:block">
+		<form:form action="${pageContext.request.contextPath}/register" method="post" commandName="user" cssClass="register-form" cssStyle="display:block">
 			<h3>Sign Up</h3>
 			<p>Enter your account details below:</p>
 			

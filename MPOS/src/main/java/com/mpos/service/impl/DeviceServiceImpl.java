@@ -138,5 +138,12 @@ public class DeviceServiceImpl implements DeviceService {
 		// TODO Auto-generated method stub
 		deviceDao.delete(hql, params);
 	}
+
+
+	public Tdevice get(Integer deviceType, String channelId) {
+		Criteria criteria = deviceDao.createCriteria();
+		criteria.add(Restrictions.eq("channelId", channelId)).add(Restrictions.eq("deviceType", deviceType));
+		return (Tdevice) criteria.uniqueResult();
+	}
 	
 }

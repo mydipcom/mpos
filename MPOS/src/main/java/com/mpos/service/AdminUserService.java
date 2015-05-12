@@ -32,6 +32,10 @@ public interface AdminUserService {
 	
 	public TadminUser getTadminUsersByEmail(String email);
 	
+	public TadminUser getUserByEmail(String email);
+	
+	public TadminUser getByCode(String code);
+	
 	List<TadminUser> getUserByStoreId(Integer storeId);
 	
 	public Long getRightByEmail(String email);

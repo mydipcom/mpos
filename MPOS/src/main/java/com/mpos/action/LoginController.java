@@ -9,7 +9,6 @@
 */ 
 package com.mpos.action;
 
-import java.util.Calendar;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mpos.commons.EMailTool;
 import com.mpos.commons.LogManageTools;
+import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
@@ -142,28 +142,92 @@ public class LoginController extends BaseController {
 		TadminUser adminUser = adminUserService.getTadminUsersByEmail(email.toLowerCase());
 		if(adminUser == null){
 			 adminUser = new TadminUser();
-			 
-			 mav.addObject(ERROR_MSG_KEY,"email not exist.");
+			 mav.addObject(ERROR_MSG_KEY,"邮箱不存在");
 		}else{
 			adminLog.setAdminId(adminUser.getAdminId());
-		   
 			String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
-			adminUser.setPassword(SecurityTools.MD5(random));
+			String code = SecurityTools.MD5(email+random);
+			adminUser.setCode(code);
 			adminUser.setUpdatedBy(adminUser.getAdminId());
 			adminUser.setUpdatedTime(System.currentTimeMillis());
+			adminUser.setStatus(false);
+			adminUserService.updateAdminUserPassword(adminUser);
 			TemaiMessage message = new TemaiMessage();
+			String html = "<a href='http://192.168.10.103:8080/mpos/common/reset?code="+code+"'>点击链接重置密码,此链接有效时间2分钟</a>";
 			message.setTo(email);
-			message.setText("your account: "+adminUser.getAdminId()+" reset password :"+Calendar.getInstance().getTime()+" new password:"+random);
+			message.setText(html);
+			message.setIsHtml(true);
 			message.setSubject("MPOS Password Reset");
 			EMailTool.send(message);
-			adminUserService.updateAdminUserPassword(adminUser);
-			//mav.addObject(ERROR_MSG_KEY,"password reset success.");
+			mav.addObject("msg", getMessage(request,"reset.pwd.success"));
 			LogManageTools.writeAdminLog(log_content, adminLog,request);
 		}
 		mav.addObject("user",adminUser);
-		mav.addObject("msg", getMessage(request,"reset.pwd.success"));
 		mav.setViewName("login");
 		log_content="success:resert password success.";
+		return mav;
+	}
+	public static void main(String[] args) {
+		String email = "34444";
+		String random="xxxx";
+		String html = "<a href='http://192.168.10.103:8080/mpos/common/reset?email="+email+"&code="+random+"'>点击链接重置密码,此链接有效时间2分钟</a>";
+		System.out.println(html);
+	}
+	@RequestMapping(value="/common/reset",method=RequestMethod.GET)
+	public ModelAndView reset(HttpServletRequest request ,String code){
+		ModelAndView mav = new ModelAndView();
+		String msg  = "";
+		TadminUser adminUser = new TadminUser();
+		try {
+			if((code!=null&&!code.isEmpty())){
+				adminUser = adminUserService.getByCode(code);
+				if(adminUser!=null){
+					long now = System.currentTimeMillis();
+					if((now-adminUser.getUpdatedTime())<=(1000*60*2)){
+						if(adminUser.getCode().equals(code)){
+							mav.addObject("user", adminUser);
+							mav.setViewName("reset");
+							return mav;
+						}else{
+							msg="校验失败";
+						}
+					}else{
+						msg="链接失效";
+					}
+				}else{
+					msg="邮箱不存在";
+				}
+			}else{
+				msg="非法链接";
+			}
+			mav.addObject("user", adminUser);
+			mav.addObject(ERROR_MSG_KEY,msg);
+			mav.setViewName("login");
+		} catch (MposException e) {
+			
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value="/common/change",method=RequestMethod.POST)
+	public ModelAndView change(HttpServletRequest request ,TadminUser user){
+		ModelAndView mav = new ModelAndView();
+		try {
+			TadminUser adminUser = adminUserService.getTadminUsersByEmail(user.getEmail());
+			if(adminUser!=null){
+				adminUser.setPassword(SecurityTools.MD5(user.getPassword()));
+				adminUser.setUpdatedTime(System.currentTimeMillis());
+				adminUser.setStatus(true);
+				adminUserService.updateAdminUser(adminUser);
+				mav.addObject("msg","重置成功，请重新登录");
+			}else{
+				adminUser = new TadminUser();
+				mav.addObject(ERROR_MSG_KEY,"邮箱不存在");
+			}
+			mav.addObject("user", adminUser);
+			mav.setViewName("login");
+		} catch (MposException e) {
+		}
 		return mav;
 	}
 	

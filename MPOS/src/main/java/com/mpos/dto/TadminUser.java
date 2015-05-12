@@ -30,6 +30,8 @@ public class TadminUser implements Serializable {
 	
 	private Long updatedTime;
 	
+	private String code;
+	
 	@SuppressWarnings("unused")
 	private String createdTimeStr;	
 	
@@ -53,7 +55,10 @@ public class TadminUser implements Serializable {
 
 	public TadminUser() {
 	}
-	
+	public TadminUser(Long updatedTime, String code) {
+		this.updatedTime = updatedTime;
+		this.code = code;
+	}
 	public TadminUser(String adminId,String email,String password,TadminRole adminRole,boolean status) {
 		this.adminId=adminId;
 		this.email=email;
@@ -62,10 +67,14 @@ public class TadminUser implements Serializable {
 		this.status=status;
 	}
 	
+	public String getCode() {
+		return code;
+	}
 
-	
-	
-	
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String getRoleName() {
 		return adminRole.getRoleName();
 	}

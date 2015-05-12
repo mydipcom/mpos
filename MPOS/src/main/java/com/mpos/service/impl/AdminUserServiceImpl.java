@@ -187,4 +187,14 @@ public void saveStoreUser(TadminUser adminUser) {
 	adminInfoDao.create(new TadminInfo(adminUser.getAdminId()));
 }
 
+public TadminUser getByCode(String code) {
+	// TODO Auto-generated method stub
+	return (TadminUser) adminUserDao.findUnique("code", code);
+}
+
+public TadminUser getUserByEmail(String email) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }

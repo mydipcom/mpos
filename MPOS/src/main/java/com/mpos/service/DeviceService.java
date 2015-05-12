@@ -21,5 +21,6 @@ public interface DeviceService {
 	List<Tdevice> loadAll();
 	PagingData loadDeviceList(DataTableParamter dtp);
 	Integer getCountByStoreIdAndDeviceType(Integer storeId,Integer deviceType);
+	Tdevice get(Integer deviceType,String channelId);
 	Integer getCount(Integer deviceType,String channelId);
 }
