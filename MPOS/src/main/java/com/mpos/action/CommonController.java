@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.mpos.commons.EMailTool;
 import com.mpos.commons.IpUtils;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.TadminUser;
+import com.mpos.dto.TemaiMessage;
 import com.mpos.dto.Tmessage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.Ttable;
@@ -162,16 +164,9 @@ public class CommonController extends BaseController {
 			if(serviceId==null||serviceId==0){
 				status = true;
 			}
-			serviceService.register(user, serviceId, mobile,status);
-			/*if(user.getPassword().isEmpty()){
-			String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
-			TemaiMessage message = new TemaiMessage();
-			message.setTo(user.getEmail());
-			message.setText("your account:  "+user.getAdminId()+"|register time:  "+Calendar.getInstance().getTime()+" |password:  "+random);
-			message.setSubject("MPOS Password");
+			Map<String,String> map = serviceService.register(user, serviceId, mobile,status);
+			TemaiMessage message = TemaiMessage.getCreate(map);
 			EMailTool.send(message);
-			user.setPassword(random);
-		}*/
 			if(!status){
 				res.put("payUrl","http://www.baidu.com");
 			}

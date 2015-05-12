@@ -9,6 +9,8 @@
 */ 
 package com.mpos.action;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -152,12 +154,10 @@ public class LoginController extends BaseController {
 			adminUser.setUpdatedTime(System.currentTimeMillis());
 			adminUser.setStatus(false);
 			adminUserService.updateAdminUserPassword(adminUser);
-			TemaiMessage message = new TemaiMessage();
-			String html = "<a href='http://192.168.10.103:8080/mpos/common/reset?code="+code+"'>点击链接重置密码,此链接有效时间2分钟</a>";
-			message.setTo(email);
-			message.setText(html);
-			message.setIsHtml(true);
-			message.setSubject("MPOS Password Reset");
+			Map<String,String> map = new HashMap<String, String>();
+			map.put("email", email);
+			map.put("code", code);
+			TemaiMessage message = TemaiMessage.getRest(map);
 			EMailTool.send(message);
 			mav.addObject("msg", getMessage(request,"reset.pwd.success"));
 			LogManageTools.writeAdminLog(log_content, adminLog,request);

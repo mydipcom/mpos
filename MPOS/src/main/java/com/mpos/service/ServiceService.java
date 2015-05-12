@@ -17,7 +17,7 @@ public interface ServiceService {
 	public List<Tservice> load();
 	public PagingData loadList(DataTableParamter rdtp);
 	
-	public void register(TadminUser user,Integer serviceId,String mobile,Boolean status);
+	public Map<String, String> register(TadminUser user,Integer serviceId,String mobile,Boolean status);
 	
 	public void delete(String hql,Map<String, Object> params);
 	public void update(String hql,Map<String, Object> params);

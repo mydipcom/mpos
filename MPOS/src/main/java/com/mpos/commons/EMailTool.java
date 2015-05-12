@@ -35,18 +35,6 @@ public class EMailTool {
 		
 	}
 	 
-	 public static void main(String[] args) {
-		 TemaiMessage msg = new TemaiMessage();
-		 msg.setTo("381551030@qq.com");
-		 msg.setSubject(TemaiMessage.SUBJECT);
-		 msg.setIsHtml(true);
-		 msg.setText("123456");
-		 StringBuffer html = new StringBuffer();
-		 html.append("<div>");
-		 html.append("</div>");
-		 EMailTool.send(msg);
-	}
-	 
 	public static JavaMailSenderImpl getJavaMailSenderImpl(){
 	    JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
 	    javaMailSenderImpl.setHost(SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_HOST));

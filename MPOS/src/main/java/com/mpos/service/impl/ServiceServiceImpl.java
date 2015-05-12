@@ -1,6 +1,7 @@
 package com.mpos.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -117,7 +118,8 @@ public class ServiceServiceImpl implements ServiceService {
 		return criteria.list();
 	}
 
-	public void register(TadminUser user, Integer serviceId, String mobile,Boolean status) {
+	public Map<String,String> register(TadminUser user, Integer serviceId, String mobile,Boolean status) {
+		Map<String, String> res = new HashMap<String, String>();
 		Tstore store = new Tstore();
 		if(serviceId==null){
 			serviceId=0;
@@ -147,6 +149,12 @@ public class ServiceServiceImpl implements ServiceService {
 		info.setAdminId(user.getAdminId());
 		info.setMobile(mobile);
 		adminInfoDao.create(info);
+		res.put("status", "1");
+		res.put("email", user.getEmail());
+		res.put("serviceName", service.getServiceName());
+		res.put("startTime", ConvertTools.longToDateString(System.currentTimeMillis()));
+		res.put("endTime",  ConvertTools.longToDateString(store.getServiceDate()));
+		return res;
 	}
 
 }
