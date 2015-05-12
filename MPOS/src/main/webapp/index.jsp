@@ -193,6 +193,7 @@
 						<div class='form-group'><label>密码确认:</label><input type='password' name='repassword'/><span class='error'></span></div>
 						<div class='form-group'><label class='decrate'></label><input type='button' value='提交' id='sevice_btn' class='btn btn-success btn-large'/></div>
 					</form>
+					<div id="alipay_form"></div>
 				</div>
 			</div>
 			

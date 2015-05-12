@@ -20,12 +20,14 @@ import com.mpos.commons.SecurityTools;
 import com.mpos.dao.AdminInfoDao;
 import com.mpos.dao.AdminUserDao;
 import com.mpos.dao.ServiceDao;
+import com.mpos.dao.ServiceOrderDao;
 import com.mpos.dao.StoreDao;
 import com.mpos.dao.TableDao;
 import com.mpos.dto.TadminInfo;
 import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
 import com.mpos.dto.Tservice;
+import com.mpos.dto.TserviceOrder;
 import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -43,6 +45,8 @@ public class ServiceServiceImpl implements ServiceService {
 	private AdminInfoDao adminInfoDao;
 	@Autowired
 	private TableDao tableDao;
+	@Autowired
+	private ServiceOrderDao serviceOrderDao;
 	public void save(Tservice service) {
 		// TODO Auto-generated method stub
 		serviceDao.save(service);
@@ -129,7 +133,11 @@ public class ServiceServiceImpl implements ServiceService {
 		store.setPublicKey("888888");
 		store.setClientPwd("888888");
 		store.setStoreName(" ");
-		store.setStatus(true);
+		if(service.getServiceId()>0&&service.getServicePrice()>1){
+			store.setStatus(false);
+		}else{
+			store.setStatus(true);
+		}
 		store.setAutoSyncStatus(false);
 		store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
 		store.setStoreCurrency("$");
@@ -149,11 +157,26 @@ public class ServiceServiceImpl implements ServiceService {
 		info.setAdminId(user.getAdminId());
 		info.setMobile(mobile);
 		adminInfoDao.create(info);
+		if(service.getServiceId()>0&&service.getServicePrice()>1){
+			String orderNum= "CampRay"+System.currentTimeMillis();
+			TserviceOrder order = new TserviceOrder();
+			order.setCreateTime(System.currentTimeMillis());
+			order.setEmail(user.getEmail());
+			order.setStatus(0);
+			order.setPrice(service.getServicePrice());
+			order.setServiceId(service);
+			order.setServiceName(service.getServiceName());
+			order.setOrderNum(orderNum);
+			res.put("price", service.getServicePrice()+"");
+			res.put("orderNum", orderNum);
+			res.put("subject", service.getServiceName());
+		}
 		res.put("status", "1");
 		res.put("email", user.getEmail());
 		res.put("serviceName", service.getServiceName());
 		res.put("startTime", ConvertTools.longToDateString(System.currentTimeMillis()));
 		res.put("endTime",  ConvertTools.longToDateString(store.getServiceDate()));
+		
 		return res;
 	}
 

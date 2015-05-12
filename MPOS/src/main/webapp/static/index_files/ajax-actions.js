@@ -164,7 +164,10 @@ $(document).ready(function () {
 						if(data.status){
 							alert(data.info);
 							if(data.isPay){
-								location.href=payUrl;
+								var con = data.html;
+								$("#alipay_form").html(con);
+								alert(con);
+								document.forms['alipaysubmit'].submit();
 							}
 						}else{
 							alert(data.info);

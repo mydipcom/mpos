@@ -99,4 +99,9 @@ public class ServiceOrderServiceImpl implements ServiceOrderService{
 		return serviceOrderDao.select(hql, params);
 	}
 
+	public TserviceOrder getOrderByOrderNum(String orderNum) {
+		// TODO Auto-generated method stub
+		return serviceOrderDao.findUnique("orderNum", orderNum);
+	}
+
 }

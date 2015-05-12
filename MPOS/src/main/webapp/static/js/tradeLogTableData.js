@@ -63,8 +63,17 @@ var MyLogTable = function () {
                       		 'render':function(data,type,row){
                       			 var temp = loadProperties("service.page.pay.true","zh_CN");
                       			 if(data=="0"){
-                      				temp = loadProperties("service.page.pay.false","zh_CN");
+                      				//temp = loadProperties("service.page.pay.false","zh_CN");
+                      				temp = "订单创建成功";
+                      			 }else if(data=="1"){
+                      				temp = "等待付款";
                       			 }
+                      			else if(data=="2"){
+                      				temp = "等待确认";
+                     			 }
+                      			else if(data=="3"){
+                      				temp = "交易完成";
+                     			 }
                              	return temp;
                              }
                       	}

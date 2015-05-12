@@ -18,8 +18,11 @@
         <property name="createTime" type="long">
             <column name="create_time" />
         </property>
-        <property name="status" type="boolean">
+        <property name="status" type="int">
             <column name="status" not-null="true" />
+        </property>
+          <property name="orderNum" type="string">
+            <column name="order_num" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

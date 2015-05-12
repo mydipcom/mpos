@@ -5,6 +5,25 @@ import java.io.Serializable;
 import com.mpos.commons.ConvertTools;
 
 public class TserviceOrder implements Serializable {
+	/**
+	 * 创建订单成功
+	 */
+	public static final int CREATE_ORDER =0;
+	
+	/**
+	 * 等待客户付款
+	 */
+	public static final int WAIT_BUYER_PAY =1;
+	
+	/**
+	 * 等待客户确认收货
+	 */
+	public static final int WAIT_BUYER_CONFIRM_GOODS =2;
+	
+	/**
+	 * 交易完成
+	 */
+	public static final int TRADE_FINISHED =3;
 
 	/**
 	 * 
@@ -16,7 +35,7 @@ public class TserviceOrder implements Serializable {
 	private Float price;
 	private String email;
 	private Long createTime;
-	private Boolean status;
+	private Integer status = CREATE_ORDER;
 	@SuppressWarnings("unused")
 	private String createTimeStr;
 	@SuppressWarnings("unused")
@@ -69,10 +88,10 @@ public class TserviceOrder implements Serializable {
 	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
-	public Boolean getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	public String getOrderNum() {

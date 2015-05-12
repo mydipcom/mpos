@@ -13,6 +13,7 @@ public interface ServiceOrderService {
 	public void delete(Integer storeId);
 	public void update(TserviceOrder serviceOrder);
 	public PagingData loadList(DataTableParamter rdtp);
+	public TserviceOrder getOrderByOrderNum(String orderNum);
 	
 	public void delete(String hql,Map<String, Object> params);
 	public void update(String hql,Map<String, Object> params);

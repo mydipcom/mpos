@@ -197,6 +197,14 @@
     		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/bccs-api-3.0.0.jar </systemPath> 
 </dependency>
 
+    <dependency> 
+    		<groupId>zfb-api</groupId> 
+    		<artifactId>zfb-api</artifactId> 
+    		<version>1.0</version> 
+    		<scope>system</scope> 
+    		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/zfb-api-1.0.jar</systemPath> 
+</dependency>
+
   </dependencies>
   <build>
     <finalName>mpos</finalName>
