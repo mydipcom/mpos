@@ -171,6 +171,33 @@
 													${system_setting['Push_IOS_Secret_Key'][1]} </span></td>
 										</tr>
 										
+										<tr>
+											<td style="width: 15%">Alipay Pid</td>
+											<td style="width: 50%"><a href="#" id="push_ios_secret_key"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Alipay Pid"> ${system_setting['ZFB_PID'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['ZFB_PID'][1]} </span></td>
+										</tr>
+										
+										<tr>
+											<td style="width: 15%">Alipay Key</td>
+											<td style="width: 50%"><a href="#" id="push_ios_secret_key"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Alipay Key"> ${system_setting['ZFB_KEY'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['ZFB_KEY'][1]} </span></td>
+										</tr>
+										
+										<tr>
+											<td style="width: 15%">Rest Pwd Valid Time</td>
+											<td style="width: 50%"><a href="#" id="push_ios_secret_key"
+												data-type="text" data-pk="1"
+												data-original-title="Enter Rest_Pwd_Valid_Time"> ${system_setting['Rest_Pwd_Valid_Time'][0]} </a></td>
+											<td style="width: 35%"><span class="text-muted">
+													${system_setting['Rest_Pwd_Valid_Time'][1]} </span></td>
+										</tr>
+										
 									</tbody>
 								</table>
 							</div>

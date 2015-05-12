@@ -95,7 +95,7 @@ public class TableController extends BaseController {
 		try {
 			String[] idstrArr=ids.split(",");		
 			idArr=ConvertTools.stringArr2IntArr(idstrArr);
-			tableService.deleteAll(idArr);
+			tableService.deleteAll(idArr,getSessionStoreId(request));
 			handleContent = "删除桌号:"+idArr.toString()+"成功;";
 			res.put("info", getMessage(request,"operate.success"));
 		} catch (MposException be) {

@@ -57,6 +57,12 @@ public class SystemConstants {
 	
 	public static final String EMAIl_PASSWORD="Email_Password";
 	
+	public static final String ZFB_PID="ZFB_PID";
+	
+	public static final String ZFB_KEY="ZFB_KEY";
+	
+	public static final String RESET_PWD_VALID_TIME="Rest_Pwd_Valid_Time";
+	
 	public static final String MAX_LOGIN_ERROR_TIMES="Max_Login_Error_Times";
 	
 	public static final String LOGIN_ERROR_LOCK="Login_Error_Locked";
@@ -133,4 +139,8 @@ public class SystemConstants {
 		
 	}
    };
+   
+   public static void main(String[] args) {
+	System.out.println(60*1000*10);
+}
 }

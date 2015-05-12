@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.MposException;
+import com.mpos.dao.ProductReleaseDao;
 import com.mpos.dao.TableDao;
+import com.mpos.dto.TproductRelease;
 import com.mpos.dto.Ttable;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
@@ -26,6 +28,8 @@ import com.mpos.service.TableService;
 public class TableServiceImpl implements TableService {
 	@Autowired
 	TableDao tableDao;
+	@Autowired
+	ProductReleaseDao productReleaseDao;
 
 	
 	public void create(Ttable table) {
@@ -36,6 +40,7 @@ public class TableServiceImpl implements TableService {
 		Ttable tt = (Ttable) criteria.uniqueResult();
 		if(tt == null){
 			tableDao.create(table);
+			updateVersion(table.getStoreId());
 		}else{                       
 			throw new MposException("error.TableServiceImpl.tableName");
 		}
@@ -50,6 +55,31 @@ public class TableServiceImpl implements TableService {
 	public void delete(Integer id) {
 		tableDao.delete(id);
 	}
+	
+	public void updateVersion(Integer storeId){
+		Integer verId = productReleaseDao.getMaxId("id", storeId);
+		TproductRelease productrelease;
+		if (verId != null && verId != 0) {
+			productrelease = productReleaseDao.get(verId);
+			String ids = productrelease.getProducts();
+			if (productrelease != null && !productrelease.isIsPublic()) {
+				productrelease.setProducts(ids);
+				productReleaseDao.update(productrelease);
+			} else {
+				TproductRelease newproductrelease = new TproductRelease();
+				newproductrelease.setProducts(ids);
+				newproductrelease.setStoreId(storeId);
+				newproductrelease.setIsPublic(false);
+				productReleaseDao.create(newproductrelease);
+			}
+		} else {
+			TproductRelease productrelease1 = new TproductRelease();
+			productrelease1.setProducts("");
+			productrelease1.setIsPublic(false);
+			productrelease1.setStoreId(storeId);
+			productReleaseDao.create(productrelease1);
+		}
+	}
 
 	
 	public void update(Ttable table) {
@@ -61,6 +91,7 @@ public class TableServiceImpl implements TableService {
 			try {
 				BeanUtils.copyProperties(table, tt);
 				tableDao.update(tt);
+				updateVersion(table.getStoreId());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -122,8 +153,9 @@ public class TableServiceImpl implements TableService {
 	
 
 	
-	public void deleteAll(Integer[] ids) {
+	public void deleteAll(Integer[] ids,Integer storeId) {
 		tableDao.deleteAll(ids);
+		updateVersion(storeId);
 	}
 
 	

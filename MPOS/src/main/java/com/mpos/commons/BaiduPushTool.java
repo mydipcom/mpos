@@ -66,6 +66,7 @@ public class BaiduPushTool {
 		 */
 		private String description;
 		private Integer code;
+		private String pwd;
 		private String notification_builder_id;
 		private String notification_basic_style;
 		private String open_type;
@@ -82,11 +83,23 @@ public class BaiduPushTool {
 			this.code = code;
 		}
 		
+		public Notification(Integer code,String pwd) {
+			this.pwd=pwd;
+			this.code = code;
+		}
+		
 		public Notification(String title, String description) {
 			this.title = title;
 			this.description = description;
 		}
-		
+		public String getPwd() {
+			return pwd;
+		}
+
+		public void setPwd(String pwd) {
+			this.pwd = pwd;
+		}
+
 		public Integer getCode() {
 			return code;
 		}

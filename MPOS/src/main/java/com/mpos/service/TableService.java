@@ -12,7 +12,7 @@ public interface TableService {
 	void create(Ttable table);
 	void delete(Ttable table);
 	void delete(Integer id);
-	void deleteAll(Integer[] ids);
+	void deleteAll(Integer[] ids,Integer storeId);
 	void update(Ttable table);
 	void deleteByStoreId(Integer storeId);
 	Ttable get(String tableName);

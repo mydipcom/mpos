@@ -62,6 +62,7 @@
 <div class="content">
 	<!-- BEGIN LOGIN FORM -->
 	<form:form action="${pageContext.request.contextPath}/common/change" method="post" commandName="user" cssClass="login-form">	
+	<h3 class="form-title">密码重置</h3>
 		<c:if test="${not empty errorMsg}">
 		<div class="alert alert-danger">
 			<button class="close" data-close="alert"></button>
@@ -90,10 +91,11 @@
 			</div>
 		</div>
 		<div class="form-actions">
+		     <label class="checkbox"></label>
 			<button type="submit" class="btn green pull-right">
 			<s:message code="system.submit"/> <i class="m-icon-swapright m-icon-white"></i>
 			</button>
-		</div>		
+		</div>
 	</form:form>
 	<!-- END LOGIN FORM -->
 	<!-- BEGIN FORGOT PASSWORD FORM -->
@@ -136,9 +138,9 @@
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() { 
-  $("#adminId").attr("placeholder","<s:message code="login.form.username"/>");
+  $("#eamil").attr("placeholder","<s:message code="login.form.username"/>");
   $("#password").attr("placeholder","<s:message code="login.form.password"/>");
-  $("#adminId").focus();    
+  $("#password").focus();    
   Metronic.init(); // init metronic core components
   Layout.init(); // init current layout
   Login.init();

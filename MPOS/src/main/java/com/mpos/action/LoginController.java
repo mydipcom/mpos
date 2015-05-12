@@ -183,7 +183,8 @@ public class LoginController extends BaseController {
 				adminUser = adminUserService.getByCode(code);
 				if(adminUser!=null){
 					long now = System.currentTimeMillis();
-					if((now-adminUser.getUpdatedTime())<=(1000*60*2)){
+					long system = Long.valueOf(SystemConfig.Admin_Setting_Map.get(SystemConstants.RESET_PWD_VALID_TIME));
+					if((now-adminUser.getUpdatedTime())<=system){
 						if(adminUser.getCode().equals(code)){
 							mav.addObject("user", adminUser);
 							mav.setViewName("reset");

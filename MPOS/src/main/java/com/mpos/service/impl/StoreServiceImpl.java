@@ -23,9 +23,11 @@ import com.mpos.commons.ConvertTools;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dao.AdminUserDao;
+import com.mpos.dao.ProductReleaseDao;
 import com.mpos.dao.ServiceDao;
 import com.mpos.dao.StoreDao;
 import com.mpos.dto.ImageModel;
+import com.mpos.dto.TproductRelease;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
@@ -40,6 +42,8 @@ public class StoreServiceImpl implements StoreService {
 	private ServiceDao serviceDao;
 	@Autowired
 	private AdminUserDao adminUserDao;
+	@Autowired
+	private ProductReleaseDao productReleaseDao;
 	public void save(Tstore store) {
 		// TODO Auto-generated method stub
 		Tservice service= serviceDao.get(store.getServiceId());
@@ -141,6 +145,7 @@ public class StoreServiceImpl implements StoreService {
 	public void update(String hql, Map<String, Object> params) {
 		// TODO Auto-generated method stub
 		storeDao.update(hql, params);
+		updateVersion(Integer.valueOf(params.get("storeId").toString()));
 	}
 
 	public List<Tstore> select(String hql, Map<String, Object> params) {
@@ -209,8 +214,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	public void updateImage(ImageModel model) {
-		// TODO Auto-generated method stub
 		storeDao.updateImage(model);
+		updateVersion(model.getStoreId());
 	}
 
 	public List<Tstore> loadAll() {
@@ -260,6 +265,31 @@ public class StoreServiceImpl implements StoreService {
 			}
 		}
 
+	public void updateVersion(Integer storeId){
+		Integer verId = productReleaseDao.getMaxId("id", storeId);
+		TproductRelease productrelease;
+		if (verId != null && verId != 0) {
+			productrelease = productReleaseDao.get(verId);
+			String ids = productrelease.getProducts();
+			if (productrelease != null && !productrelease.isIsPublic()) {
+				productrelease.setProducts(ids);
+				productReleaseDao.update(productrelease);
+			} else {
+				TproductRelease newproductrelease = new TproductRelease();
+				newproductrelease.setProducts(ids);
+				newproductrelease.setStoreId(storeId);
+				newproductrelease.setIsPublic(false);
+				productReleaseDao.create(newproductrelease);
+			}
+		} else {
+			TproductRelease productrelease1 = new TproductRelease();
+			productrelease1.setProducts("");
+			productrelease1.setIsPublic(false);
+			productrelease1.setStoreId(storeId);
+			productReleaseDao.create(productrelease1);
+		}
+	}
+	
 	public List<Object[]> getBySql(String sql, Map<String, Object> params) {
 		// TODO Auto-generated method stub
 		return storeDao.getListBySql(sql, params);

@@ -21,12 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.mpos.commons.BaiduPushTool;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.LogManageTools;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
+import com.mpos.commons.BaiduPushTool.Notification;
 import com.mpos.dto.ImageModel;
 import com.mpos.dto.Tlanguage;
 import com.mpos.dto.Tservice;
@@ -352,6 +354,8 @@ public class StoreContrller extends BaseController {
 			if(!k.isEmpty()){
 				SystemConfig.STORE_TAKEN_MAP.remove(k);
 			}
+			Notification notification = new Notification(10001,value);
+			BaiduPushTool.pushMsgToTag(notification, getSessionUser(request).getStoreId()+"", BaiduPushTool.IOS_TYPE);
 			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(ConvertTools.bw(storeId, 8, "S")+value), storeId);
 			handleContent = "修改公钥成功;";
 			info = getMessage(request,"operate.success");
