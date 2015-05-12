@@ -25,7 +25,7 @@ public class EMailTool {
             	messageHelper.setSubject(temaiMessage.getSubject());
             }
             if(temaiMessage.getText() !=null){
-            	messageHelper.setText(temaiMessage.getText());
+            	messageHelper.setText(temaiMessage.getText(), temaiMessage.getIsHtml());
             }
 			javaMailSenderImpl.send(message);
 		} catch (MessagingException e) {
@@ -38,8 +38,12 @@ public class EMailTool {
 	 public static void main(String[] args) {
 		 TemaiMessage msg = new TemaiMessage();
 		 msg.setTo("381551030@qq.com");
-		 msg.setSubject("Password");
+		 msg.setSubject(TemaiMessage.SUBJECT);
+		 msg.setIsHtml(true);
 		 msg.setText("123456");
+		 StringBuffer html = new StringBuffer();
+		 html.append("<div>");
+		 html.append("</div>");
 		 EMailTool.send(msg);
 	}
 	 

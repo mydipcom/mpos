@@ -104,7 +104,6 @@ public class AdminUserServiceImpl implements AdminUserService {
 
 	public void deleteAdminUserByIds(String[] ids) {
 		adminUserDao.delete(ids);
-		// TODO Auto-generated method stub
 	}
 
 	public PagingData loadAdminUserList(DataTableParamter rdtp) {

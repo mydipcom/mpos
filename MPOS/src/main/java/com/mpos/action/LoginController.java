@@ -119,7 +119,7 @@ public class LoginController extends BaseController {
 			request.getSession().removeAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_STATUS);
-			if(StringUtils.isEmpty(toUrl)&&((tUser.getAdminRole().getRoleId()==1)||(tUser.getAdminRole().getRoleId()==4))){
+			if(StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()==1){
 				setSessionUser(request, tUser);
 				toUrl="/home";
 			}else if (StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()!=1) {
@@ -179,11 +179,11 @@ public class LoginController extends BaseController {
 		TadminLog adminLog = new TadminLog();
 		if((TadminUser)session.getAttribute(SystemConstants.LOGINED)!=null){
 		adminLog.setAdminId(((TadminUser)session.getAttribute(SystemConstants.LOGINED)).getAdminId());
-		}
 		log_content="success:login out.";
 		LogManageTools.writeAdminLog(log_content, adminLog,request);
 		session.removeAttribute(SystemConstants.LOGINED);
 		session.invalidate();
+		}
 		return "forward:login";
 	}
 }

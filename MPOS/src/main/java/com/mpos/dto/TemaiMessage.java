@@ -3,8 +3,10 @@ package com.mpos.dto;
 import java.io.File;
 
 public class TemaiMessage {
+	public static final String SUBJECT = "欢迎使用凯瑞时代云菜单服务";
 	private String to;
 	private String cc[];
+	private Boolean isHtml;
 	private String subject;
 	private String text;
 	private File file[];
@@ -39,4 +41,11 @@ public class TemaiMessage {
 	public void setFile(File[] file) {
 		this.file = file;
 	}
+	public Boolean getIsHtml() {
+		return isHtml;
+	}
+	public void setIsHtml(Boolean isHtml) {
+		this.isHtml = isHtml;
+	}
+	
 }
