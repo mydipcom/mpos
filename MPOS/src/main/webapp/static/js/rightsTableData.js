@@ -146,6 +146,7 @@ var RightsTable = function () {
 	            var pid  = data.pid;
 	            var isMenu  = data.isMenu;
 	            var status=data.status;
+	            var menuIcon=data.menuIcon;
 	            $("#editRightsForm option").removeAttr("selected");
 	            $("#editRightsForm :radio").removeAttr("checked");
 	            $("#editRightsForm :radio").parents('span').removeClass("checked");
@@ -155,7 +156,7 @@ var RightsTable = function () {
 	            $("#editRightsForm input[name='bitFlag']").val(bitFlag);
 	            $("#editRightsForm input[name='uri']").val(uri);
 	            
-	            $("#editRightsForm select[name='method']").children("option[value='"+method+"']").attr("selected","true");
+	            $("#editRightsForm select[name='method']").children("option[value='"+method+"']").attr("selected","true");	            
 	            $("#editRightsForm input[name='groupName']").val(groupName);
 	            $("#editRightsForm input[name='groupSort']").val(groupSort);
 	            $("#editRightsForm input[name='descr']").val(descr);
@@ -164,7 +165,10 @@ var RightsTable = function () {
 	            $("#editRightsForm :radio[name='isMenu']").filter("[value='"+isMenu+"']").attr("checked","true");
 	            $("#editRightsForm :radio[name='isMenu']").filter("[value='"+isMenu+"']").parents('span').addClass("checked");
 	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");	            
+	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
+	            
+	            
+	            $("#editRightsForm select[name='menuIcon']").val(menuIcon).trigger("change"); 
 			}
 		});								
 		
@@ -424,8 +428,8 @@ var RightsTable = function () {
         	addFormValidation();
         	editFormValidation();
         	//菜单图标的下拉菜单初始化
-            $(".select2_menuIcon").select2({
-                placeholder: "Select a Country",
+        	$("select[name='menuIcon']").select2({
+                placeholder: "Select a menu icon",
                 allowClear: true,
                 formatResult: format,
                 formatSelection: format,
