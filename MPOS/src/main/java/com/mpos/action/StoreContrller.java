@@ -354,7 +354,7 @@ public class StoreContrller extends BaseController {
 			if(!k.isEmpty()){
 				SystemConfig.STORE_TAKEN_MAP.remove(k);
 			}
-			Notification notification = new Notification(10001,value);
+			Notification notification = new Notification(10002,value);
 			BaiduPushTool.pushMsgToTag(notification, getSessionUser(request).getStoreId()+"", BaiduPushTool.IOS_TYPE);
 			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(ConvertTools.bw(storeId, 8, "S")+value), storeId);
 			handleContent = "修改公钥成功;";
