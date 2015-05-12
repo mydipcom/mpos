@@ -50,7 +50,7 @@
 	  	    	    	<h2>云端菜单 免费使用</h2>
 	  	    	    	<p>云端管理 云端推送</p>
 	  	    	    	<h3>完美交互 极致细节</h3>
-	  	    	    	<p id="btn-p"><a id="purchase-btn" href="#works">开始订购</a></p>
+	  	    	    	<p id="btn-p"><a id="purchase-btn" href="#services">服务介绍</a></p>
 	  	    		</li>
 				</ul>
 			</div>
