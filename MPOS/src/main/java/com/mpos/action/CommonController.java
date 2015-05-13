@@ -8,7 +8,10 @@
  */
 package com.mpos.action;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alipay.config.AlipayConfig;
+import com.alipay.util.AlipayNotify;
+import com.alipay.util.AlipaySubmit;
 import com.mpos.commons.EMailTool;
 import com.mpos.commons.IpUtils;
 import com.mpos.commons.MposException;
@@ -31,10 +37,12 @@ import com.mpos.dto.TadminUser;
 import com.mpos.dto.TemaiMessage;
 import com.mpos.dto.Tmessage;
 import com.mpos.dto.Tservice;
+import com.mpos.dto.TserviceOrder;
 import com.mpos.dto.Ttable;
 import com.mpos.service.AdminInfoService;
 import com.mpos.service.AdminUserService;
 import com.mpos.service.MessageService;
+import com.mpos.service.ServiceOrderService;
 import com.mpos.service.ServiceService;
 import com.mpos.service.StoreService;
 import com.mpos.service.TableService;
@@ -66,6 +74,8 @@ public class CommonController extends BaseController {
 	private AdminInfoService adminInfoService;
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private ServiceOrderService serviceOrderService;
 	
 	@RequestMapping(value="header",method=RequestMethod.GET)
 	public ModelAndView header(HttpServletRequest request){
@@ -168,7 +178,7 @@ public class CommonController extends BaseController {
 			TemaiMessage message = TemaiMessage.getCreate(map);
 			EMailTool.send(message);
 			if(!status){
-				res.put("payUrl","http://www.baidu.com");
+				res.put("html",getAlipaySubmit(map));
 			}
 			res.put("isPay",!status);
 			res.put("status", true);
@@ -180,20 +190,254 @@ public class CommonController extends BaseController {
 		}
 		return JSON.toJSONString(res);
 	}
-	
-	@SuppressWarnings("unchecked")
-	@RequestMapping("/pay")
+	 
+	@RequestMapping(value="/notify_url",method=RequestMethod.POST)
 	@ResponseBody
-	public String test(HttpServletRequest request){
+	public String notify_url(HttpServletRequest request) throws UnsupportedEncodingException{
 		String ip = IpUtils.getIpAddr(request);
 		System.out.println(ip);
-		Map< String, Object> re = request.getParameterMap();
-		for (String key : re.keySet()) {
-			System.out.println(key+":"+re.get(key));
+		Map<String,String> params = new HashMap<String,String>();
+		Map requestParams = request.getParameterMap();
+		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+			params.put(name, valueStr);
 		}
-		Map<String, Object> res = getHashMap();
-		res.put("is_success", "T");
-		res.put("out_trade_no", System.currentTimeMillis());
+		
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
+		//商户订单号
+
+		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+
+		//支付宝交易号
+
+		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+
+		//交易状态
+		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
+		if(AlipayNotify.verify(params)){//验证成功
+			//////////////////////////////////////////////////////////////////////////////////////////
+			//请在这里加上商户的业务逻辑程序代码
+			//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+			if(trade_status.equals("WAIT_BUYER_PAY")){
+				//该判断表示买家已在支付宝交易管理中产生了交易记录，但没有付款
+					//判断该笔订单是否在商户网站中已经做过处理
+						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+						//如果有做过处理，不执行商户的业务程序
+				TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
+				order.setStatus(TserviceOrder.WAIT_BUYER_PAY);
+				serviceOrderService.update(order);
+				System.out.println("success");	//请不要修改或删除
+				} else if(trade_status.equals("WAIT_SELLER_SEND_GOODS")){
+				//该判断表示买家已在支付宝交易管理中产生了交易记录且付款成功，但卖家没有发货
+					//判断该笔订单是否在商户网站中已经做过处理
+						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+						//如果有做过处理，不执行商户的业务程序
+					TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
+					order.setStatus(TserviceOrder.WAIT_BUYER_PAY);
+					serviceOrderService.update(order);
+					qrfh(trade_no);
+					System.out.println("success");	//请不要修改或删除
+				} else if(trade_status.equals("WAIT_BUYER_CONFIRM_GOODS")){
+				//该判断表示卖家已经发了货，但买家还没有做确认收货的操作
+					//判断该笔订单是否在商户网站中已经做过处理
+						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+						//如果有做过处理，不执行商户的业务程序
+					TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
+					order.setStatus(TserviceOrder.WAIT_BUYER_CONFIRM_GOODS);
+					serviceOrderService.update(order);
+					System.out.println("success");	//请不要修改或删除
+				} else if(trade_status.equals("TRADE_FINISHED")){
+				//该判断表示买家已经确认收货，这笔交易完成
+					//判断该笔订单是否在商户网站中已经做过处理
+						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+						//如果有做过处理，不执行商户的业务程序
+					TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
+					order.setStatus(TserviceOrder.TRADE_FINISHED);
+					serviceOrderService.update(order);
+					System.out.println("success");	//请不要修改或删除
+				}
+				else {
+					System.out.println("success");	//请不要修改或删除
+				}
+
+			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+
+			//////////////////////////////////////////////////////////////////////////////////////////
+		}else{//验证失败
+			System.out.println("fail");
+		}
+		//Map<String, Object> res = getHashMap();
+		//res.put("is_success", "T");
+		//res.put("out_trade_no", System.currentTimeMillis());
 		return JSON.toJSONString("success");
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/return_url",method=RequestMethod.GET)
+	@ResponseBody
+	public String return_url(HttpServletRequest request) throws UnsupportedEncodingException{
+		String ip = IpUtils.getIpAddr(request);
+		System.out.println(ip);
+		//获取支付宝GET过来反馈信息
+		Map<String,String> params = new HashMap<String,String>();
+		Map requestParams = request.getParameterMap();
+		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+			params.put(name, valueStr);
+		}
+		
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
+		//商户订单号
+
+		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+
+		//支付宝交易号
+
+		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+
+		//交易状态
+		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
+		
+		//计算得出通知验证结果
+		boolean verify_result = AlipayNotify.verify(params);
+		
+		if(verify_result){//验证成功
+			//////////////////////////////////////////////////////////////////////////////////////////
+			//请在这里加上商户的业务逻辑程序代码
+			
+			//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+			
+			if(trade_status.equals("WAIT_SELLER_SEND_GOODS")){
+				//判断该笔订单是否在商户网站中已经做过处理
+					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+					//如果有做过处理，不执行商户的业务程序
+				qrfh(trade_no);
+			}
+			
+			//该页面可做页面美工编辑
+			System.out.println("验证成功<br />");
+			
+			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+
+			//////////////////////////////////////////////////////////////////////////////////////////
+		}else{
+			//该页面可做页面美工编辑
+			System.out.println("验证失败");
+		}
+		return "";
+	}
+	
+	private String getAlipaySubmit(Map<String, String> map){
+		 //支付类型
+		String payment_type = "1";
+		//必填，不能修改
+		//服务器异步通知页面路径
+		String notify_url = "http://222.209.232.126/mpos/common/notify_url";
+		//需http://格式的完整路径，不能加?id=123这类自定义参数
+		//页面跳转同步通知页面路径
+		String return_url = "http://222.209.232.126/mpos/common/return_url";
+		//需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
+		//商户订单号
+		String out_trade_no = map.get("orderNum");
+		//商户网站订单系统中唯一订单号，必填
+		//订单名称
+		String subject = map.get("subject");
+		//必填
+		//付款金额
+		String price = "0.01";
+		//必填
+		//商品数量
+		String quantity = "1";
+		//必填，建议默认为1，不改变值，把一次交易看成是一次下订单而非购买一件商品
+		//物流费用
+		String logistics_fee = "0.00";
+		//必填，即运费
+		//物流类型
+		String logistics_type = "EXPRESS";
+		//必填，三个值可选：EXPRESS（快递）、POST（平邮）、EMS（EMS）
+		//物流支付方式
+		String logistics_payment = "SELLER_PAY";
+		//必填，两个值可选：SELLER_PAY（卖家承担运费）、BUYER_PAY（买家承担运费）
+		//把请求参数打包成数组
+		Map<String, String> sParaTemp = new HashMap<String, String>();
+		sParaTemp.put("service", "create_partner_trade_by_buyer");
+        sParaTemp.put("partner", AlipayConfig.partner);
+        sParaTemp.put("seller_email", AlipayConfig.seller_email);
+        sParaTemp.put("_input_charset", AlipayConfig.input_charset);
+		sParaTemp.put("payment_type", payment_type);
+		sParaTemp.put("notify_url", notify_url);
+		sParaTemp.put("return_url", return_url);
+		sParaTemp.put("out_trade_no", out_trade_no);
+		sParaTemp.put("subject", subject);
+		sParaTemp.put("price", price);
+		sParaTemp.put("quantity", quantity);
+		sParaTemp.put("logistics_fee", logistics_fee);
+		sParaTemp.put("logistics_type", logistics_type);
+		sParaTemp.put("logistics_payment", logistics_payment);
+		sParaTemp.put("receive_name", "13488943117@163.com");
+		sParaTemp.put("receive_address", "四川成都");
+		sParaTemp.put("receive_zip", "638000");
+		sParaTemp.put("receive_mobile", "13488943117");
+		//建立请求
+		String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"post","确认");
+		System.out.println(sHtmlText);
+		return sHtmlText;
+	}
+	
+	private String qrfh(String trade_no){
+		String sHtmlText ="";
+		try {
+		       //支付宝交易号
+			//	String trade_no = new String(request.getParameter("WIDtrade_no").getBytes("ISO-8859-1"),"UTF-8");
+				//必填
+				//物流公司名称
+				String logistics_name = "SF";
+				//必填
+				//物流发货单号
+				String invoice_no = System.currentTimeMillis()+"";
+				//物流运输类型
+				String transport_type = "EXPRESS";
+				//三个值可选：POST（平邮）、EXPRESS（快递）、EMS（EMS）
+				//////////////////////////////////////////////////////////////////////////////////
+				
+				//把请求参数打包成数组
+				Map<String, String> sParaTemp = new HashMap<String, String>();
+				sParaTemp.put("service", "send_goods_confirm_by_platform");
+		        sParaTemp.put("partner", AlipayConfig.partner);
+		        sParaTemp.put("_input_charset", AlipayConfig.input_charset);
+				sParaTemp.put("trade_no", trade_no);
+				sParaTemp.put("logistics_name", logistics_name);
+				sParaTemp.put("invoice_no", invoice_no);
+				sParaTemp.put("transport_type", transport_type);
+				
+				//建立请求
+				sHtmlText = AlipaySubmit.buildRequest("", "", sParaTemp);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					sHtmlText=e.getMessage();
+				}
+		
+		return sHtmlText;
 	}
 }

@@ -49,7 +49,7 @@ public class ServiceOrderServiceImpl implements ServiceOrderService{
 		String searchJsonStr = rdtp.getsSearch();
 		Criteria criteria = serviceOrderDao.createCriteria();
 		criteria.addOrder(Order.desc("serviceOrderId"));
-		criteria.add(Restrictions.eq("status", true));
+		//criteria.add(Restrictions.eq("status", 0));
 		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
 			List<Criterion> criterionList = new ArrayList<Criterion>();
 			JSONObject json = (JSONObject) JSONObject.parse(searchJsonStr);
@@ -60,7 +60,7 @@ public class ServiceOrderServiceImpl implements ServiceOrderService{
 					if(key.equals("email")){
 						criterionList.add(Restrictions.like(key, json.getString(key), MatchMode.ANYWHERE));
 					}else if(key.equals("status")){
-						criterionList.add(Restrictions.eq(key, json.getBoolean(key)));
+						criterionList.add(Restrictions.eq(key, json.getInteger(key)));
 					}else if(key.equals("startTime")||key.equals("endTime")){
 					}else{
 						criterionList.add(Restrictions.eq(key, json.get(key)));

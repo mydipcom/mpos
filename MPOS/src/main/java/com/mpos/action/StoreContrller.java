@@ -542,7 +542,7 @@ public class StoreContrller extends BaseController {
 			serviceOrder.setPrice(service.getServicePrice());
 			serviceOrder.setServiceId(service);
 			serviceOrder.setEmail(getSessionUser(request).getEmail());
-			serviceOrder.setStatus(false);
+			serviceOrder.setStatus(1);
 			info = getMessage(request,"operate.success");
 		} catch (MposException be) {
 			info = getMessage(request, be.getErrorID(), be.getMessage());

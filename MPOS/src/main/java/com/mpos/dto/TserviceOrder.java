@@ -14,6 +14,10 @@ public class TserviceOrder implements Serializable {
 	 * 等待客户付款
 	 */
 	public static final int WAIT_BUYER_PAY =1;
+	/**
+	 * 等待发货
+	 */
+	public static final int WAIT_SELLER_SEND_GOODS =4;
 	
 	/**
 	 * 等待客户确认收货
