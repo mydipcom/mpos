@@ -167,6 +167,7 @@ public class ServiceServiceImpl implements ServiceService {
 			order.setServiceId(service);
 			order.setServiceName(service.getServiceName());
 			order.setOrderNum(orderNum);
+			serviceOrderDao.create(order);
 			res.put("price", service.getServicePrice()+"");
 			res.put("orderNum", orderNum);
 			res.put("subject", service.getServiceName());

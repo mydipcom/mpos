@@ -8,7 +8,7 @@
  */
 package com.mpos.action;
 
-import java.io.UnsupportedEncodingException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ import com.alipay.config.AlipayConfig;
 import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.mpos.commons.EMailTool;
-import com.mpos.commons.IpUtils;
 import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.TadminUser;
@@ -76,6 +76,8 @@ public class CommonController extends BaseController {
 	private MessageService messageService;
 	@Autowired
 	private ServiceOrderService serviceOrderService;
+	
+	private Map<String, String>  map = new HashMap<String, String>();
 	
 	@RequestMapping(value="header",method=RequestMethod.GET)
 	public ModelAndView header(HttpServletRequest request){
@@ -174,9 +176,8 @@ public class CommonController extends BaseController {
 			if(serviceId==null||serviceId==0){
 				status = true;
 			}
-			Map<String,String> map = serviceService.register(user, serviceId, mobile,status);
-			TemaiMessage message = TemaiMessage.getCreate(map);
-			EMailTool.send(message);
+			map = serviceService.register(user, serviceId, mobile,status);
+			request.getSession().setAttribute("map", map);
 			if(!status){
 				res.put("html",getAlipaySubmit(map));
 			}
@@ -190,12 +191,22 @@ public class CommonController extends BaseController {
 		}
 		return JSON.toJSONString(res);
 	}
+	@RequestMapping(value="/alipay",method=RequestMethod.GET)
+	public ModelAndView alipay(HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		map = (Map<String, String>) request.getSession().getAttribute("map");
+		mav.addObject("html", getAlipaySubmit(map));
+		mav.setViewName("pay");
+		return mav;
+	}
+	
 	 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/notify_url",method=RequestMethod.POST)
-	@ResponseBody
-	public String notify_url(HttpServletRequest request) throws UnsupportedEncodingException{
-		String ip = IpUtils.getIpAddr(request);
-		System.out.println(ip);
+	public void notify_url(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		System.out.println(request.getRemoteAddr());
+		//String ip = IpUtils.getIpAddr(request);
+		//System.out.println(ip);
 		Map<String,String> params = new HashMap<String,String>();
 		Map requestParams = request.getParameterMap();
 		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -213,21 +224,13 @@ public class CommonController extends BaseController {
 		
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
 		//商户订单号
-
 		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
 		//支付宝交易号
-
 		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
 		//交易状态
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 		if(AlipayNotify.verify(params)){//验证成功
-			//////////////////////////////////////////////////////////////////////////////////////////
-			//请在这里加上商户的业务逻辑程序代码
-			//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
 			if(trade_status.equals("WAIT_BUYER_PAY")){
 				//该判断表示买家已在支付宝交易管理中产生了交易记录，但没有付款
 					//判断该笔订单是否在商户网站中已经做过处理
@@ -245,7 +248,12 @@ public class CommonController extends BaseController {
 					TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
 					order.setStatus(TserviceOrder.WAIT_BUYER_PAY);
 					serviceOrderService.update(order);
-					qrfh(trade_no);
+					String res = qrfh(trade_no);
+					if(res.contains("T")){
+						 serviceOrderService.active(out_trade_no);
+						 TemaiMessage message = TemaiMessage.getCreate(map);
+						 EMailTool.send(message);
+					}
 					System.out.println("success");	//请不要修改或删除
 				} else if(trade_status.equals("WAIT_BUYER_CONFIRM_GOODS")){
 				//该判断表示卖家已经发了货，但买家还没有做确认收货的操作
@@ -262,6 +270,7 @@ public class CommonController extends BaseController {
 						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 						//如果有做过处理，不执行商户的业务程序
 					TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
+					request.getSession().removeAttribute("map");
 					order.setStatus(TserviceOrder.TRADE_FINISHED);
 					serviceOrderService.update(order);
 					System.out.println("success");	//请不要修改或删除
@@ -269,25 +278,20 @@ public class CommonController extends BaseController {
 				else {
 					System.out.println("success");	//请不要修改或删除
 				}
-
-			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
-			//////////////////////////////////////////////////////////////////////////////////////////
 		}else{//验证失败
 			System.out.println("fail");
 		}
-		//Map<String, Object> res = getHashMap();
-		//res.put("is_success", "T");
-		//res.put("out_trade_no", System.currentTimeMillis());
-		return JSON.toJSONString("success");
+		PrintWriter writer = response.getWriter();
+		writer.print("success");
+		writer.flush();
+		writer.close();
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/return_url",method=RequestMethod.GET)
-	@ResponseBody
-	public String return_url(HttpServletRequest request) throws UnsupportedEncodingException{
-		String ip = IpUtils.getIpAddr(request);
-		System.out.println(ip);
+	public ModelAndView return_url(HttpServletRequest request) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		System.out.println(request.getRemoteAddr());
 		//获取支付宝GET过来反馈信息
 		Map<String,String> params = new HashMap<String,String>();
 		Map requestParams = request.getParameterMap();
@@ -303,48 +307,33 @@ public class CommonController extends BaseController {
 			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
 			params.put(name, valueStr);
 		}
-		
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
 		//商户订单号
-
 		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
 		//支付宝交易号
-
 		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
 		//交易状态
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-
-		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
-		
 		//计算得出通知验证结果
 		boolean verify_result = AlipayNotify.verify(params);
 		
 		if(verify_result){//验证成功
-			//////////////////////////////////////////////////////////////////////////////////////////
-			//请在这里加上商户的业务逻辑程序代码
-			
-			//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-			
 			if(trade_status.equals("WAIT_SELLER_SEND_GOODS")){
-				//判断该笔订单是否在商户网站中已经做过处理
-					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-					//如果有做过处理，不执行商户的业务程序
-				qrfh(trade_no);
+				String res = qrfh(trade_no);
+				if(res.contains("T")){
+					 serviceOrderService.active(out_trade_no);
+					mav.addObject("user", new TadminUser());
+					mav.setViewName("login");
+					mav.addObject("msg", "账号已激活");
+					return mav;
+				}
 			}
-			
-			//该页面可做页面美工编辑
-			System.out.println("验证成功<br />");
-			
-			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
-			//////////////////////////////////////////////////////////////////////////////////////////
 		}else{
-			//该页面可做页面美工编辑
-			System.out.println("验证失败");
+			mav.addObject(ERROR_MSG_KEY, "支付异常");
 		}
-		return "";
+		mav.addObject("user", new TadminUser());
+		mav.setViewName("login");
+		return mav;
 	}
 	
 	private String getAlipaySubmit(Map<String, String> map){
@@ -352,10 +341,10 @@ public class CommonController extends BaseController {
 		String payment_type = "1";
 		//必填，不能修改
 		//服务器异步通知页面路径
-		String notify_url = "http://222.209.232.126/mpos/common/notify_url";
+		String notify_url = "http://222.209.232.126:8989/mpos/common/notify_url";
 		//需http://格式的完整路径，不能加?id=123这类自定义参数
 		//页面跳转同步通知页面路径
-		String return_url = "http://222.209.232.126/mpos/common/return_url";
+		String return_url = "http://222.209.232.126:8989/mpos/common/return_url";
 		//需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
 		//商户订单号
 		String out_trade_no = map.get("orderNum");
@@ -411,10 +400,10 @@ public class CommonController extends BaseController {
 			//	String trade_no = new String(request.getParameter("WIDtrade_no").getBytes("ISO-8859-1"),"UTF-8");
 				//必填
 				//物流公司名称
-				String logistics_name = "SF";
+				String logistics_name = "没有物流";
 				//必填
 				//物流发货单号
-				String invoice_no = System.currentTimeMillis()+"";
+				String invoice_no = "000000";
 				//物流运输类型
 				String transport_type = "EXPRESS";
 				//三个值可选：POST（平邮）、EXPRESS（快递）、EMS（EMS）

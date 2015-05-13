@@ -98,7 +98,7 @@ public class LoginController extends BaseController {
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}else if(!tUser.getStatus() && !"admin".equals(tUser.getAdminId())){
-			mav.addObject(ERROR_MSG_KEY, getMessage(request,"login.failed.pwd.user"));
+			mav.addObject(ERROR_MSG_KEY, "账号未激活");
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);

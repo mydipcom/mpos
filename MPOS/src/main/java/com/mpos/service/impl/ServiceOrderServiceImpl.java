@@ -16,8 +16,12 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
+import com.mpos.dao.AdminUserDao;
 import com.mpos.dao.ServiceOrderDao;
+import com.mpos.dao.StoreDao;
+import com.mpos.dto.TadminUser;
 import com.mpos.dto.TserviceOrder;
+import com.mpos.dto.Tstore;
 import com.mpos.model.DataTableParamter;
 import com.mpos.model.PagingData;
 import com.mpos.service.ServiceOrderService;
@@ -25,6 +29,10 @@ import com.mpos.service.ServiceOrderService;
 public class ServiceOrderServiceImpl implements ServiceOrderService{
 	@Autowired
 	private ServiceOrderDao serviceOrderDao;
+	@Autowired
+	private AdminUserDao adminUserDao;
+	@Autowired
+	private StoreDao storeDao;
 	public void save(TserviceOrder serviceOrder) {
 		// TODO Auto-generated method stub
 		serviceOrderDao.save(serviceOrder);
@@ -102,6 +110,19 @@ public class ServiceOrderServiceImpl implements ServiceOrderService{
 	public TserviceOrder getOrderByOrderNum(String orderNum) {
 		// TODO Auto-generated method stub
 		return serviceOrderDao.findUnique("orderNum", orderNum);
+	}
+
+	public void active(String out_trade_no) {
+		TserviceOrder order = getOrderByOrderNum(out_trade_no);
+		order.setStatus(TserviceOrder.WAIT_BUYER_CONFIRM_GOODS);
+		serviceOrderDao.update(order);
+		TadminUser user = adminUserDao.findUnique("email", order.getEmail());
+		user.setStatus(true);
+		user.setUpdatedTime(System.currentTimeMillis());
+		Tstore store = storeDao.get(user.getStoreId());		
+		store.setStatus(true);
+		storeDao.update(store);
+		adminUserDao.update(user);
 	}
 
 }

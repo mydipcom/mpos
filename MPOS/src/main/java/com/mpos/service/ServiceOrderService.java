@@ -14,6 +14,7 @@ public interface ServiceOrderService {
 	public void update(TserviceOrder serviceOrder);
 	public PagingData loadList(DataTableParamter rdtp);
 	public TserviceOrder getOrderByOrderNum(String orderNum);
+	public void active(String  out_trade_no);
 	
 	public void delete(String hql,Map<String, Object> params);
 	public void update(String hql,Map<String, Object> params);

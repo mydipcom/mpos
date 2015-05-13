@@ -70,9 +70,11 @@ var MyLogTable = function () {
                       			 }
                       			else if(data=="2"){
                       				temp = "等待确认";
-                     			 }
-                      			else if(data=="3"){
+                     			 }else if(data=="3"){
                       				temp = "交易完成";
+                     			 }
+                      			else if(data=="4"){
+                      				temp = "等待发货";
                      			 }
                              	return temp;
                              }

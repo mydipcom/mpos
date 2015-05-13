@@ -13,6 +13,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
@@ -21,6 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -223,6 +228,25 @@ public class ConvertTools {
     	}
     	return qz;
     }
+    
+    public static boolean xml2String(String xml){
+		SAXReader reader = new SAXReader();  
+		Document document = null;
+		try {
+			InputStream in = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+			document = reader.read(in);
+			Element rootElm = document.getRootElement();  
+			Element root1Elm = rootElm.element("is_success");  
+			String status = root1Elm.getTextTrim();
+			if(status!=null&&xml.equals("T")){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
+		return false;
+		    
+	}
     
     public static void main(String[] args) {
 		System.out.println(bw(12,8,"S"));

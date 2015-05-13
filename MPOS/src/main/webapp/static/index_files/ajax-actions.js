@@ -154,6 +154,7 @@ $(document).ready(function () {
 			if(flag&&flag1&&flag2&&flag3){
 				$.ajax({
 					type:'POST',
+					async: false, 
 					dataType:'json',
 					url:'common/register',
 					data:$('.ser_form').serialize(),
@@ -162,17 +163,17 @@ $(document).ready(function () {
 					},
 					success:function(data,status){
 						if(data.status){
-							alert(data.info);
 							if(data.isPay){
-								var con = data.html;
-								$("#alipay_form").html(con);
-								alert(con);
-								document.forms['alipaysubmit'].submit();
+								window.open("/common/alipay");
+								//var con = data.html;
+								//$("#alipay_form").html(con);
+								//document.forms['alipaysubmit'].target = "_blank";
+								//$("#alipaysubmit").attr("target", "_blank");
+								//document.forms['alipaysubmit'].submit();
 							}
 						}else{
 							alert(data.info);
 						};
-						
 					},
 					error:function(){
 						alert('注册失败，请重试！');
