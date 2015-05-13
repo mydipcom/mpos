@@ -79,7 +79,7 @@
 					<li><a id="news-link" href="#news">新闻</a></li>
 					<li class="right-side"><a id="contact-link" href="#contact">联系我们</a></li>
 					<li class="right-side"><a id="setup-link" href="#setup">下载安装</a></li>
-					<li><a href="${pageContext.request.contextPath}/login">登陆后台</a></li>
+					<li><a href="${pageContext.request.contextPath}/login" target="blank">登陆后台</a></li>
 				</ul>
 					<ul id="tinynav" class="l_tinynav1">
 						<li><a href="#home">主页</a></li>
@@ -284,8 +284,8 @@
 					<a href="http://item.taobao.com/item.htm?spm=a1z09.2.9.101.51BU3x&id=43622591271&_u=d2d8mv657c2" target="blank">宝贝详情</a>
 					</div>
 				</div>
-			</div>
-					
+			</div>			
+			<h1>&nbsp;</h1>		
 		</div>		
 	</div>
 	
