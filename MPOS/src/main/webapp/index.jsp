@@ -241,28 +241,43 @@
 		    </div>
 		</div>
 	</div>	
-	<div id="setup" class="about">
+	<div id="setup" class="setup">
 		<div class="container">
 			<h3 class="titles titles-white-c">下载安装</h3>
+			<!-- <h3 class="setup-desc">安装设备</h3>
 			<div class="about-desc">
-				<h4>客户端下载</h4>
-				<div> 
-				<a href="http://yun.campray.com/download/" target="_blank"><img src="static/index_files/apple-icon.jpg" alt="icon"> iPad版下载</a>
-				<a href="http://yun.campray.com/download/" target="_blank"><img src="static/index_files/android-icon.jpg" alt="icon"> Android版下载</a>
-				</div> 
-			</div>			
-			<div class="about-desc">
-				<h4>亲可以参考以下方案，在您的店铺里面固定平板</h4>
+				<h4>可以参考以下方案，在您的店铺里面固定平板</h4>
 				<h4>桌面较大推荐这种平板固定器，支持iPad和Android平板</h4>
 				<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
-			</div>
+			</div>	 -->
+			<h3 class="setup-desc">移动客户端下载</h3>			
+			<ul>
+				<li>
+					<div class="apps-img"><img src="static/index_files/apple-icon.png" alt="icon"></div>
+					<h3>App Store</h3>
+					<div>
+					<h4>菜果移动客户端</h4>					
+					<a href="http://yun.campray.com/download/" target="_blank" class="download-btn">下载</a>
+					</div>
+				</li>
+				<li class="right-side">
+					<div class="apps-img"><img src="static/index_files/android-icon.png" alt="icon"></div>
+					<h3>Android</h3>
+					<h4>Android移动客户端</h4>
+					<a href="http://yun.campray.com/download/" target="_blank" class="download-btn">下载</a>
+				</li>
+			</ul>
+			
+			
+					
 		</div>		
 	</div>
+	
 	<!-- /Contact-section -->
 	<!-- Footer-section -->
 	<div class="footer">
 		<div class="container">
-			<p id="cp-text">Copyright 2015. 凯瑞时代信息技术有限公司版权所有</a></p>
+			<p id="cp-text">Copyright 2015. 凯瑞时代信息技术有限公司版权所有</p>
 		</div>
 	</div>
 	<!-- /Footer-section -->

@@ -443,6 +443,67 @@ textarea:-ms-input-placeholder {
 .contact-desc ul li:last-child{
 	margin-right: 0;
 }
+
+/**********Setup Section************/
+.setup{
+	background:rgba(36, 82, 13, 0.5);
+	padding-bottom: 60px;
+}
+.setup-desc{
+	color: #f4f4f4;
+	margin-top: 30px;
+	text-align: center;
+}
+.setup ul{
+	margin-top: 20px;	
+}
+.setup ul li{
+	float: left;
+	width:45%;
+	margin-right: 5%;
+	margin-bottom: 5px;
+	background-color: rgba(250, 255, 252, 0.7);
+	padding: 10px;
+}
+
+.setup .apps-img{
+	float: left;
+	margin-top: 8px;
+	margin-right: 12px;
+	height: 100px;
+}
+
+.setup ul li img{
+/* 	opacity: .8; */
+	-webkit-transition-duration: 300ms;
+	-moz-transition-duration: 300ms;
+	-o-transition-duration: 300ms;
+	-ms-transition-duration: 300ms;
+}
+.setup ul li h3{
+	color: #544240;	
+	text-align: left;
+}
+.setup ul li h4{
+	float:left;
+	color: #252525;	
+	text-align: left;
+}
+
+.setup a.download-btn {
+	margin-top: 8px;
+  float:right;
+  display: inline-block;
+  width: 75px;
+  height: 25px;
+  line-height: 25px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  background-color: #0f74c3;
+  border-radius: 15px;
+}
+
 /**** Footer Section ****/
 .footer{
 	background-color: #383636;
