@@ -504,6 +504,27 @@ textarea:-ms-input-placeholder {
   border-radius: 15px;
 }
 
+.setup-device{
+	margin:200px 0 10px;
+}
+.devices-block{
+	padding:10px;
+	background-color: #dfdfdf;
+	height:280px;
+}
+.device-img{
+	float:left;
+	width:50%;
+}
+.device-img img{
+	height:280px;	
+}
+.device-img a{
+	color:#58B1FD;	
+}
+.device-img a:hover{
+	color:#0A56FA;	
+}
 /**** Footer Section ****/
 .footer{
 	background-color: #383636;

@@ -47,10 +47,18 @@
 	  	    			</div>
 	  	    		</li>
 	            	<li id="slide-1" class="flex-active-slide" style="width: 940px; float: left; display: block;">
-	  	    	    	<h2>云端菜单 免费使用</h2>
+	  	    	    	<!-- <h2>云端菜单 免费使用</h2>
 	  	    	    	<p>云端管理 云端推送</p>
 	  	    	    	<h3>完美交互 极致细节</h3>
-	  	    	    	<p id="btn-p"><a id="purchase-btn" href="#services">服务介绍</a></p>
+	  	    	    	<p id="btn-p"><a id="purchase-btn" href="#services">服务介绍</a></p> -->
+	  	    	    	<div class="app-content">
+	  	    	    		<h2>云端菜单 免费使用</h2>
+	  	    	    		<p>云端管理 云端推送  完美交互 极致细节</p>
+	  	    	    		<p id="btn-p"><a id="purchase-btn" href="#services">服务介绍</a></p>
+	  	    			</div>
+	  	    			<div class="image-wrapper" style="width:300px">
+		  	    			<img src="static/index_files/app_menu.png" alt="menu">
+	  	    			</div>
 	  	    		</li>
 				</ul>
 			</div>
@@ -264,10 +272,18 @@
 				</li>
 			</ul>
 			
-			<div class="about-desc">
-				<h4>可以参考以下方案，在您的店铺里面固定平板</h4>
-				<h4>桌面较大推荐这种平板固定器，支持iPad和Android平板</h4>
-				<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
+			<div class="setup-device">				
+				<h4>可以选配以下平板固定器和蓝牙打印机。仅供参考，如需详细帮助，请联系客服。</h4>
+				<div class="devices-block">
+					<div class="device-img">
+					<img src="static/index_files/ipad_frame.jpg" alt="icon">
+					<a href="http://detail.tmall.com/item.htm?spm=a230r.1.14.16.Q7NrV4&id=20061842266&cm_id=140105335569ed55e27b&abbucket=10" target="blank">宝贝详情</a>
+					</div>
+					<div class="device-img">
+					<img src="static/index_files/print.jpg" alt="icon">
+					<a href="http://item.taobao.com/item.htm?spm=a1z09.2.9.101.51BU3x&id=43622591271&_u=d2d8mv657c2" target="blank">宝贝详情</a>
+					</div>
+				</div>
 			</div>
 					
 		</div>		
