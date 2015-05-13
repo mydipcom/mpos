@@ -79,7 +79,7 @@
 					<li><a id="news-link" href="#news">新闻</a></li>
 					<li class="right-side"><a id="contact-link" href="#contact">联系我们</a></li>
 					<li class="right-side"><a id="setup-link" href="#setup">下载安装</a></li>
-					<li><a href="${pageContext.request.contextPath}/login" target="blank">登陆后台</a></li>
+					<li><a href="${pageContext.request.contextPath}/login" target="_blank">登陆后台</a></li>
 				</ul>
 					<ul id="tinynav" class="l_tinynav1">
 						<li><a href="#home">主页</a></li>
@@ -277,11 +277,11 @@
 				<div class="devices-block">
 					<div class="device-img">
 					<img src="static/index_files/ipad_frame.jpg" alt="icon">
-					<a href="http://detail.tmall.com/item.htm?spm=a230r.1.14.16.Q7NrV4&id=20061842266&cm_id=140105335569ed55e27b&abbucket=10" target="blank">宝贝详情</a>
+					<a href="http://detail.tmall.com/item.htm?spm=a230r.1.14.16.Q7NrV4&id=20061842266&cm_id=140105335569ed55e27b&abbucket=10" target="_blank">宝贝详情</a>
 					</div>
 					<div class="device-img">
 					<img src="static/index_files/print.jpg" alt="icon">
-					<a href="http://item.taobao.com/item.htm?spm=a1z09.2.9.101.51BU3x&id=43622591271&_u=d2d8mv657c2" target="blank">宝贝详情</a>
+					<a href="http://item.taobao.com/item.htm?spm=a1z09.2.9.101.51BU3x&id=43622591271&_u=d2d8mv657c2" target="_blank">宝贝详情</a>
 					</div>
 				</div>
 			</div>			

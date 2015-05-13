@@ -206,9 +206,9 @@
 								</div>
 								<!--End Multi-language Form   -->
 							
-								<h3 class="form-section"><s:message code="product.basic.info"/></h3>
+								<h3 class="form-section"><s:message code="product.basic.info"/>&nbsp;&nbsp;&nbsp;&nbsp;<small class="font-red-sunglo"><s:message code="product.tip"/></small></h3>
 								<div class="row">
-								<div class="col-md-6">										
+									<div class="col-md-6">										
 										<div class="form-group">
 											<label class="control-label col-md-3"><s:message code="product.category.name"/><span class="required"> * </span></label>
 											<div class="col-md-9">
@@ -223,6 +223,16 @@
 											</div>
 										</div>
 									</div>
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label col-md-3"><s:message code="product.isput"/></label>
+											<div class="col-md-9">
+											<label class="radio-inline"><form:checkbox path="isPut" value="true" cssClass="form-control"/></label>
+											<span class="help-block"><s:message code="product.isput.help"/></span>
+											</div>
+										</div>										
+									</div>																
 								</div>
 								<div class="row">
 									<!--/span-->
@@ -371,23 +381,8 @@
 									
 									</div>
 								</div>
-								<!--End images upload form-->
-								
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label col-md-3"><s:message code="product.isput"/></label>
-											<div class="col-md-9">
-											<label class="radio-inline"><form:checkbox path="isPut" value="true" cssClass="form-control"/></label>
-											</div>
-										</div>
-								</div>
-								</div>
-								<div class="row">
-								<div class="col-md-6">
-								<label style="font-size: 12px;color:red"><s:message code="product.tip"/></label>
-								</div>
-								</div>								
+								<!--End images upload form-->																							
+															
 							</div>
 							
 							
