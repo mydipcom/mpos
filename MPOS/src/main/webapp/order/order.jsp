@@ -173,11 +173,15 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label"><s:message
-											code="order.time" /></label>
-
+									<label class="col-md-3 control-label"><s:message code="order.time" /></label>
 									<div class="col-md-4">
-										<div class="input-group date form_datetime">
+										<div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
+											<input type="text"	name="startTime" class="form-control" readonly>
+											<span class="input-group-btn">
+											<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+											</span>
+										</div>
+										<%-- <div class="input-group date form_datetime">
 											<input type="text" size="16" readonly class="form-control"	name="startTime"> <span class="input-group-btn">
 												<button class="btn default date-reset" type="button">
 													<i class="fa fa-times"></i>
@@ -188,11 +192,18 @@
 												</button>
 											</span>
 
-										</div>
+										</div> --%>
 									</div>
-									<div class="col-md-1">至</div>
+									<label class="col-md-1 control-label">至</label>
 									<div class="col-md-4">
-										<div class="input-group date form_datetime">
+										<div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-end-date="+0d" data-date-viewmode="years">
+											<input type="text"	name="endTime" class="form-control" readonly>
+											<span class="input-group-btn">
+											<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+											</span>
+										</div>
+										
+										<%-- <div class="input-group date form_datetime">
 											<input type="text" size="16" readonly class="form-control"	name="endTime"> <span class="input-group-btn">
 												<button class="btn default date-reset" type="button">
 													<i class="fa fa-times"></i>
@@ -203,7 +214,7 @@
 												</button>
 											</span>
 
-										</div>
+										</div> --%>
 									</div>
 
 								</div>
@@ -399,8 +410,7 @@
 		src="../assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"
 		type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
-	<script type="text/javascript"
-		src="../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script
 		src="../assets/global/plugins/jquery-i18n/jquery.i18n.properties-1.0.9.js"
 		type="text/javascript"></script>

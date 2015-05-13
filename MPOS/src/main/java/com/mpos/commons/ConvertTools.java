@@ -136,17 +136,22 @@ public class ConvertTools {
 		if(dateLong==null){
 			return "";
 		}
-		SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 		return sdf.format(new Date(dateLong));
 	}
 	
 	public static long dateStringToLong(String date) throws ParseException{
-		SimpleDateFormat sdf =new SimpleDateFormat("dd/mm/yyyy hh:mm");
+		SimpleDateFormat sdf =new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		return sdf.parse(date).getTime();
 	}
 	
 	public static long dateString2Long(String date) throws ParseException{
-		SimpleDateFormat sdf =new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat sdf =new SimpleDateFormat("dd-MM-yyyy");
+		return sdf.parse(date).getTime();
+	}
+	
+	public static long dateString2Long(String date,String format) throws ParseException{
+		SimpleDateFormat sdf =new SimpleDateFormat(format);
 		return sdf.parse(date).getTime();
 	}
 	

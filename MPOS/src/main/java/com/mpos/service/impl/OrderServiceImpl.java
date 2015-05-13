@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 			if(jsonObj.getString("startTime") != null && !jsonObj.getString("startTime").isEmpty() 
 				    && jsonObj.getString("endTime") != null && !jsonObj.getString("endTime").isEmpty()){
 				   try {
-					criterionsList.add(Restrictions.between("createTime", ConvertTools.dateStringToLong(jsonObj.getString("startTime")), ConvertTools.dateStringToLong(jsonObj.getString("endTime"))));
+					criterionsList.add(Restrictions.between("createTime", ConvertTools.dateString2Long(jsonObj.getString("startTime"),"yyyy-MM-dd"), ConvertTools.dateString2Long(jsonObj.getString("endTime"),"yyyy-MM-dd")));
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

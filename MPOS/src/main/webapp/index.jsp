@@ -120,7 +120,7 @@
 				<li>
 					<div class="service-img"><img src="static/index_files/a6.png" alt="icon"></div>
 					<h3>多语言支持</a></h3>
-					<p>无纸化展示，通过各角度展示菜品</p>
+					<p>多语言支持：可以定制你希望的任何语言</p>
 				</li>
 				<li class="right-side">
 					<div class="service-img"><img src="static/index_files/a2.png" alt="icon"></div>
