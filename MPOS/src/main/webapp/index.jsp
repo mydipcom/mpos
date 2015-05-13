@@ -159,24 +159,24 @@
 		<div class="container">
 			<h3 class="titles">新闻</h3>
 		<ul>
-			<li>
-				<h4>2014年9月</h4>
-				<p class="meta">云菜单服务立项，即将推出</p>
-			</li>
 			<li class="right-side">
-				<h4>2014年12月</h4>
-				<p class="meta">云菜单公测版推出</p>
+				<h4>2015年4月</h4>
+				<p class="meta">云菜单正式版上线</p>
 			</li>
 			<li>
 				<h4>2015年2月</h4>
 				<p class="meta">云菜单被评为2015年最具潜力的行业云服务之一</p>
 			</li>
 			<li class="right-side">
-				<h4>2015年4月</h4>
-				<p class="meta">云菜单正式版上线</p>
+				<h4>2014年12月</h4>
+				<p class="meta">云菜单公测版推出</p>
 			</li>
-			<div class='clear'></div>
+			<li>
+				<h4>2014年9月</h4>
+				<p class="meta">云菜单服务立项，即将推出</p>
+			</li>
 		</ul>
+		<div class='clear'></div>
 		</div>
 	</div>
 	<!-- /News-section -->
