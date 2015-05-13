@@ -125,12 +125,11 @@
 									<label class="col-md-3 control-label"><s:message
 											code="order.status" /></label>
 									<div class="col-md-9">
-										<select class="bs-select form-control" id="status_select"
-											name="orderStatus">
+										<select class="bs-select form-control" id="status_select" name="orderStatus">
+											<option value=""><s:message code="all.status.all"/></option>
 											<option value="0"><s:message code="order.pending"/></option>
 											<option value="1"><s:message code="order.paid"/></option>
-											<option value="2"><s:message code="order.cancelled"/></option>
-											<option value=""><s:message code="all.status.all"/></option>
+											<option value="2"><s:message code="order.cancelled"/></option>											
 										</select>
 									</div>
 								</div>
@@ -179,8 +178,7 @@
 
 									<div class="col-md-4">
 										<div class="input-group date form_datetime">
-											<input type="text" size="16" readonly class="form-control"
-												name="startTime"> <span class="input-group-btn">
+											<input type="text" size="16" readonly class="form-control"	name="startTime"> <span class="input-group-btn">
 												<button class="btn default date-reset" type="button">
 													<i class="fa fa-times"></i>
 												</button>
@@ -195,8 +193,7 @@
 									<div class="col-md-1">至</div>
 									<div class="col-md-4">
 										<div class="input-group date form_datetime">
-											<input type="text" size="16" readonly class="form-control"
-												name="endTime"> <span class="input-group-btn">
+											<input type="text" size="16" readonly class="form-control"	name="endTime"> <span class="input-group-btn">
 												<button class="btn default date-reset" type="button">
 													<i class="fa fa-times"></i>
 												</button>

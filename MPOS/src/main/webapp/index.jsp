@@ -244,12 +244,8 @@
 	<div id="setup" class="setup">
 		<div class="container">
 			<h3 class="titles titles-white-c">下载安装</h3>
-			<!-- <h3 class="setup-desc">安装设备</h3>
-			<div class="about-desc">
-				<h4>可以参考以下方案，在您的店铺里面固定平板</h4>
-				<h4>桌面较大推荐这种平板固定器，支持iPad和Android平板</h4>
-				<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
-			</div>	 -->
+			<!-- <h3 class="setup-desc">安装设备</h3> -->
+			
 			<h3 class="setup-desc">移动客户端下载</h3>			
 			<ul>
 				<li>
@@ -268,7 +264,11 @@
 				</li>
 			</ul>
 			
-			
+			<div class="about-desc">
+				<h4>可以参考以下方案，在您的店铺里面固定平板</h4>
+				<h4>桌面较大推荐这种平板固定器，支持iPad和Android平板</h4>
+				<div><img src="static/index_files/ipad_frame.jpg" alt="icon"></div>
+			</div>
 					
 		</div>		
 	</div>

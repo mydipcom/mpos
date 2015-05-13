@@ -504,8 +504,8 @@
 									<label class="control-label col-md-2"><s:message code="attribute.required" /> <span class="required">* </span></label>
 									<div class="col-md-10">										
 										<div class="radio-list">
-											<label class="radio-inline"><input type="radio" name="required" value="true"/><s:message code="all.status.enable" /></label>
-											<label class="radio-inline"><input type="radio" name="required" value="false" checked/><s:message code="all.status.disable" /></label>											
+											<label class="radio-inline"><input type="radio" name="required" value="true"/><s:message code="attribute.required.is" /></label>
+											<label class="radio-inline"><input type="radio" name="required" value="false" checked/><s:message code="attribute.required.not" /></label>											
 										</div>									
 									</div>
 								</div>
@@ -629,8 +629,8 @@
 									<label class="control-label col-md-2"><s:message code="attribute.required" /> <span class="required">* </span></label>
 									<div class="col-md-10">										
 										<div class="radio-list">
-											<label class="radio-inline"><input type="radio" name="required" value="true"/><s:message code="all.status.enable" /></label>
-											<label class="radio-inline"><input type="radio" name="required" value="false" checked/><s:message code="all.status.disable" /></label>													
+											<label class="radio-inline"><input type="radio" name="required" value="true"/><s:message code="attribute.required.is" /></label>
+											<label class="radio-inline"><input type="radio" name="required" value="false" checked/><s:message code="attribute.required.not" /></label>													
 										</div>									
 									</div>
 								</div>
