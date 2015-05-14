@@ -145,27 +145,27 @@ var ManagersTable = function () {
 	        "fnDrawCallback":function(oSetting){
 	        	selected=[];
 	        }
-		});		
-		 
+		});			 		
+		
 		//打开删除对话框前判断是否已选择要删除的行
-			$("#openDeleteadminsModal").on("click",function(event){
-					if(selected.length==0){
-						handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
-						return false;
-					}
-				});
-			$("#openActiveadminsModal").on("click",function(event){
+		$("#openDeleteadminsModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts(loadProperties("error.active.select",locale),"warning","");				
+					handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
 					return false;
 				}
 			});
-			$("#openDeactiveadminsModal").on("click",function(event){
-				if(selected.length==0){
-					handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
-					return false;
-				}
-			});
+		$("#openActiveadminsModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts(loadProperties("error.active.select",locale),"warning","");				
+				return false;
+			}
+		});
+		$("#openDeactiveadminsModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
+				return false;
+			}
+		});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
@@ -247,12 +247,18 @@ var ManagersTable = function () {
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});	
+		
+		$("#openAddUserModal").on("click",function(event){
+			AddUsersValidation();
+		});		
+		
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length!=1){
 				handleAlerts(loadProperties("error.edit.select",locale),"warning","");
 				return false;
 			}
 			else{
+				EditUsersValidation();
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				//$("#editUsersForm option").removeAttr("selected");
 				$("#editUsersForm option").removeAttr("selected");
@@ -410,7 +416,7 @@ var ManagersTable = function () {
     	var URL =  rootURI+"storeManager/checkEmail?rand="+Math.random();
         var form = $('#addUsersForm');
         var errorDiv = $('.alert-danger', form);            
-        form.validate({
+        var validator=form.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
@@ -462,13 +468,18 @@ var ManagersTable = function () {
             	AddUsers();
             }
         });
+        //重置表单页面
+		form[0].reset();
+        errorDiv.hide(); 
+		$('input',form).closest('.form-group').removeClass('has-error');
+		validator.resetForm();
     };
     
 	var EditUsersValidation = function() {
 		//var URL =  rootURI+"storeManager/checkEmail?rand="+Math.random();
 		var form = $('#editUsersForm');
 		var errorDiv = $('.alert-danger', form);            
-		form.validate({
+		var validator=form.validate({
 			errorElement: 'span', //default input error message container
 			errorClass: 'help-block help-block-error', // default input error message class
 			focusInvalid: false, // do not focus the last invalid input
@@ -476,47 +487,47 @@ var ManagersTable = function () {
 			rules: {
 				email:  {
 	             	required: true,
-	             	email:true,
-	            	/*remote: {
-	            	    url:URL,     //后台处理程序
-	            	    type: "post",               //数据发送方式
-	            	    dataType: "json",           //接受数据格式   
-	            	    data: {                     //要传递的数据
-	            	    	email: function() {
-	            	    		return $("#editUsersForm input[name='email']").val()+","+$("#editUsersForm input[name='adminId']").val();
-	            	        }
-	            	    }
-	            	}*/
-	            }
+	             	email:true,	            	
+	            },
+	            password: {
+	        		required: true,
+	        		minlength:6,
+	        		maxlength:12,
+	    		}
 
-        },
-       invalidHandler: function (event, validator) { //display error alert on form submit              
-            errorDiv.show();                    
-        },
-
-        highlight: function (element) { // hightlight error inputs
-            $(element)
-                .closest('.form-group').addClass('has-error'); // set error class to the control group
-        },
-
-        unhighlight: function (element) { // revert the change done by hightlight
-            $(element)
-                .closest('.form-group').removeClass('has-error'); // set error class to the control group
-        },
-
-        success: function (label) {
-            label
-                .closest('.form-group').removeClass('has-error'); // set success class to the control group
-        },
-        onfocusout:function(element){
-        	$(element).valid();
-        },
-        submitHandler: function (form) { 
-        	errorDiv.hide();
-        	EditUsers();
-        }
-    });
-};
+	        },
+	       invalidHandler: function (event, validator) { //display error alert on form submit              
+	            errorDiv.show();                    
+	        },
+	
+	        highlight: function (element) { // hightlight error inputs
+	            $(element)
+	                .closest('.form-group').addClass('has-error'); // set error class to the control group
+	        },
+	
+	        unhighlight: function (element) { // revert the change done by hightlight
+	            $(element)
+	                .closest('.form-group').removeClass('has-error'); // set error class to the control group
+	        },
+	
+	        success: function (label) {
+	            label
+	                .closest('.form-group').removeClass('has-error'); // set success class to the control group
+	        },
+	        onfocusout:function(element){
+	        	$(element).valid();
+	        },
+	        submitHandler: function (form) { 
+	        	errorDiv.hide();
+	        	EditUsers();
+	        }
+		});
+        //重置表单页面
+		form[0].reset();
+        errorDiv.hide(); 
+		$('input',form).closest('.form-group').removeClass('has-error');
+		validator.resetForm();
+	};
     
 
     return {

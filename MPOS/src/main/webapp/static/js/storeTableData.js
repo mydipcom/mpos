@@ -82,24 +82,50 @@ var StoreTable = function () {
 	        "ajaxSource": rootURI+"storeManager/storeList?rand="+Math.random()
 
 		});		
-
-		//打开删除对话框前判断是否已选择要删除的行
-		$("#openDeleteTableModal").on("click",function(event){
+		//打开添加店铺对话框方法
+		$("#openAddStoreModal").on("click",function(event){
+			FormValidation($('#addStoreForm'),"add");
+		});
+		$("#openEditStoreModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.edit.select",locale),"warning","");				
 				return false;
+			}
+			else{
+				FormValidation($('#editStoreForm'),"edit");
+				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+				var storeId = data.storeId;
+	            var storeName = data.storeName;
+	            var publicKey=data.publicKey;
+	            var serviceId  = data.serviceId;	            
+	            var storeCurrency  = data.storeCurrency;
+	            var printType  = data.printType;
+	            $("#editStoreForm input[name='storeId']").val(storeId);
+	            $("#editStoreForm input[name='storeName']").val(storeName);
+	            $("#editStoreForm input[name='publicKey']").val(publicKey);
+	            $("#editStoreForm select[name='serviceId']").children("option[value='"+serviceId+"']").attr("selected","true");
+	            $("#editStoreForm select[name='storeCurrency']").children("option[value='"+storeCurrency+"']").attr("selected","true");
+	            $("#editStoreForm select[name='printType']").children("option[value='"+printType+"']").attr("selected","true");
 			}
 		});
 		
-		$("#openUpdateTableModal").on("click",function(event){
+		//打开删除对话框前判断是否已选择要删除的行
+		$("#openDeactiveStoreModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
 				return false;
 			}
+		});				
+		
+		$("#openActiveStoreModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts(loadProperties("error.active.select",locale),"warning","");				
+				return false;
+			}			
 		});
 		
 		//删除操作
-		$('#updateBtn').on('click', function (e) {
+		$('#activeBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "GET", 
@@ -124,7 +150,7 @@ var StoreTable = function () {
         }); 
 		
 		//删除操作
-		$('#deleteBtn').on('click', function (e) {
+		$('#deactiveBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "GET", 
@@ -213,7 +239,7 @@ var StoreTable = function () {
 	};
 	
 	//添加操作
-	var ajaxAddTable=function(formId){
+	var ajaxAddStore=function(formId){
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
@@ -225,8 +251,8 @@ var StoreTable = function () {
         		 if(resp.status){						 
 	            	 oTable.api().draw();
 	            	 infoType = "success";
-	            	 $('#addTableForm')[0].reset();
-	            	 $("#add_table").modal('hide');
+	            	 $('#addStoreForm')[0].reset();
+	            	 $("#add_Store").modal('hide');
 				 }
 				handleAlerts(resp.info,infoType,"#addFormMsg");						 
 			}             	 
@@ -237,7 +263,31 @@ var StoreTable = function () {
        });		
     };
     
-	
+    //添加操作
+	var ajaxEditStore=function(formId){
+		$.ajax( {
+         "dataType": 'json', 
+         "type":'POST', 
+         "url": rootURI+"storeManager/editStore", 
+         "data": formId.serialize(),
+         "success": function(resp,status){
+        	 if(status == "success"){
+        		 var infoType = "danger";
+        		 if(resp.status){						 
+	            	 oTable.api().draw();
+	            	 infoType = "success";
+	            	 $('#editStoreForm')[0].reset();
+	            	 $("#edit_Store").modal('hide');
+				 }
+				handleAlerts(resp.info,infoType,"#editFormMsg");						 
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });		
+    };
+    
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
 	var handleAlerts = function(msg,msgType,position) {
 		if(position==""){
@@ -261,7 +311,7 @@ var StoreTable = function () {
     var FormValidation = function(formId,type) {
     	    var URL =  rootURI+"storeManager/checkEmail?rand="+Math.random();
             var errorDiv = $('.alert-danger', formId);            
-            formId.validate({
+            var validator=formId.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
@@ -275,7 +325,7 @@ var StoreTable = function () {
                     	    dataType: "json",           //接受数据格式   
                     	    data: {                     //要传递的数据
                     	    	email: function() {
-                    	    		return $("#addTableForm input[name='email']").val();
+                    	    		return formId.find("input[name='email']").val();
                     	        }
                     	    }
                     	}
@@ -312,12 +362,17 @@ var StoreTable = function () {
                 submitHandler: function (form) {                	
                     errorDiv.hide();
                     if(type=="edit"){
-                    	ajaxEditTable(formId);
+                    	ajaxEditStore(formId);
                     }else if(type=="add"){
-                    	ajaxAddTable(formId); 
+                    	ajaxAddStore(formId); 
                     }
                 }
             });
+            //重置表单页面
+            formId[0].reset();
+            errorDiv.hide(); 
+    		$('input',formId).closest('.form-group').removeClass('has-error');
+    		validator.resetForm();            
     };
     
     return {
@@ -325,8 +380,8 @@ var StoreTable = function () {
         	rootURI=rootPath;
         	locale = locale_value;
         	handleTable(); 
-        	FormValidation($('#addTableForm'),"add");
-        	FormValidation($('#editTableForm'),"edit");
+        	FormValidation($('#addStoreForm'),"add");
+        	FormValidation($('#editStoreForm'),"edit");
         }
 
     };

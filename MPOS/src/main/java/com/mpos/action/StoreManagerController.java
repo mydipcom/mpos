@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
 import com.mpos.commons.MposException;
 import com.mpos.dto.Tservice;
@@ -83,6 +84,29 @@ public class StoreManagerController extends BaseController {
 		return JSON.toJSONString(res);
 	}
 	
+	@RequestMapping(value="editStore",method=RequestMethod.POST)
+	@ResponseBody
+	public String editStore(HttpServletRequest request,Tstore store){
+		JSONObject respJson=new JSONObject();
+		try {
+			Tstore oldStore=storeService.get(store.getStoreId());
+			if(oldStore!=null){
+				oldStore.setStoreName(store.getStoreName());
+				oldStore.setServiceId(store.getServiceId());
+				oldStore.setPublicKey(store.getPublicKey());
+				oldStore.setStoreCurrency(store.getStoreCurrency());
+				oldStore.setPrintType(store.getPrintType());
+			}
+			storeService.update(oldStore);							
+			respJson.put("status", true);
+			respJson.put("info", getMessage(request,"operate.success"));
+		} catch (MposException be) {
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}
+		return JSON.toJSONString(respJson);
+	}
+	
 	@RequestMapping(value = "/storeList", method = RequestMethod.GET)
 	@ResponseBody
 	public String storeList(HttpServletRequest request, DataTableParamter dtp) {
@@ -110,6 +134,10 @@ public class StoreManagerController extends BaseController {
 				o.put("createTimeStr", ConvertTools.longToDateString(store.getCreateTime()));
 				o.put("date",ConvertTools.longToDateString(store.getServiceDate()));
 				o.put("status", store.getCreateTimeStr());
+				o.put("serviceId", store.getServiceId());
+				o.put("publicKey", store.getPublicKey());
+				o.put("printType", store.getPrintType());
+				o.put("storeCurrency", store.getStoreCurrency());
 				StringBuffer storeAdmin = new StringBuffer();
 				storeAdmin.append("");
 				if(res!=null&&res.size()>0){

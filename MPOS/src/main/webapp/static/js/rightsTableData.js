@@ -127,6 +127,9 @@ var RightsTable = function () {
            });
         });  
 		
+        $("#openAddRightModal").on("click",function(event){
+        	addFormValidation();
+        });
 		
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length!=1){
@@ -134,6 +137,7 @@ var RightsTable = function () {
 				return false;				
 			}
 			else{
+				editFormValidation();
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				var nodeId = data.nodeId;
 	            var name = data.name;
@@ -307,7 +311,7 @@ var RightsTable = function () {
             var addform = $('#addRightsForm');
             var errorDiv = $('.alert-danger', addform);            
 
-            addform.validate({
+            var validator=addform.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
@@ -356,6 +360,11 @@ var RightsTable = function () {
                     ajaxAddRights();                    
                 }
             });
+            //重置表单页面
+            addform[0].reset();
+            errorDiv.hide(); 
+    		$('input',addform).closest('.form-group').removeClass('has-error');
+    		validator.resetForm();             
     };
     
   //处理表单验证方法
@@ -363,7 +372,7 @@ var RightsTable = function () {
             var editform = $('#editRightsForm');
             var errorDiv = $('.alert-danger', editform);            
 
-            editform.validate({
+            var validator=editform.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
@@ -412,6 +421,11 @@ var RightsTable = function () {
                     ajaxEditRights();                    
                 }
             });
+            //重置表单页面
+            editform[0].reset();
+            errorDiv.hide(); 
+    		$('input',editform).closest('.form-group').removeClass('has-error');
+    		validator.resetForm();            
     };
     
     function format(state) {

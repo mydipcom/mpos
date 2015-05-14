@@ -141,7 +141,9 @@ var LanguagesTable = function () {
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});	
-		
+		$("#openAddlanguageModal").on("click",function(event){
+			AddlanguagesValidation();
+		});
 		
 		$("#openEditlanguageModal").on("click",function(event){
 			if(selected.length!=1){
@@ -149,6 +151,7 @@ var LanguagesTable = function () {
 				return false;
 			}
 			else{
+				EditLanguagesValidation();
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 	            var Id = data.id;
 	            var name =data.name;
@@ -288,7 +291,7 @@ var LanguagesTable = function () {
     var AddlanguagesValidation = function() {
         var form = $('#addLanguagesForm');
         var errorDiv = $('.alert-danger', form);            
-        form.validate({
+        var validator=form.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
@@ -336,6 +339,11 @@ var LanguagesTable = function () {
             	AddLanguage();
             }
         });
+        //重置表单页面
+    	form[0].reset();
+        errorDiv.hide(); 
+    	$('input',form).closest('.form-group').removeClass('has-error');
+    	validator.resetForm();	        
     };
     
 	//编辑表单提交操作
@@ -368,7 +376,7 @@ var LanguagesTable = function () {
 	var EditLanguagesValidation = function() {
 		var form = $('#editLanguagesForm');
 		var errorDiv = $('.alert-danger', form);            
-		form.validate({
+		var validator=form.validate({
 			errorElement: 'span', //default input error message container
 			errorClass: 'help-block help-block-error', // default input error message class
 			focusInvalid: false, // do not focus the last invalid input
@@ -411,6 +419,11 @@ var LanguagesTable = function () {
         	EditLanguages();
         }
     });
+    //重置表单页面
+	form[0].reset();
+    errorDiv.hide(); 
+	$('input',form).closest('.form-group').removeClass('has-error');
+	validator.resetForm();		
 };
 	
 
