@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,6 @@ import com.alipay.config.AlipayConfig;
 import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.mpos.commons.EMailTool;
-import com.mpos.commons.MposException;
 import com.mpos.commons.SystemConfig;
 import com.mpos.dto.TadminUser;
 import com.mpos.dto.TemaiMessage;
@@ -184,15 +184,20 @@ public class CommonController extends BaseController {
 				res.put("data", map);
 			}else{
 				TemaiMessage message = TemaiMessage.getCreate(map);
-				 EMailTool.send(message);
+					EMailTool.send(message);
 			}
 			res.put("isPay",!status);
+			res.put("service", map.get("serviceName"));
 			res.put("status", true);
 			res.put("info", "注册成功");
-		} catch (MposException e) {
+		} catch (Exception e) {
+			if(e instanceof MailSendException){
+				res.put("info", "邮箱不存在");
+			}else{
+				res.put("info", "网络异常");
+			}
 			e.printStackTrace();
 			res.put("status", false);
-			res.put("info", "失败");
 		}
 		return JSON.toJSONString(res);
 	}

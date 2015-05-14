@@ -207,10 +207,12 @@ $(document).ready(function () {
 						    	$("#goodName").html(data.subject);
 						    	$("#goodPrice").html(data.price+"元");
 							}else{
-								alert('恭喜您免费体验版注册成功！');
+								$("#body_content").html("恭喜您"+data.service+"注册成功，您可以登录后台开始管理菜单");
+					        	$('#pay_done').modal({backdrop: 'static', keyboard: false});
 							}
 						}else{
-							alert(data.info);
+							$("#body_content").html(data.info);
+				        	$('#pay_done').modal({backdrop: 'static', keyboard: false});
 						};
 					},
 					error:function(){

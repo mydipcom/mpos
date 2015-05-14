@@ -11,6 +11,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.mpos.dto.TemaiMessage;
 public class EMailTool {
+
+
 	
 	 public static void send(TemaiMessage temaiMessage){
 		try {
