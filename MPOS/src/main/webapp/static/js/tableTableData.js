@@ -33,7 +33,7 @@ var TableTable = function () {
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
-                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">'+loadProperties("page.edit",locale)+'</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal" href="#edit_table">'+loadProperties("page.edit",locale)+'</a></div>';
                 	},
                 'class':'center'
             	}
@@ -60,6 +60,11 @@ var TableTable = function () {
 
 		});		
 
+		//打开添加对话框
+		$("#openAddTableModal").on("click",function(event){
+			FormValidation($('#addTableForm'),"add");
+		});
+						
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteTableModal").on("click",function(event){
 			if(selected.length==0){
@@ -69,15 +74,16 @@ var TableTable = function () {
 		});
 		
 		table.on('click', 'tbody tr a',function(){
-	           var data = oTable.api().row($(this).parents('tr')).data();
-	           $("#editTableForm input[name='id']").val(data.id);
-	           $("#editTableForm input[name='storeId']").val(data.storeId);
-	           $("#editTableForm input[name='tableName']").val(data.tableName);
-	           $("#editTableForm input[name='createTime']").val(data.createTime);
-	           $("#editTableForm input[name='seatingNumber']").val(data.seatingNumber);
-	           $("#editTableForm textarea[name='descr']").val(data.descr);
-	           $("#editTableForm input[name='status']").val(data.status);
-	        });
+			FormValidation($('#editTableForm'),"edit");
+           var data = oTable.api().row($(this).parents('tr')).data();
+           $("#editTableForm input[name='id']").val(data.id);
+           $("#editTableForm input[name='storeId']").val(data.storeId);
+           $("#editTableForm input[name='tableName']").val(data.tableName);
+           $("#editTableForm input[name='createTime']").val(data.createTime);
+           $("#editTableForm input[name='seatingNumber']").val(data.seatingNumber);
+           $("#editTableForm textarea[name='descr']").val(data.descr);
+           $("#editTableForm input[name='status']").val(data.status);
+        });
 		
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
@@ -241,71 +247,77 @@ var TableTable = function () {
     
     //处理表单验证方法
     var FormValidation = function(formId,type) {
-    	    var URL =  rootURI+"table/checkTableName?rand="+Math.random();
-    		if(type=="edit"){
-    			URL =  rootURI+"table/verification?rand="+Math.random();
-    		}
-            var errorDiv = $('.alert-danger', formId);            
-            formId.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    "tableName": {
-                    	required: true,
-                    	remote: {
-                    	    url:URL,     //后台处理程序
-                    	    type: "post",               //数据发送方式
-                    	    dataType: "json",           //接受数据格式   
-                    	    data: {                     //要传递的数据
-                    	    	tableName: function() {
-                    	    		if(type=="edit"){
-                    	    			return $("#"+type+"TableForm input[name='tableName']").val()+","+$("#"+type+"TableForm input[name='id']").val()+","+$("#"+type+"TableForm input[name='storeId']").val();
-                    	    		}else{
-                    	    			return $("#"+type+"TableForm input[name='tableName']").val()+","+$("#"+type+"TableForm input[name='storeId']").val();
-                    	    		}
-                    	        }
-                    	    }
-                    	}
-                    },
-                    "seatingNumber": {
-                    	required: true,
-                    	digits:true,
-                    	min:1 
-                    }
+	    var URL =  rootURI+"table/checkTableName?rand="+Math.random();
+		if(type=="edit"){
+			URL =  rootURI+"table/verification?rand="+Math.random();
+		}
+        var errorDiv = $('.alert-danger', formId);            
+        var validator=formId.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+                "tableName": {
+                	required: true,
+                	remote: {
+                	    url:URL,     //后台处理程序
+                	    type: "post",               //数据发送方式
+                	    dataType: "json",           //接受数据格式   
+                	    data: {                     //要传递的数据
+                	    	tableName: function() {
+                	    		if(type=="edit"){
+                	    			return $("#"+type+"TableForm input[name='tableName']").val()+","+$("#"+type+"TableForm input[name='id']").val()+","+$("#"+type+"TableForm input[name='storeId']").val();
+                	    		}else{
+                	    			return $("#"+type+"TableForm input[name='tableName']").val()+","+$("#"+type+"TableForm input[name='storeId']").val();
+                	    		}
+                	        }
+                	    }
+                	}
                 },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit                	
-                    errorDiv.show();                    
-                },
-
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-                onfocusout: function (element) { // hightlight error inputs
-                    $(element).valid();
-                },
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                    if(type=="edit"){
-                    	ajaxEditTable(formId);
-                    }else if(type=="add"){
-                    	ajaxAddTable(formId); 
-                    }
+                "seatingNumber": {
+                	required: true,
+                	digits:true,
+                	min:1 
                 }
-            });
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit                	
+                errorDiv.show();                    
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            onfocusout: function (element) { // hightlight error inputs
+                $(element).valid();
+            },
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {                	
+                errorDiv.hide();
+                if(type=="edit"){
+                	ajaxEditTable(formId);
+                }else if(type=="add"){
+                	ajaxAddTable(formId); 
+                }
+            }
+        });
+        
+        //重置表单页面
+        formId[0].reset();
+        errorDiv.hide(); 
+		$('input',formId).closest('.form-group').removeClass('has-error');
+		validator.resetForm();
     };
     
     return {

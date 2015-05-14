@@ -149,8 +149,8 @@ var MenuTable = function () {
 		
 		$("#openAdd").on("click",function(event){
 			loadSelect($("#add_select"));
-		});
-		
+			addFormValidation();
+		});			
 		
 		$("#openEditMenuModal").on("click",function(event){
 			if(selected.length!=1){
@@ -158,6 +158,7 @@ var MenuTable = function () {
 				return false;				
 			}
 			else{
+				editFormValidation();
 				var checkedObj=$("tr input:checked");
 				var data = oTable.api().row(checkedObj.parents('tr')).data();
 				
@@ -333,92 +334,103 @@ var MenuTable = function () {
     
     //处理表单验证方法
     var addFormValidation = function() {
-            var addform = $('#addMenuForm');
-            var errorDiv = $('.alert-danger', addform);            
+        var addform = $('#addMenuForm');
+        var errorDiv = $('.alert-danger', addform);            
 
-            addform.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    "menu.title": {
-                        minlength: 2,
-                        required: true
-                    }
-                },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit                	
-                    errorDiv.show();                    
-                },
-
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-                onfocusout: function (element) { // hightlight error inputs
-                    $(element).valid();
-                },
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                    ajaxAddMenu();                    
+        var validator=addform.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+                "menu.title": {
+                    minlength: 2,
+                    required: true
                 }
-            });
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit                	
+                errorDiv.show();                    
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            onfocusout: function (element) { // hightlight error inputs
+                $(element).valid();
+            },
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {                	
+                errorDiv.hide();
+                ajaxAddMenu();                    
+            }
+        });
+        //重置表单页面
+        addform[0].reset();
+        errorDiv.hide(); 
+		$('input',addform).closest('.form-group').removeClass('has-error');
+		validator.resetForm();
     };
     
   //处理表单验证方法
     var editFormValidation = function() {
-            var addform = $('#editMenuForm');
-            var errorDiv = $('.alert-danger', addform);            
+        var addform = $('#editMenuForm');
+        var errorDiv = $('.alert-danger', addform);            
 
-            addform.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    "menu.title": {
-                        minlength: 2,
-                        required: true
-                    },                    
-                },
+        var validator=addform.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+                "menu.title": {
+                    minlength: 2,
+                    required: true
+                },                    
+            },
 
-                invalidHandler: function (event, validator) { //display error alert on form submit                	
-                    errorDiv.show();                    
-                },
+            invalidHandler: function (event, validator) { //display error alert on form submit                	
+                errorDiv.show();                    
+            },
 
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
 
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-                onfocusout: function (element) { // hightlight error inputs
-                    $(element).valid();
-                },
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            onfocusout: function (element) { // hightlight error inputs
+                $(element).valid();
+            },
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
 
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                    ajaxEditMenu();                    
-                }
-            });
+            submitHandler: function (form) {                	
+                errorDiv.hide();
+                ajaxEditMenu();                    
+            }
+        });
+            
+        //重置表单页面
+        addform[0].reset();
+        errorDiv.hide(); 
+		$('input',addform).closest('.form-group').removeClass('has-error');
+		validator.resetForm();
     };
     
 
