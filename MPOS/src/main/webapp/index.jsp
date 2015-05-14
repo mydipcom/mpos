@@ -120,7 +120,7 @@
 				<li>
 					<div class="service-img"><img src="static/index_files/a6.png" alt="icon"></div>
 					<h3>多语言支持</a></h3>
-					<p>多语言支持：可以定制你希望的任何语言</p>
+					<p>可以定制你希望的任何语言</p>
 				</li>
 				<li class="right-side">
 					<div class="service-img"><img src="static/index_files/a2.png" alt="icon"></div>
@@ -161,19 +161,19 @@
 		<ul>
 			<li class="right-side">
 				<h4>2015年4月</h4>
-				<p class="meta">云菜单正式版上线</p>
+				<p class="meta">云菜单正式版上线，推出免费版和基础版供用户订购，后续将提供更丰富的版本供大家体验。</p>
 			</li>
 			<li>
 				<h4>2015年2月</h4>
-				<p class="meta">云菜单被评为2015年最具潜力的行业云服务之一</p>
+				<p class="meta">云菜单被评为2015年最具潜力的行业云服务之一！</p>
 			</li>
 			<li class="right-side">
 				<h4>2014年12月</h4>
-				<p class="meta">云菜单公测版推出</p>
+				<p class="meta">云菜单团队经过三个月的拼搏，公测版对外发布</p>
 			</li>
 			<li>
 				<h4>2014年9月</h4>
-				<p class="meta">云菜单服务立项，即将推出</p>
+				<p class="meta">云菜单服务立项，定位于打造行业领先的云服务</p>
 			</li>
 		</ul>
 		<div class='clear'></div>

@@ -38,7 +38,7 @@ import com.alibaba.fastjson.JSONObject;
 public class ConvertTools {
 	
 	public static  SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	public static SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	public static SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/**
      * 当月第一天
@@ -141,12 +141,12 @@ public class ConvertTools {
 		if(dateLong==null){
 			return "";
 		}
-		SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+		SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		return sdf.format(new Date(dateLong));
 	}
 	
 	public static long dateStringToLong(String date) throws ParseException{
-		SimpleDateFormat sdf =new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		SimpleDateFormat sdf =new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		return sdf.parse(date).getTime();
 	}
 	

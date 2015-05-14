@@ -32,7 +32,7 @@ $("#navigation").sticky({topSpacing:0});
 	$("#services-link").anchorScroll({fx: "easeOutExpo"});
 	$("#works-link").anchorScroll({fx: "easeOutExpo"});
 	$("#news-link").anchorScroll({fx: "easeOutExpo"});
-	$("#team-link").anchorScroll({fx: "easeOutExpo"});
+	$("#setup-link").anchorScroll({fx: "easeOutExpo"});
 	$("#contact-link").anchorScroll({fx: "easeOutExpo"});
 	// Works - Quicksand
 
