@@ -93,11 +93,21 @@ $(document).ready(function () {
                 });
             }
         });
+        $("#close_pay").on('click',function(){
+        	$("#body_content").html("您确定要取消服务订购？");
+        	$('#pay_done').modal({backdrop: 'static', keyboard: false});
+   	});
+        $("#qrb").on('click',function(){
+        	 $("#pay_id").modal('hide');
+   	});
         $("#rePayButton").on('click',function(){
         	window.open(getRootPath()+"/common/alipay");
    	});
     	$("#doneButton").on('click',function(){
     		 $("#pay_id").modal('hide');
+    		 var htm="<div>稍后服务将自动开通，请查收邮件</div>";
+    		 htm +="<div>在确认服务已开通情况下，请在您的支付宝中确认收货，谢谢！</div>";
+    		 $("#body_content").html(htm);
     		 $('#pay_done').modal({backdrop: 'static', keyboard: false});
     	});
     	$("#payButton").on('click',function(){
@@ -196,6 +206,8 @@ $(document).ready(function () {
 						    	$("#orderNum").html(data.orderNum);
 						    	$("#goodName").html(data.subject);
 						    	$("#goodPrice").html(data.price+"元");
+							}else{
+								alert('恭喜您免费体验版注册成功！');
 							}
 						}else{
 							alert(data.info);

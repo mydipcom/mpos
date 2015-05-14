@@ -177,9 +177,12 @@ public Long getRightByEmail(String email) {
 	params.put("email", email);
 	String sql = "select r_right.role_rights from mpos_cloud.mpos_admin as admin left join mpos_cloud.mpos_store as store on admin.store_id=store.store_id left join mpos_cloud.mpos_service as service on service.service_id=store.service_id left join mpos_cloud.mpos_admin_role_rights as r_right on r_right.role_id=service.role_id where admin.email=:email and store.status=true";
 	Object object = adminUserDao.getBySql(sql, params);
-	System.out.println(object.toString());
-	BigInteger value = (BigInteger)object;
-	return value.longValue();
+	if(object==null){
+		return 0L;
+	}else{
+		BigInteger value = (BigInteger)object;
+		return value.longValue();
+	}
 }
 
 public void saveStoreUser(TadminUser adminUser) {

@@ -65,7 +65,8 @@ public class TemaiMessage {
 	</div>*/
 	public static TemaiMessage getCreate(Map<String, String> map){
 		StringBuffer sb = new StringBuffer();
-		sb.append("<div style=\"background-color:#CFCDCD;color:#1A1A1A\">");
+		sb.append("<body style=\"background-color:#CFCDCD;font-color:#1A1A1A\">");
+		sb.append("<div style=\"background-color:#CFCDCD;font-color:#1A1A1A\">");
 		sb.append("<h3>您好: "+map.get("email")+"</h3>");
 		sb.append("<div style=\"margin-bottom:30px;margin-top:30px\">欢迎注册凯瑞时代云菜单服务！以下为您注册的账号信息：</div>");
 		sb.append("<div>登录账号："+map.get("email")+"</div>");
@@ -75,9 +76,10 @@ public class TemaiMessage {
 		sb.append("<div style=\"margin-top:30px\">谢谢</div>");
 		sb.append("<div>凯瑞时代云菜单客服中心</div>");
 		sb.append("<div>客服电话：028-83361785</div>");
-		sb.append("<div style=\"border:solid #FFF 1px;margin-top:30px\"></div>");
+		sb.append("<div style=\"border:solid #FFFFFF 1px;margin-top:30px\"></div>");
 		sb.append("<div style=\"margin-top:20px\">此邮件有系统自动发出，请勿直接回复！</div>");
 		sb.append("</div>");
+		sb.append("</body>");
 		TemaiMessage meg = new TemaiMessage();
 		meg.setIsHtml(true);
 		meg.setText(sb.toString());
@@ -88,19 +90,21 @@ public class TemaiMessage {
 	
 	public static TemaiMessage getRest(Map<String, String> map){
 		StringBuffer sb = new StringBuffer();
-		sb.append("<div style=\"background-color:#CFCDCD;color:#1A1A1A\">");
+		sb.append("<body style=\"background-color:#CFCDCD;font-color:#1A1A1A\">");
+		sb.append("<div style=\"background-color:#CFCDCD;font-color:#1A1A1A\">");
 		sb.append("<h3>您好: "+map.get("email")+"</h3>");
 		sb.append("<div style=\"margin-bottom:30px;margin-top:30px\">欢迎使用凯瑞时代云菜单服务！以下为您的账号密码重置地址：</div>");
-		sb.append("<div  style=\"margin-top:30px\"><a href='http://192.168.10.3:8888/mpos/common/reset?code="+map.get("code")+"'>点击链接重置密码</a></div>");
+		sb.append("<div  style=\"margin-top:30px\"><a href='"+map.get("url")+"/common/reset?code="+map.get("code")+"'>点击链接重置密码</a></div>");
 		sb.append("<div  style=\"margin-top:30px;margin-bottom:30px\">或者复制以下地址在浏览器上打开</div>");
-		sb.append("<div  style=\"margin-bottom:30px\">http://192.168.10.3:8888/mpos/common/reset?code="+map.get("code")+"</div>");
+		sb.append("<div  style=\"margin-bottom:30px\">"+map.get("url")+"/mpos/common/reset?code="+map.get("code")+"</div>");
 		sb.append("<div>此链接有效时间为10分钟，请及时重置密码</div>");
 		sb.append("<div style=\"margin-top:30px\">谢谢</div>");
 		sb.append("<div>凯瑞时代云菜单客服中心</div>");
 		sb.append("<div>客服电话：028-83361785</div>");
-		sb.append("<div style=\"border:solid #FFF 1px;margin-top:30px\"></div>");
-		sb.append("<div style=\"margin-top:20px\">此邮件有系统自动发出，请勿直接回复！</div>");
+		sb.append("<div style=\"border:solid #FFFFFF 1px;margin-top:30px\"></div>");
+		sb.append("<div style=\"margin-top:20px\">此邮件由系统自动发出，请勿直接回复！</div>");
 		sb.append("</div>");
+		sb.append("</body>");
 		TemaiMessage meg = new TemaiMessage();
 		meg.setIsHtml(true);
 		meg.setSubject(RESET_SUBJECT);

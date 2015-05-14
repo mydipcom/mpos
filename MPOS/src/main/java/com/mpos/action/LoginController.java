@@ -141,6 +141,7 @@ public class LoginController extends BaseController {
 	public ModelAndView resetPassword(HttpServletRequest request ,String email){
 		ModelAndView mav = new ModelAndView();
 		TadminLog adminLog = new TadminLog();
+		String url = request.getRequestURL().toString().replaceFirst( request.getServletPath(), "");
 		TadminUser adminUser = adminUserService.getTadminUsersByEmail(email.toLowerCase());
 		if(adminUser == null){
 			 adminUser = new TadminUser();
@@ -157,6 +158,7 @@ public class LoginController extends BaseController {
 			Map<String,String> map = new HashMap<String, String>();
 			map.put("email", email);
 			map.put("code", code);
+			map.put("url", url);
 			TemaiMessage message = TemaiMessage.getRest(map);
 			EMailTool.send(message);
 			mav.addObject("msg", getMessage(request,"reset.pwd.success"));
@@ -178,6 +180,7 @@ public class LoginController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		String msg  = "";
 		TadminUser adminUser = new TadminUser();
+		
 		try {
 			if((code!=null&&!code.isEmpty())){
 				adminUser = adminUserService.getByCode(code);

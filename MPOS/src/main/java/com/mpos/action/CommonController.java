@@ -179,8 +179,12 @@ public class CommonController extends BaseController {
 			map = serviceService.register(user, serviceId, mobile,status);
 			request.getSession().setAttribute("map", map);
 			if(!status){
+				map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
 				res.put("html",getAlipaySubmit(map));
 				res.put("data", map);
+			}else{
+				TemaiMessage message = TemaiMessage.getCreate(map);
+				 EMailTool.send(message);
 			}
 			res.put("isPay",!status);
 			res.put("status", true);
@@ -192,6 +196,7 @@ public class CommonController extends BaseController {
 		}
 		return JSON.toJSONString(res);
 	}
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/alipay",method=RequestMethod.GET)
 	public ModelAndView alipay(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
@@ -363,10 +368,10 @@ public class CommonController extends BaseController {
 		String payment_type = "1";
 		//必填，不能修改
 		//服务器异步通知页面路径
-		String notify_url = "http://222.209.232.126:8989/mpos/common/notify_url";
+		String notify_url = map.get("url")+"/common/notify_url";
 		//需http://格式的完整路径，不能加?id=123这类自定义参数
 		//页面跳转同步通知页面路径
-		String return_url = "http://222.209.232.126:8989/mpos/common/return_url";
+		String return_url = map.get("url")+"/common/return_url";
 		//需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
 		//商户订单号
 		String out_trade_no = map.get("orderNum");

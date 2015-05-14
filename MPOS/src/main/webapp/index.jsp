@@ -302,7 +302,7 @@
 	
 	<div class="modal" id="pay_id"  data-width="650" data-height="200" style="color:black;display: none" >
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+						<button type="button" class="close" id="close_pay" aria-hidden="true">X</button>
 						<h4 class="modal-title">服务订购</h4>
 					</div>
 					<!-- <div class="modal-body"> -->
@@ -348,17 +348,17 @@
 						<!-- END FORM-->
 		</div>					
 	 
-	 	<div class="modal" id="pay_done" style="display: none;" role="dialog">
+	 	<div class="modal" id="pay_done" style="display: none;" >
 					<div class="modal-header" style="color: black;">
 					<a class="close" data-dismiss="modal">x</a>
 						<h4 class="modal-title">提示：</h4>
 					</div>
-					<div class="modal-body" style="color: black;">
+					<div class="modal-body" style="color: black;" id="body_content">
 						<div >稍后服务将自动开通，请查收邮件</div>
-						<div>再确认服务已开通情况下，请在您的支付宝中确认收货，谢谢！</div>
+						<div>在确认服务已开通情况下，请在您的支付宝中确认收货，谢谢！</div>
 					</div>
 					<div class="modal-footer">
-					<button class="btn" data-dismiss="modal">确认</button>
+					<button class="btn-info" data-dismiss="modal" id="qrb"  style="width: 120px; height: 35px; margin-right: 160px;">确认</button>
 					</div>
 	 </div>				
 	

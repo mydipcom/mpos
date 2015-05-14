@@ -158,7 +158,7 @@ public class ServiceServiceImpl implements ServiceService {
 		info.setAdminId(user.getAdminId());
 		info.setMobile(mobile);
 		adminInfoDao.create(info);
-		if(service.getServiceId()>0&&service.getServicePrice()>1){
+		if(service.getServiceId()>0&&service.getServicePrice()>0){
 			String orderNum= "CampRay"+System.currentTimeMillis();
 			TserviceOrder order = new TserviceOrder();
 			order.setCreateTime(System.currentTimeMillis());
@@ -173,6 +173,10 @@ public class ServiceServiceImpl implements ServiceService {
 			res.put("orderNum", orderNum);
 			res.put("subject", service.getServiceName());
 		}
+		res.put("email", user.getEmail());
+		res.put("serviceName", service.getServiceName());
+		res.put("startTime", ConvertTools.longToDateString(System.currentTimeMillis()));
+		res.put("endTime",  ConvertTools.longToDateString(store.getServiceDate()));
 		return res;
 	}
 
