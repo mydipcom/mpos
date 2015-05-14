@@ -1,5 +1,6 @@
 package com.mpos.service.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -172,13 +173,21 @@ public class ServiceServiceImpl implements ServiceService {
 			res.put("orderNum", orderNum);
 			res.put("subject", service.getServiceName());
 		}
-		res.put("status", "1");
-		res.put("email", user.getEmail());
-		res.put("serviceName", service.getServiceName());
-		res.put("startTime", ConvertTools.longToDateString(System.currentTimeMillis()));
-		res.put("endTime",  ConvertTools.longToDateString(store.getServiceDate()));
-		
 		return res;
+	}
+
+	public Map<String, String> getInfoByEmail(String email) {
+		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("email", email);
+		String sql = "select store.service_date,service.service_name from mpos_cloud.mpos_admin as admin left join mpos_cloud.mpos_store as store on admin.store_id = store.store_id left join mpos_cloud.mpos_service as service on service.service_id=store.service_id where admin.email=:email";
+		Object[] res = (Object[]) adminUserDao.getBySql(sql, params);
+		map.put("email", email);
+		 map.put("serviceName", res[1].toString());
+		 map.put("startTime", ConvertTools.longToDateString(System.currentTimeMillis()));
+		 BigInteger time = (BigInteger) res[0];
+		 map.put("endTime",  ConvertTools.longToDateString(time.longValue()));
+		return map;
 	}
 
 }

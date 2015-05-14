@@ -180,6 +180,7 @@ public class CommonController extends BaseController {
 			request.getSession().setAttribute("map", map);
 			if(!status){
 				res.put("html",getAlipaySubmit(map));
+				res.put("data", map);
 			}
 			res.put("isPay",!status);
 			res.put("status", true);
@@ -239,6 +240,7 @@ public class CommonController extends BaseController {
 				TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
 				order.setStatus(TserviceOrder.WAIT_BUYER_PAY);
 				serviceOrderService.update(order);
+				System.out.println("---------------------创建订单成功----------------------------");
 				System.out.println("success");	//请不要修改或删除
 				} else if(trade_status.equals("WAIT_SELLER_SEND_GOODS")){
 				//该判断表示买家已在支付宝交易管理中产生了交易记录且付款成功，但卖家没有发货
@@ -246,13 +248,16 @@ public class CommonController extends BaseController {
 						//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 						//如果有做过处理，不执行商户的业务程序
 					TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
-					order.setStatus(TserviceOrder.WAIT_BUYER_PAY);
-					serviceOrderService.update(order);
-					String res = qrfh(trade_no);
-					if(res.contains("T")){
-						 serviceOrderService.active(out_trade_no);
-						 TemaiMessage message = TemaiMessage.getCreate(map);
-						 EMailTool.send(message);
+					if(order.getStatus()==TserviceOrder.WAIT_BUYER_PAY){
+						String res = qrfh(trade_no);
+						if(res.contains("T")){
+							 serviceOrderService.active(out_trade_no);
+							 order.setStatus(TserviceOrder.WAIT_BUYER_CONFIRM_GOODS);
+							serviceOrderService.update(order);
+							 TemaiMessage message = TemaiMessage.getCreate(serviceService.getInfoByEmail(order.getEmail()));
+							 EMailTool.send(message);
+							System.out.println("---------------------已发货，已发送邮件----------------------------");
+						}
 					}
 					System.out.println("success");	//请不要修改或删除
 				} else if(trade_status.equals("WAIT_BUYER_CONFIRM_GOODS")){
@@ -263,6 +268,7 @@ public class CommonController extends BaseController {
 					TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
 					order.setStatus(TserviceOrder.WAIT_BUYER_CONFIRM_GOODS);
 					serviceOrderService.update(order);
+					System.out.println("---------------------等待确认收货----------------------------");
 					System.out.println("success");	//请不要修改或删除
 				} else if(trade_status.equals("TRADE_FINISHED")){
 				//该判断表示买家已经确认收货，这笔交易完成
@@ -273,6 +279,7 @@ public class CommonController extends BaseController {
 					request.getSession().removeAttribute("map");
 					order.setStatus(TserviceOrder.TRADE_FINISHED);
 					serviceOrderService.update(order);
+					System.out.println("---------------------交易完成---------------------------");
 					System.out.println("success");	//请不要修改或删除
 				}
 				else {
@@ -319,9 +326,24 @@ public class CommonController extends BaseController {
 		
 		if(verify_result){//验证成功
 			if(trade_status.equals("WAIT_SELLER_SEND_GOODS")){
-				String res = qrfh(trade_no);
-				if(res.contains("T")){
-					 serviceOrderService.active(out_trade_no);
+				//该判断表示买家已在支付宝交易管理中产生了交易记录且付款成功，但卖家没有发货
+				TserviceOrder order = serviceOrderService.getOrderByOrderNum(out_trade_no);
+				if(order.getStatus()==TserviceOrder.WAIT_BUYER_PAY){
+					String res = qrfh(trade_no);
+					if(res.contains("T")){
+						 serviceOrderService.active(out_trade_no);
+						 order.setStatus(TserviceOrder.WAIT_BUYER_CONFIRM_GOODS);
+						serviceOrderService.update(order);
+						 TemaiMessage message = TemaiMessage.getCreate(serviceService.getInfoByEmail(order.getEmail()));
+						 EMailTool.send(message);
+						mav.addObject("user", new TadminUser());
+						mav.setViewName("login");
+						mav.addObject("msg", "账号已激活");
+						System.out.println("---------------------同步，发货 发邮件---------------------------");
+						return mav;
+					}
+				}
+				if(order.getStatus()==TserviceOrder.WAIT_BUYER_CONFIRM_GOODS){
 					mav.addObject("user", new TadminUser());
 					mav.setViewName("login");
 					mav.addObject("msg", "账号已激活");
@@ -353,7 +375,7 @@ public class CommonController extends BaseController {
 		String subject = map.get("subject");
 		//必填
 		//付款金额
-		String price = "0.01";
+		String price = map.get("price");
 		//必填
 		//商品数量
 		String quantity = "1";
@@ -383,10 +405,10 @@ public class CommonController extends BaseController {
 		sParaTemp.put("logistics_fee", logistics_fee);
 		sParaTemp.put("logistics_type", logistics_type);
 		sParaTemp.put("logistics_payment", logistics_payment);
-		sParaTemp.put("receive_name", "13488943117@163.com");
-		sParaTemp.put("receive_address", "四川成都");
-		sParaTemp.put("receive_zip", "638000");
-		sParaTemp.put("receive_mobile", "13488943117");
+		sParaTemp.put("receive_name", "无");
+		sParaTemp.put("receive_address", "无");
+		sParaTemp.put("receive_zip", "66666");
+		sParaTemp.put("receive_mobile", "83361785");
 		//建立请求
 		String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"post","确认");
 		System.out.println(sHtmlText);

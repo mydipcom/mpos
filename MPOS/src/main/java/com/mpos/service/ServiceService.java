@@ -19,6 +19,8 @@ public interface ServiceService {
 	
 	public Map<String, String> register(TadminUser user,Integer serviceId,String mobile,Boolean status);
 	
+	public Map<String, String> getInfoByEmail(String email);
+	
 	public void delete(String hql,Map<String, Object> params);
 	public void update(String hql,Map<String, Object> params);
 	public List<Tservice> select(String hql,Map<String, Object> params);

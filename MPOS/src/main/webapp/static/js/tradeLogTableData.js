@@ -54,7 +54,7 @@ var MyLogTable = function () {
             ],
             "columns":[
                       	{"orderable": false },
-                      	//{data: "serviceOrderId", },
+                      	{data: "orderNum" },
                       	{data: "email" },
                       	{data: "createTimeStr" },
                     	{data: "serviceName" },

@@ -13,6 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="static/index_files/jquery.fancybox-1.3.4.css">
 	<link rel="stylesheet" href="static/index_files/flexslider.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="static/index_files/style.css" type="text/css">
+	<link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
 	<!--Fav and touch icons-->
 	<!--<link rel="apple-touch-icon" href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/img/favicons/apple-touch-icon.png">-->
 </head>
@@ -297,6 +299,69 @@
 		</div>
 	</div>
 	<!-- /Footer-section -->
+	
+	<div class="modal" id="pay_id"  data-width="650" data-height="200" style="color:black;display: none" >
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+						<h4 class="modal-title">服务订购</h4>
+					</div>
+					<!-- <div class="modal-body"> -->
+					<div class="modal-body">
+						<!-- BEGIN FORM	-->	
+						<div>				
+								  <div style="float: left;">	
+								  		<div style="margin: 10px">
+								  			<div style="text-align: right;width: 100px;float: left;">订单编号：</div>
+								  			<div style="float: left;" id="orderNum">CampRay123456</div>
+								  			<div style="clear: both"> </div>
+								  		</div>
+								  		<div style="margin: 10px">
+								  			<div style="text-align: right;width: 100px;float: left;">商品名称：</div>
+								  			<div style="float: left;" id="goodName">基础版</div>
+								  			<div style="clear: both"> </div>
+								  		</div>
+								  		<div style="margin: 10px">
+								  			<div style="text-align: right;width: 100px;float: left;">价格：</div>
+								  			<div style="float: left;" id="goodPrice">100元</div>
+								  			<div style="clear: both"> </div>
+								  		</div>
+								  		<div style="margin: 10px">
+								  			<div style="text-align: right;width: 100px;float: left;">交易类型：</div>
+								  			<div style="float: left;">支付宝担保交易</div>
+								  			<div style="clear: both"> </div>
+								  		</div>
+									</div>
+									<div style="float: right;margin: 10px">																				
+										<img alt="" src="static/index_files/zfb.png">
+									</div>
+									<div style="clear: both"> </div>
+									</div>
+									<div style="color:red;font-size: 18px;margin-top: 50px;margin-left: 30px;width: 100px;">在线支付</div>
+					</div>
+							<div class="modal-footer">
+										<button class="btn-info" id="payButton" style="width: 120px; height: 35px; margin-left: 260px;" type="button"> 下一步</button>
+											<div style="margin-left: 170px;display: none" id="button_info">
+											<button class="btn-info" id="doneButton" style="width: 120px; height: 35px; float: left; " type="button"> 完成支付</button>
+										    <button class="btn-info" id="rePayButton" style="height: 35px; margin-left: 10px; float: left; " type="button"> 付款遇到问题，重新支付</button>
+										    </div>
+							</div>
+						<!-- END FORM-->
+		</div>					
+	 
+	 	<div class="modal" id="pay_done" style="display: none;" role="dialog">
+					<div class="modal-header" style="color: black;">
+					<a class="close" data-dismiss="modal">x</a>
+						<h4 class="modal-title">提示：</h4>
+					</div>
+					<div class="modal-body" style="color: black;">
+						<div >稍后服务将自动开通，请查收邮件</div>
+						<div>再确认服务已开通情况下，请在您的支付宝中确认收货，谢谢！</div>
+					</div>
+					<div class="modal-footer">
+					<button class="btn" data-dismiss="modal">确认</button>
+					</div>
+	 </div>				
+	
 <!-- Javascript -->
 	<script type="text/javascript" src="static/index_files/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="static/index_files/bootstrap.min.js"></script>
@@ -311,7 +376,8 @@
 	<script type="text/javascript" src="static/index_files/jquery.fancybox.js"></script>
 	<script type="text/javascript" src="static/index_files/ajax-actions.js" charset="utf-8"></script>
 	<script type="text/javascript" src="static/index_files/custom.js"></script>
-
+	<script src="assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
 <div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div>
 <div id="fancybox-overlay"></div>
 <div id="fancybox-wrap">

@@ -176,6 +176,7 @@
 												<input type="checkbox" class="group-checkable" data-set="mylog_table .checkboxes"/>
 											</th>
 											<%-- <th><s:message code="trade.id"/></th> --%>
+											<th><s:message code="trade.order.num"/></th>
 											<th><s:message code="trade.eamil"/></th>
 											<th><s:message code="trade.time"/></th>
 											<th><s:message code="trade.service.name"/></th>
