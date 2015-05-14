@@ -174,49 +174,14 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label class="col-md-3 control-label"><s:message code="order.time" /></label>
-									<div class="col-md-4">
-										<div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
-											<input type="text"	name="startTime" class="form-control" readonly>
-											<span class="input-group-btn">
-											<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-										<%-- <div class="input-group date form_datetime">
-											<input type="text" size="16" readonly class="form-control"	name="startTime"> <span class="input-group-btn">
-												<button class="btn default date-reset" type="button">
-													<i class="fa fa-times"></i>
-												</button>
-											</span> <span class="input-group-btn">
-												<button class="btn default date-set" type="button">
-													<i class="fa fa-calendar"></i>
-												</button>
-											</span>
-
-										</div> --%>
-									</div>
-									<label class="col-md-1 control-label">至</label>
-									<div class="col-md-4">
-										<div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-end-date="+0d" data-date-viewmode="years">
-											<input type="text"	name="endTime" class="form-control" readonly>
-											<span class="input-group-btn">
-											<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-										
-										<%-- <div class="input-group date form_datetime">
-											<input type="text" size="16" readonly class="form-control"	name="endTime"> <span class="input-group-btn">
-												<button class="btn default date-reset" type="button">
-													<i class="fa fa-times"></i>
-												</button>
-											</span> <span class="input-group-btn">
-												<button class="btn default date-set" type="button">
-													<i class="fa fa-calendar"></i>
-												</button>
-											</span>
-
-										</div> --%>
-									</div>
-
+									<div class="col-md-6">
+										<div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-mm-dd">
+											<input type="text" class="form-control" name="startTime" readonly>
+											<span class="input-group-addon">
+											至 </span>
+											<input type="text" class="form-control" name="endTime" readonly>
+										</div>																												
+									</div>									
 								</div>
 							</div>
 						</div>

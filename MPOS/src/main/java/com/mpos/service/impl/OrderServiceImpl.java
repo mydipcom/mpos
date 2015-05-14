@@ -46,12 +46,25 @@ public class OrderServiceImpl implements OrderService {
 			
 			if(jsonObj.getString("startTime") != null && !jsonObj.getString("startTime").isEmpty() 
 				    && jsonObj.getString("endTime") != null && !jsonObj.getString("endTime").isEmpty()){
-				   try {
-					criterionsList.add(Restrictions.between("createTime", ConvertTools.dateString2Long(jsonObj.getString("startTime"),"yyyy-MM-dd"), ConvertTools.dateString2Long(jsonObj.getString("endTime"),"yyyy-MM-dd")));
+			   try {
+				   criterionsList.add(Restrictions.between("createTime", ConvertTools.dateString2Long(jsonObj.getString("startTime"),"yyyy-MM-dd"), ConvertTools.dateString2Long(jsonObj.getString("endTime"),"yyyy-MM-dd")));
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			else if(jsonObj.getString("startTime") != null && !jsonObj.getString("startTime").isEmpty()){
+				try {
+					   criterionsList.add(Restrictions.ge("createTime", ConvertTools.dateString2Long(jsonObj.getString("startTime"),"yyyy-MM-dd")));
+					} catch (ParseException e) {						
+						e.printStackTrace();
+					}
+			}
+			else if(jsonObj.getString("endTime") != null && !jsonObj.getString("endTime").isEmpty()){
+				try {
+					   criterionsList.add(Restrictions.le("createTime", ConvertTools.dateString2Long(jsonObj.getString("endTime"),"yyyy-MM-dd")));
+					} catch (ParseException e) {						
+						e.printStackTrace();
+					}
 			}
 			Criterion[] criterions=new Criterion[criterionsList.size()];
 			int i=0;

@@ -67,32 +67,38 @@ public class OrderController extends BaseController{
 	@RequestMapping(value="orderlist",method=RequestMethod.GET)
 	@ResponseBody
 	public String orderList(HttpServletRequest request,DataTableParamter dtp){
-		addStoreCondition(request, dtp);
-		PagingData pagingData = orderService.loadOrderList(dtp);
-		pagingData.setSEcho(dtp.getsEcho());
-		Object[]objs = pagingData.getAaData();
-		if(objs == null){
-			objs=new Object[]{};
-			pagingData.setAaData(objs);
-		}else{
-			for(int i=0;i<objs.length;i++){
-				Torder torder = (Torder)objs[i];
-				OrderModel orderModel = new OrderModel();
-				if(torder.getComment() == null){
-					torder.setComment("");
+		PagingData pagingData=null;
+		try{
+			addStoreCondition(request, dtp);
+			pagingData = orderService.loadOrderList(dtp);
+			pagingData.setSEcho(dtp.getsEcho());
+			Object[]objs = pagingData.getAaData();
+			if(objs == null){
+				objs=new Object[]{};
+				pagingData.setAaData(objs);
+			}else{
+				for(int i=0;i<objs.length;i++){
+					Torder torder = (Torder)objs[i];
+					OrderModel orderModel = new OrderModel();
+					if(torder.getComment() == null){
+						torder.setComment("");
+					}
+					orderModel.setOrderId(torder.getOrderId());
+					orderModel.setOrderStatus(SystemConstants.ORDER_STATUS.get(torder.getOrderStatus()));
+					orderModel.setOrderTotal(torder.getOrderTotal());
+					orderModel.setOrderDiscount(torder.getOrderDiscount());
+					orderModel.setCreateTime(ConvertTools.longToDateString(torder.getCreateTime()));
+					orderModel.setCreater(torder.getCreater());
+					orderModel.setOrderPromotion(torder.getOrderPromotion());
+					orderModel.setComment(torder.getComment());
+					orderModel.setPeopleNum(torder.getPeopleNum());
+					objs[i]=orderModel;
 				}
-				orderModel.setOrderId(torder.getOrderId());
-				orderModel.setOrderStatus(SystemConstants.ORDER_STATUS.get(torder.getOrderStatus()));
-				orderModel.setOrderTotal(torder.getOrderTotal());
-				orderModel.setOrderDiscount(torder.getOrderDiscount());
-				orderModel.setCreateTime(ConvertTools.longToDateString(torder.getCreateTime()));
-				orderModel.setCreater(torder.getCreater());
-				orderModel.setOrderPromotion(torder.getOrderPromotion());
-				orderModel.setComment(torder.getComment());
-				orderModel.setPeopleNum(torder.getPeopleNum());
-				objs[i]=orderModel;
+				pagingData.setAaData(objs);
 			}
-			pagingData.setAaData(objs);
+		}
+		catch(Exception e){
+			
 		}
 		String jsonString = JSON.toJSONString(pagingData);
 		return jsonString;

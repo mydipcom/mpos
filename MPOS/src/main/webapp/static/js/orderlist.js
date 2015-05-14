@@ -241,24 +241,13 @@ var OrderList = function () {
 			});
 		}
     
-	var handleDatetimePicker = function() {
-		/*$(".form_datetime").datetimepicker(
-				{
-					isRTL : Metronic.isRTL(),
-					format : "dd/mm/yyyy hh:ii",
-					autoclose : true,
-					todayBtn : false,
-					pickerPosition : (Metronic.isRTL() ? "bottom-right"
-							: "bottom-left"),
-					minuteStep : 1
-				});*/
+	var handleDatetimePicker = function() {		
 		if (jQuery().datepicker) {
             $('.date-picker').datepicker({
                 rtl: Metronic.isRTL(),
                 orientation: "left",
                 autoclose: true
-            });
-            //$('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+            });           
         }
 	}
 	
