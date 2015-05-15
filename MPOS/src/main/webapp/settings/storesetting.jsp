@@ -19,48 +19,48 @@
 <meta content="" name="author" />
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link
-	href="../assets/global/plugins/font-awesome/css/font-awesome.min.css"
+	href="${pageContext.request.contextPath}/assets/global/plugins/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
 <link
-	href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css"
+	href="${pageContext.request.contextPath}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css"
 	rel="stylesheet" type="text/css" />
-<link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css"
+<link href="${pageContext.request.contextPath}/assets/global/plugins/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
-<link href="../assets/global/plugins/uniform/css/uniform.default.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"
+<link href="${pageContext.request.contextPath}/assets/global/plugins/uniform/css/uniform.default.css"
 	rel="stylesheet" type="text/css" />
 <link
-	href="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"
+	href="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"
 	rel="stylesheet" type="text/css" />
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css"
-	href="../assets/global/plugins/select2/select2.css" />
+	href="${pageContext.request.contextPath}/assets/global/plugins/select2/select2.css" />
 <link rel="stylesheet" type="text/css"
-	href="../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+	href="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
 <link rel="stylesheet" type="text/css"
-	href="../assets/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" />
+	href="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" />
 
 
 <!-- END PAGE LEVEL STYLES -->
 
 <!-- BEGIN THEME STYLES -->
-<link href="../assets/global/css/components.css" rel="stylesheet"
+<link href="${pageContext.request.contextPath}/assets/global/css/components.css" rel="stylesheet"
 	type="text/css" />
-<link href="../assets/global/css/plugins.css" rel="stylesheet"
+<link href="${pageContext.request.contextPath}/assets/global/css/plugins.css" rel="stylesheet"
 	type="text/css" />
-<link href="../assets/admin/layout/css/layout.css" rel="stylesheet"
+<link href="${pageContext.request.contextPath}/assets/admin/layout/css/layout.css" rel="stylesheet"
 	type="text/css" />
 <link id="style_color"
-	href="../assets/admin/layout/css/themes/default.css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/admin/layout/css/themes/default.css" rel="stylesheet"
 	type="text/css" />
-<link href="../assets/admin/layout/css/custom.css" rel="stylesheet"
+<link href="${pageContext.request.contextPath}/assets/admin/layout/css/custom.css" rel="stylesheet"
 	type="text/css" />
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="../media/image/favicon.ico" />
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/media/image/favicon.ico" />
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -254,72 +254,72 @@
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
 	<!--[if lt IE 9]>
-	<script src="../assets/global/plugins/respond.min.js"></script>
-	<script src="../assets/global/plugins/excanvas.min.js"></script> 
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/respond.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/excanvas.min.js"></script> 
 	<![endif]-->
 
 
-	<script src="../assets/global/plugins/jquery-1.11.0.min.js"
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/jquery-1.11.0.min.js"
 		type="text/javascript"></script>
-	<script src="../assets/global/plugins/jquery-migrate-1.2.1.min.js"
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/jquery-migrate-1.2.1.min.js"
 		type="text/javascript"></script>
 	<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 	<script
-		src="../assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js"
+		src="${pageContext.request.contextPath}/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js"
 		type="text/javascript"></script>
-	<script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js"
-		type="text/javascript"></script>
-	<script
-		src="../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap/js/bootstrap.min.js"
 		type="text/javascript"></script>
 	<script
-		src="../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
-		type="text/javascript"></script>
-	<script src="../assets/global/plugins/jquery.blockui.min.js"
-		type="text/javascript"></script>
-	<script src="../assets/global/plugins/jquery.cokie.min.js"
+		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
 		type="text/javascript"></script>
 	<script
-		src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js"
+		src="${pageContext.request.contextPath}/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
 		type="text/javascript"></script>
-	<script src="../assets/global/plugins/uniform/jquery.uniform.min.js"
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/jquery.blockui.min.js"
+		type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/jquery.cokie.min.js"
 		type="text/javascript"></script>
 	<script
-		src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
+		src="${pageContext.request.contextPath}/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"
+		type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/uniform/jquery.uniform.min.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
 		type="text/javascript"></script>
 	<!-- END CORE PLUGINS -->
 
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 	<script type="text/javascript"
-		src="../assets/global/plugins/select2/select2.min.js"></script>
+		src="${pageContext.request.contextPath}/assets/global/plugins/select2/select2.min.js"></script>
 	<script type="text/javascript"
-		src="../assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
 	<script type="text/javascript"
-		src="../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
 	<script type="text/javascript"
-		src="../assets/global/plugins/moment.min.js"></script>
+		src="${pageContext.request.contextPath}/assets/global/plugins/moment.min.js"></script>
 	<script type="text/javascript"
-		src="../assets/global/plugins/jquery.mockjax.js"></script>
+		src="${pageContext.request.contextPath}/assets/global/plugins/jquery.mockjax.js"></script>
 	<script type="text/javascript"
-		src="../assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js"></script>
+		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js"></script>
 	<script type="text/javascript"
-		src="../assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js"></script>
+		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js"></script>
 		
 	<script
-		src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
+		src="${pageContext.request.contextPath}/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
 		type="text/javascript"></script>
 	
 	<!-- END PAGE LEVEL PLUGINS -->
-	<script src="../assets/global/plugins/jquery.ajaxfileupload.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/jquery.ajaxfileupload.js" type="text/javascript"></script>
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script src="../assets/global/plugins/json/json2.js"
+	<script src="${pageContext.request.contextPath}/assets/global/plugins/json/json2.js"
 		type="text/javascript"></script>
-	<script src="../assets/global/scripts/metronic.js"
+	<script src="${pageContext.request.contextPath}/assets/global/scripts/metronic.js"
 		type="text/javascript"></script>
-	<script src="../assets/admin/layout/scripts/layout.js"
+	<script src="${pageContext.request.contextPath}/assets/admin/layout/scripts/layout.js"
 		type="text/javascript"></script>
-	<script src="../static/js/storeSetting.js"></script>
+	<script src="${pageContext.request.contextPath}/static/js/storeSetting.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Metronic.init(); // init metronic core components
