@@ -193,6 +193,7 @@ public class CommonController extends BaseController {
 		} catch (Exception e) {
 			if(e instanceof MailSendException){
 				res.put("info", "邮箱不存在");
+				serviceService.deleteInfo(user.getAdminId(), user.getStoreId());
 			}else{
 				res.put("info", "网络异常");
 			}

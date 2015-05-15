@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="com.mpos.dto.TadminInfo" table="mpos_admin_info" catalog="mpos_cloud">
         <id name="adminId" type="string">
-            <column name="admin_id" length="20" />
+            <column name="admin_id" length="100" />
             <generator class="assigned" />
         </id>
         <property name="firstName" type="string">

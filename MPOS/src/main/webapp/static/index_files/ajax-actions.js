@@ -186,10 +186,10 @@ $(document).ready(function () {
 				flag2=true;	
 			}
 			if(flag&&flag1&&flag2&&flag3){
-				
+				//$('#sevice_btn').val('注册中...').css('background','#333').attr('disabled','disabled');
 				$.ajax({
 					type:'POST',
-					async: false, 
+					//async: false, 
 					dataType:'json',
 					url:'common/register',
 					data:$('.ser_form').serialize(),
@@ -214,6 +214,7 @@ $(document).ready(function () {
 							$("#body_content").html(data.info);
 				        	$('#pay_done').modal({backdrop: 'static', keyboard: false});
 						};
+						$('#sevice_btn').val('提交').css('background','#ED0C4C').attr('disabled',false);
 					},
 					error:function(){
 						alert('注册失败，请重试！');

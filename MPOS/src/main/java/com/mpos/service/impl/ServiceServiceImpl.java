@@ -194,4 +194,10 @@ public class ServiceServiceImpl implements ServiceService {
 		return map;
 	}
 
+	public void deleteInfo(String adminId, Integer storeId) {
+		adminUserDao.delete(adminId);
+		adminInfoDao.delete(adminId);
+		storeDao.delete(storeId);
+	}
+
 }
