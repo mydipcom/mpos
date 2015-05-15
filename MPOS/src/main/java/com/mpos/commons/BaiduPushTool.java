@@ -31,21 +31,21 @@ import com.baidu.yun.push.model.QueryDeviceNumInTagResponse;
  */
 public class BaiduPushTool {
 	/**
-	 * 苹果设备服务端api_key
+	 * 苹果设备服务端api_key"DCL771qHUBeVu0fGCAzYTuA7 " ;//
 	 */
-	public final static String IOS_API_KEY = "DCL771qHUBeVu0fGCAzYTuA7 " ;//SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_API_KEY);
+	public final static String IOS_API_KEY = SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_API_KEY);
 	/**
-	 * 苹果设备服务端secret_key
+	 * 苹果设备服务端secret_key "hH8Sc9vCeTqCgLC2ikZeOUnu3t46WajA";//
 	 */
-	public final static String IOS_SECRET_KEY = "hH8Sc9vCeTqCgLC2ikZeOUnu3t46WajA";//SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_SECRET_KEY);
+	public final static String IOS_SECRET_KEY =SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_IOS_SECRET_KEY);
 	/**
-	 * 安卓设备服务端api_key  "LXkMQ0p54mg4jGOtKkPC5A0F";//
+	 * 安卓设备服务端api_key"LXkMQ0p54mg4jGOtKkPC5A0F";//
 	 */
-	public final static String ANDROID_API_KEY =  "LXkMQ0p54mg4jGOtKkPC5A0F";//SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_API_KEY);
+	public final static String ANDROID_API_KEY =  SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_API_KEY);
 	/**
 	 * 安卓设备服务端secret_key "xGRxrDaO51MQK599kGYTttqFaiTZwAwK";// 
 	 */
-	public final static String ANDROID_SECRET_KEY =  "xGRxrDaO51MQK599kGYTttqFaiTZwAwK";// SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_SECRET_KEY);
+	public final static String ANDROID_SECRET_KEY =  SystemConfig.Admin_Setting_Map.get(SystemConstants.PUSH_ANDROID_SECRET_KEY);
 	/**
 	 * 苹果设备
 	 */
