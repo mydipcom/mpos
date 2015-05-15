@@ -39,11 +39,11 @@ var MyLogTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process","zh_CN"),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero","zh_CN"),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty","zh_CN"),
-                "sInfo": loadProperties("dataTable.page.info","zh_CN"),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty","zh_CN"),
+                "sProcessing": loadProperties("dataTable.page.process","zh_CN",rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero","zh_CN",rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty","zh_CN",rootURI),
+                "sInfo": loadProperties("dataTable.page.info","zh_CN",rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty","zh_CN",rootURI),
             },
             "columnDefs": [{                    
                     'targets': 0,   
@@ -184,8 +184,9 @@ var MyLogTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        init: function (rootPath,locale_value) {
         	rootURI=rootPath;
+        	locale=locale_value;
         	handleTable();  
         	datePicker();
         }

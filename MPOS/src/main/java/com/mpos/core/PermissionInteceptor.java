@@ -52,6 +52,7 @@ public class PermissionInteceptor implements HandlerInterceptor {
 			else{
 				String reqMethod=request.getMethod().toUpperCase();
 				String uri=request.getRequestURI();
+				uri=request.getRequestURI().toString().replaceFirst( request.getContextPath(), "/  ");
 				uri=uri.split("/")[2];
 				String reqPath=reqMethod+"@"+"/"+uri;
 				Long rightsBit=SystemConfig.Admin_Nodes_Url_Map.get(reqPath);

@@ -17,11 +17,11 @@ var TableTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process",locale),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-                "sInfo": loadProperties("dataTable.page.info",locale),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+                "sProcessing": loadProperties("dataTable.page.process",locale,rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+                "sInfo": loadProperties("dataTable.page.info",locale,rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
             },
             "columnDefs": [{                    
                 'targets': 0,   
@@ -33,7 +33,7 @@ var TableTable = function () {
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
-                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal" href="#edit_table">'+loadProperties("page.edit",locale)+'</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal" href="#edit_table">'+loadProperties("page.edit",locale,rootURI)+'</a></div>';
                 	},
                 'class':'center'
             	}
@@ -68,7 +68,7 @@ var TableTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteTableModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale,rootURI),"warning","");				
 				return false;
 			}
 		});

@@ -37,11 +37,11 @@ var StoreTable = function () {
             "displayLength": 5,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process",locale),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-                "sInfo": loadProperties("dataTable.page.info",locale),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+                "sProcessing": loadProperties("dataTable.page.process",locale,rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+                "sInfo": loadProperties("dataTable.page.info",locale,rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
             },
             "columnDefs": [{                    
                 'targets': 0,   
@@ -53,7 +53,7 @@ var StoreTable = function () {
             	'data':null,//定义列名
             	'render':function(data,type,row){
             		var url = rootURI+"storeSetting/search/"+data.storeId;
-                	return '<div class="actions"><a class="btn btn-sm dark"  href="'+url+'">'+loadProperties("page.view",locale)+'</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark"  href="'+url+'">'+loadProperties("page.view",locale,rootURI)+'</a></div>';
                 	},
                 'class':'center'
             	}
@@ -68,9 +68,9 @@ var StoreTable = function () {
 	           {   data: "createTimeStr" },
 	           {     data: "status",
 	        	   'render':function(data,type,row){
-	        		   var temp=loadProperties("store.page.qy",locale);
+	        		   var temp=loadProperties("store.page.qy",locale,rootURI);
 	        		   if(data=="0"){
-	        			   temp = loadProperties("store.page.jy",locale);
+	        			   temp = loadProperties("store.page.jy",locale,rootURI);
 	        		   }
 	        		   	return temp;
 	        	   	} 
@@ -88,7 +88,7 @@ var StoreTable = function () {
 		});
 		$("#openEditStoreModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.edit.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.edit.select",locale,rootURI),"warning","");				
 				return false;
 			}
 			else{
@@ -112,14 +112,14 @@ var StoreTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeactiveStoreModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.deactive.select",locale,rootURI),"warning","");				
 				return false;
 			}
 		});				
 		
 		$("#openActiveStoreModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.active.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.active.select",locale,rootURI),"warning","");				
 				return false;
 			}			
 		});

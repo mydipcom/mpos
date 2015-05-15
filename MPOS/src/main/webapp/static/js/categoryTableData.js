@@ -17,7 +17,7 @@
         });
         return serializeObj;
     };
-    
+    var rootURI="/";   
     $.validator.addMethod("sameArraySize", function(value, element) {   
         var arrSize = 0;
         var attrVal=jQuery.trim(value);
@@ -37,12 +37,12 @@
         	}
         });                       
         return this.optional(element) || isSame;
-    }, loadProperties("cate.page.attr",locale));
+    }, loadProperties("cate.page.attr",locale,rootURI));
     
 })(jQuery);
 
 var locale = "zh_CN";
-var rootURI="/";
+
 
 var CategoryTable = function () {
 	var oTable;
@@ -66,11 +66,11 @@ var CategoryTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process",locale),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-                "sInfo": loadProperties("dataTable.page.info",locale),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+                "sProcessing": loadProperties("dataTable.page.process",locale,rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+                "sInfo": loadProperties("dataTable.page.info",locale,rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
             },
             "columnDefs": [{                    
                     'targets': 0,   
@@ -82,7 +82,7 @@ var CategoryTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_attribute" id="openrluesviewmodal">'+loadProperties("cate.page.attr",locale)+'</a></div>';
+                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_attribute" id="openrluesviewmodal">'+loadProperties("cate.page.attr",locale,rootURI)+'</a></div>';
                     },
                     'class':'center'
                 }
@@ -94,10 +94,10 @@ var CategoryTable = function () {
 	           { data: "content" },
 	           { 'render':function(data,type,row){
 	               	if(row.type==0){
-	            		return loadProperties("cate.page.spec.group",locale);
+	            		return loadProperties("cate.page.spec.group",locale,rootURI);
 	            	}
 	            	else{
-	            		return  loadProperties("cate.page.order.group",locale);
+	            		return  loadProperties("cate.page.order.group",locale,rootURI);
 	            	}	                	
 	               } 
 	           },
@@ -111,7 +111,7 @@ var CategoryTable = function () {
 		
 		$("#CloneSelectedCategory").on("click",function(){
 			if(selected.length!=1){
-				handleAlerts(loadProperties("error.clone.select",locale),"warning","");			
+				handleAlerts(loadProperties("error.clone.select",locale,rootURI),"warning","");			
 				return false;				
 			}
 			else{
@@ -141,7 +141,7 @@ var CategoryTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteCategoryModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale,rootURI),"warning","");				
 				return false;
 			}
 		});		
@@ -178,7 +178,7 @@ var CategoryTable = function () {
 		//打开编辑分类创窗口
 		$("#openEditCategoryModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts(loadProperties("error.edit.select",locale),"warning","");			
+				handleAlerts(loadProperties("error.edit.select",locale,rootURI),"warning","");			
 				return false;				
 			}
 			else{
@@ -335,11 +335,11 @@ var CategoryTable = function () {
 		        "displayLength": 5,
 		        "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
 	            "oLanguage": {
-	                "sProcessing": loadProperties("dataTable.page.process",locale),                
-	                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-	                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-	                "sInfo": loadProperties("dataTable.page.info",locale),
-	                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+	                "sProcessing": loadProperties("dataTable.page.process",locale,rootURI),                
+	                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+	                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+	                "sInfo": loadProperties("dataTable.page.info",locale,rootURI),
+	                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
 	            },
 		        "columnDefs": [
 		          {                    
@@ -453,7 +453,7 @@ var CategoryTable = function () {
 		//打开分类属性编辑窗口
 		$("#openEditAttributeModal").on("click",function(event){
 			if(attSelected.length!=1){
-				handleAlerts(loadProperties("error.edit.select",locale),"warning","#view_attributeMsg");		
+				handleAlerts(loadProperties("error.edit.select",locale,rootURI),"warning","#view_attributeMsg");		
 				return false;				
 			}
 			else{
@@ -531,7 +531,7 @@ var CategoryTable = function () {
 		//打开删除属性对话框前判断是否已选择要删除的行
 		$("#openDeleteAttributeModal").on("click",function(event){
 			if(attSelected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","#view_attributeMsg");				
+				handleAlerts(loadProperties("error.delete.select",locale,rootURI),"warning","#view_attributeMsg");				
 				return false;
 			}
 		});

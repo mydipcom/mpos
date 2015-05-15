@@ -25,7 +25,6 @@ var LanguagesTable = function () {
 	var oTable;
 	var oLogTable;
 	var selected = [];
-	locale =  "zh_CN";
 	var handleTable = function () {		
 		var table=$('#languages_table');
 		 oTable = table.dataTable({
@@ -39,11 +38,11 @@ var LanguagesTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process","zh_CN"),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-                "sInfo": loadProperties("dataTable.page.info","zh_CN"),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+                "sProcessing": loadProperties("dataTable.page.process","zh_CN",rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+                "sInfo": loadProperties("dataTable.page.info","zh_CN",rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
             },
             "columnDefs": [{                    
                     'targets': 0,   
@@ -71,13 +70,13 @@ var LanguagesTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 			$("#openActivelanguageModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts(loadProperties("error.active.select",locale),"warning","");				
+					handleAlerts(loadProperties("error.active.select",locale,rootURI),"warning","");				
 					return false;
 				}
 			});
 			$("#openDeletelanguageModal").on("click",function(event){
 				if(selected.length==0){
-					handleAlerts(loadProperties("error.deactive.select",locale),"warning","");				
+					handleAlerts(loadProperties("error.deactive.select",locale,rootURI),"warning","");				
 					return false;
 				}
 			});
@@ -147,7 +146,7 @@ var LanguagesTable = function () {
 		
 		$("#openEditlanguageModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts(loadProperties("error.edit.select",locale),"warning","");
+				handleAlerts(loadProperties("error.edit.select",locale,rootURI),"warning","");
 				return false;
 			}
 			else{

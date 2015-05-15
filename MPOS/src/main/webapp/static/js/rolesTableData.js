@@ -38,11 +38,11 @@ var RolesTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
 			  "oLanguage": {
-	                "sProcessing": loadProperties("dataTable.page.process",locale),                
-	                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-	                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-	                "sInfo": loadProperties("dataTable.page.info",locale),
-	                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+	                "sProcessing": loadProperties("dataTable.page.process",locale,rootURI),                
+	                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+	                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+	                "sInfo": loadProperties("dataTable.page.info",locale,rootURI),
+	                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
 	            },
             "columnDefs": [{                    
                     'targets': 0,   
@@ -94,7 +94,7 @@ var RolesTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteRoleModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");			
+				handleAlerts(loadProperties("error.delete.select",locale,rootURI),"warning","");			
 				return false;
 			}
 		});
@@ -127,7 +127,7 @@ var RolesTable = function () {
 		//打开编辑对话框前的表单数据加载处理
 		$("#openEditRoleModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts(loadProperties("error.edit.select",locale),"warning","");		
+				handleAlerts(loadProperties("error.edit.select",locale,rootURI),"warning","");		
 				return false;				
 			}
 			else{
@@ -152,7 +152,7 @@ var RolesTable = function () {
 		//打开编辑分配角色权限的对话框
 		$("#openRoleRigthsModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts(loadProperties("error.edit.select",locale),"warning","");		
+				handleAlerts(loadProperties("error.edit.select",locale,rootURI),"warning","");		
 				return false;				
 			}
 			else{

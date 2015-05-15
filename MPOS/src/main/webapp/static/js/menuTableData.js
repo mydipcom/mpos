@@ -1,3 +1,6 @@
+
+var locale = "zh_CN";
+var rootURI="/";
 /**
  * 加载数据
  * @returns {String}
@@ -69,8 +72,7 @@ var setLocal = function(localTitles){
 		}
 	}
 }
-var locale = "en_US";
-var rootURI="/";
+
 var MenuTable = function () {
 	var oTable;
 	var handleTable = function () {
@@ -88,11 +90,11 @@ var MenuTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process",locale),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-                "sInfo": loadProperties("dataTable.page.info",locale),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+                "sProcessing": loadProperties("dataTable.page.process",locale,rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+                "sInfo": loadProperties("dataTable.page.info",locale,rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
             },
             "columnDefs": [{                    
                     'targets': 0,   
@@ -117,7 +119,7 @@ var MenuTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteMenuModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");
+				handleAlerts(loadProperties("error.delete.select",locale,rootURI),"warning","");
 				return false;
 			}
 		});
@@ -154,7 +156,7 @@ var MenuTable = function () {
 		
 		$("#openEditMenuModal").on("click",function(event){
 			if(selected.length!=1){
-				handleAlerts(loadProperties("error.edit.select",locale),"warning","");
+				handleAlerts(loadProperties("error.edit.select",locale,rootURI),"warning","");
 				return false;				
 			}
 			else{

@@ -39,11 +39,11 @@ var MyLogTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process",locale),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale),
-                "sInfo": loadProperties("dataTable.page.info",locale),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale),
+                "sProcessing": loadProperties("dataTable.page.process",locale,rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero",locale,rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty",locale,rootURI),
+                "sInfo": loadProperties("dataTable.page.info",locale,rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty",locale,rootURI),
             },
             "columnDefs": [{                    
                     'targets': 0,   
@@ -56,7 +56,7 @@ var MyLogTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-sm dark"" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">'+loadProperties("page.view",locale)+'</a></div>';
+                    	return '<div class="actions"><a class="btn btn-sm dark"" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">'+loadProperties("page.view",locale,rootURI)+'</a></div>';
                     },
                     'class':'center'
                 }

@@ -176,14 +176,15 @@ public class CommonController extends BaseController {
 		Map<String, Object> res = getHashMap();
 		try {
 			boolean status = false;
-			if(serviceId==null||serviceId==0){
+			Tservice service= serviceService.get(serviceId);
+			if(service==null||service.getServicePrice()==0){
 				status = true;
 			}
 			String realPath = request.getSession().getServletContext().getRealPath("/");
 			String logoPath = SystemConstants.STORE_SET_PATH+"examples.png";
 			String filePath = realPath+logoPath;
 			map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
-			map = serviceService.register(user, serviceId, mobile,status,filePath,map.get("url"));
+			map = serviceService.register(user, service.getServiceId(), mobile,status,filePath,map.get("url"));
 			if(!status){
 				res.put("html",getAlipaySubmit(map));
 				res.put("data", map);

@@ -43,11 +43,11 @@ var ServiceTable = function () {
             "displayLength": 10,
             "dom": "tr<'row'<'col-md-6'i><'col-md-6'p>>",
             "oLanguage": {
-                "sProcessing": loadProperties("dataTable.page.process","zh_CN"),                
-                "sZeroRecords":loadProperties("dataTable.page.data.zero","zh_CN"),
-                "sEmptyTable": loadProperties("dataTable.page.data.empty","zh_CN"),
-                "sInfo": loadProperties("dataTable.page.info","zh_CN"),
-                "sInfoEmpty":loadProperties("dataTable.page.info.empty","zh_CN"),
+                "sProcessing": loadProperties("dataTable.page.process","zh_CN",rootURI),                
+                "sZeroRecords":loadProperties("dataTable.page.data.zero","zh_CN",rootURI),
+                "sEmptyTable": loadProperties("dataTable.page.data.empty","zh_CN",rootURI),
+                "sInfo": loadProperties("dataTable.page.info","zh_CN",rootURI),
+                "sInfoEmpty":loadProperties("dataTable.page.info.empty","zh_CN",rootURI),
             },
             "columnDefs": [{                    
                 'targets': 0,   
@@ -58,7 +58,7 @@ var ServiceTable = function () {
             	'targets':-1,
             	'data':null,//定义列名
             	'render':function(data,type,row){
-                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">'+loadProperties("page.edit",locale)+'</a></div>';
+                	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#edit_table">'+loadProperties("page.edit",locale,rootURI)+'</a></div>';
                 	},
                 'class':'center'
             	}
@@ -79,9 +79,9 @@ var ServiceTable = function () {
 	           },
 	           { data: "status",
 	        	   'render':function(data,type,row){
-		        		var res ='<font color="green">'+loadProperties("service.page.publish",locale)+'</font>';
+		        		var res ='<font color="green">'+loadProperties("service.page.publish",locale,rootURI)+'</font>';
 		        		if(data=="0"){
-		        			res ='<font color="red">'+loadProperties("service.page.unpublish",locale)+'</font>';
+		        			res ='<font color="red">'+loadProperties("service.page.unpublish",locale,rootURI)+'</font>';
 		        		}
 		                return res;
 		                }
@@ -97,7 +97,7 @@ var ServiceTable = function () {
 		//打开删除对话框前判断是否已选择要删除的行
 		$("#openDeleteTableModal").on("click",function(event){
 			if(selected.length==0){
-				handleAlerts(loadProperties("error.delete.select",locale),"warning","");				
+				handleAlerts(loadProperties("error.delete.select",locale,rootURI),"warning","");				
 				return false;
 			}
 		});
