@@ -8,10 +8,12 @@
  */
 package com.mpos.action;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,7 @@ import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.mpos.commons.EMailTool;
 import com.mpos.commons.SystemConfig;
+import com.mpos.commons.SystemConstants;
 import com.mpos.dto.TadminUser;
 import com.mpos.dto.TemaiMessage;
 import com.mpos.dto.Tmessage;
@@ -176,16 +179,16 @@ public class CommonController extends BaseController {
 			if(serviceId==null||serviceId==0){
 				status = true;
 			}
-			map = serviceService.register(user, serviceId, mobile,status);
-			request.getSession().setAttribute("map", map);
+			String realPath = request.getSession().getServletContext().getRealPath("/");
+			String logoPath = SystemConstants.STORE_SET_PATH+"examples.png";
+			String filePath = realPath+logoPath;
+			map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
+			map = serviceService.register(user, serviceId, mobile,status,filePath,map.get("url"));
 			if(!status){
-				map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
 				res.put("html",getAlipaySubmit(map));
 				res.put("data", map);
-			}else{
-				TemaiMessage message = TemaiMessage.getCreate(map);
-					EMailTool.send(message);
 			}
+			request.getSession().setAttribute("map", map);
 			res.put("isPay",!status);
 			res.put("service", map.get("serviceName"));
 			res.put("status", true);
@@ -265,7 +268,16 @@ public class CommonController extends BaseController {
 							 serviceOrderService.active(out_trade_no);
 							 order.setStatus(TserviceOrder.WAIT_BUYER_CONFIRM_GOODS);
 							serviceOrderService.update(order);
+							map = serviceService.getInfoByEmail(order.getEmail());
+							map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
+							String realPath = request.getSession().getServletContext().getRealPath("/");
+							String logoPath = SystemConstants.STORE_SET_PATH+"examples.png";
+							String filePath = realPath+logoPath;
 							 TemaiMessage message = TemaiMessage.getCreate(serviceService.getInfoByEmail(order.getEmail()));
+							 List<File> files = new LinkedList<File>();
+								File file = new File(filePath);
+								files.add(file);
+								message.setFiles(files);
 							 EMailTool.send(message);
 							System.out.println("---------------------已发货，已发送邮件----------------------------");
 						}
@@ -345,7 +357,16 @@ public class CommonController extends BaseController {
 						 serviceOrderService.active(out_trade_no);
 						 order.setStatus(TserviceOrder.WAIT_BUYER_CONFIRM_GOODS);
 						serviceOrderService.update(order);
+						map = serviceService.getInfoByEmail(order.getEmail());
+						map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
+						String realPath = request.getSession().getServletContext().getRealPath("/");
+						String logoPath = SystemConstants.STORE_SET_PATH+"examples.png";
+						String filePath = realPath+logoPath;
 						 TemaiMessage message = TemaiMessage.getCreate(serviceService.getInfoByEmail(order.getEmail()));
+						 List<File> files = new LinkedList<File>();
+							File file = new File(filePath);
+							files.add(file);
+							message.setFiles(files);
 						 EMailTool.send(message);
 						mav.addObject("user", new TadminUser());
 						mav.setViewName("login");

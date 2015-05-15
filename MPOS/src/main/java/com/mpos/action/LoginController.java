@@ -217,8 +217,9 @@ public class LoginController extends BaseController {
 	public ModelAndView change(HttpServletRequest request ,TadminUser user){
 		ModelAndView mav = new ModelAndView();
 		try {
+			
 			TadminUser adminUser = adminUserService.getTadminUsersByEmail(user.getEmail());
-			if(adminUser!=null){
+			if(adminUser!=null&&adminUser.getCode().equals(user.getCode())){
 				adminUser.setPassword(SecurityTools.MD5(user.getPassword()));
 				adminUser.setUpdatedTime(System.currentTimeMillis());
 				adminUser.setStatus(true);
@@ -226,7 +227,7 @@ public class LoginController extends BaseController {
 				mav.addObject("msg","重置成功，请重新登录");
 			}else{
 				adminUser = new TadminUser();
-				mav.addObject(ERROR_MSG_KEY,"邮箱不存在");
+				mav.addObject(ERROR_MSG_KEY,"邮箱不存在或者非法操作");
 			}
 			mav.addObject("user", adminUser);
 			mav.setViewName("login");

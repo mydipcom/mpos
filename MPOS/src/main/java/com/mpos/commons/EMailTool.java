@@ -1,9 +1,17 @@
 package com.mpos.commons;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -18,16 +26,61 @@ public class EMailTool {
 		try {
 			JavaMailSender javaMailSenderImpl=getJavaMailSenderImpl();
 			MimeMessage message = javaMailSenderImpl.createMimeMessage();
+			/*String nick = "";
+			try {
+				nick = MimeUtility.decodeText("凯瑞时代云服务");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			String from = nick+"<"+SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_NAME)+">";
+			message.setSubject(temaiMessage.getSubject());
+			message.setFrom(new InternetAddress(from));
+			message.addRecipient(Message.RecipientType.TO,new InternetAddress(temaiMessage.getTo()));
+			MimeMultipart multipart = new MimeMultipart("related");
+	        // first part  (the html)
+	        BodyPart messageBodyPart = new MimeBodyPart();
+	        messageBodyPart.setContent(temaiMessage.getText(), "text/html");
+	        // add it
+	        multipart.addBodyPart(messageBodyPart);
+	        // second part (the image)
+	        messageBodyPart = new MimeBodyPart();
+	        if(temaiMessage.getFiles()!=null&&temaiMessage.getFiles().size()>0){
+            	for (File file : temaiMessage.getFiles()) {
+            		  DataSource fds = new FileDataSource (file);
+          	          messageBodyPart.setDataHandler(new DataHandler(fds));
+          	         messageBodyPart.setHeader("Content-ID","<image>");
+          	        // add it
+          	        multipart.addBodyPart(messageBodyPart);
+				}
+            }
+	        // put everything together
+	        message.setContent(multipart);*/
+
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
-            messageHelper.setFrom(new InternetAddress(SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_NAME)));
+			String nick = "";
+			try {
+				nick = MimeUtility.decodeText("凯瑞时代云服务");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			String from = nick+"<"+SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_NAME)+">";
+            messageHelper.setFrom(from);
             if(temaiMessage.getTo() !=null && !temaiMessage.getTo().isEmpty()){
             	messageHelper.setTo(temaiMessage.getTo());
             }
             if(temaiMessage.getSubject() !=null){
             	messageHelper.setSubject(temaiMessage.getSubject());
             }
-            if(temaiMessage.getText() !=null){
-            	messageHelper.setText(temaiMessage.getText(), temaiMessage.getIsHtml());
+            messageHelper.setText(temaiMessage.getText(), temaiMessage.getIsHtml());
+	        if(temaiMessage.getFiles()!=null&&temaiMessage.getFiles().size()>0){
+	        	 MimeMultipart multipart =messageHelper.getMimeMultipart();
+	 	        BodyPart messageBodyPart = new MimeBodyPart();
+            	for (File file : temaiMessage.getFiles()) {
+            		  DataSource fds = new FileDataSource (file);
+          	          messageBodyPart.setDataHandler(new DataHandler(fds));
+          	         messageBodyPart.setHeader("Content-ID","<image>");
+          	        multipart.addBodyPart(messageBodyPart);
+				}
             }
 			javaMailSenderImpl.send(message);
 		} catch (MessagingException e) {

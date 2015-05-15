@@ -1,6 +1,7 @@
 package com.mpos.dto;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 public class TemaiMessage {
@@ -11,7 +12,7 @@ public class TemaiMessage {
 	private Boolean isHtml;
 	private String subject;
 	private String text;
-	private File file[];
+	private List<File> files;
 	
 	public String getTo() {
 		return to;
@@ -37,11 +38,11 @@ public class TemaiMessage {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public File[] getFile() {
-		return file;
+	public List<File> getFiles() {
+		return files;
 	}
-	public void setFile(File[] file) {
-		this.file = file;
+	public void setFiles(List<File> files) {
+		this.files = files;
 	}
 	public Boolean getIsHtml() {
 		return isHtml;
@@ -68,11 +69,18 @@ public class TemaiMessage {
 		sb.append("<body style=\"background-color:#CFCDCD;font-color:#1A1A1A\">");
 		sb.append("<div style=\"background-color:#CFCDCD;font-color:#1A1A1A\">");
 		sb.append("<h3>您好: "+map.get("email")+"</h3>");
-		sb.append("<div style=\"margin-bottom:30px;margin-top:30px\">欢迎注册凯瑞时代云菜单服务！以下为您注册的账号信息：</div>");
+		sb.append("<div style=\"margin-bottom:30px;margin-top:30px\">欢迎注册凯瑞时代云菜单服务！以下为您注册的服务详情：</div>");
+		sb.append("<div style=\"margin-top:30px\"><h3>账号信息：</h3></div>");
+		sb.append("<div><font color='red'>后台登录地址：</font><a href='"+map.get("url")+"/login'>"+map.get("url")+"/login</a></div>");
 		sb.append("<div>登录账号："+map.get("email")+"</div>");
 		sb.append("<div>订购服务："+map.get("serviceName")+"</div>");
 		sb.append("<div>生效时间："+map.get("startTime")+"</div>");
 		sb.append("<div>到期时间："+map.get("endTime")+"</div>");
+		sb.append("<div style=\"margin-top:30px\"><font color='red'><h3>店铺信息：</h3></font></div>");
+		sb.append("<div>门店编号："+map.get("storeCode")+"    (不可更改)</div>");
+		sb.append("<div>初始访问密码："+map.get("publicKey")+"  (请登录后台后，在店铺设置中进行更改)</div>");
+		sb.append("<div style=\"margin-top:30px\"><h3>第一次使用时，需在iPad/Android客户端进行设置：</h3></div>");
+		sb.append("<div><img src='cid:image'></div>");
 		sb.append("<div style=\"margin-top:30px\">谢谢</div>");
 		sb.append("<div>凯瑞时代云菜单客服中心</div>");
 		sb.append("<div>客服电话：028-83361785</div>");

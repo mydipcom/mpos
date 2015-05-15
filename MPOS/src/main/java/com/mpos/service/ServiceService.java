@@ -17,7 +17,7 @@ public interface ServiceService {
 	public List<Tservice> load();
 	public PagingData loadList(DataTableParamter rdtp);
 	
-	public Map<String, String> register(TadminUser user,Integer serviceId,String mobile,Boolean status);
+	public Map<String, String> register(TadminUser user,Integer serviceId,String mobile,Boolean status,String filePath,String url);
 	
 	public Map<String, String> getInfoByEmail(String email);
 	public void deleteInfo(String adminId,Integer storeId);

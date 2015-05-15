@@ -3,7 +3,9 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-
+<%
+String code = request.getParameter("code");
+%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -80,13 +82,14 @@
 			<label class="control-label visible-ie8 visible-ie9"><s:message code="login.form.username"/></label>
 			<div class="input-icon">
 				<i class="fa fa-user"></i>				
-				<form:input path="email" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off" maxlength="20"/>
+				<form:input path="email" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off" maxlength="100" readonly="true"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9"><s:message code="login.form.password"/></label>
 			<div class="input-icon">
 				<i class="fa fa-lock"></i>
+				<input type="hidden" value="<%=code%>"  name="code">
 				<form:password path="password" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off"/>				
 			</div>
 		</div>

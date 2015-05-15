@@ -1,8 +1,10 @@
 package com.mpos.service.impl;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mpos.commons.ConvertTools;
+import com.mpos.commons.EMailTool;
 import com.mpos.commons.SecurityTools;
 import com.mpos.dao.AdminInfoDao;
 import com.mpos.dao.AdminUserDao;
@@ -27,6 +30,7 @@ import com.mpos.dao.TableDao;
 import com.mpos.dto.TadminInfo;
 import com.mpos.dto.TadminRole;
 import com.mpos.dto.TadminUser;
+import com.mpos.dto.TemaiMessage;
 import com.mpos.dto.Tservice;
 import com.mpos.dto.TserviceOrder;
 import com.mpos.dto.Tstore;
@@ -123,7 +127,7 @@ public class ServiceServiceImpl implements ServiceService {
 		return criteria.list();
 	}
 
-	public Map<String,String> register(TadminUser user, Integer serviceId, String mobile,Boolean status) {
+	public Map<String,String> register(TadminUser user, Integer serviceId, String mobile,Boolean status,String filePath,String url) {
 		Map<String, String> res = new HashMap<String, String>();
 		Tstore store = new Tstore();
 		if(serviceId==null){
@@ -177,6 +181,17 @@ public class ServiceServiceImpl implements ServiceService {
 		res.put("serviceName", service.getServiceName());
 		res.put("startTime", ConvertTools.longToDateString(System.currentTimeMillis()));
 		res.put("endTime",  ConvertTools.longToDateString(store.getServiceDate()));
+		res.put("storeCode", ConvertTools.bw(store.getStoreId(), 8, "S"));
+		res.put("publicKey", store.getPublicKey());
+		res.put("url", url);
+		if(status){
+			TemaiMessage message = TemaiMessage.getCreate(res);
+			List<File> files = new LinkedList<File>();
+			File file = new File(filePath);
+			files.add(file);
+			message.setFiles(files);
+			EMailTool.send(message);
+		}
 		return res;
 	}
 
