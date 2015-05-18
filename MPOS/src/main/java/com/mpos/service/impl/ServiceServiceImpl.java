@@ -145,7 +145,7 @@ public class ServiceServiceImpl implements ServiceService {
 		}
 		store.setAutoSyncStatus(false);
 		store.setServiceDate(ConvertTools.longTimeAIntDay(System.currentTimeMillis(), service.getValidDays()));
-		store.setStoreCurrency("$");
+		store.setStoreCurrency("¥");
 		store.setStoreLangId("2");
 		store.setPrintType(1);
 		storeDao.save(store);
@@ -181,6 +181,7 @@ public class ServiceServiceImpl implements ServiceService {
 		res.put("serviceName", service.getServiceName());
 		res.put("startTime", ConvertTools.longToDateString(System.currentTimeMillis()));
 		res.put("endTime",  ConvertTools.longToDateString(store.getServiceDate()));
+		res.put("storeId",store.getStoreId()+"");
 		res.put("storeCode", ConvertTools.bw(store.getStoreId(), 8, "S"));
 		res.put("publicKey", store.getPublicKey());
 		res.put("url", url);

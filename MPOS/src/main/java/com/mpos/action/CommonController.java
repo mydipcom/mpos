@@ -34,6 +34,7 @@ import com.alipay.config.AlipayConfig;
 import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.mpos.commons.EMailTool;
+import com.mpos.commons.SecurityTools;
 import com.mpos.commons.SystemConfig;
 import com.mpos.commons.SystemConstants;
 import com.mpos.dto.TadminUser;
@@ -185,10 +186,11 @@ public class CommonController extends BaseController {
 			String filePath = realPath+logoPath;
 			map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
 			map = serviceService.register(user, service.getServiceId(), mobile,status,filePath,map.get("url"));
+			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(map.get("storeCode")), Integer.parseInt(map.get("storeId")));
 			if(!status){
 				res.put("html",getAlipaySubmit(map));
 				res.put("data", map);
-			}
+			}			
 			request.getSession().setAttribute("map", map);
 			res.put("isPay",!status);
 			res.put("service", map.get("serviceName"));
