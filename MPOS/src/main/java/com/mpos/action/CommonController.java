@@ -185,8 +185,8 @@ public class CommonController extends BaseController {
 			String logoPath = SystemConstants.STORE_SET_PATH+"examples.png";
 			String filePath = realPath+logoPath;
 			map.put("url", request.getRequestURL().toString().replaceFirst( request.getServletPath(), ""));
-			map = serviceService.register(user, service.getServiceId(), mobile,status,filePath,map.get("url"));
-			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(map.get("storeCode")), Integer.parseInt(map.get("storeId")));
+			map = serviceService.register(user, service.getServiceId(), mobile,status,filePath,map.get("url"));			
+			SystemConfig.STORE_TAKEN_MAP.put(SecurityTools.MD5(map.get("storeCode")+"888888"), Integer.parseInt(map.get("storeId")));
 			if(!status){
 				res.put("html",getAlipaySubmit(map));
 				res.put("data", map);
