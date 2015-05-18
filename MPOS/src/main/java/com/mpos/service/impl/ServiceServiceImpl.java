@@ -200,7 +200,7 @@ public class ServiceServiceImpl implements ServiceService {
 		Map<String, String> map = new HashMap<String, String>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("email", email);
-		String sql = "select store.service_date,service.service_name,store.storeId,store.public_key from mpos_cloud.mpos_admin as admin left join mpos_cloud.mpos_store as store on admin.store_id = store.store_id left join mpos_cloud.mpos_service as service on service.service_id=store.service_id where admin.email=:email";
+		String sql = "select store.service_date,service.service_name,store.store_id,store.public_key from mpos_cloud.mpos_admin as admin left join mpos_cloud.mpos_store as store on admin.store_id = store.store_id left join mpos_cloud.mpos_service as service on service.service_id=store.service_id where admin.email=:email";
 		Object[] res = (Object[]) adminUserDao.getBySql(sql, params);
 		map.put("email", email);
 		 map.put("serviceName", res[1].toString());
