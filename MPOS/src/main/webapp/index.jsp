@@ -14,9 +14,10 @@
 	<link rel="stylesheet" href="static/index_files/flexslider.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="static/index_files/style.css" type="text/css">
 	<link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css"/>
-<link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
 	<!--Fav and touch icons-->
 	<!--<link rel="apple-touch-icon" href="http://demo.cssmoban.com/cssthemes3/mstp_69_vienna2/img/favicons/apple-touch-icon.png">-->
+	<link rel="shortcut icon" href="${pageContext.request.contextPath}/media/image/favicon.ico"/>
 </head>
 <body id="home"><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"></div>
 
