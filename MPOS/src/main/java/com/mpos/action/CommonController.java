@@ -276,7 +276,7 @@ public class CommonController extends BaseController {
 							String realPath = request.getSession().getServletContext().getRealPath("/");
 							String logoPath = SystemConstants.STORE_SET_PATH+"examples.png";
 							String filePath = realPath+logoPath;
-							 TemaiMessage message = TemaiMessage.getCreate(serviceService.getInfoByEmail(order.getEmail()));
+							 TemaiMessage message = TemaiMessage.getCreate(map);
 							 List<File> files = new LinkedList<File>();
 								File file = new File(filePath);
 								files.add(file);
@@ -365,7 +365,7 @@ public class CommonController extends BaseController {
 						String realPath = request.getSession().getServletContext().getRealPath("/");
 						String logoPath = SystemConstants.STORE_SET_PATH+"examples.png";
 						String filePath = realPath+logoPath;
-						 TemaiMessage message = TemaiMessage.getCreate(serviceService.getInfoByEmail(order.getEmail()));
+						 TemaiMessage message = TemaiMessage.getCreate(map);
 						 List<File> files = new LinkedList<File>();
 							File file = new File(filePath);
 							files.add(file);
